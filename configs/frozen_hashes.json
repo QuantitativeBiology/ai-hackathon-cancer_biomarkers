@@ -8,13 +8,14 @@
  },
  "_comment": "sha256 (LF-normalised) of frozen files; 'design' at tag freeze-design, 'bounds' at freeze-bounds",
  "design_amendments": {
-  "DESIGN.md": "4e7cca361a544beff866dc5a1201ffb7e8d2b28297ea9f2f740678c03ebba5b9",
+  "DESIGN.md": "02ee40cd5d587c0cfd518427561dff33759099db5aea1e364a6a686ffd9be114",
   "amendments": [
    "A1",
    "A2",
    "A3",
    "A4",
-   "A5"
+   "A5",
+   "A6"
   ],
   "note": "appended section 'Amendments after freeze'; text above it unchanged from freeze-design"
  }

@@ -1,0 +1,1228 @@
+{
+  "_comment": "Toy answer key (DESIGN v3 Â§13.1), written by the verification agent, not the pipeline author. 'generator' fixes the planted truths of src/biomark/toysim.py; 'pass' holds the pre-declared bounds the pipeline must meet on the toy (tests/test_toy_answers.py); 'derivation' records the oracle statistics they were derived from (python -m biomark.toysim derive --n-seeds 20 --write). Dimensions come from design_params.json:toy_s13, seeds from seeds.json:toy_seed / toy_null_seed. Hash this file in configs/frozen_hashes.json (section design) at freeze-design. Explanation: docs/toy_answer_key.md.",
+  "version": "toy-v2 (DESIGN v3)",
+  "families": {
+    "hot": "HOT",
+    "lof": "LOFBI",
+    "amp": "AMP",
+    "del": "DEL",
+    "loss": "LOSS",
+    "sil": "SIL",
+    "sig": "SIG",
+    "comp": "COMP",
+    "expdose": "EXPDOSE",
+    "exppar": "EXPPAR",
+    "prog": "PROG",
+    "pscore": "PSCORE"
+  },
+  "stage_family_of_sil": "SIL-other",
+  "named_features": {
+    "msi": "MSI",
+    "dmg": "DMG_BURDEN",
+    "wgd": "WGD",
+    "ploidy": "PLOIDY",
+    "cin": "CIN",
+    "tp53": "TP53MUT",
+    "rb": "RB_ALT",
+    "isg": "ISG",
+    "nrf2": "NRF2"
+  },
+  "generator": {
+    "n_chrom": 10,
+    "first_gene_mb": 2.0,
+    "gene_spacing_mb": 4.5,
+    "locus_centre_first": 3,
+    "locus_centre_step": 6,
+    "entrez_base": 9000001,
+    "lineage_weights": [
+      75,
+      80,
+      60,
+      75,
+      60,
+      45,
+      40,
+      45,
+      50,
+      40,
+      22,
+      8
+    ],
+    "library_groups": [
+      "Avana-only",
+      "KY-only",
+      "Humagne-only",
+      "Avana+KY"
+    ],
+    "library_nested_group": "KY-only",
+    "library_nested_lineage_idx": [
+      0,
+      5,
+      6
+    ],
+    "library_nested_p": 0.85,
+    "library_other_p": [
+      0.6,
+      0.1,
+      0.15,
+      0.15
+    ],
+    "suspension_groups": [
+      "haematopoietic"
+    ],
+    "cellformat_suspension_lineages": {
+      "levels": [
+        "suspension",
+        "mixed/unknown"
+      ],
+      "p": [
+        0.9,
+        0.1
+      ]
+    },
+    "cellformat_other": {
+      "levels": [
+        "adherent",
+        "suspension",
+        "3D",
+        "mixed/unknown"
+      ],
+      "p": [
+        0.76,
+        0.1,
+        0.06,
+        0.08
+      ]
+    },
+    "serumfree_T_p_default": 0.08,
+    "serumfree_T_p_by_group": {
+      "neural_crest_neuro": 0.3
+    },
+    "serumfree_unknown_p": 0.04,
+    "medium_suspension": {
+      "levels": [
+        "RPMI",
+        "IMDM",
+        "other"
+      ],
+      "p": [
+        0.8,
+        0.15,
+        0.05
+      ]
+    },
+    "medium_other": {
+      "levels": [
+        "DMEM",
+        "RPMI",
+        "DMEM-F12",
+        "other",
+        "unknown"
+      ],
+      "p": [
+        0.45,
+        0.3,
+        0.1,
+        0.1,
+        0.05
+      ]
+    },
+    "doubling_time": {
+      "mean_h": 40.0,
+      "sd_h": 10.0,
+      "suspension_shift_h": -8.0,
+      "unknown_p": 0.1
+    },
+    "msi_rate_default": 0.015,
+    "msi_rate_by_lineage_idx": {
+      "1": 0.25,
+      "9": 0.2
+    },
+    "msi_unknown_p": 0.05,
+    "dmg_burden": {
+      "mean": 5.0,
+      "sd": 0.45,
+      "msi_shift": 2.5
+    },
+    "tmb_offset": 3.5,
+    "tmb_log_sd": 0.15,
+    "tp53_rate_default": 0.55,
+    "tp53_rate_by_group": {
+      "haematopoietic": 0.3
+    },
+    "tp53_unknown_p": 0.03,
+    "cn_absent_p": 0.05,
+    "patient_pair_frac": 0.05,
+    "subtype_A_p": 0.6,
+    "cn": {
+      "arm_sd": 0.12,
+      "arm_loss_p": 0.12,
+      "arm_loss_shift": -0.8,
+      "arm_gain_p": 0.08,
+      "arm_gain_shift": 0.45,
+      "gene_sd": 0.08,
+      "amp_shift": [
+        1.6,
+        3.0
+      ],
+      "del_shift": [
+        3.0,
+        4.5
+      ]
+    },
+    "amp_loci": [
+      [
+        "own_locus_cn",
+        5
+      ],
+      [
+        "cutting_artefact",
+        2
+      ],
+      [
+        "pan_amp",
+        1
+      ],
+      [
+        "amp_background",
+        2
+      ]
+    ],
+    "del_loci": [
+      [
+        "co_located",
+        5
+      ],
+      [
+        "co_located_tight",
+        3
+      ],
+      [
+        "self_null",
+        1
+      ],
+      [
+        "del_background",
+        1
+      ]
+    ],
+    "loci": {
+      "own_locus_cn": {
+        "p": [
+          0.08,
+          0.14
+        ],
+        "q": 0.8,
+        "nb_only": 0.03
+      },
+      "cutting_artefact": {
+        "p": [
+          0.08,
+          0.12
+        ],
+        "q": 0.95,
+        "nb_only": 0.0
+      },
+      "pan_amp": {
+        "p": [
+          0.08,
+          0.14
+        ],
+        "q": 0.8,
+        "nb_only": 0.03
+      },
+      "amp_background": {
+        "p": [
+          0.03,
+          0.1
+        ],
+        "q": [
+          0.2,
+          0.9
+        ],
+        "nb_only": 0.01
+      },
+      "co_located": {
+        "p": [
+          0.1,
+          0.14
+        ],
+        "q": 0.8,
+        "nb_only": 0.03
+      },
+      "co_located_tight": {
+        "p": [
+          0.08,
+          0.12
+        ],
+        "q": 0.985,
+        "nb_only": 0.0
+      },
+      "self_null": {
+        "p": [
+          0.07,
+          0.1
+        ],
+        "q": 0.8,
+        "nb_only": 0.02
+      },
+      "del_background": {
+        "p": [
+          0.03,
+          0.08
+        ],
+        "q": [
+          0.2,
+          0.9
+        ],
+        "nb_only": 0.01
+      }
+    },
+    "n_hot": 100,
+    "n_sil": 30,
+    "n_prog_base": 25,
+    "prog_partner_r": 0.9,
+    "prog_lineage_frac": 0.6,
+    "n_sil_lineage_proxy": 10,
+    "sil_lineage_proxy_p_in": [
+      0.5,
+      0.8
+    ],
+    "sil_lineage_proxy_p_out": 0.01,
+    "sil_regular_p": [
+      0.04,
+      0.12
+    ],
+    "background_binary_p": [
+      0.005,
+      0.12
+    ],
+    "background_lineage_enriched_frac": 0.3,
+    "background_lineage_enrichment": 5.0,
+    "background_lineage_enriched_cap": 0.6,
+    "plant_binary_p": [
+      0.06,
+      0.18
+    ],
+    "n_paralogs": [
+      1,
+      3
+    ],
+    "expression": {
+      "mean": [
+        3.0,
+        7.0
+      ],
+      "lineage_sd": 0.6,
+      "cn_slope": 0.4,
+      "sd": 0.4,
+      "lof_shift": -1.0,
+      "proxy_lof_shift": -2.5,
+      "sil_max": 0.5,
+      "unexpressed_max": 0.6
+    },
+    "effects": {
+      "gene_mean": [
+        -0.3,
+        0.1
+      ],
+      "plant_gene_mean": [
+        -0.5,
+        -0.1
+      ],
+      "w_sign_gene_mean": -0.9,
+      "self_null_gene_mean": -1.2,
+      "self_null_carrier_sd": 0.05,
+      "lineage_sd": 0.1,
+      "lineage_only_dep": [
+        0.6,
+        1.2
+      ],
+      "lineage_only_n_lineages": [
+        1,
+        3
+      ],
+      "lineage_min_lines_for_plants": 10,
+      "latent_factors": 10,
+      "latent_loading_sd": 0.07,
+      "latent_gene_frac": 0.6,
+      "latent_planted_frac": 0.5,
+      "pan_beta": [
+        0.45,
+        0.9
+      ],
+      "loss_beta": [
+        0.4,
+        0.6
+      ],
+      "restricted_beta": [
+        0.8,
+        1.0
+      ],
+      "restricted_lineage_sets": [
+        [
+          "Myeloid",
+          "Lymphoid"
+        ],
+        [
+          "Bowel",
+          "Esophagus/Stomach"
+        ],
+        [
+          "CNS/Brain",
+          "Peripheral Nervous System"
+        ],
+        [
+          "Lung"
+        ],
+        [
+          "Breast"
+        ]
+      ],
+      "restricted_feature_p": [
+        0.12,
+        0.18
+      ],
+      "own_locus_beta": [
+        0.6,
+        0.9
+      ],
+      "msi_beta": [
+        0.7,
+        1.0
+      ],
+      "msi_passenger_p": [
+        0.35,
+        0.02
+      ],
+      "n_msi_passengers": 12,
+      "culture_beta": [
+        0.6,
+        0.8
+      ],
+      "culture_vars": [
+        "suspension",
+        "suspension",
+        "suspension",
+        "serum_free",
+        "serum_free"
+      ],
+      "culture_trap_families": [
+        "hot",
+        "hot",
+        "hot",
+        "sil",
+        "sil"
+      ],
+      "culture_trap_p": [
+        0.5,
+        0.03
+      ],
+      "co_located_beta": [
+        0.7,
+        0.9
+      ],
+      "proxy_beta": [
+        0.7,
+        0.9
+      ],
+      "nrf2_score_shift": 2.0,
+      "prog_beta_per_sd": [
+        0.2,
+        0.3
+      ],
+      "p53_beta": [
+        0.5,
+        0.7
+      ],
+      "blind_beta": [
+        0.6,
+        0.8
+      ],
+      "blind_p": [
+        0.08,
+        0.14
+      ],
+      "wrong_sign_beta": 0.7,
+      "wrong_sign_p": 0.15,
+      "cutting_beta": 0.5,
+      "six_carrier_n": 6,
+      "six_carrier_beta": 1.5,
+      "lineage_dummy_beta": 0.9,
+      "fold_artefact_offset": -0.8,
+      "fold_artefact_carrier_frac": 0.05,
+      "fold_artefact_in_fold_frac": 0.7
+    },
+    "noise": {
+      "obs_sd": [
+        0.2,
+        0.35
+      ],
+      "fold_offset_sd": 0.04,
+      "library_offset_sd": 0.08,
+      "n_library_nan_genes": 8,
+      "library_nan_group": "KY-only"
+    },
+    "predictor": {
+      "default": "smooth",
+      "ridge": {
+        "alphas": [
+          10.0,
+          21.5,
+          46.4,
+          100.0,
+          215.4,
+          464.2,
+          1000.0,
+          2154.4,
+          4641.6,
+          10000.0,
+          21544.3,
+          46415.9,
+          100000.0
+        ],
+        "alpha_rule": "per-gene GCV (sklearn RidgeCV alpha_per_target) inside each training fold",
+        "inputs": [
+          "dictionary features (standardised, NaN->0) except predictor-blind plant features",
+          "lineage one-hot",
+          "library one-hot",
+          "hidden latent programmes (not in the dictionary; stand-in for expression the predictor sees)"
+        ],
+        "excluded_inputs": "culture covariates (so culture-confounded features are learnt as proxies)"
+      },
+      "smooth": {
+        "pred_sd": 0.12,
+        "pred_shrink": 0.9,
+        "pred_tanh_scale": 1.2,
+        "pred_library_share": 0.6
+      },
+      "_note": "smooth = recovery-bound toy (every plant class is learnt by the predictor, so pipeline logic is what is tested); ridge = DESIGN v3 ?13.1 double-dip toy used for the error-rate checks (FDP_true, FDR_emp_fixed vs FDP_true, pure null). With ridge on the toy features, 4/5 fold-artefact, 5/5 lineage-restricted, 3/5 culture, 2/3 predictor-blind genes and both cutting cores are ineligible (r_within < 0.10), so those bounds would be untestable."
+    },
+    "plants": {
+      "pan_lineage": {
+        "hot_own": 6,
+        "hot_pathway": 3,
+        "lofbi_paralog": 4,
+        "loss_paralog": 4,
+        "sil_partner": 2,
+        "amp_partner": 1
+      },
+      "lineage_restricted": 5,
+      "own_locus_cn": 5,
+      "msi_like": 5,
+      "culture_confounded": 5,
+      "co_located": 5,
+      "co_located_tight": 3,
+      "fold_offset_artefact": 5,
+      "genomic_with_expression_proxy": 5,
+      "prog_driven": 5,
+      "p53_w": 2,
+      "predictor_blind": 3,
+      "wrong_sign_cgt": 1,
+      "six_carrier_strong": 1,
+      "lineage_dummy_feature": 1,
+      "lineage_only": 10,
+      "self_null": 1,
+      "cutting_artefact_loci": 2,
+      "low_tier": 10
+    }
+  },
+  "pass": {
+    "_rule": "see propose_bounds docstring; derived from derivation.smooth over derivation._n_seeds seeds",
+    "_lists_hard_on_smooth_toy": [
+      "S1-obs",
+      "S1-pred",
+      "EN-obs selected",
+      "EN-pred selected",
+      "MD-strict"
+    ],
+    "_lists_hard_on_ridge_toy": [
+      "S1-obs",
+      "EN-obs selected",
+      "MD-strict"
+    ],
+    "_lists_reported_on_ridge_toy": [
+      "S1-pred",
+      "EN-pred selected"
+    ],
+    "pan_lineage_recall_min": 0.8,
+    "pan_lineage_recall_s1_obs_min": 0.9,
+    "own_locus_cn_recall_min": 0.8,
+    "msi_like_signature_recovered_min": 4,
+    "msi_like_passenger_lof_selected_max": 1,
+    "co_located_locus_level_min": 4,
+    "co_located_true_gene_level_min": 4,
+    "co_located_passenger_gene_level_max": 1,
+    "co_located_tight_gene_level_max": 0,
+    "culture_confounded_in_md_strict_max": 1,
+    "culture_flagged_if_reported_frac_min": 0.8,
+    "lineage_only_in_md_strict_max": 0,
+    "lineage_only_class3_frac_min": 0.8,
+    "lineage_dummy_in_md_strict_max": 0,
+    "lineage_dummy_flagged_collinear": true,
+    "fold_offset_selected_after_centring_max": 1,
+    "fold_offset_selected_without_centring_min": 3,
+    "genomic_stage_G_recovered_min": 4,
+    "prog_driven_en_pred_min": 4,
+    "p53_md_strict_min": 1,
+    "six_carrier_selected_subsample_frac_min": 0.5,
+    "predictor_blind_en_pred_selected_max": 0,
+    "predictor_blind_s1_obs_recall_min": 0.9,
+    "wrong_sign_counts_as_sign_error": true,
+    "cross_lineage_pan_frac_min": 0.9,
+    "cross_lineage_restricted_max": 2,
+    "cutting_core_label_min": 1,
+    "own_locus_addiction_label_min": 3,
+    "self_null_in_universe_max": 0,
+    "nc3_frac_dependent_max": 0.1,
+    "gate_overall_recall_min": 0.6,
+    "gate_family_recall_min": 0.5,
+    "planted_eligible_frac_min": 0.85,
+    "planted_fdp_true_max": 0.15,
+    "fdr_emp_fixed_minus_fdp_true_min": -0.05,
+    "pure_null_bh_lists": [
+      "S1-obs",
+      "S1-pred",
+      "MD-strict"
+    ],
+    "pure_null_bh_lists_p_any_hit_max": 0.1,
+    "pure_null_B": 20,
+    "_feasibility": {
+      "smooth_fdp_p95": {
+        "fdp_s1_obs": 0.1135,
+        "fdp_s1_pred": 0.1242,
+        "fdp_md_strict_oracle": 0.0921
+      },
+      "smooth_null_p_any_hit": {
+        "s1_obs": 0.05,
+        "s1_pred": 0.1,
+        "md_strict_oracle": 0.05
+      },
+      "ridge_fdp_p05": {
+        "fdp_s1_obs": 0.0468,
+        "fdp_s1_pred": 0.8117,
+        "fdp_md_strict_oracle": 0.6717
+      },
+      "ridge_null_p_any_hit": {
+        "s1_obs": 0.1,
+        "s1_pred": 1.0,
+        "md_strict_oracle": 1.0
+      }
+    }
+  },
+  "derivation": {
+    "_n_seeds": 20,
+    "ridge": {
+      "planted_eligible_frac": {
+        "mean": 0.9096,
+        "p05": 0.8588,
+        "p95": 0.95,
+        "min": 0.8421,
+        "max": 1.0
+      },
+      "lineage_only_ineligible_frac": {
+        "mean": 0.99,
+        "p05": 0.9,
+        "p95": 1.0,
+        "min": 0.9,
+        "max": 1.0
+      },
+      "pan_recall_s1_obs": {
+        "mean": 0.9125,
+        "p05": 0.8,
+        "p95": 1.0,
+        "min": 0.8,
+        "max": 1.0
+      },
+      "pan_recall_s1_pred": {
+        "mean": 0.9125,
+        "p05": 0.8,
+        "p95": 1.0,
+        "min": 0.8,
+        "max": 1.0
+      },
+      "own_locus_recall_s1_obs": {
+        "mean": 0.98,
+        "p05": 0.8,
+        "p95": 1.0,
+        "min": 0.8,
+        "max": 1.0
+      },
+      "msi_recovered_s1_obs": {
+        "mean": 4.9,
+        "p05": 4.0,
+        "p95": 5.0,
+        "min": 4.0,
+        "max": 5.0
+      },
+      "msi_passenger_genes_s1_obs": {
+        "mean": 0.05,
+        "p05": 0.0,
+        "p95": 0.05,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "proxy_stage_G_s1_pred": {
+        "mean": 5.0,
+        "p05": 5.0,
+        "p95": 5.0,
+        "min": 5.0,
+        "max": 5.0
+      },
+      "prog_recovered_s1_pred": {
+        "mean": 5.0,
+        "p05": 5.0,
+        "p95": 5.0,
+        "min": 5.0,
+        "max": 5.0
+      },
+      "p53_recovered_s1_obs": {
+        "mean": 1.9,
+        "p05": 1.0,
+        "p95": 2.0,
+        "min": 1.0,
+        "max": 2.0
+      },
+      "blind_recall_s1_obs": {
+        "mean": 0.4167,
+        "p05": 0.0,
+        "p95": 0.6833,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "blind_hits_s1_pred": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "six_carrier_s1_obs": {
+        "mean": 0.8,
+        "p05": 0.0,
+        "p95": 1.0,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "wrong_sign_hit_w_s1_obs": {
+        "mean": 0.95,
+        "p05": 0.95,
+        "p95": 1.0,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "culture_trap_hits_s1_obs": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "culture_trap_live_pred_no_culture": {
+        "mean": 2.35,
+        "p05": 1.0,
+        "p95": 4.05,
+        "min": 1.0,
+        "max": 5.0
+      },
+      "lineage_only_hits_s1_obs": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "lineage_dummy_collinear": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "fold_live_raw_bh": {
+        "mean": 3.75,
+        "p05": 1.95,
+        "p95": 5.0,
+        "min": 1.0,
+        "max": 5.0
+      },
+      "fold_hits_centred": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "co_located_true_gene": {
+        "mean": 4.95,
+        "p05": 4.95,
+        "p95": 5.0,
+        "min": 4.0,
+        "max": 5.0
+      },
+      "co_located_passenger_gene": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tight_gene": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "co_located_same_group": {
+        "mean": 8.0,
+        "p05": 8.0,
+        "p95": 8.0,
+        "min": 8.0,
+        "max": 8.0
+      },
+      "co_located_min_jaccard": {
+        "mean": 0.5868,
+        "p05": 0.5199,
+        "p95": 0.6597,
+        "min": 0.5185,
+        "max": 0.6667
+      },
+      "cross_lineage_pan_frac": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "cross_lineage_restricted_n": {
+        "mean": 0.7,
+        "p05": 0.0,
+        "p95": 2.0,
+        "min": 0.0,
+        "max": 2.0
+      },
+      "cutting_core_labelled": {
+        "mean": 2.0,
+        "p05": 2.0,
+        "p95": 2.0,
+        "min": 2.0,
+        "max": 2.0
+      },
+      "own_locus_addiction": {
+        "mean": 4.75,
+        "p05": 4.0,
+        "p95": 5.0,
+        "min": 4.0,
+        "max": 5.0
+      },
+      "nc3_frac_dependent": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "gate_recall_s1_obs": {
+        "mean": 0.9462,
+        "p05": 0.8827,
+        "p95": 1.0,
+        "min": 0.8462,
+        "max": 1.0
+      },
+      "fdp_s1_obs": {
+        "mean": 0.0771,
+        "p05": 0.0468,
+        "p95": 0.1305,
+        "min": 0.0312,
+        "max": 0.1478
+      },
+      "fdp_s1_pred": {
+        "mean": 0.8324,
+        "p05": 0.8117,
+        "p95": 0.8554,
+        "min": 0.8086,
+        "max": 0.8813
+      },
+      "n_hits_s1_obs": {
+        "mean": 122.6,
+        "p05": 115.95,
+        "p95": 131.25,
+        "min": 115.0,
+        "max": 136.0
+      },
+      "n_hits_s1_pred": {
+        "mean": 581.75,
+        "p05": 520.45,
+        "p95": 671.4,
+        "min": 510.0,
+        "max": 812.0
+      },
+      "fdp_md_strict_oracle": {
+        "mean": 0.7105,
+        "p05": 0.6717,
+        "p95": 0.763,
+        "min": 0.6527,
+        "max": 0.7702
+      },
+      "n_md_strict_oracle": {
+        "mean": 344.75,
+        "p05": 296.35,
+        "p95": 414.75,
+        "min": 284.0,
+        "max": 429.0
+      },
+      "pan_recall_md_strict_oracle": {
+        "mean": 0.9125,
+        "p05": 0.8,
+        "p95": 1.0,
+        "min": 0.8,
+        "max": 1.0
+      },
+      "culture_trap_md_strict_oracle": {
+        "mean": 0.2,
+        "p05": 0.0,
+        "p95": 1.0,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "null_hits_s1_obs": {
+        "mean": 0.1,
+        "p05": 0.0,
+        "p95": 1.0,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "null_hits_s1_pred": {
+        "mean": 339.0,
+        "p05": 263.35,
+        "p95": 419.25,
+        "min": 251.0,
+        "max": 614.0
+      },
+      "null_frac_p_lt_0.05": {
+        "mean": 0.0516,
+        "p05": 0.0497,
+        "p95": 0.0551,
+        "min": 0.0497,
+        "max": 0.0561
+      },
+      "null_hits_md_strict_oracle": {
+        "mean": 132.0,
+        "p05": 92.8,
+        "p95": 166.05,
+        "min": 89.0,
+        "max": 186.0
+      },
+      "null_p_any_hit_s1_obs": 0.1,
+      "null_p_any_hit_s1_pred": 1.0,
+      "null_p_any_hit_md_strict_oracle": 1.0
+    },
+    "smooth": {
+      "planted_eligible_frac": {
+        "mean": 0.9974,
+        "p05": 0.9825,
+        "p95": 1.0,
+        "min": 0.9825,
+        "max": 1.0
+      },
+      "lineage_only_ineligible_frac": {
+        "mean": 0.975,
+        "p05": 0.9,
+        "p95": 1.0,
+        "min": 0.9,
+        "max": 1.0
+      },
+      "pan_recall_s1_obs": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "pan_recall_s1_pred": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "own_locus_recall_s1_obs": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "msi_recovered_s1_obs": {
+        "mean": 5.0,
+        "p05": 5.0,
+        "p95": 5.0,
+        "min": 5.0,
+        "max": 5.0
+      },
+      "msi_passenger_genes_s1_obs": {
+        "mean": 0.05,
+        "p05": 0.0,
+        "p95": 0.05,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "proxy_stage_G_s1_pred": {
+        "mean": 5.0,
+        "p05": 5.0,
+        "p95": 5.0,
+        "min": 5.0,
+        "max": 5.0
+      },
+      "prog_recovered_s1_pred": {
+        "mean": 5.0,
+        "p05": 5.0,
+        "p95": 5.0,
+        "min": 5.0,
+        "max": 5.0
+      },
+      "p53_recovered_s1_obs": {
+        "mean": 2.0,
+        "p05": 2.0,
+        "p95": 2.0,
+        "min": 2.0,
+        "max": 2.0
+      },
+      "blind_recall_s1_obs": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "blind_hits_s1_pred": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "six_carrier_s1_obs": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "wrong_sign_hit_w_s1_obs": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "culture_trap_hits_s1_obs": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "culture_trap_live_pred_no_culture": {
+        "mean": 4.95,
+        "p05": 4.95,
+        "p95": 5.0,
+        "min": 4.0,
+        "max": 5.0
+      },
+      "lineage_only_hits_s1_obs": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "lineage_dummy_collinear": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "fold_live_raw_bh": {
+        "mean": 4.95,
+        "p05": 4.95,
+        "p95": 5.0,
+        "min": 4.0,
+        "max": 5.0
+      },
+      "fold_hits_centred": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "co_located_true_gene": {
+        "mean": 4.95,
+        "p05": 4.95,
+        "p95": 5.0,
+        "min": 4.0,
+        "max": 5.0
+      },
+      "co_located_passenger_gene": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tight_gene": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "co_located_same_group": {
+        "mean": 8.0,
+        "p05": 8.0,
+        "p95": 8.0,
+        "min": 8.0,
+        "max": 8.0
+      },
+      "co_located_min_jaccard": {
+        "mean": 0.5868,
+        "p05": 0.5199,
+        "p95": 0.6597,
+        "min": 0.5185,
+        "max": 0.6667
+      },
+      "cross_lineage_pan_frac": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "cross_lineage_restricted_n": {
+        "mean": 0.7,
+        "p05": 0.0,
+        "p95": 2.0,
+        "min": 0.0,
+        "max": 2.0
+      },
+      "cutting_core_labelled": {
+        "mean": 2.0,
+        "p05": 2.0,
+        "p95": 2.0,
+        "min": 2.0,
+        "max": 2.0
+      },
+      "own_locus_addiction": {
+        "mean": 4.75,
+        "p05": 4.0,
+        "p95": 5.0,
+        "min": 4.0,
+        "max": 5.0
+      },
+      "nc3_frac_dependent": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "gate_recall_s1_obs": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "fdp_s1_obs": {
+        "mean": 0.0683,
+        "p05": 0.0373,
+        "p95": 0.1135,
+        "min": 0.0294,
+        "max": 0.1217
+      },
+      "fdp_s1_pred": {
+        "mean": 0.0847,
+        "p05": 0.0557,
+        "p95": 0.1242,
+        "min": 0.0476,
+        "max": 0.1304
+      },
+      "n_hits_s1_obs": {
+        "mean": 129.9,
+        "p05": 125.8,
+        "p95": 136.0,
+        "min": 122.0,
+        "max": 136.0
+      },
+      "n_hits_s1_pred": {
+        "mean": 130.1,
+        "p05": 125.8,
+        "p95": 135.1,
+        "min": 122.0,
+        "max": 137.0
+      },
+      "fdp_md_strict_oracle": {
+        "mean": 0.0543,
+        "p05": 0.0196,
+        "p95": 0.0921,
+        "min": 0.0196,
+        "max": 0.0982
+      },
+      "n_md_strict_oracle": {
+        "mean": 126.35,
+        "p05": 122.75,
+        "p95": 131.15,
+        "min": 118.0,
+        "max": 134.0
+      },
+      "pan_recall_md_strict_oracle": {
+        "mean": 1.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "culture_trap_md_strict_oracle": {
+        "mean": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "null_hits_s1_obs": {
+        "mean": 0.05,
+        "p05": 0.0,
+        "p95": 0.05,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "null_hits_s1_pred": {
+        "mean": 0.15,
+        "p05": 0.0,
+        "p95": 1.05,
+        "min": 0.0,
+        "max": 2.0
+      },
+      "null_frac_p_lt_0.05": {
+        "mean": 0.0504,
+        "p05": 0.0489,
+        "p95": 0.0527,
+        "min": 0.0489,
+        "max": 0.0548
+      },
+      "null_hits_md_strict_oracle": {
+        "mean": 0.1,
+        "p05": 0.0,
+        "p95": 0.1,
+        "min": 0.0,
+        "max": 2.0
+      },
+      "null_p_any_hit_s1_obs": 0.05,
+      "null_p_any_hit_s1_pred": 0.1,
+      "null_p_any_hit_md_strict_oracle": 0.05
+    }
+  }
+}

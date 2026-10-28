@@ -571,3 +571,9 @@ Each row maps 1:1 to a key in the named file; code reads only the file.
   secondary and excluded from the P2 headline set (headline tiers T1–T3).
 - **A5 (§3, D10).** KMT2A added to the 5′-driver fusion exception (DEV-DICT-1); SPEC_MMR excluded after failing its
   pre-declared sanity check.
+- **A6 (D11, toy findings before freeze-bounds).** (i) The toy shows that with a ridge-type predictor the prediction arms'
+  true FDP is ≈ 0.7–0.8 and the fixed-threshold null cannot detect it; EN-pred/S1-pred FDR_emp is therefore reported as
+  "not calibrated for ridge-type predictors", the catalogue remains MD-strict, and replication in R is the arbiter. The
+  ridge toy is kept as a reported (unbounded) check; recovery bounds use the smooth-predictor toy. (ii) Eligibility's
+  beyond-lineage×library r excludes lines in strata with < 5 lines. (iii) Pure-null counts exclude neutral hits and the
+  own-EXPDOSE (F2) family. (iv) Toy files are `src/biomark/toysim.py` and `tests/test_toy_answers.py` (§13 names differ).

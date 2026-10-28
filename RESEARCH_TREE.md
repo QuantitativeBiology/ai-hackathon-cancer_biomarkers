@@ -52,6 +52,10 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D11 (M3b, toy): [!] with a ridge-type predictor, prediction-based lists have true FDP ≈ 0.7–0.8 that the
+  permutation null cannot see (ridge spreads a determinant's signal onto correlated features). Response: MD-strict stays
+  the catalogue, EN-pred FDR_emp labelled not calibrated, R replication arbitrates; amendment A6 (also eligibility strata
+  < 5 lines excluded; pure-null count rule).
 - D10 (M3b): dictionary track outcomes — shared 𝒟 2,965 features (cap 3,000; AMP/METH minimum carriers raised to 20,
   SIL-other to 10 by the frozen cap rule); 2,193 eligible genes; 39/40 controls gate-eligible. Rulings: ALLELE/CLIN features
   built into 𝒟 by the dictionary owner from the CGT rules; canonical name ALLELE:EGFR_activating; allele primaries only for
