@@ -23,4 +23,7 @@ New downloads go to `external/` (git-ignored); their checksums are recorded in `
 | bioRxiv 10.1101/2024.07.16.603642 supplement (brief: "Klingbeil"; record lists Flister et al., Pfizer) | https://www.biorxiv.org/content/10.1101/2024.07.16.603642v3.supplementary-material | v3, 2025-01-16 | configs/external_sha256.txt (external/combinatorial/klingbeil2024_biorxiv/) | bioRxiv licence "cc_no": no reuse licence; analysis only, do not redistribute | downloaded |
 | Thompson 2021 Nat Commun supplement (PMC7910459) | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7910459/supplementaryFiles | Nat Commun 12:1302 | configs/external_sha256.txt (external/combinatorial/thompson2021/) | CC BY 4.0 | downloaded |
 
-All of the above are fetched by `scripts/fetch_external.py` (manifest: configs/external_manifest.json).
+| DepMap OmicsSomaticMutations, OmicsGlobalSignatures, OmicsProfiles, CRISPRConfounders, OmicsCNSegmentsWGS | DepMap portal (manual download by the user, 2026-10-28; portal blocks scripts) | Public 26Q3 (as requested; files not self-versioned) | configs/depmap_extra_sha256.txt | CC BY 4.0 | present in external/depmap_extra/ |
+| CCLE RRBS methylation; PRISM Repurposing | DepMap portal | — | — | CC BY 4.0 | not obtained: methylation not tested (SIL-other expression proxy), PRISM not used |
+
+All of the above except the DepMap rows are fetched by `scripts/fetch_external.py` (manifest: configs/external_manifest.json).
