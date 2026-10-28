@@ -52,6 +52,22 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D13 (M4, ~23:00, process-guard findings before freeze-bounds, no association result yet):
+  - (i) The CR2 + ν test is anti-conservative at n = 255 with heteroskedastic carriers (size 0.069–0.073 at α 0.05). This
+    triggers the pre-declared §5.3 fallback, binary d → df = carrier clusters − 1, applied in every S1 test and in power
+    and logged in deviations.csv. It is not a choice.
+  - (ii) Power df ≠ test df, a bug; it is being fixed.
+  - (iii) NMF scores were not D-only invariant (8e-4). D, R and set A will be transformed separately and the dictionary
+    rebuilt before freeze-bounds.
+  - (iv) build_cgt.py gene literals move to config, with a byte-identical CGT required.
+  - (v) String exemptions from the leakscan go through an explicit allowlist (configs/leakscan_allow.json); `literal-ok`
+    covers numbers only.
+  - (vi) [!] The cross-lineage rule (§8.3) labelled a one-lineage plant cross-lineage in 1/5 toy seeds when the null
+    lineages shared its sign by chance. This is kept as a reported limitation of the label; the rule is unchanged.
+  - (vii) Six files that §13.4 lists under freeze-design were created later in M3b. They are hashed in the `bounds` section
+    instead.
+  - (viii) M3b builders wrote no timing records, so their wall time is unknown. This is logged as a deviation, not
+    reconstructed.
 - D12 (M4, 21:50, toy run of the real engine before freeze-bounds): 14/19 toy checks pass, 5 fail; no bound or answer
   key changed. [!] Ridge toy: MD-strict FDP_true 0.228 > 0.15, the double dip the answer key predicted (§4.1). The
   D-stage observed screen re-uses the D noise that the ridge OOF predictions absorbed, so the catalogue's D-based error
