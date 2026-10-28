@@ -1,0 +1,22 @@
+{
+  "rule": "(variable OR selective) AND m5 tier in {high, medium} AND r_within >= r_within_lin_lib_min",
+  "r_within_lin_lib_min": 0.1,
+  "stratum_min_lines": 5,
+  "n_genes_evaluated": 18434,
+  "n_class_ok": 3485,
+  "n_class_and_tier_ok": 3062,
+  "n_eligible": 2193,
+  "n_eligible_by_tier": {
+    "high": 1172,
+    "medium": 1021
+  },
+  "reasons": {
+    "not_variable_or_selective": 14949,
+    "eligible": 2193,
+    "r_beyond<0.1": 869,
+    "tier_not_high_or_medium": 423
+  },
+  "control_genes": 55,
+  "control_genes_eligible": 39,
+  "median_r_beyond_class_tier_ok": 0.14752504006005862
+}

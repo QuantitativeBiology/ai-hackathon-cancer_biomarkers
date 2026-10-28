@@ -1,0 +1,20 @@
+{
+ "n_rows": 58,
+ "n_gate_eligible": 39,
+ "n_untestable": 1,
+ "gate_eligible_by_family": {
+  "ADD-CN": 5,
+  "ADD-EXP": 1,
+  "ADD-HOT": 6,
+  "LOF-SL": 2,
+  "P53": 4,
+  "PAR": 13,
+  "PROG": 2,
+  "SIG": 2,
+  "SIL": 1,
+  "W": 3
+ },
+ "untestable": [
+  "SIL_UBC_UBB"
+ ]
+}

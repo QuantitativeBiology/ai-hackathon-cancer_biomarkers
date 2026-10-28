@@ -1,0 +1,67 @@
+covariate,kind,level,n_dev,n_test,n_noncancerous,missing_dev,mean_dev,missing_test,mean_test,missing_noncancerous,mean_noncancerous
+lineage,categorical,Biliary Tract,24,12,0,,,,,,
+lineage,categorical,Bladder/Urinary Tract,25,9,0,,,,,,
+lineage,categorical,Bone,36,13,0,,,,,,
+lineage,categorical,Bowel,69,11,1,,,,,,
+lineage,categorical,Breast,54,11,0,,,,,,
+lineage,categorical,CNS/Brain,102,24,0,,,,,,
+lineage,categorical,Cervix,14,4,0,,,,,,
+lineage,categorical,Esophagus/Stomach,72,17,0,,,,,,
+lineage,categorical,Head and Neck,51,12,0,,,,,,
+lineage,categorical,Kidney,28,3,1,,,,,,
+lineage,categorical,Liver,16,9,0,,,,,,
+lineage,categorical,Lung,102,21,0,,,,,,
+lineage,categorical,Lymphoid,78,16,2,,,,,,
+lineage,categorical,Myeloid,38,5,0,,,,,,
+lineage,categorical,Ovary/Fallopian Tube,41,18,0,,,,,,
+lineage,categorical,Pancreas,59,10,0,,,,,,
+lineage,categorical,Peripheral Nervous System,28,12,0,,,,,,
+lineage,categorical,Pleura,14,7,0,,,,,,
+lineage,categorical,Prostate,11,3,5,,,,,,
+lineage,categorical,Skin,59,15,0,,,,,,
+lineage,categorical,Soft Tissue,42,7,0,,,,,,
+lineage,categorical,Uterus,31,7,0,,,,,,
+lineage,categorical,_rare,28,9,6,,,,,,
+library_group,categorical,Avana+KY,154,34,0,,,,,,
+library_group,categorical,Avana-only,638,168,14,,,,,,
+library_group,categorical,Humagne-only,152,41,1,,,,,,
+library_group,categorical,KY-only,47,9,0,,,,,,
+library_group,categorical,other,31,3,0,,,,,,
+cellformat,categorical,3D,88,21,1,,,,,,
+cellformat,categorical,adherent,724,194,12,,,,,,
+cellformat,categorical,mixed/unknown,82,14,1,,,,,,
+cellformat,categorical,suspension,128,26,1,,,,,,
+serumfree,categorical,F,925,232,14,,,,,,
+serumfree,categorical,T,83,19,1,,,,,,
+serumfree,categorical,unknown,14,4,0,,,,,,
+medium_family,categorical,DMEM,140,36,6,,,,,,
+medium_family,categorical,DMEM-F12,52,11,0,,,,,,
+medium_family,categorical,IMDM,28,11,0,,,,,,
+medium_family,categorical,RPMI,455,119,3,,,,,,
+medium_family,categorical,other,333,74,6,,,,,,
+medium_family,categorical,unknown,14,4,0,,,,,,
+MSI,categorical,MSI,63,14,0,,,,,,
+MSI,categorical,MSS,959,241,15,,,,,,
+TP53,categorical,WT,337,91,13,,,,,,
+TP53,categorical,mut,685,164,2,,,,,,
+msi_source,categorical,OmicsGlobalSignatures.MSIScore,1022,255,15,,,,,,
+medium_source,categorical,condition,965,243,15,,,,,,
+medium_source,categorical,model,43,8,0,,,,,,
+medium_source,categorical,none,14,4,0,,,,,,
+serumfree_source,categorical,condition,965,243,15,,,,,,
+serumfree_source,categorical,model,43,8,0,,,,,,
+serumfree_source,categorical,none,14,4,0,,,,,,
+screen_days,continuous,,1022,255,15,0.0,20.071428571428573,0.0,20.201960784313727,0.0,21.2
+screen_days_dev_humagne,continuous,,1022,255,15,0.0,-0.21868884540117417,0.0,-0.2627450980392157,0.0,0.0
+doubling_time,continuous,,1022,255,15,0.0,65.1432436399217,0.0,81.98529411764706,0.0,66.146
+MSIScore,continuous,,1022,255,15,0.0,6.480303326810177,0.0,5.925019607843137,0.0,2.8033333333333337
+DMG_BURDEN,continuous,,1022,255,15,0.0,3.4696137886457947,0.0,3.4226511506473316,0.0,2.656126038233439
+TMB,continuous,,1022,255,15,0.0,5.391758172716736,0.0,5.359671046454653,0.0,4.4416720708852715
+PLOIDY,continuous,,779,193,12,243.0,3.105929867186835,62.0,3.077812653848847,3.0,2.353201827777046
+CN_absent,flag,,1022,255,15,0.0,0.053816046966731895,0.0,0.06274509803921569,0.0,0.4666666666666667
+MSI_unknown,flag,,1022,255,15,0.0,0.0,0.0,0.0,0.0,0.0
+DT_unknown,flag,,1022,255,15,0.0,0.09393346379647749,0.0,0.09411764705882353,0.0,0.06666666666666667
+hypermutated,flag,,1022,255,15,0.0,0.07534246575342465,0.0,0.06274509803921569,0.0,0.0
+aux_ScreenNNMD,continuous,,1022,255,15,0.0,-7.474037932402861,0.0,-7.406656649348991,0.0,-7.655592475021419
+aux_ScreenROCAUC,continuous,,1022,255,15,0.0,0.9433657753637638,0.0,0.9365015154268188,0.0,0.9531447440417159
+aux_CasActivity,continuous,,946,244,14,76.0,76.28250528541226,11.0,76.76438524590165,1.0,82.01428571428573

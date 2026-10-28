@@ -1,0 +1,42 @@
+{
+  "culture": {
+    "condition_formulation_column": "FormulationID",
+    "model_formulation_column": "FormulationID"
+  },
+  "screen_days_humagne_D_median": 24.0,
+  "dropped_by_vif": [],
+  "vif_max": 9.386170291311007,
+  "vif_max_column": "cellformat_adherent",
+  "hypermutated_tmb_threshold_D": 7.31863867313938,
+  "library_ari_vs_p1_lib_group": 0.949862014794152,
+  "library_ari_min": 0.9,
+  "library_ari_pass": true,
+  "n_lines": {
+    "dev": 1022,
+    "test": 255,
+    "noncancerous": 15
+  },
+  "columns_categorical": [
+    "lineage",
+    "library_group",
+    "cellformat",
+    "serumfree",
+    "medium_family",
+    "MSI",
+    "TP53"
+  ],
+  "columns_continuous": [
+    "screen_days",
+    "screen_days_dev_humagne",
+    "doubling_time",
+    "MSIScore",
+    "DMG_BURDEN",
+    "TMB",
+    "PLOIDY"
+  ],
+  "columns_flags": [
+    "CN_absent",
+    "MSI_unknown",
+    "DT_unknown"
+  ]
+}

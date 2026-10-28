@@ -1,0 +1,2 @@
+path,sha256,rows,cols,written_utc,script
+cache/effect_nan_mask.parquet,5713a1fe0a040289545173de8d75ce34b6d8c39363d095acd49f9de50fceb8a2,1022,18434,2026-10-28T19:20:39+00:00,scripts/build_effect_nan_mask.py

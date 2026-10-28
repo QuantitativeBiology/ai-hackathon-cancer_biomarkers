@@ -1,0 +1,6 @@
+cell_line_name,fusion,driver_symbol,source,note
+NCI-H3122,EML4::ALK,ALK,DESIGN v2 10.3,known positive must be a FUS carrier
+NCI-H2228,EML4::ALK,ALK,DESIGN v2 10.3,known positive must be a FUS carrier
+K562,BCR::ABL1,ABL1,DESIGN v2 10.3,known positive must be a FUS carrier
+MV4-11,KMT2A::AFF1,KMT2A,DESIGN v2 10.3,known positive must be a FUS carrier
+MDA-MB-175-VII,TENM4::NRG1,NRG1,DESIGN v2 10.3,known positive must be a FUS carrier

@@ -1,0 +1,43 @@
+column,vif
+cellformat_adherent,9.386170291311007
+cellformat_suspension,8.061863366210225
+library_group_Humagne-only,6.91911262493816
+lineage_Lymphoid,5.729904367406643
+lineage_CNS/Brain,5.17645171630372
+lineage_Lung,5.052206364528313
+cellformat_mixed/unknown,4.22314404882345
+lineage_Esophagus/Stomach,4.019601244931635
+lineage_Bowel,3.9285297155021053
+lineage_Pancreas,3.481132710439573
+lineage_Skin,3.3801735488593545
+lineage_Myeloid,3.318089411010736
+lineage_Breast,3.2915992006735157
+lineage_Head and Neck,3.154367780460657
+medium_family_other,2.8598482875246867
+medium_family_RPMI,2.8208016190041607
+lineage_Soft Tissue,2.7648127507249907
+lineage_Ovary/Fallopian Tube,2.6765528384637536
+DMG_BURDEN,2.614904091984584
+serumfree_T,2.568642791140956
+lineage_Bone,2.567168773632605
+lineage_Uterus,2.5418607134559843
+library_group_KY-only,2.48014726944108
+MSI_MSS,2.345551644746681
+library_group_Avana-only,2.3104338141735146
+DT_unknown,2.278789293461956
+lineage_Peripheral Nervous System,2.1644496159028632
+lineage_Kidney,2.159006673650722
+lineage__rare,2.132777657648782
+screen_days_dev_humagne,2.1199331242684893
+lineage_Bladder/Urinary Tract,2.0721947187976455
+lineage_Liver,1.6635179868731473
+lineage_Cervix,1.6447993683162077
+lineage_Pleura,1.6064765445164282
+lineage_Prostate,1.579386027875523
+medium_family_DMEM-F12,1.3993261797365582
+medium_family_IMDM,1.272575527614376
+TP53_mut,1.2458061070668494
+library_group_other,1.233814745545019
+doubling_time,1.0935141613518313
+serumfree_unknown,0.2833410199240068
+medium_family_unknown,0.2833410199240065

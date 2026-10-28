@@ -1,0 +1,281 @@
+{
+  "_comment": "M3b implementation parameters for choices DESIGN v2 leaves open (one line each in docs/impl_notes_dictionary.md). DESIGN decision numbers stay in design_params.json; this file holds only implementation details (category maps, NA rules, file names). Code reads it via biomark.paths.load_config('build_params').",
+  "version": "m3b-1",
+  "data_status": {
+    "dir": "external/depmap_extra",
+    "checksums_file": "configs/depmap_extra_sha256.txt",
+    "files": [
+      {
+        "file": "OmicsGlobalSignatures.csv",
+        "tier": "essential",
+        "used_for": "SIG: MSI, ploidy, WGD, CIN, LoH",
+        "fallback": "MSI unknown (NA) for every line; no CMP fallback in DESIGN v3 (concordance only); ploidy/WGD/CIN/LoH/aneuploidy not built"
+      },
+      {
+        "file": "OmicsSomaticMutations.csv",
+        "tier": "essential",
+        "used_for": "SIG:TMB, SIG-SPEC spectra (alleles for CGT features: scripts/build_cgt_features.py)",
+        "fallback": "TMB and SIG-SPEC not assayed; allele-level CGT tests 'untestable: allele'"
+      },
+      {
+        "file": "CRISPRConfounders.csv",
+        "tier": "essential",
+        "used_for": "covariate doubling_time (ScreenDoublingTime); screen QC kept as auxiliary columns",
+        "fallback": "no doubling-time covariate (no proxy invented)"
+      },
+      {
+        "file": "OmicsProfiles.csv",
+        "tier": "essential_if_needed",
+        "used_for": "ID keys only (not needed: all used files are ModelID-keyed)",
+        "fallback": "none needed"
+      },
+      {
+        "file": "OmicsCNSegmentsWGS.csv",
+        "tier": "dropped",
+        "used_for": "not used (DESIGN 1.5 dropped CNSegments)",
+        "fallback": "none"
+      },
+      {
+        "file": "OmicsInferredMolecularSubtypes.csv",
+        "tier": "nice",
+        "used_for": "not used in M3b",
+        "fallback": "none"
+      },
+      {
+        "file": "RRBS",
+        "glob": "*RRBS*",
+        "tier": "essential (amendment D7)",
+        "used_for": "METH and SIL-METH (DESIGN v3.1 D7)",
+        "fallback": "methylation not tested; SIL-METH absent"
+      },
+      {
+        "file": "PRISM",
+        "glob": "*PRISM*",
+        "tier": "not_requested_in_design",
+        "used_for": "none",
+        "fallback": "none"
+      }
+    ],
+    "unused_present_tiers": [
+      "not_obtained_per_design_v3",
+      "dropped",
+      "not_requested_in_design"
+    ]
+  },
+  "covariates": {
+    "library_map": {
+      "Avana": "Avana-only",
+      "KY": "KY-only",
+      "Humagne-CD": "Humagne-only",
+      "Avana+KY": "Avana+KY"
+    },
+    "library_other": "other",
+    "humagne_group": "Humagne-only",
+    "lib_concordance_ari_min": 0.9,
+    "cellformat_map": {
+      "adherent": "adherent",
+      "suspension": "suspension",
+      "dome": "3D",
+      "spheroid": "3D",
+      "organoid": "3D",
+      "mixed": "mixed/unknown",
+      "unknown": "mixed/unknown"
+    },
+    "cellformat_missing": "mixed/unknown",
+    "cellformat_multi": "mixed/unknown",
+    "serumfree_map": {
+      "True": "T",
+      "False": "F"
+    },
+    "serumfree_missing": "unknown",
+    "formulation_detect_regex": "(RPMI|DMEM|IMDM|MEM|F-?12|FBS|[Mm]edi(a|um)|L-15|OPAC|McCoy)",
+    "formulation_detect_min_frac": 0.9,
+    "medium_family_regex": [
+      [
+        "DMEM-F12",
+        "^DMEM\\s*[:/-]\\s*F-?12$"
+      ],
+      [
+        "RPMI",
+        "^RPMI(\\s*-?\\s*1640)?$"
+      ],
+      [
+        "IMDM",
+        "^IMDM$"
+      ],
+      [
+        "DMEM",
+        "^DMEM(\\s*high glucose)?$"
+      ]
+    ],
+    "medium_base_split_regex": "\\s*\\+\\s*",
+    "medium_other": "other",
+    "medium_unknown": "unknown",
+    "medium_multi_family": "other",
+    "msi_levels": {
+      "MSI": "MSI",
+      "MSS": "MSS",
+      "unknown": "unknown"
+    },
+    "tp53_levels": {
+      "mut": "mut",
+      "wt": "WT",
+      "unknown": "unknown"
+    },
+    "doubling_time_column": "ScreenDoublingTime",
+    "doubling_time_na_rule": "impute D median; indicator DT_unknown",
+    "screen_qc_aux_columns": [
+      "ScreenNNMD",
+      "ScreenROCAUC",
+      "CasActivity"
+    ],
+    "vif_drop_screen_days_if_gt": 10,
+    "cn_log2_offset": 0.1,
+    "cn_log2_clip": 3.0
+  },
+  "eligibility": {
+    "library_source": "covariates.library_group (screen map)",
+    "stratum_size_counted_on": "non-NaN D lines of the gene",
+    "lines_in_small_strata": "excluded from r_within for that gene",
+    "min_lines_for_r": 10
+  },
+  "dictionary": {
+    "population_roles": [
+      "dev",
+      "test",
+      "noncancerous"
+    ],
+    "fit_role": "dev",
+    "mutation_columns": [
+      "ModelID",
+      "IsDefaultEntryForModel",
+      "Chrom",
+      "Pos",
+      "Ref",
+      "Alt",
+      "VariantType",
+      "VariantInfo",
+      "VepImpact",
+      "EntrezGeneID",
+      "HugoSymbol",
+      "ProteinChange",
+      "Exon",
+      "DNAChange",
+      "LikelyLoF",
+      "Hotspot",
+      "AF"
+    ],
+    "lof_bi_na_rule": "1 if any clause is true on available data; NA if dosage >= 1 and a clause needing missing CN or sex could make it true; else 0",
+    "sil_y_min_male_lines_in_lineage": 10,
+    "sil_mechanism_codes": {
+      "SIL-DEL": 1,
+      "SIL-MUT": 2,
+      "SIL-METH": 3,
+      "SIL-other": 4
+    },
+    "yabs_paralog_source": "top-3 Ensembl paralogs located on chrY",
+    "exppar_drop_if_d_sd_le": 0.0,
+    "locus_distance": "interval gap max(0, start_b - end_a) on the same chromosome",
+    "locus_genes": "genes with a call of that family in >= 1 CN-profiled D line among: features of the family (shared + gene-specific) and, for DEL, every gene-specific target gene",
+    "fusion_5prime_column": "Gene1",
+    "fusion_3prime_column": "Gene2",
+    "fusion_kinase_regex": "kinase",
+    "fusion_kinase_exclude_regex": "(?:regulat|inhibit|anchor|binding|phosphatase|activat|interacting|substrate)",
+    "fusion_driver_sources": [
+      "CIViC nightly VariantSummaries (feature_type Fusion; 5'/3' partners)",
+      "MOAlmanac Rearrangement records (gene1 = 5', gene2 = 3' when both given)"
+    ],
+    "fusion_driver_restrict_to_oncokb": true,
+    "hallmark_gmt": "data/raw_external/msigdb_hallmark/h.all.v2024.1.Hs.symbols.gmt",
+    "isg_set": "HALLMARK_INTERFERON_ALPHA_RESPONSE",
+    "nmf_input": "D log2(TPM+1) of the n_top_var_genes genes with largest D variance; all population rows scored by model.transform",
+    "nmf_annotation_top_genes": 50,
+    "nmf_annotation_bh_q": 0.05,
+    "oncokb_gene_list": "external/clinical/oncokb/cancerGeneList.txt",
+    "gtf": "data/raw_external/ensembl116_gtf/Homo_sapiens.GRCh38.116.gtf.gz",
+    "hgnc": "data/raw_external/hgnc/hgnc_complete_set.txt",
+    "cmp_models": "external/probe/cmp_models.csv.gz",
+    "feature_hash_chars": 16,
+    "composite_features": {
+      "COMP:TP53MUT": "TP53_mut",
+      "COMP:RB_ALT": "RB_altered"
+    },
+    "dmg_burden_feature": "SIG:DMG_BURDEN",
+    "tmb_feature": "SIG:TMB",
+    "pscore_isg_feature": "PSCORE:ISG",
+    "fusion_known_positives": "configs/fusion_known_positives.csv",
+    "subtype_msi_token": "MSI",
+    "tobacco_lineage": "Lung",
+    "scope_shared_families": [
+      "HOT",
+      "ALLELE",
+      "LOFBI",
+      "DEL",
+      "FUS",
+      "SIL-DEL",
+      "SIL-MUT",
+      "SIL-METH",
+      "SIL-other",
+      "METH",
+      "CLIN",
+      "PROG",
+      "PSCORE",
+      "SIG",
+      "COMP"
+    ],
+    "scope_gene_specific_families": [
+      "LOSS",
+      "YABS",
+      "EXPDOSE",
+      "EXPPAR"
+    ],
+    "amp_scope_rule": "AMP:g is shared if g in Gamma, else gene-specific (own AMP of target g)",
+    "spec_pole_snv_percentile": 99,
+    "spec_pole_indel_snv_ratio_max": 0.05,
+    "msi_feature_ids": {
+      "binary": "SIG:MSI",
+      "score": "SIG:MSISCORE"
+    },
+    "global_signatures_columns": {
+      "SIG:PLOIDY": "Ploidy",
+      "SIG:WGD": "WGD",
+      "SIG:CIN": "CIN",
+      "SIG:ANEUPLOIDY": "Aneuploidy",
+      "SIG:LOH": "LoHFraction"
+    },
+    "global_signatures_binary": [
+      "SIG:WGD"
+    ],
+    "cgt_features_file": "configs/cgt_features.csv",
+    "cgt_allele_rules": "configs/cgt_allele_rules.json",
+    "window_bp_per_mb": 1000000,
+    "er_gmm_seed_key": "seeds[0]",
+    "access_class_rules": {
+      "direct": "own EXPDOSE/EXPGATE, own AMP/DEL/LOSS (own CN), own LOFBI (own damaging), EXPPAR/DEL/LOFBI of a top-3 paralog",
+      "potentially-direct": "HOT (H matrix, M3 pool only), other LOFBI, AMP, DEL, LOSS (matrices C, M of the M3 pool)",
+      "expression-derived": "EXPDOSE, EXPPAR (non-paralog), PROG, PSCORE, SIL-DEL/MUT/METH/other, YABS",
+      "proxy": "SIG, FUS, ALLELE, CLIN, COMP, METH"
+    },
+    "meth_above_lineage_median": 0.3,
+    "meth_lineage_median_rule": "median over RRBS-profiled D lines of the lineage if >= lineage_min_lines such lines, else pan-D RRBS median",
+    "sil_split_rule": "SIL-<mech>:<g> mutually exclusive, precedence DEL > MUT > METH > other (R3-2); umbrella SIL is internal only (LOFBI clause, YABS)",
+    "cgt_features_note": "ALLELE/CLIN built in the dictionary from configs/cgt_allele_rules.json (CGT track, read-only); configs/cgt_features.csv = the built list with carrier counts",
+    "fusion_5prime_drivers_extra": [
+      "KMT2A"
+    ],
+    "fusion_5prime_drivers_extra_note": "DEV-DICT-1 (PI ruling): extends design_params dictionary_s3.fusion.kinase_3prime_except_5prime, consistent with CGT CLIN:KMT2A_R",
+    "failed_sanity_rule": "a spectrum whose pre-declared sanity check fails is excluded from D as a determinant (PI ruling) and recorded as failed_sanity",
+    "spectra_sanity_feature": {
+      "mmr_pass": "SIG:SPEC_MMR",
+      "uv_pass": "SIG:SPEC_UV",
+      "tobacco_pass": "SIG:SPEC_TOBACCO"
+    }
+  },
+  "controls": {
+    "spec_file": "configs/positive_controls_spec.csv",
+    "lineage_check_relation": "lineage_TF",
+    "gate_min_nonnan_D_lines": 100,
+    "gate_eligible_rule": "n_obs_D >= gate_min_nonnan_D_lines AND (primary or secondary feature in D_g with >= min_carriers D carriers among non-NaN lines (binary) or available (continuous))",
+    "fusion_known_positives": "configs/fusion_known_positives.csv"
+  }
+}

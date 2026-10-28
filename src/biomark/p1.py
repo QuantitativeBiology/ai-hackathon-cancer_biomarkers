@@ -420,8 +420,11 @@ def _join(values) -> object:
     return "+".join(v) if v else np.nan
 
 
-def screen_covariates() -> pd.DataFrame:
+def screen_covariates(extra_condition_cols=("FormulationID",)) -> pd.DataFrame:
     """Screen/culture covariates for every CRISPR-screened line (dev, test, noncancerous, unassigned).
+
+    ``extra_condition_cols``: further ModelCondition.csv columns of the screened condition(s), '+'-joined
+    like the default ones (default adds FormulationID, needed by the base-medium parser of DESIGN 5.3).
 
     Sources: CRISPRScreenMap (ScreenID -> ModelID) -> ScreenSequenceMap rows of those screens
     (Library, Days, ScreenType, ModelConditionID) -> ModelCondition.csv; plus Model.csv.
@@ -438,7 +441,8 @@ def screen_covariates() -> pd.DataFrame:
                      usecols=["ScreenID", "Days", "Library", "ScreenType", "ModelConditionID"],
                      dtype={"ScreenID": str, "Library": str, "ScreenType": str, "ModelConditionID": str})
     ss = ss.merge(sm, on="ScreenID", how="inner")
-    mc = model_condition(_COND_COLS)
+    cond_cols = list(dict.fromkeys(list(_COND_COLS) + list(extra_condition_cols)))
+    mc = model_condition(cond_cols)
     ss = ss.join(mc, on="ModelConditionID")
     g = ss.groupby("ModelID")
     out = pd.DataFrame(index=pd.Index(sorted(sm["ModelID"].unique()), name="ModelID"))
@@ -446,7 +450,7 @@ def screen_covariates() -> pd.DataFrame:
     out["n_screens"] = sm.groupby("ModelID")["ScreenID"].nunique().reindex(out.index).astype(int)
     out["Library"] = g["Library"].agg(_join).reindex(out.index)
     out["ScreenDays"] = g["Days"].median().reindex(out.index)
-    for c in ["ScreenType", "ModelConditionID"] + _COND_COLS:
+    for c in ["ScreenType", "ModelConditionID"] + cond_cols:
         out[c] = g[c].agg(_join).reindex(out.index)
     mt = model_table(_MODEL_COLS).reindex(out.index)
     for c in _MODEL_COLS:

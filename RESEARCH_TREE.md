@@ -52,6 +52,11 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D10 (M3b): dictionary track outcomes — shared 𝒟 2,965 features (cap 3,000; AMP/METH minimum carriers raised to 20,
+  SIL-other to 10 by the frozen cap rule); 2,193 eligible genes; 39/40 controls gate-eligible. Rulings: ALLELE/CLIN features
+  built into 𝒟 by the dictionary owner from the CGT rules; canonical name ALLELE:EGFR_activating; allele primaries only for
+  BRAF and EGFR (R3-2), KRAS/NRAS/PIK3CA stay HOT (§9.2); KMT2A added to the 5′-driver fusion exception (DEV-DICT-1);
+  SPEC_MMR excluded (failed its pre-declared ρ ≥ 0.5 sanity check vs MSIScore: 0.27); RRBS covers 453/1022 D lines.
 - D9 (M3b): ER+ (and HR+/HER2−) operationalised as ESR1-expression rule AND PAM50 luminal call, decided before any
   dependency data were joined: the expression-only rule over-called (29/65 breast lines ER+, 14 non-luminal). ALK cap of 10
   was a pre-data estimate; 11 real carriers kept (DEV-CGT-1). KMT2A-r = any KMT2A-5′ fusion (no memory-based partner list).

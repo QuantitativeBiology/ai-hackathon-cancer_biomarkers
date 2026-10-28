@@ -1,0 +1,142 @@
+{
+ "sig": {
+  "sources": {
+   "SIG:MSI": {
+    "rule": "MSIScore >= msi_threshold (OmicsGlobalSignatures)",
+    "threshold": 20.0,
+    "lines_with_score": 1292,
+    "cmp_concordance": {
+     "vs_cmp": {
+      "score_MSS_cmp_MSS": 504,
+      "score_MSI_cmp_MSI": 43,
+      "score_MSI_cmp_MSS": 8
+     },
+     "subtype_MSI_lines_called_MSI": 10,
+     "subtype_MSI_lines": 10,
+     "threshold": 20.0
+    }
+   },
+   "SIG:PLOIDY": "OmicsGlobalSignatures.Ploidy",
+   "SIG:WGD": "OmicsGlobalSignatures.WGD",
+   "SIG:CIN": "OmicsGlobalSignatures.CIN",
+   "SIG:ANEUPLOIDY": "OmicsGlobalSignatures.Aneuploidy",
+   "SIG:LOH": "OmicsGlobalSignatures.LoHFraction",
+   "SIG:TMB": "OmicsSomaticMutations",
+   "spectra": "OmicsSomaticMutations"
+  },
+  "spectra_checks": {
+   "mmr_vs_msiscore_spearman": 0.26807764408626855,
+   "mmr_pass": false,
+   "uv_top_lineage": "Skin",
+   "uv_pass": true,
+   "tobacco_lung_vs_rest_p": 3.780767013653108e-37,
+   "tobacco_pass": true,
+   "fitted": {
+    "spec_pole_snv_threshold_D": 3255.749999999999
+   }
+  }
+ },
+ "meth": {
+  "rrbs_profiled": {
+   "dev": 453,
+   "test": 114,
+   "noncancerous": 1
+  },
+  "n_lineages_with_own_median": 16,
+  "n_genes_gamma_with_rrbs": 2779
+ },
+ "sil": {
+  "n_lineages_with_own_stats": 22
+ },
+ "cgt_features": {
+  "status": "pending: configs/cgt_features.csv absent at build time"
+ },
+ "nmf": {
+  "n_iter": 252,
+  "reconstruction_err": 2357.458984375,
+  "n_genes": 5000,
+  "seed": 0
+ },
+ "fusion_known_positives": [
+  {
+   "cell_line_name": "NCI-H3122",
+   "ModelID": "ACH-000337",
+   "fusion": "EML4::ALK",
+   "fus_features_available": [
+    "FUS:238"
+   ],
+   "carrier_of": [
+    "FUS:238"
+   ],
+   "pass": true,
+   "status": "carrier",
+   "carrier_feature_in_D": [
+    "FUS:238"
+   ]
+  },
+  {
+   "cell_line_name": "NCI-H2228",
+   "ModelID": null,
+   "fusion": "EML4::ALK",
+   "fus_features_available": [
+    "FUS:238"
+   ],
+   "carrier_of": [],
+   "pass": null,
+   "status": "line not in the Part 1 population",
+   "carrier_feature_in_D": []
+  },
+  {
+   "cell_line_name": "K562",
+   "ModelID": "ACH-000551",
+   "fusion": "BCR::ABL1",
+   "fus_features_available": [
+    "FUS:25"
+   ],
+   "carrier_of": [
+    "FUS:25"
+   ],
+   "pass": true,
+   "status": "carrier",
+   "carrier_feature_in_D": [
+    "FUS:25"
+   ]
+  },
+  {
+   "cell_line_name": "MV4-11",
+   "ModelID": "ACH-000045",
+   "fusion": "KMT2A::AFF1",
+   "fus_features_available": [],
+   "carrier_of": [],
+   "pass": false,
+   "status": "no FUS driver for this fusion",
+   "carrier_feature_in_D": []
+  },
+  {
+   "cell_line_name": "MDA-MB-175-VII",
+   "ModelID": null,
+   "fusion": "TENM4::NRG1",
+   "fus_features_available": [
+    "FUS:3084"
+   ],
+   "carrier_of": [],
+   "pass": null,
+   "status": "line not in the Part 1 population",
+   "carrier_feature_in_D": []
+  }
+ ],
+ "fus_carriers_D": {
+  "FUS:25": 13,
+  "FUS:238": 14,
+  "FUS:861": 7,
+  "FUS:2120": 5,
+  "FUS:2261": 5,
+  "FUS:2263": 8,
+  "FUS:2313": 11,
+  "FUS:4609": 16,
+  "FUS:6098": 5,
+  "FUS:7468": 9,
+  "FUS:8091": 7,
+  "FUS:23261": 7
+ }
+}
