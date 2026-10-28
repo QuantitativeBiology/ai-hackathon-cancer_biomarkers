@@ -1,0 +1,39 @@
+{
+ "job": "surrogate_pilot",
+ "utc": "2026-10-28T20:44:17+00:00",
+ "n_genes": 50,
+ "n_features": 12813,
+ "n_lines": 1022,
+ "workers_used": 5,
+ "chunk": 10,
+ "worker_cpu_s_en": 682.7014978999941,
+ "load_s": 14.120330599998852,
+ "wall_s": {
+  "s1_both": 202.89261930000066,
+  "EN-obs": 108.47787310000058,
+  "EN-pred": 115.49196440000014
+ },
+ "cache_hit_rate": 0.86,
+ "cache_hits": 4816,
+ "cache_misses": 784,
+ "n_eligible": 2193,
+ "projection_workers": 12,
+ "projected_wall_min": {
+  "s1_obs_pred": 12.35954205902504,
+  "en_obs_pred": 41.587899580407985,
+  "null_one_draw_single_worker": 28.78977960000011,
+  "null_B_base": 95.96593200000036,
+  "null_B_raised": 239.91483000000093
+ },
+ "null_B_rule": "B = B_raised iff B_raised x wall(draw 1) <= wall_cap_min (single draw wall)",
+ "K": 300,
+ "pilot_max_projected_wall_min": 45.0,
+ "K_rule": "projected EN wall > pilot_max_projected_wall_min => K = sis_K_fallback",
+ "K_decision": 300,
+ "universe_rows": 149726,
+ "selected": {
+  "EN-obs": 6,
+  "EN-pred": 1025
+ },
+ "fidelity_median": 0.29435500437393053
+}

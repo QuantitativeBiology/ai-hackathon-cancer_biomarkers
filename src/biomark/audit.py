@@ -442,8 +442,7 @@ def gate(controls: pd.DataFrame, lists: dict) -> pd.DataFrame:
     out = []
     for _, c in controls.iterrows():
         feats = [x for x in (c.get("feature_primary", ""), c.get("feature_secondary", "")) if isinstance(x, str) and x]
-        rec = {"control_id": c["control_id"], "family": c.get("family", ""), "gate_eligible": bool(c.get("gate_eligible", False)),
-               "scope": c.get("scope", "")}
+        rec = {"control_id": c["control_id"]}          # control attributes stay in the controls table (merge key only)
         for name, L in lists.items():
             m = L[(L["gene"] == c["dependency_entrez"]) & L["feature"].isin(feats)] if len(L) else L
             if len(m) and c.get("expected_sign") in ("S", "W"):

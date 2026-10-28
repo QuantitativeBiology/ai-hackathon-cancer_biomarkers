@@ -1,0 +1,56 @@
+{
+  "_comment": "Implementation constants of the Tier A engine (src/biomark/{stats,en,arms,null,audit,pipeline}.py). NOT a design decision file: every DESIGN §F number is read from design_params.json / primary_endpoints.json / seeds.json; this file only holds numerical tolerances, solver limits, covariate coding and name maps the design leaves to the implementation (docs/impl_notes_pipeline.md). Loaded via biomark.params.",
+  "version": "pipeline-v1",
+  "numerics": {
+    "rank_tol_rel": 1e-10,
+    "eig_floor_rel": 1e-12,
+    "tiny": 1e-300,
+    "cluster_eigh_min_size": 3
+  },
+  "covariates": {
+    "_comment": "Canonical covariate columns (pipeline.Data.cov). Design blocks are never dropped (DESIGN 5.3); droppable shared covariates are dropped per (g, d) by stats.shared_drops; gene covariates (own CN, EXPGATE) by stats.gene_cov_drops. reference = level that absorbs merged (< 2-line) levels; null = most frequent level in the fit rows.",
+    "design_blocks": {
+      "lineage": [{"col": "lineage", "kind": "cat", "reference": "_rare"}],
+      "library": [{"col": "library_group", "kind": "cat", "reference": null}],
+      "culture": [{"col": "cellformat", "kind": "cat", "reference": null},
+                  {"col": "serumfree", "kind": "cat", "reference": null},
+                  {"col": "medium_family", "kind": "cat", "reference": null}],
+      "growth": [{"col": "doubling_time", "kind": "num"}, {"col": "DT_unknown", "kind": "num"}]
+    },
+    "droppable_shared": {
+      "MSI": [{"col": "MSI", "kind": "cat", "reference": "MSS"}],
+      "DMG_BURDEN": [{"col": "DMG_BURDEN", "kind": "num"}],
+      "TP53": [{"col": "tp53_status", "kind": "cat", "reference": "WT"}],
+      "screen_days": [{"col": "screen_days", "kind": "num"}]
+    },
+    "gene_covariates": ["own_CN", "EXPGATE"],
+    "covariate_is_feature": {"MSI": ["SIG:MSI"], "DMG_BURDEN": ["SIG:DMG_BURDEN"], "TP53": ["COMP:TP53MUT"]},
+    "tp53_derivation": {"covariate": "TP53", "_comment": "TP53 omitted when d derives from TP53 (any feature of these genes) or MDM2 amplification (DESIGN 5.3); symbols resolved to Entrez at run time", "gene_symbols": ["TP53"], "amp_symbols": ["MDM2"], "amp_families": ["AMP"]},
+    "cn_derived_families": ["AMP", "DEL", "LOSS", "SIL-DEL"],
+    "na_flags": ["CN_absent", "MSI_unknown", "METH_absent"],
+    "delta_blocks": {"lineage": ["lineage"], "library": ["library"], "culture": ["culture"], "growth": ["growth"], "burden": ["MSI", "DMG_BURDEN"], "TP53": ["TP53"], "own CN": ["own_CN"]},
+    "primary_disease_block": {"col": "primary_disease", "kind": "cat", "reference": null}
+  },
+  "en": {
+    "max_iter": 10000,
+    "selection": "cyclic",
+    "fwl_cache_max_entries": 400,
+    "gram_cache_max_features": 1500,
+    "sis_tie_break": "feature index asc (stable)",
+    "fidelity_sst": "sum of squared held-out residualised target (FWL by training-fold coefficients)",
+    "forced_relations_exclude": ["self_null"]
+  },
+  "eb": {"n_sigma": 20, "max_iter": 500, "tol": 1e-8, "sigma_min_frac_of_min_se": 0.1, "sigma_max_mult": 2.0},
+  "subsamples": {"format": "pipeline-v1", "file": "configs/subsamples.json", "half_rule": "within each pooled lineage, patients shuffled (subsample_seed) and alternately assigned to half a / b; complementary pair = (a, b)"},
+  "null": {"strata_merge_min": 2, "s1_vectorised_chunk": 25, "ci_level": 0.95, "bootstrap_B": 1000},
+  "audit": {
+    "interaction_test": "OLS F-test of d x lineage interaction terms over testable lineages (homoskedastic; secondary label input)",
+    "min_group_size_amplicon": 3,
+    "min_n_corr": 4,
+    "cross_lineage_top_s1": 200
+  },
+  "toy": {"cgt_k": 200, "gate_lists": ["MD-strict", "S1-obs", "S1-pred", "EN-obs", "EN-pred"]},
+  "se_type": "CR2",
+  "pair_classes": {"_comment": "DESIGN §12.2 pair-class codes", "expression_gating": 4, "too_rare": 5, "confounded": 6, "valid": 9},
+  "timing_dir": "results/timing"
+}
