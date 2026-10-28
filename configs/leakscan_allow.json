@@ -1,0 +1,14 @@
+{
+ "_comment": "String allowlist for scripts/leakscan.py (DESIGN 13.4 (i)). Each entry exempts one exact literal in one exact file (repo-relative path) and nowhere else; every allowlisted occurrence is printed as an EXEMPT line. Only identifiers that collide with HGNC symbols and are not gene references belong here. Gene symbols used as genes (e.g. scripts/build_cgt.py) must move to config, never here. ACH- ids cannot be allowlisted.",
+ "allow": [
+  {"file": "src/biomark/dictionary.py", "literal": "FUS", "reason": "dictionary family id FUS (fusion features, DESIGN 3), not the FUS gene"},
+  {"file": "src/biomark/dictionary.py", "literal": "COMP", "reason": "dictionary family id COMP (P1 composite flags, DESIGN 3), not the COMP gene"},
+  {"file": "src/biomark/dictionary.py", "literal": "POLE", "reason": "suffix test for the spectrum id SIG:SPEC_POLE (DESIGN 3), not a POLE gene feature"},
+  {"file": "src/biomark/genesets.py", "literal": "FUS", "reason": "family id FUS in the GENE_FAMILIES set (DESIGN 3), not the FUS gene"},
+  {"file": "src/biomark/controls.py", "literal": "COMP", "reason": "family id COMP mapped to build_params composite_features (DESIGN 3), not the COMP gene"},
+  {"file": "src/biomark/covariates.py", "literal": "TP53", "reason": "name of the TP53-status covariate column (DESIGN 5.3), not a gene feature"},
+  {"file": "scripts/build_dictionary.py", "literal": "FUS", "reason": "family id FUS used as a dictionary key and in the family description table (DESIGN 3)"},
+  {"file": "scripts/build_dictionary.py", "literal": "COMP", "reason": "family id COMP in the family description table (DESIGN 3)"},
+  {"file": "scripts/verify_inputs.py", "literal": "BAD", "reason": "status word printed for a checksum mismatch ('OK'/'BAD'), not the BAD gene"}
+ ]
+}

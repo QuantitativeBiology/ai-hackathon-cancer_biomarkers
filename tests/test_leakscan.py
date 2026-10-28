@@ -114,3 +114,60 @@ def test_every_literal_ok_marker_is_listed(tmp_path):
     assert not by[3]["well_formed"]
     out = LS.render(hits, ex)
     assert "EXEMPT src/biomark/m.py:1: suppressed ['0.7']" in out and "MALFORMED" in out
+
+
+def _allow(root, entries):
+    import json
+    p = root / "configs" / "leakscan_allow.json"
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps({"allow": entries}), encoding="utf-8")
+
+
+def test_allowlisted_string_is_exempt_only_in_its_file(tmp_path):
+    root = _tree(tmp_path, {"src/biomark/a.py": 'FAM = "TP53"\n', "src/biomark/b.py": 'G = "TP53"\n',
+                            "scripts/c.py": 'H = "TP53"\n'})
+    _allow(root, [{"file": "src/biomark/a.py", "literal": "TP53", "reason": "covariate column name"}])
+    allowed, errors = [], []
+    hits = LS.scan(root, symbols=SYMS, allowed=allowed, errors=errors)
+    assert errors == []
+    assert sorted(h["file"] for h in hits) == ["scripts/c.py", "src/biomark/b.py"]   # elsewhere still fails
+    assert [(a["file"], a["value"], a["reason"]) for a in allowed] == [("src/biomark/a.py", "TP53", "covariate column name")]
+    out = LS.render(hits, [], allowed, errors)
+    assert "EXEMPT src/biomark/a.py:1:6: [gene] TP53 allowlisted  reason: covariate column name" in out
+    assert out.endswith("RESULT: FAIL")
+
+
+def test_allowlist_is_exact_literal_and_never_numbers_or_ach(tmp_path):
+    root = _tree(tmp_path, {"src/biomark/a.py": 'A = "TP53"\nB = "KRAS"\nC = 0.7\nD = "ACH-000001"\n'})
+    _allow(root, [{"file": "src/biomark/a.py", "literal": "TP53", "reason": "x"},
+                  {"file": "src/biomark/a.py", "literal": "0.7", "reason": "numbers are not strings"}])
+    allowed, errors = [], []
+    hits = LS.scan(root, symbols=SYMS, allowed=allowed, errors=errors)
+    assert _kinds(hits) == [("ach", "ACH-000001"), ("gene", "KRAS"), ("num", "0.7")]
+    assert [a["literal"] for a in allowed if a.get("unused")] == ["0.7"]
+    assert "matched nothing" in LS.render(hits, [], allowed, errors)
+
+
+def test_invalid_allowlist_entries_fail(tmp_path, monkeypatch):
+    root = _tree(tmp_path, {"src/biomark/a.py": 'A = "TP53"\n'})
+    _allow(root, [{"file": "src/biomark/a.py", "literal": "TP53", "reason": "  "},
+                  {"file": "src/biomark/a.py", "literal": "ACH-000001", "reason": "no"},
+                  {"file": "src/biomark/gone.py", "literal": "TP53", "reason": "file absent"},
+                  {"file": "src/biomark/a.py", "literal": "TP53"}])
+    errors = []
+    hits = LS.scan(root, symbols=SYMS, errors=errors)
+    assert len(hits) == 1                                  # nothing valid exempts the TP53 hit
+    joined = " ".join(errors)
+    assert "empty reason" in joined and "ACH- ids cannot be allowlisted" in joined
+    assert "does not exist" in joined and "needs string fields" in joined
+    clean = _tree(tmp_path / "clean", {"src/biomark/a.py": "A = 1\n"})
+    _allow(clean, [{"file": "src/biomark/a.py", "literal": "TP53", "reason": ""}])
+    monkeypatch.setattr(LS, "gene_symbols", lambda: SYMS)
+    assert LS.main(["--root", str(clean)]) == 1            # no hits, but an invalid entry fails
+
+
+def test_project_allowlist_is_valid_and_has_no_gene_references():
+    entries, errors = LS.load_allow(ROOT / "configs" / "leakscan_allow.json")
+    assert errors == [] and entries
+    assert all((ROOT / e["file"]).exists() for e in entries)
+    assert not any(e["file"] == "scripts/build_cgt.py" for e in entries)   # real gene uses move to config

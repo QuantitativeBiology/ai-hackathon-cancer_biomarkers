@@ -62,18 +62,26 @@ combinatorial_lookup, Tier B tcga_prevalence_cbioportal; M7 replication_R; M8 li
 
 ## 2. `leakscan.py` (DESIGN §13.4)
 
-`python -X utf8 scripts/leakscan.py [--json out.json]`; exit 1 on any hit.
+`python -X utf8 scripts/leakscan.py [--json out.json] [--allow FILE]`; exit 1 on any hit or invalid allowlist entry.
 
 - (i) string constants equal to an HGNC symbol of ≥ 3 characters from Part 1 `gene_map`
   (`biomark.p1.gene_map()`, read-only), or containing `ACH-\d{6}`, in `src/` and `scripts/`;
 - (ii) numeric constants (`-x` is one constant) outside {0, 1, −1, 2, 0.5, 100} in `src/biomark/` except
   `src/biomark/params.py` (the params loader).
-- `# literal-ok: <reason>` (non-empty reason) exempts (ii) only, as §13.4 attaches it to (ii). Several existing
-  markers sit on gene-symbol lines (family ids `FUS`, `COMP`, covariate name `TP53`, spectrum `POLE`); they are
-  reported as hits with a note. If the PI wants string exemptions, that is a design decision, not a scanner change.
-- Every `literal-ok` comment in the tree is printed (`EXEMPT` lines: what it suppressed, reason, well-formed or not),
-  so no exemption is silent (66 markers, 63 numeric constants suppressed at 82c3240).
-- Test: planted `"KRAS"` and `0.7` give exactly two hits (with injected and with the real gene_map).
+- `# literal-ok: <reason>` (non-empty reason) exempts (ii) only, as §13.4 attaches it to (ii) (coordinator ruling).
+- String exemptions come only from `configs/leakscan_allow.json` (`{"allow": [{file, literal, reason}]}`): an entry
+  exempts that exact literal in that exact file and nowhere else, never a number and never an `ACH-` id. An entry
+  with a missing field, an empty reason, an `ACH-` literal or a missing file fails the scan; an entry that matches
+  nothing is a WARN (stale). Seeded with the identifiers that collide with HGNC symbols (family ids `FUS`, `COMP`,
+  TP53-status covariate name `TP53`, spectrum suffix `POLE`) and the `BAD` status word in `verify_inputs.py`:
+  9 entries covering 16 occurrences. Gene symbols used as genes (`scripts/build_cgt.py`) are not allowlisted;
+  they move to config.
+- Every exemption is printed as an `EXEMPT` line: each `literal-ok` comment (what it suppressed, reason,
+  well-formed or not; 66 markers, 63 numeric constants suppressed at 82c3240) and each allowlisted occurrence with
+  its reason, so no exemption is silent.
+- Tests: planted `"KRAS"` and `0.7` give exactly two hits (with injected and with the real gene_map); an
+  allowlisted literal in another file still fails; the allowlist never covers numbers or `ACH-` ids; invalid
+  entries fail; the project allowlist is valid and has no `build_cgt.py` entry.
 
 ## 3. `check_frozen.py` (DESIGN §13.4)
 
@@ -141,7 +149,9 @@ section and tag do not exist yet.
    pre-registered clinical definitions, not effect leaks, but hard-coded rather than in `cgt_allele_rules.json`);
    family / covariate / spectrum ids colliding with HGNC symbols (`FUS`, `COMP`, `TP53`, `POLE`, 15 hits, most with a
    `literal-ok` marker that does not apply to (i)); `BAD` in a `verify_inputs.py` print; 8 numeric slice / timeout
-   constants in `guard.py` and `p1.py` without a marker. No `ACH-` id.
+   constants in `guard.py` and `p1.py` without a marker. No `ACH-` id. After the allowlist (16 occurrences exempt):
+   54 hits = the 46 `build_cgt.py` symbols and the 8 `guard.py` / `p1.py` numbers, which the pipeline author is
+   moving to config and marking.
 5. **freeze-design coverage**: six §13.4 freeze-design files were added after the tag (§3).
 6. **NMF scores are not D-only invariant** (`src/biomark/dictionary.py:426`, `model.transform` on all population
    rows at once): the basis H is fit on D only and is identical with R/set A deleted, but sklearn's

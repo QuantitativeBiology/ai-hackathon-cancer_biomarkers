@@ -1,6 +1,6 @@
 """Leakscan (DESIGN §13.4): AST scan of ``src/`` and ``scripts/`` for hard-coded answers.
 
-    python -X utf8 scripts/leakscan.py [--json out.json]
+    python -X utf8 scripts/leakscan.py [--json out.json] [--allow configs/leakscan_allow.json]
 
 Hits:
   (i)  ``gene``: a string constant exactly equal to an HGNC symbol of >= 3 characters from Part 1 ``gene_map``
@@ -9,9 +9,12 @@ Hits:
   (ii) ``num``: a numeric constant (``-x`` counts as one constant) outside {0, 1, -1, 2, 0.5, 100} in
        ``src/biomark/``, except the params loader ``src/biomark/params.py`` and lines carrying
        ``# literal-ok: <reason>`` (non-empty reason).
-The ``# literal-ok`` marker exempts (ii) only; (i) has no exemption. Booleans are not numbers. Exit 1 on any hit.
-Every ``literal-ok`` comment in the scanned tree is listed (``EXEMPT`` lines: what it suppressed, its reason, and
-whether it is well formed), so an exemption is never a silent bypass.
+The ``# literal-ok`` marker exempts (ii) only. A (i) ``gene`` hit is exempt only through the explicit allowlist
+``configs/leakscan_allow.json`` ({"allow": [{file, literal, reason}]}): an entry covers that exact literal in that
+exact file (repo-relative posix path) and nowhere else; ``ach`` hits have no exemption. Booleans are not numbers.
+Exit 1 on any hit or on an invalid allowlist entry (missing field, empty reason, ``ACH-`` literal, file absent).
+Every exemption is listed (``EXEMPT`` lines): each ``literal-ok`` comment with what it suppressed, its reason and
+whether it is well formed, and each allowlisted occurrence with its reason; unused allowlist entries are reported.
 """
 from __future__ import annotations
 
@@ -33,6 +36,36 @@ LITERAL_OK_ANY_RE = re.compile(r"literal-ok", re.IGNORECASE)
 PARAMS_LOADER = Path("src") / "biomark" / "params.py"
 NUMERIC_SCOPE = Path("src") / "biomark"
 SCAN_DIRS = ("src", "scripts")
+ALLOW_FILE = Path("configs") / "leakscan_allow.json"
+
+
+def load_allow(path: Path) -> tuple[list, list]:
+    """(entries, errors) from an allowlist file; a missing file is an empty allowlist."""
+    path = Path(path)
+    if not path.exists():
+        return [], []
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as e:  # noqa: BLE001
+        return [], [f"{path}: unreadable JSON ({e})"]
+    items = raw.get("allow", []) if isinstance(raw, dict) else raw
+    return validate_allow(items)
+
+
+def validate_allow(items) -> tuple[list, list]:
+    ok, errs = [], []
+    for i, e in enumerate(items or []):
+        if not isinstance(e, dict) or not all(isinstance(e.get(k), str) for k in ("file", "literal", "reason")):
+            errs.append(f"allowlist entry {i}: needs string fields file, literal, reason: {e!r}")
+            continue
+        if not e["reason"].strip():
+            errs.append(f"allowlist entry {i} ({e['file']}, {e['literal']!r}): empty reason")
+            continue
+        if ACH_RE.search(e["literal"]):
+            errs.append(f"allowlist entry {i} ({e['file']}, {e['literal']!r}): ACH- ids cannot be allowlisted")
+            continue
+        ok.append(e)
+    return ok, errs
 
 
 def gene_symbols() -> set:
@@ -121,10 +154,21 @@ def scan_file(path: Path, rel: Path, symbols: set, exemptions: list | None = Non
     return out
 
 
-def scan(root: Path = ROOT, symbols: set | None = None, dirs=SCAN_DIRS, exemptions: list | None = None) -> list:
-    """Hits; if ``exemptions`` (a list) is given, every literal-ok marker is appended to it."""
+def scan(root: Path = ROOT, symbols: set | None = None, dirs=SCAN_DIRS, exemptions: list | None = None,
+         allow: list | None = None, allowed: list | None = None, errors: list | None = None) -> list:
+    """Hits. If ``exemptions`` (a list) is given, every literal-ok marker is appended to it. ``allow`` = allowlist
+    entries (default: ``<root>/configs/leakscan_allow.json``); allowlisted ``gene`` hits go to ``allowed`` (with the
+    entry's reason) instead of the hits, followed by unused entries (``unused: True``); invalid entries -> ``errors``."""
     root = Path(root)
     symbols = gene_symbols() if symbols is None else set(symbols)
+    if allow is None:
+        allow, errs = load_allow(root / ALLOW_FILE)
+    else:
+        allow, errs = validate_allow(allow)
+    errs += [f"allowlist entry ({e['file']}, {e['literal']!r}): file does not exist" for e in allow
+             if not (root / e["file"]).exists()]
+    if errors is not None:
+        errors += errs
     hits = []
     for d in dirs:
         base = root / d
@@ -134,11 +178,33 @@ def scan(root: Path = ROOT, symbols: set | None = None, dirs=SCAN_DIRS, exemptio
             if "__pycache__" in p.parts:
                 continue
             hits += scan_file(p, p.relative_to(root), symbols, exemptions)
-    return hits
+    index = {(e["file"], e["literal"]): e for e in allow}
+    used, kept = set(), []
+    for h in hits:
+        e = index.get((h["file"], h["value"])) if h["kind"] == "gene" else None
+        if e is None:
+            kept.append(h)
+            continue
+        used.add((e["file"], e["literal"]))
+        if allowed is not None:
+            allowed.append({**h, "reason": e["reason"]})
+    if allowed is not None:
+        allowed += [{"file": f, "literal": lit, "reason": e["reason"], "unused": True}
+                    for (f, lit), e in index.items() if (f, lit) not in used]
+    return kept
 
 
-def render(hits: list, exemptions: list | None = None) -> str:
+def render(hits: list, exemptions: list | None = None, allowed: list | None = None,
+           errors: list | None = None) -> str:
     L = []
+    for a in allowed or []:
+        if a.get("unused"):
+            L.append(f"WARN: allowlist entry ({a['file']}, {a['literal']!r}) matched nothing (stale?)")
+        else:
+            L.append(f"EXEMPT {a['file']}:{a['line']}:{a['col']}: [gene] {a['value']} allowlisted  "
+                     f"reason: {a['reason']}    | {a['source']}")
+    if allowed is not None:
+        L.append(f"allowlisted string hits: {sum(1 for a in allowed if not a.get('unused'))}")
     for m in exemptions or []:
         what = (f"suppressed {m['suppressed']}" if m["suppressed"] else "suppresses nothing")
         form = "" if m["well_formed"] else "  MALFORMED (no reason; exempts nothing)"
@@ -156,7 +222,9 @@ def render(hits: list, exemptions: list | None = None) -> str:
     L.append(f"leakscan: {len(hits)} hit(s)")
     for (f, k), n in sorted(by.items()):
         L.append(f"  {f} [{k}]: {n}")
-    L.append("RESULT: " + ("FAIL" if hits else "PASS"))
+    for e in errors or []:
+        L.append(f"FAIL: {e}")
+    L.append("RESULT: " + ("FAIL" if hits or errors else "PASS"))
     return "\n".join(L)
 
 
@@ -164,13 +232,19 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="DESIGN §13.4 leakscan")
     ap.add_argument("--root", type=Path, default=ROOT)
     ap.add_argument("--json", type=Path, default=None)
+    ap.add_argument("--allow", type=Path, default=None, help="allowlist (default <root>/configs/leakscan_allow.json)")
     a = ap.parse_args(argv)
-    ex = []
-    hits = scan(a.root, exemptions=ex)
-    print(render(hits, ex))
+    ex, allowed, errors = [], [], []
+    allow = None
+    if a.allow is not None:
+        allow, errs = load_allow(a.allow)
+        errors += errs
+    hits = scan(a.root, exemptions=ex, allow=allow, allowed=allowed, errors=errors)
+    print(render(hits, ex, allowed, errors))
     if a.json:
-        a.json.write_text(json.dumps({"hits": hits, "literal_ok": ex}, indent=1), encoding="utf-8")
-    return 1 if hits else 0
+        a.json.write_text(json.dumps({"hits": hits, "literal_ok": ex, "allowlisted": allowed, "errors": errors},
+                                     indent=1), encoding="utf-8")
+    return 1 if hits or errors else 0
 
 
 if __name__ == "__main__":
