@@ -601,3 +601,10 @@ Each row maps 1:1 to a key in the named file; code reads only the file.
     - The §8.3 cross-lineage rule can mislabel a one-lineage effect when the null lineages share its sign by chance.
   - (iv) **Triggered fallback, as pre-declared in §5.3.** The calibration test failed at n = 255 with carrier SD × 2, so
     binary d uses df = carrier clusters − 1 (deviations.csv).
+  - (v) **Correction (all 5 ridge replicates).**
+    - Ridge MD-global FDP was 0, 0, 0.013, 0 and 0.025.
+    - Ridge MD-strict FDP was 0.228, 0.255, 0.237, 0.200 and 0.160.
+    - Ridge recall was 0.815–0.926, identical for both lists (not 0.85–0.93).
+    - Of the 106 MD-strict false hits, 6 are proxies of planted determinants; the rest are in-sample chance associations
+      (43 lineage/latent structure, 57 observation noise).
+    - EN-obs selected exceeds 0.15 on ridge replicate 4 (0.162); this is reported.
