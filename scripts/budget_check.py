@@ -148,8 +148,55 @@ def read_record(path: Path) -> tuple[dict | None, list, list]:
     if start is not None and end is not None and start > end:
         errs.append(f"{path.name}: start after end")
     rec = {"job": stem, "start": start, "end": end, "wall_s": wall, "workers": workers,
-           "run_id": str(r.get("run_id", stem))}
+           "run_id": str(r.get("run_id", stem)), "subs": []}
+    subs = r.get("subrecords", {})
+    if not isinstance(subs, dict):
+        errs.append(f"{path.name}: 'subrecords' must be an object")
+        subs = {}
+    for name, s in subs.items():
+        sr, se = _read_sub(path.name, stem, name, s)
+        errs += se
+        if sr is not None:
+            rec["subs"].append(sr)
     return rec, errs, warns
+
+
+def _read_sub(fname: str, stem: str, name: str, s) -> tuple[dict | None, list]:
+    """A sub-record {start_utc?, utc, wall_s?, workers, run_id?}: same minimal schema as a record (no job); its
+    interval counts toward the parent stage's wall and toward concurrency (own run_id, default <stem>:<name>)."""
+    errs = []
+    if not isinstance(s, dict):
+        return None, [f"{fname}: sub-record {name!r} is not an object"]
+    w = s.get("workers")
+    if not (isinstance(w, int) and not isinstance(w, bool) and w >= 1):
+        errs.append(f"{fname}: sub-record {name!r} missing/invalid 'workers' (int >= 1)")
+        w = None
+    try:
+        end = _ts(s["utc"])
+    except (KeyError, ValueError):
+        return None, errs + [f"{fname}: sub-record {name!r} missing/unparsable 'utc' (end time)"]
+    start = None
+    if "start_utc" in s:
+        try:
+            start = _ts(s["start_utc"])
+        except ValueError:
+            errs.append(f"{fname}: sub-record {name!r} unparsable start_utc")
+    wall = s.get("wall_s")
+    if start is None:
+        if isinstance(wall, (int, float)) and not isinstance(wall, bool):
+            start = end - dt.timedelta(seconds=float(wall))
+        else:
+            return None, errs + [f"{fname}: sub-record {name!r} needs numeric 'wall_s' or 'start_utc'"]
+    if start > end:
+        errs.append(f"{fname}: sub-record {name!r} start after end")
+    return {"job": f"{stem}:{name}", "start": start, "end": end, "workers": w,
+            "run_id": str(s.get("run_id", f"{stem}:{name}"))}, errs
+
+
+def _intervals(rec: dict) -> list:
+    """(start, end) of a record and of its sub-records."""
+    iv = [(rec["start"], rec["end"])] if rec["start"] is not None and rec["end"] is not None else []
+    return iv + [(s["start"], s["end"]) for s in rec.get("subs", [])]
 
 
 def _union_s(intervals) -> float:
@@ -240,17 +287,17 @@ def evaluate(timing_dir: Path = TIMING, tiers_path: Path = TIERS, milestone: str
         row = {"stage": s, "tier": info["tier"], "milestone": STAGE_MILESTONE.get(s), "box_min": info["box_min"],
                "jobs": jobs, "jobs_present": [r["job"] for r in have], "done": done}
         if have and all(r["start"] is not None for r in have):
-            row["start"] = min(r["start"] for r in have)
+            row["start"] = min(s for r in have for s, _ in _intervals(r))
         if done:
-            row["end"] = max(r["end"] for r in have)
-            row["wall_min"] = _union_s([(r["start"], r["end"]) for r in have]) / SEC_PER_MIN
+            row["end"] = max(e for r in have for _, e in _intervals(r))
+            row["wall_min"] = _union_s([iv for r in have for iv in _intervals(r)]) / SEC_PER_MIN
             row["late_min"] = max(0.0, row["wall_min"] - info["box_min"])
             row["status"] = "late" if row["late_min"] > 0 else "ok"
         else:
             row["status"] = "not done: time"
         stages[s] = row
     # concurrency
-    peak, when = peak_concurrency(list(recs.values()))
+    peak, when = peak_concurrency(list(recs.values()) + [s for r in recs.values() for s in r.get("subs", [])])
     cmax = int(t["concurrency"]["max_total_workers"])
     if peak > cmax:
         errors.append(f"{peak} concurrent workers > max_total_workers {cmax} at {when}")

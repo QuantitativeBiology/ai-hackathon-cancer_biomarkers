@@ -119,7 +119,7 @@ def test_registry_and_timing_writers(tmp_path):
     AN.append_registry("scripts/y.py", "dryrun", [], registry=reg)
     r = pd.read_csv(reg)
     assert list(r.columns) == AN.REGISTRY_COLS and r["status"].tolist() == ["ok", "dryrun"]
-    AN.write_timing("vif", {"wall_s": 1.5}, timing_dir=tmp_path)
+    AN.write_timing("vif", {"wall_s": 1.5}, timing_dir=tmp_path, workers=1)
     assert (tmp_path / "vif.json").exists()
 
 
@@ -152,8 +152,12 @@ def test_timing_schema_fields(tmp_path):
     r = json.loads((tmp_path / "vif.json").read_text(encoding="utf-8"))
     assert r["job"] == "vif" and r["workers"] == 3 and isinstance(r["wall_s"], float) and r["wall_s"] >= 29
     assert r["start_utc"] < r["utc"] and r["run_id"]
-    AN.write_timing("gate_pc", {}, timing_dir=tmp_path, wall_s=1.0)
+    AN.write_timing("gate_pc", {}, timing_dir=tmp_path, wall_s=1.0, workers=1)
     r2 = json.loads((tmp_path / "gate_pc.json").read_text(encoding="utf-8"))
     assert r2["workers"] == 1 and r2["run_id"] == r["run_id"]          # one run id per process
     with pytest.raises(ValueError):
-        AN.write_timing("vif", {}, timing_dir=tmp_path)                # numeric wall_s required
+        AN.write_timing("vif", {}, timing_dir=tmp_path, workers=1)     # numeric wall_s required
+    for bad in (None, 0, -1, 1.5, "2", True):                          # workers: no silent default
+        with pytest.raises(ValueError):
+            AN.write_timing("vif", {}, timing_dir=tmp_path, wall_s=1.0, workers=bad)
+    assert AN.write_timing("vif", {"workers": 2}, timing_dir=tmp_path, wall_s=1.0)["workers"] == 2

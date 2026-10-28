@@ -76,21 +76,27 @@ def main(argv=None) -> int:
     from biomark import analyses as AN
     td = P.PROJECT / PR.pp()["timing_dir"]
     f_t = td / "null_fixed.json"
-    sub_rec = {"wall_s": wall, "B": nul["B"], "workers": w, "wall_draw0_s": nul["wall_draw0_s"],
-               "start_utc": t_start.isoformat(timespec="seconds"), "utc": AN.utc_now().isoformat(timespec="seconds")}
-    prev = json.loads(f_t.read_text(encoding="utf-8")) if f_t.exists() else None
+    parked = out_dir / "timing_s1_vectorised_subrecord.json"     # not budgeted until the main null record exists
     if a.s1_vectorised:
-        # the S1-only permutations are part of stage null_fixed_B: a sub-record of the null_fixed job, never a new stem
-        if prev is None:
-            AN.write_timing("null_fixed", {"B": None, "s1_vectorised": sub_rec, "note": "main fixed-threshold null not run yet"},
-                            start_utc=t_start, workers=w)
-        else:
-            prev["s1_vectorised"] = sub_rec
+        srec = AN.timing_subrecord("s1_vectorised", t_start, AN.utc_now(), w, B=nul["B"],
+                                   wall_draw0_s=nul["wall_draw0_s"])
+        if f_t.exists():
+            prev = json.loads(f_t.read_text(encoding="utf-8"))
+            prev.setdefault("subrecords", {})["s1_vectorised"] = srec
             f_t.write_text(json.dumps(prev, indent=1, default=float), encoding="utf-8")
+        else:
+            parked.write_text(json.dumps(srec, indent=1, default=float), encoding="utf-8")
     else:
-        extra = {"s1_vectorised": prev["s1_vectorised"]} if prev and "s1_vectorised" in prev else {}
+        subs = {}
+        if f_t.exists():
+            subs.update(json.loads(f_t.read_text(encoding="utf-8")).get("subrecords", {}))
+        if parked.exists():
+            subs["s1_vectorised"] = json.loads(parked.read_text(encoding="utf-8"))
+        extra = {"subrecords": subs} if subs else {}
         AN.write_timing("null_fixed", {"B": nul["B"], "wall_draw0_s": nul["wall_draw0_s"], **extra}, start_utc=t_start,
                         workers=w)
+        if parked.exists():
+            parked.unlink()
     AN.append_registry("scripts/run_null.py" + (" --s1-vectorised" if a.s1_vectorised else ""), "ok",
                        [f"results/null/summary{sfx}.json", f"results/null/fdr_fixed{sfx}.csv"])
     print(json.dumps(summ, indent=1, default=float))

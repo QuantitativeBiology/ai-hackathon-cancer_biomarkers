@@ -243,3 +243,11 @@ Ambiguities resolved:
     MD-global; MD-strict kept); Q4b actionability; component readout and confounder audit (both lists, flagged);
     replicate `r_lines`.
   - The gate is decided on MD-strict, with MD-global reported. The P1/P2 contrasts are unchanged.
+- **Re-verify fixes.** `analyses.write_timing` raises on a missing or invalid `workers`; there is no default, and every
+  scripted call passes it (checked by AST in `tests/test_budget_subrecords.py`). Timing files may carry `subrecords`
+  (`{name: {start_utc, utc, wall_s, workers, run_id}}`, built by `analyses.timing_subrecord`).
+  - `budget_check` counts their intervals in the stage wall (union) and in concurrency (own run_id, default
+    `<stem>:<name>`), and reports schema errors.
+  - `run_null --s1-vectorised` writes `null_fixed.subrecords.s1_vectorised`. Before the main null exists, it is
+    parked in `results/null/timing_s1_vectorised_subrecord.json` and merged by the main run, so a placeholder never
+    marks the stage done.

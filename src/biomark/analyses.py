@@ -75,6 +75,25 @@ def utc_now() -> dt.datetime:
     return dt.datetime.now(dt.timezone.utc)
 
 
+def _check_workers(stem: str, wk) -> int:
+    """workers must be an int >= 1 (no silent default; docs/process_checks.md §1.1)."""
+    if isinstance(wk, bool) or wk is None:
+        raise ValueError(f"timing {stem}: 'workers' (int >= 1) required")
+    if isinstance(wk, float) and wk.is_integer():
+        wk = int(wk)
+    if not isinstance(wk, (int, np.integer)) or int(wk) < 1:
+        raise ValueError(f"timing {stem}: invalid workers {wk!r} (int >= 1 required)")
+    return int(wk)
+
+
+def timing_subrecord(name: str, start_utc: dt.datetime, end_utc: dt.datetime, workers: int, **extra) -> dict:
+    """A sub-record of a timing file (schema of a record minus job): budget_check counts its interval toward the
+    parent stage's wall and toward concurrency."""
+    return {"start_utc": start_utc.isoformat(timespec="seconds"), "utc": end_utc.isoformat(timespec="seconds"),
+            "wall_s": float((end_utc - start_utc).total_seconds()), "workers": _check_workers(name, workers),
+            "run_id": run_id(), **extra}
+
+
 def write_timing(stem: str, rec: dict, timing_dir=None, *, wall_s: float | None = None, workers: int | None = None,
                  start_utc: dt.datetime | None = None, end_utc: dt.datetime | None = None) -> dict:
     """results/timing/<stem>.json with the minimal schema of docs/process_checks.md §1.1: job (= stem), utc (end time),
@@ -84,6 +103,7 @@ def write_timing(stem: str, rec: dict, timing_dir=None, *, wall_s: float | None 
     rec = dict(rec)
     wall = float(rec.pop("wall_s")) if wall_s is None and "wall_s" in rec else wall_s
     wk = rec.pop("workers", None) if workers is None else workers
+    wk = _check_workers(stem, wk)
     end = end_utc or utc_now()
     if wall is None and start_utc is not None:
         wall = (end - start_utc).total_seconds()
@@ -91,7 +111,7 @@ def write_timing(stem: str, rec: dict, timing_dir=None, *, wall_s: float | None 
         raise ValueError(f"timing {stem}: numeric wall_s required")
     start = start_utc or (end - dt.timedelta(seconds=float(wall)))
     out = {"job": stem, "utc": end.isoformat(timespec="seconds"), "start_utc": start.isoformat(timespec="seconds"),
-           "wall_s": float(wall), "workers": max(1, int(wk or 1)), "run_id": rec.pop("run_id", run_id()), **rec}
+           "wall_s": float(wall), "workers": wk, "run_id": rec.pop("run_id", run_id()), **rec}
     (d / f"{stem}.json").write_text(json.dumps(out, indent=1, default=float), encoding="utf-8")
     return out
 
