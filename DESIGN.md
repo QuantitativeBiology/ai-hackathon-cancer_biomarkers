@@ -1,8 +1,8 @@
 # DESIGN — Predictor-derived dependency subtypes and their molecular biomarkers
 
-Version: v3.1 (after review round 2; PI amendment D7: methylation added). Status: final candidate; tag `freeze-design` on commit, `freeze-bounds` at the
-end of M3b (§13.4).
-Inputs: PROMPT.md, docs/part1_brief.md, LITERATURE.md, reviews/round{1,2}_*.md and their response files. Decision
+Version: v3.2 (after review round 3; includes PI amendment D7: methylation). Status: frozen at tag `freeze-design`;
+bounds frozen at tag `freeze-bounds` at the end of M3b (§13.4).
+Inputs: PROMPT.md, docs/part1_brief.md, LITERATURE.md, reviews/round{1,2,3}_*.md and their response files. Decision
 numbers live in §F and its config files; prose numbers are descriptive.
 
 ## 0. Questions, claims, endpoints
@@ -78,7 +78,7 @@ PRISM (unused). **Data deadline = the first dictionary build**: `build_dictionar
 rebuild. MSI = MSIScore ≥ 20; Cell Model Passports `msi_status` is a concordance check only.
 
 1.6 **Missing data and row sets.** 𝒟 is built from raw caches. CN-derived features are NA for lines without CN; in EN
-fits NA → 0 plus `CN_absent`/`MSI_unknown` indicators, which are attributes of 𝒟 rows and move with them under
+fits NA → 0 plus `CN_absent`/`MSI_unknown`/`METH_absent` indicators, which are attributes of 𝒟 rows and move with them under
 permutation; in S1, D-stage, subtype and carrier counts NA lines are excluded for that family. A separate process writes
 `cache/effect_nan_mask.parquet` (sha256 in `results/bulk_manifest.csv`), the only effect-derived input EN-pred may read;
 both EN arms fit identical row sets per gene. `n_obs, n_carriers, n_NA` are written per test.
@@ -128,22 +128,23 @@ non-NaN D lines and SD > 0 (EXPDOSE: ≥ 5 expressed lines).
 
 - **Stage and universe families.** U_G (genomic universe) = HOT, ALLELE, LOFBI, AMP, DEL, LOSS, FUS, SIL-DEL, SIL-MUT, SIL-METH, METH,
   YABS, CLIN, SIG, COMP (= EN stage G). Expression families EXPDOSE, EXPPAR, PROG, PSCORE, SIL-other (= stage X).
-- **Self-null features** are removed from 𝒟_g and kept as checks (NC3): DEL_g, SIL_g, LOFBI_g, DEL_h for h in g's DEL
-  locus group. LOSS_g (CYCLOPS) and AMP_g stay.
+- **Self-null features** are removed from 𝒟_g and kept as checks (NC3): DEL_g, SIL_g (all mechanisms incl. SIL-METH_g),
+  METH_g, LOFBI_g, DEL_h for h in g's DEL locus group. LOSS_g (CYCLOPS) and AMP_g stay.
 - **Variant groups** for de-duplication (§5.1): locus groups (genes within 10 Mb whose binary calls have Jaccard ≥ 0.5
   among CN-profiled D lines, per AMP/DEL/LOSS family, Ensembl 116 coordinates) and allele groups (HOT:x with its
-  ALLELE:x_* and CLIN features built from them). Features stay separate; CDKN2A/CDKN2B/MTAP form one group.
+  ALLELE:x_* and CLIN features built from them) and SIL groups (the SIL mechanisms of one gene, which are mutually exclusive
+  features with precedence DEL > MUT > METH > other). Features stay separate; CDKN2A/CDKN2B/MTAP form one group.
 - **Cap.** Shared 𝒟 ≤ 3,000; if exceeded, the largest family's minimum frequency rises to 10, then 20 (logged). SIL with
   Cramér's V(lineage) > 0.5 is flagged.
-- **Not assayed**, with a record in `dictionary_v1.json`: (methylation is now assayed via RRBS, D7; previously the MLH1 SIL-other vs MSI proxy
-  check). REPORT.md lists it as a limit.
+- **Not assayed:** methylation for lines without RRBS (`METH_absent`; record in `dictionary_v1.json`); coverage is
+  reported (§12.2) and REPORT.md lists it as a limit.
 
 ## 4. Reading determinants out of the predictor
 
 ### 4.1 Hierarchical stability elastic net (EN-pred, EN-obs)
 Target: fold-centred ŷ_g (EN-pred) or observed y_g (EN-obs); identical code, configs, subsamples and row sets.
 1. **FWL.** 𝒟 standardised once on D. Every fit residualises target and features on the unpenalised block (lineage,
-   library group, culture block, growth block, `CN_absent`, `MSI_unknown`; §5.3) estimated on that fit's rows; no
+   library group, culture block, growth block, `CN_absent`, `MSI_unknown`, `METH_absent`; §5.3) estimated on that fit's rows; no
    intercept. Residualised 𝒟 is cached per (NaN-pattern group × fold or subsample), memmapped read-only. A column is
    dropped in a fit if residual SD < 1e-6 or < 2 carriers in the fit's rows.
 2. **Stages.** Stage G on the residualised target; stage X on that fit's own stage-G residual.
@@ -179,8 +180,8 @@ family is among the top-5 terms of the accurate-dependent lines. No M3 refit.
   own deep deletion, own damaging mutation; paralog expression/minimum, deep deletion, damaging mutation).
 - `potentially-direct`: d derives from a matrix in M3's pool (E, C, M, H) but is not an M2 input (selection
   unverifiable without the cut M3 refit).
-- `expression-derived`: EXP/PROG/PSCORE/SIL-other. `proxy`: not derived from any predictor input (MSI and other SIG,
-  FUS, ALLELE, CLIN, COMP).
+- `expression-derived`: EXP/PROG/PSCORE/SIL-other/SIL-METH. `proxy`: not derived from any predictor input (MSI and
+  other SIG, FUS, ALLELE, CLIN, COMP, METH).
 Wording: "learnt d" only for direct and expression-derived; potentially-direct carries a qualifier; proxy reads "learnt
 a correlate of d (via X)". **Claims that the predictor finds determinants beyond its hand-coded inputs come only from
 the non-direct stratum; "beyond any input" only from proxy.**
@@ -191,7 +192,8 @@ the non-direct stratum; "beyond any input" only from proxy.**
 **S1-obs** (univariate confounder-model test on observed effects; the standard), **S1-pred** (same on fold-centred
 predictions), **EN-obs**, **EN-pred** (= MD-pure). `results/benchmark/arms.csv` holds (arm, g, d, family, access_class,
 rank_stat, rank, d_type, en_max_attainable_freq); scripts assert equal universes, covariate hash, subsamples and seeds.
-Before any top-k, features of one g in one variant group are de-duplicated to the best-ranked member (all arms).
+Before any top-k, features of one g in one variant group are de-duplicated to the best-ranked member (all arms). A CGT
+`feature_D` is scored by its own `rank_of_feature_D` (§10.5): the group's best member never lends its rank.
 
 5.2 **MD-strict** = EN-pred selected candidates that pass the D-stage screen on observed effects: confounder model,
 same sign, BH q_sc < 0.05 within EN-pred selected candidates. The p and q are *selection-conditional (nominal)*; the
@@ -250,8 +252,10 @@ paired patient bootstrap over R (1,000, `bootstrap_seed`; lists, drops and pool 
 patient copies get new cluster ids; zero-variance columns dropped by pivoted QR and logged; a pair with < 2 distinct
 carrier or non-carrier patients in a draw counts as not replicated; `frac_degenerate` reported). Claim only if the 95%
 CI excludes 0 in the claimed direction; this is inference conditional on the frozen lists. Reported by access stratum
-(`direct`, `non_direct`) in `results/benchmark/p1_by_access.csv`; the beyond-inputs claim uses the non-direct stratum
-with the same rule.
+(`direct`, `non_direct`, and `proxy` for "beyond any input") in `results/benchmark/p1_by_access.csv`: each arm is
+re-ranked within Pool_G ∩ stratum with k_s = min(100, ⌊|Pool_s|/3⌋) (in `p1_pool.json`), same bootstrap and branches.
+If k_G or any k_s < 20 the result is "descriptive (underpowered: k)" with no claim. EN rows with selection frequency 0
+are not rankable; if fewer than k remain the list is shorter and `n_list` is reported.
 - **Power** (a property of (g, d), identical across arms, committed before the tag): β_D from S1-obs, standardised
   (β* = β·SD_D(d̃)), shrunk by an empirical-Bayes normal scale mixture fitted once on all U rows (incl. F2) and
   back-transformed. SE_R_pred = σ̂_resid,D(g)·√(1/n1_R + 1/n0_R) (binary) or σ̂_resid,D(g)/(SD_R(d̃_R)·√n_R)
@@ -286,9 +290,11 @@ cap after the primary draws; reported, not a pass rule. `results/null/summary.js
 7.3 **Negative controls** (`negative_controls_s7`): NC1 FDR_emp_fixed ≤ 0.10 (pre-declared target, never replaced);
 NC2 100 matched-SD low-tier genes (`lowtier_seed`): median fidelity, MD-strict hits per gene; NC3 self-null features:
 fraction of testable pairs whose carriers are dependent; NC4 fold artefact (toy plant); NC5 false-sensitivity rate on
-resistance/N CGT tests; NC6 lineage-TF genes in class 3. NC2–NC6 provisional bounds are replaced by the 95th
-percentile (5th for NC6) of the corresponding toy statistic at real D dimensions, written by the toy run and frozen at
-`freeze-bounds`. Outside its bound = failed control.
+resistance/N CGT tests; NC6 lineage-TF genes in class 3. NC2–NC6 provisional bounds are replaced by the max (min for NC6)
+of the toy statistic over 5 toy replicates (`toy_seed + r`, r = 0..4) at toy dimensions, written to
+`results/toy/nc_bounds.json` and frozen at `freeze-bounds` with the provisional values alongside; if the replicates
+exceed the `toy_run_bounds` timebox, the provisional values become final (logged in `deviations.csv`). Outside its
+bound = failed control.
 
 ## 8. Subtypes and confounder audit
 
@@ -334,7 +340,9 @@ with the culture gene sets (hypergeometric BH < 0.05).
 fallback_feature, expected_sign, citation, note; frozen at `freeze-design`) → `scripts/build_positive_controls.py` →
 `configs/positive_controls.csv` (adds control_id, dependency_entrez, scope ∈ {gate, class_check, untestable}, in_cgt,
 n_carriers_D/R, access_class, en_max_attainable_freq, gate_eligible), frozen at `freeze-bounds` and an ancestor of the
-first commit writing `results/md/`.
+first commit writing `results/md/`. A spec id `SIL:<x>` expands to every SIL-DEL/SIL-MUT/SIL-METH/SIL-other:<x> feature in 𝒟;
+the control is recovered if any expanded feature is recovered with the expected sign. `build_positive_controls.py` fails on
+any spec id (after expansion) that is not a `dictionary_v1.json` id.
 
 9.2 **Controls** (S = β < 0 for feature presence; W = β > 0):
 - ADD-HOT (S): KRAS←HOT:KRAS; NRAS←HOT:NRAS; BRAF←ALLELE:BRAF_V600 (HOT:BRAF as labelled secondary proxy);
@@ -412,8 +420,12 @@ class 8.
   sets `non_proxy` (headline) and `incl_proxy` (secondary), each on `all` and `gate_disjoint`; per tier with exact CIs;
   trend test only if every tier has ≥ 5 tests. If fewer than 15 testable headline tests, P2 is "descriptive
   (underpowered: n)" (`p2_status`). Also recall over data-supported tests and `miss_decomposition` per arm (ineligible
-  gene class 1/2/3; no `feature_D` or feature not in 𝒟_g; eligible and ranked below k; ceiling data-null), summing to
-  the misses.
+  gene class 1/2/3; no `feature_D` or feature not in 𝒟_g; eligible and ranked below k; `lost_to_group_member`; ceiling
+  data-null), summing to the misses. A test is hit iff g ∈ T and `rank_of_feature_D` ≤ k, where `rank_of_feature_D` = 1 +
+  the number of de-duplicated rows outside (g, variant group of `feature_D`) with a better rank_stat; the same rank is
+  used in `known_recovery.csv`. **Primary contrast:** EN-pred vs S1-obs on `non_proxy` (`gate_disjoint` if > 1 gate
+  attempt), exact two-sided McNemar at α 0.05, three branches (`primary_endpoints.json`), not evaluated when
+  descriptive; per-arm recall with Clopper–Pearson 95% CI; other pairs secondary and unadjusted.
 - Direction accuracy (hits with the expected sign / all hits) and sign-error rate for every arm and the ceiling;
   N-partition hit ratio vs 1,000 matched random pairs (flag > 2); false-sensitivity rate.
 - **Q4b actionability**: pair- and feature-level fractions of MD-strict vs S1-obs and vs 200 within-list g-label
@@ -472,7 +484,7 @@ locus level ≥ 4/5; culture-confounded in MD-strict ≤ 1/5; lineage-only genes
 feature ≤ 1/5 after centring and ≥ 3/5 without; genomic feature with expression proxy recovered in stage G ≥ 4/5; a
 6-carrier strong plant selected in > 50% of subsamples; wrong-sign CGT pair = sign error. Error rates: on the planted toy
 FDP_true ≤ 0.15 per list and FDR_emp_fixed ≥ FDP_true − 0.05; on a pure-null toy (`toy_null_seed`) P(|hits| ≥ 1) ≤ 0.10
-for BH lists, EN mean hits reported. The same run writes the NC2–NC6 bounds (§7.3).
+for BH lists, EN mean hits reported. Five replicates of the toy run give the NC2–NC6 bounds (§7.3).
 
 13.2 **Unit tests**: `test_inference_calibration.py` (20,000 null simulations per n ∈ {255, 1022} × carriers ∈ {3, 5,
 10} × {homoskedastic, carrier SD × 2} on the real covariate designs: size at α 0.05 in [0.035, 0.065], at α 1e-3 ≤
@@ -513,7 +525,7 @@ D-id ranges. `gate.py` subcommands: `leakscan, frozen, data, controls, G_pc, par
 G_rep, G_indep, part1` by M7. `gate.py params` asserts every §F key exists and is non-null. **Procedural (not
 script-checked):** catalogue agents do not read P1 REPORT.md test sections or P1 RESEARCH_TREE.md.
 
-## 14. Tiers, compute, schedule (≈ 17 h left; `configs/tiers.json`)
+## 14. Tiers, compute, schedule (≈ 16 h left; `configs/tiers.json`)
 
 - **Tier A (must):** 𝒟, four arms, MD-strict, confounder audit, gate, fixed-threshold null, subtypes and modules,
   cross-lineage, co-location/cutting/culture/hypermutation, component readout, CGT recovery/direction/actionability/
@@ -526,7 +538,7 @@ script-checked):** catalogue agents do not read P1 REPORT.md test sections or P1
 - **Schedule (h):** M2 v3 + `freeze-design` 0.5; M3b dictionary, covariates, eligibility, controls, CGT features, guard/
   gate, toy → `freeze-bounds` 3.0; M4 arms, MD-strict, gate, null and XLIB in background 3.0; M5 subtypes, audit,
   attribution 2.0; M6 CGT scoring, combinatorial 2.0; M7 `freeze-catalogue`, single R run 0.75; M8 limits, cards,
-  report, review 2.75. Total 14.0 + 3.0 reserve.
+  report, review 2.75. Total 14.0 + 2.0 reserve.
 
 ## §F Frozen parameters
 

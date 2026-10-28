@@ -1,0 +1,10 @@
+{
+ "design": {
+  "DESIGN.md": "d0a7a95669bf061065fb2e5776bc08d01bcfcf528e3fde803eea3ccca328423d",
+  "configs/design_params.json": "1fdbfb96a07f40fcc17fe65ef4ad319b224ab6005b2daa225d3795fc1cde13a6",
+  "configs/primary_endpoints.json": "978754c4a2eac7ca3dd28861e38918996506e8a925e7a905bd18705deb460fe1",
+  "configs/tiers.json": "b0f2ef1919fd8a9f759b2be758f902bead2a49711a28e10099eced0c26b80cfa",
+  "configs/seeds.json": "19d1d9b47b965e9a2db943d3a1aa6689925de10ed0202085413e48893f22419e"
+ },
+ "_comment": "sha256 (LF-normalised) of frozen files; 'design' at tag freeze-design, 'bounds' at freeze-bounds"
+}
