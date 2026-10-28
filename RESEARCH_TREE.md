@@ -4,6 +4,22 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-28 ~19:40 — M2 milestone: design frozen (tag `freeze-design`, DESIGN v3.2)
+The design went through three review rounds: 7 reviewers / 84 items (R1), a fresh PI plus statistics and implementability
+reviewers / 23 items (R2), and one fresh reviewer / 6 items (R3). Every item has a recorded decision
+(reviews/round{1,2,3}_response.md). The core design: read determinants out of the Part 1 predictor with a stability
+elastic net fitted to its out-of-fold predictions (EN-pred), and compare it in a 2×2 benchmark against the same model on
+observed effects and univariate confounder-adjusted tests. The primary endpoint is replication of the top genomic
+candidates in the 255 never-analysed Part 1 test lines (opened once), stratified by whether the determinant was a
+hand-coded predictor input. Clinical validation uses a pre-registered CIViC/MOAlmanac/FDA test table with signs and
+partitions fixed before any dependency data are joined. Frozen parameters are in configs/ and hashed in
+configs/frozen_hashes.json.
+
+All user-requested DepMap extras arrived, including RRBS methylation (amendment D7). The core library and the external
+data are committed. Three build tracks are running (dictionary/eligibility/controls; clinical ground-truth table;
+toy simulation by a separate verification agent). Next: finish M3b, run the toy at real settings, tag `freeze-bounds`,
+then M4 (the four arms, MD-strict, gate, null). Time used ≈ 2.6 h of 24; the frozen schedule budgets 14 h + 2 h reserve.
+
 ### 2026-10-28 — SUSPEND (machine suspended by the user mid-M2/M3b) — resumed 19:02; all 4 agents resumed via SendMessage
 Done and committed: M0 setup; M1 literature (LITERATURE.md, docs/lit/*, data availability, Part 1 brief); DESIGN v1 → v2
 after round 1 (84 items, reviews/round1_response.md); round-2 reviews (reviews/round2_*.md, decisions D5–D6); core
@@ -36,6 +52,8 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D8 (M2 milestone): design frozen at v3.2 after 3 rounds (113 items total, none open). Further changes only as logged
+  amendments with reason; parameters cannot change after results are seen.
 - D7 (M2): the user supplied CCLE RRBS promoter methylation before the first dictionary build, so methylation is in scope
   (families METH and SIL-METH, U_G, access class proxy); coverage is limited to RRBS-profiled CCLE lines.
 - D6 (M2, R2): accept round 2 nearly in full: HC2/CR2 with carrier-based df (small-carrier size inflation, R2-ST1);
@@ -55,12 +73,12 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   - [x] LITERATURE.md synthesis (writer); clinical survey pair counts inconsistent → recount by script at CGT freeze
   - [~] User download request sent (DepMap extras: GlobalSignatures, CRISPRConfounders, full mutations, CN segments; optional RRBS, PRISM)
   - [~] External fetch (clinical: CIViC, MOAlmanac, FDA CDx, OncoKB gene lists; combinatorial screens)
-- [~] M2 Design
+- [x] M2 Design
   - [x] DESIGN v1; round 1: 7 reviewers, 84 items (18 critical) in reviews/round1_*.md
   - [x] DESIGN v2 + reviews/round1_response.md (PI decisions D1–D3); configs/{design_params,primary_endpoints,tiers}.json
   - [x] Round 2: fresh PI + statistics + implementability, 23 items (6 critical) in reviews/round2_*.md
   - [x] DESIGN v3 + reviews/round2_response.md (D6), all 23 accepted; v3.1 amendment D7 (RRBS methylation: METH, SIL-METH)
-  - [~] Round 3: single fresh reviewer (blockers to freeze only)
+  - [x] Round 3: single fresh reviewer, 6 items accepted → v3.2; tag freeze-design
 - [~] M3 Infrastructure
   - [x] src/biomark (paths, p1 loaders, guard, P1 write-block); 31 tests pass; input sha256 11/11 OK
   - [x] External fetch: CIViC, MOAlmanac (GPL-2.0), FDA CDx (232 rows), OncoKB lists; combinatorial: Esmaeili 2024 harmonised table (covers Dede/Parrish/Thompson/CHyMErA/Ito), Dede, Thompson, Flister 2024 bioRxiv (analysis-only licence); Parrish processed tables blocked (not needed)
