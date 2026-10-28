@@ -1,45 +1,52 @@
 {
-  "_comment": "DESIGN.md v2 §14. scripts/budget_check.py compares results/timing/<stage>.json against these timeboxes and lists any Tier B/C stage started before all Tier A stages were done. Anything unfinished is reported 'not done: time'.",
-  "version": "v2",
-  "hours_remaining_at_v2": 19.0,
+  "_comment": "DESIGN.md v3 §14. scripts/budget_check.py runs at every milestone end: compares results/timing/<job>.json (via stage_job_map) with these timeboxes, fails on unmapped job stems or > 12 concurrent workers, lists any Tier B stage started before all Tier A stages of the milestone were done, and when cumulative lateness exceeds lateness_trigger_h applies the next unused cut_order entry, logged in results/deviations.csv. Unfinished stages are reported 'not done: time'.",
+  "version": "v3",
+  "hours_remaining_at_v3": 17.0,
   "milestones": [
-    {"id": "M2", "content": "DESIGN v2, round-2 review, freeze-design (sim bounds, pc_eligibility, frozen hashes)", "budget_h": 1.5},
-    {"id": "M3b", "content": "dictionary, screen covariates, eligibility, controls csv, cgt features, guard/gate extensions, data_status (start of M4 deadline), toy simulation (separate agent, parallel)", "budget_h": 3.0},
-    {"id": "M4", "content": "4 arms + MD-strict, confounder audit, gate attempt 1, null (background), replication dry run", "budget_h": 3.0},
-    {"id": "M5", "content": "subtypes per gene and per module, cross-lineage, co-location, cutting, culture, hypermutation; Tier B attribution in background", "budget_h": 2.5},
-    {"id": "M6", "content": "CGT build + freeze-cgt (may start in M3b), ceiling, Q4a-d, combinatorial lookup", "budget_h": 2.0},
-    {"id": "M7", "content": "independent reimplementation check, freeze-catalogue, replication in R (once), XLIB", "budget_h": 1.0},
-    {"id": "M8", "content": "limits classes, claims table, REPORT.md, report-number check, review", "budget_h": 3.5}
+    {"id": "M2", "content": "DESIGN v3, round-2 response, tag freeze-design", "budget_h": 0.5},
+    {"id": "M3b", "content": "data_status, CGT features (ALLELE, CLIN) before the dictionary, dictionary, screen covariates, eligibility, controls, NaN mask, subsamples, guard/gate (leakscan, frozen, data, controls, G_pc, params), toy run (separate agent) -> NC bounds; tag freeze-bounds", "budget_h": 3.0},
+    {"id": "M4", "content": "S1 and EN arms, MD-strict, confounder audit, gate attempt 1; background: fixed-threshold null (6 workers) then XLIB arms; independent check starts after gate attempt 1", "budget_h": 3.0},
+    {"id": "M5", "content": "subtypes, modules, cross-lineage, co-location, cutting, culture, hypermutation/TP53, component readout; Tier B M1-proxy attribution", "budget_h": 2.0},
+    {"id": "M6", "content": "freeze-cgt (CGT table may be finished during M3b-M5), ceiling, Q4a-d, combinatorial lookup", "budget_h": 2.0},
+    {"id": "M7", "content": "r_requests.csv, dry run reviewed for completeness only, tag freeze-catalogue, single replicate.py run (R and set A)", "budget_h": 0.75},
+    {"id": "M8", "content": "limits classes, candidate cards, claims table, REPORT.md, report-number check, review", "budget_h": 2.75}
   ],
-  "milestone_total_h": 16.5,
-  "reserve_h": 2.5,
+  "milestone_total_h": 14.0,
+  "reserve_h": 3.0,
+  "lateness_trigger_h": 1.0,
   "tiers": {
     "A": {
       "rule": "must; never cut",
+      "unit": "minutes wall",
       "stages": {
-        "dictionary": 10, "screen_covariates": 10, "eligibility": 10, "s1_obs_pred": 15, "en_obs_pred": 30, "md_strict": 10,
-        "confounder_audit": 20, "gate": 10, "null_B": 180, "subtypes_gene_module": 30, "cross_lineage": 20,
-        "colocation_cutting_culture_hypermut": 30, "cgt_build_freeze": 90, "cgt_recovery_direction_actionability_population_by_lineage": 45,
-        "replication_R": 20, "replication_xlib": 20, "limits_classes": 30, "component_readout_AC5": 10
-      },
-      "unit": "minutes wall"
+        "data_status": 5, "cgt_features": 30, "dictionary": 15, "screen_covariates": 10, "eligibility": 10, "nan_mask_subsamples": 5,
+        "toy_run_bounds": 45, "s1_obs_pred": 20, "en_obs_pred": 40, "md_strict": 10, "confounder_audit": 20, "gate": 10,
+        "null_fixed_B": 180, "xlib_arms": 30, "component_readout": 10, "subtypes_gene_module": 30, "cross_lineage": 20,
+        "colocation_cutting_culture_hypermut": 30, "cgt_build_freeze": 90, "cgt_scoring_q4": 45, "combinatorial_lookup": 45,
+        "independent_check": 60, "replication_R": 20, "limits_classes": 30, "candidate_cards": 20
+      }
     },
     "B": {
       "rule": "after all Tier A stages of the current milestone are done",
-      "stages": {
-        "direct_attribution_panel": 75, "combinatorial_lookup": 60, "tcga_prevalence_cbioportal": 45,
-        "lmm_top200": 45, "xlib_en_pred_clean_m1_refit": 20
-      },
       "unit": "minutes wall",
-      "attribution_rules": "M1-proxy from saved t_E_status folds (exact linear); M3 refit for panel genes with pred_contrib; per-gene reproduction r >= 0.999 else report shortfall and continue; one diagnosis attempt <= 30 min"
-    },
-    "C": {
-      "rule": "only if ahead of schedule",
-      "stages": {"unsupervised_clustering_networkx_louvain": 30, "clinicaltrials_gov_harvest": 45, "crossfit_sensitivity_ST1": 45},
-      "unit": "minutes wall"
+      "stages": {"m1_proxy_attribution_panel": 45, "tcga_prevalence_cbioportal": 45, "null_rerun_selection_adaptive_B10": 60}
     }
   },
-  "cut_order_if_M4_ends_gt_1h_late": ["Tier C (all)", "lmm_top200", "direct_attribution_panel (AC5 component readout is the pre-declared fallback)", "null B 20 -> 10 (logged deviation)", "tcga_prevalence_cbioportal", "combinatorial per-line concordance"],
-  "never_cut": ["gate", "confounder model", "CGT pre-registration and freeze-cgt", "single R replication", "limits classes", "null B >= 10"],
-  "concurrency": "never run the Tier B refit (4-6 processes, ~3.3 GB) concurrently with a 12-worker job"
+  "removed_in_v3": ["lmm_top200", "xlib_en_pred_clean_m1_refit", "m3_refit", "Tier C (clustering, CTG harvest, cross-fit)", "scripts/simulate_control_bounds.py"],
+  "stage_job_map": {
+    "data_status": ["data_status"], "cgt_features": ["build_cgt_features"], "dictionary": ["build_dictionary"],
+    "screen_covariates": ["build_screen_covariates"], "eligibility": ["eligibility"], "nan_mask_subsamples": ["effect_nan_mask", "subsamples"],
+    "toy_run_bounds": ["toy_pipeline"], "s1_obs_pred": ["s1_obs", "s1_pred"], "en_obs_pred": ["surrogate_pilot", "en_obs", "en_pred"],
+    "md_strict": ["md_strict"], "confounder_audit": ["confounder_delta", "vif"], "gate": ["gate_pc"],
+    "null_fixed_B": ["null_fixed"], "xlib_arms": ["xlib_s1_obs", "xlib_en_obs"], "component_readout": ["component_readout"],
+    "subtypes_gene_module": ["subtypes", "modules"], "cross_lineage": ["cross_lineage"],
+    "colocation_cutting_culture_hypermut": ["locus_resolution", "amplicon_test", "culture_audit", "hypermut_tp53"],
+    "cgt_build_freeze": ["build_cgt"], "cgt_scoring_q4": ["cgt_ceiling", "q4_summary"], "combinatorial_lookup": ["combinatorial_lookup"],
+    "independent_check": ["independent_check"], "replication_R": ["replicate"], "limits_classes": ["limits"],
+    "candidate_cards": ["candidate_cards"], "m1_proxy_attribution_panel": ["m1_proxy_attribution"],
+    "tcga_prevalence_cbioportal": ["tcga_prevalence"], "null_rerun_selection_adaptive_B10": ["null_rerun"]
+  },
+  "cut_order": ["tcga_prevalence_cbioportal", "null_rerun_selection_adaptive_B10", "m1_proxy_attribution_panel (component readout is the fallback)", "null fixed B 50 -> 20 if raised (logged deviation)", "XLIB u_rule discovery_only sensitivity", "P1 secondary variants beyond k = 50/200/500"],
+  "never_cut": ["gate", "confounder model", "CGT pre-registration and freeze-cgt", "single R replication", "limits classes", "candidate cards", "combinatorial_lookup", "fixed-threshold null B >= 20"],
+  "concurrency": {"null_workers": 6, "foreground_workers_during_null": 6, "max_total_workers": 12}
 }

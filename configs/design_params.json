@@ -1,278 +1,837 @@
 {
-  "_comment": "DESIGN.md v2 §F. Every decision number used by code lives here; code reads it via biomark.paths.load_config('design_params'). Frozen (sha256 in configs/frozen_hashes.json) at tag freeze-design; later changes need a D-entry (DESIGN §13.4). Keys are grouped by DESIGN section.",
-  "version": "v2",
-  "eligibility_s2": {
-    "gene_classes_any": ["variable", "selective"],
-    "tier_model": "m5",
-    "tiers": ["high", "medium"],
-    "r_within_lin_lib_min": 0.10,
-    "r_within_stratum_min_lines": 5,
-    "lineage_min_lines": 10,
-    "rare_lineage_label": "_rare",
-    "controls_bypass_eligibility": true
+ "_comment": "DESIGN.md v3 §F. Every decision number used by code lives here; code reads it via biomark.paths.load_config('design_params'). Frozen at tag freeze-design; keys marked provisional (negative_controls_s7 NC2-NC6) are replaced from the toy run and frozen at tag freeze-bounds (DESIGN §13.4). Later changes need a D-entry.",
+ "version": "v3.1",
+ "data_s1": {
+  "deadline": "first dictionary build: build_dictionary.py reads results/data_status.json (committed first) and stores its sha256 in dictionary_v1.json; later files feed labelled secondaries only",
+  "obtained": [
+   "OmicsSomaticMutations",
+   "OmicsGlobalSignatures",
+   "CRISPRConfounders",
+   "OmicsCNSegmentsWGS (unused)",
+   "OmicsProfiles (keys only)"
+  ],
+  "not_obtained": [
+   "RRBS methylation (SIL-METH absent; methylation not tested)",
+   "PRISM (unused)"
+  ],
+  "msi_rule": "MSIScore >= msi_threshold (OmicsGlobalSignatures)",
+  "msi_threshold": 20.0,
+  "msi_cmp_role": "Cell Model Passports msi_status: concordance check only"
+ },
+ "eligibility_s2": {
+  "gene_classes_any": [
+   "variable",
+   "selective"
+  ],
+  "tier_model": "m5",
+  "tiers": [
+   "high",
+   "medium"
+  ],
+  "r_within_lin_lib_min": 0.1,
+  "r_within_stratum_min_lines": 5,
+  "lineage_min_lines": 10,
+  "rare_lineage_label": "_rare",
+  "non_eligible_controls": "U_ctrl: analysed separately; excluded from every top-k list, the null subset and P1/P2"
+ },
+ "dependency_s2": {
+  "threshold": -0.5,
+  "threshold_sensitivity": -1.0,
+  "relative_rule_if_frac_below_gt": 0.5,
+  "relative_quantile": 0.25,
+  "accurate_dependent_rule": "observed dependent AND fold-centred prediction rank (most negative first) <= n_g, n_g = number of dependent D lines of g",
+  "R_accurate_dependent_rule": "R refit prediction <= quantile(R predictions, n_g/n_D) (target-free, computed before freeze-catalogue)",
+  "no_contrast_sd_max": 0.15
+ },
+ "dictionary_s3": {
+  "min_carriers": 5,
+  "cn_amp": 2.0,
+  "cn_del": 0.25,
+  "cn_loss": 0.75,
+  "expressed_log2tpm": 1.0,
+  "sil_lineage_expressed_frac": 0.5,
+  "sil_below_lineage_median_by": 2.0,
+  "sil_lineage_proxy_cramers_v": 0.5,
+  "n_paralogs": 3,
+  "restricted_gene_set": [
+   "oncokb_cancerGeneList",
+   "p1_paralog_top3_of_eligible",
+   "positive_control_partners",
+   "known_silenced"
+  ],
+  "known_silenced": [
+   "MGMT",
+   "MLH1",
+   "CDKN2A",
+   "SMARCA4",
+   "VHL",
+   "MTAP",
+   "UBB",
+   "BRCA1"
+  ],
+  "lof_bi_rule": "damaging dosage 2 OR (dosage >= 1 AND (own CN < cn_loss OR SIL OR LikelyLoF call with AF >= lof_bi_af_min)) OR (X-linked AND male AND dosage >= 1)",
+  "fusion": {
+   "ffpm_min": 0.1,
+   "driver_list": "configs/fusion_drivers.csv (built from CIViC/MOAlmanac fusion profiles and OncoKB fusion genes)",
+   "kinase_3prime_except_5prime": [
+    "FGFR2",
+    "FGFR3"
+   ],
+   "orientation": "driver from fusion_drivers.csv is the 3-prime gene (5-prime for FGFR2/3)"
   },
-  "dependency_s2": {
-    "threshold": -0.5,
-    "threshold_sensitivity": -1.0,
-    "relative_rule_if_frac_below_gt": 0.5,
-    "relative_quantile": 0.25,
-    "accurate_dependent_rule": "observed dependent AND fold-centred prediction rank (most negative first) <= n_g, n_g = number of dependent D lines of g",
-    "R_accurate_dependent_rule": "R refit prediction <= quantile(R predictions, n_g/n_D) (target-free, computed before freeze-catalogue)",
-    "no_contrast_sd_max": 0.15
+  "nmf": {
+   "n_components": 50,
+   "n_top_var_genes": 5000,
+   "init": "nndsvda",
+   "solver": "cd",
+   "max_iter": 500,
+   "seed_key": "nmf_seed"
   },
-  "dictionary_s3": {
-    "min_carriers": 5,
-    "cn_amp": 2.0,
-    "cn_del": 0.25,
-    "cn_loss": 0.75,
-    "expressed_log2tpm": 1.0,
-    "sil_lineage_expressed_frac": 0.5,
-    "sil_below_lineage_median_by": 2.0,
-    "sil_lineage_proxy_cramers_v": 0.5,
-    "n_paralogs": 3,
-    "restricted_gene_set": ["oncokb_cancerGeneList", "p1_paralog_top3_of_eligible", "positive_control_partners", "known_silenced"],
-    "known_silenced": ["MGMT", "MLH1", "CDKN2A", "SMARCA4", "VHL", "MTAP", "UBB", "BRCA1"],
-    "lof_bi_rule": "damaging dosage 2 OR (dosage >= 1 AND (own CN < cn_loss OR SIL)) OR (X-linked AND male AND dosage >= 1)",
-    "fusion": {"ffpm_min": 0.1, "driver_list": "configs/fusion_drivers.csv (built from CIViC/MOAlmanac fusion profiles and OncoKB fusion genes)", "kinase_3prime_except_5prime": ["FGFR2", "FGFR3"]},
-    "nmf": {"n_components": 50, "n_top_var_genes": 5000, "init": "nndsvda", "solver": "cd", "max_iter": 500, "seed_key": "nmf_seed"},
-    "programme_scores": {
-      "PSCORE:ISG": {"source": "P1/data/raw_external/msigdb_hallmark HALLMARK_INTERFERON_ALPHA_RESPONSE", "method": "mean z (D-fitted) of member genes"},
-      "PSCORE:NRF2": {"genes": ["NQO1", "AKR1C1", "AKR1C2", "AKR1C3", "GCLM", "TXNRD1", "SRXN1", "G6PD", "ME1", "ABCC2", "CYP4F11", "OSGIN1"], "method": "mean z (D-fitted) of member genes"}
-    },
-    "locus_groups": {"window_mb": 10, "binary_jaccard_min": 0.5, "coordinates": "P1/data/raw_external/ensembl116_gtf"},
-    "locus_resolution": {"min_discordant_carriers": 5, "p_max": 0.05},
-    "shared_feature_cap": 3000,
-    "cap_escalation_min_carriers": [10, 20],
-    "msi_source_order": ["OmicsGlobalSignatures.MSIScore", "CellModelPassports.msi_status", "Model.ModelSubtypeFeatures:MSI"],
-    "msi_unknown": "NA (never MSS)",
-    "hypermutated_rule": "MSI OR DMG_BURDEN in top hypermutated_top_frac of D",
-    "hypermutated_top_frac": 0.05,
-    "spectra_if_mutation_file": {
-      "SIG:SPEC_MMR": "log1p(count of 1-bp indels)",
-      "SIG:SPEC_POLE": "1 if SNV count >= D 99th percentile AND indel/SNV ratio < 0.05",
-      "SIG:SPEC_APOBEC": "C>G fraction among C:G SNVs (pyrimidine-collapsed)",
-      "SIG:SPEC_TOBACCO": "C>A fraction among SNVs, SPEC_POLE lines excluded (NA)",
-      "SIG:SPEC_UV": "fraction of CC>TT dinucleotide substitutions among all substitutions",
-      "sanity": {"mmr_vs_msi_spearman_min": 0.5, "uv_top_lineage": "Skin", "tobacco_lung_vs_rest_wilcoxon_p_max": 0.05}
-    },
-    "methylation_if_rrbs": {"promoter_beta_min": 0.7}
+  "programme_scores": {
+   "PSCORE:ISG": {
+    "source": "P1/data/raw_external/msigdb_hallmark HALLMARK_INTERFERON_ALPHA_RESPONSE",
+    "method": "mean z (D-fitted) of member genes"
+   },
+   "PSCORE:NRF2": {
+    "genes": [
+     "NQO1",
+     "AKR1C1",
+     "AKR1C2",
+     "AKR1C3",
+     "GCLM",
+     "TXNRD1",
+     "SRXN1",
+     "G6PD",
+     "ME1",
+     "ABCC2",
+     "CYP4F11",
+     "OSGIN1"
+    ],
+    "method": "mean z (D-fitted) of member genes"
+   }
   },
-  "surrogate_s4": {
-    "l1_ratio": 0.9,
-    "fwl_unpenalised": ["lineage", "library_group", "CN_absent", "MSI_unknown"],
-    "stages": {"G": ["HOT", "LOFBI", "AMP", "DEL", "LOSS", "FUS", "SIL-DEL", "SIL-MUT", "SIL-METH", "YABS", "SIG", "COMP"], "X": ["EXPDOSE", "EXPPAR", "PROG", "PSCORE", "SIL-other"]},
-    "stage_X_target": "stage-G residual",
-    "sis_K_per_stage": 300,
-    "sis_K_fallback": 150,
-    "forced_terms": ["EXPDOSE own", "EXPPAR top-3", "LOSS own", "LOSS paralog/partner", "AMP own", "YABS", "positive-control partner feature"],
-    "n_lambda": 25,
-    "eps": 0.01,
-    "tol": 0.001,
-    "cv_folds": "P1 splits.csv cv_fold",
-    "lambda_rule": "full_D_1se_fixed",
-    "n_complementary_pairs": 25,
-    "subsample_design": "complementary halves, patient-grouped, lineage-stratified; seed seeds.json:subsample_seed",
-    "selection_freq_min": 0.6,
-    "sign_consistency_min": 0.9,
-    "pilot_genes": 50,
-    "pilot_max_projected_wall_min": 45,
-    "drop_column_if_resid_sd_lt": 1e-6,
-    "fidelity": "r2_oof_beyond_lineage_library",
-    "fidelity_class3_max": 0.10,
-    "rank_rule_EN": ["selection_freq desc", "abs(mean beta) desc", "feature_id asc"],
-    "rank_rule_S1": ["p asc", "abs(beta) desc", "feature_id asc"],
-    "locus_dedup_before_topk": true
+  "locus_groups": {
+   "window_mb": 10,
+   "binary_jaccard_min": 0.5,
+   "coordinates": "P1/data/raw_external/ensembl116_gtf"
   },
-  "attribution_s4": {
-    "panel_max_genes": 300,
-    "panel_order": ["positive-control genes", "CGT target genes", "MD-strict genes by best rank"],
-    "m1_proxy_run": "t_E_status_24b46e2a saved folds",
-    "m1_gene_block": 500,
-    "m3_repro_r_min": 0.999,
-    "additivity_tol": 1e-5,
-    "m1_named_share_min": 0.5,
-    "agreement_top_n": 5,
-    "line_contribution_share_min": 0.25
+  "locus_resolution": {
+   "min_discordant_carriers": 5,
+   "p_max": 0.05
   },
-  "confounders_s5": {
-    "blocks": {
-      "lineage": ["lineage (<10 D lines pooled to _rare)"],
-      "library": ["library_group (screen-map: Avana-only, KY-only, Humagne-only, Avana+KY, other)", "screen_days_within_humagne_dev"],
-      "culture": ["screened CellFormat {adherent, suspension, 3D, mixed/unknown}", "SerumFree {T, F, unknown}", "base-medium family {RPMI, DMEM, IMDM, DMEM-F12, other, unknown}"],
-      "burden": ["MSI {MSI, MSS, unknown}", "DMG_BURDEN"],
-      "tp53": ["TP53 status {mut, WT, unknown}"],
-      "gene": ["own CN of g (log2, NA->0 + CN_absent)", "EXPGATE own (log2TPM+1 >= 1)"],
-      "optional_if_data": ["doubling_time (CRISPRConfounders)"]
-    },
-    "drop_if_abs_spearman_gt": 0.7,
-    "drop_rules": ["covariate is d or in d's locus group", "|Spearman(cov, d)| > 0.7 on test lines", "own CN omitted when d is CN-derived and its locus group contains g (own-CN-adjusted = sensitivity)", "TP53 omitted when d derives from TP53 or MDM2 amplification"],
-    "vif_max": 10,
-    "se_type": "patient-clustered sandwich: CR1 (vectorised) for all tests; CR2 for D-stage screen, ceiling and R tests",
-    "delta_flag": "|b_full - b_minus| > 0.5*|b_minus| AND |b_full - b_minus| > 1*SE_minus (drop-one-block)",
-    "primary_disease_sensitivity_min_lines": 5,
-    "media_column_rule": "parse base medium from the column whose values match the formulation regex in >= 90% of non-empty cells (Model.csv OnboardedMedia/FormulationID appear swapped); screened condition first (ModelCondition), else Model.csv, else unknown"
+  "shared_feature_cap": 3000,
+  "cap_escalation_min_carriers": [
+   10,
+   20
+  ],
+  "msi_source_order": [
+   "OmicsGlobalSignatures.MSIScore >= data_s1.msi_threshold"
+  ],
+  "msi_unknown": "NA (never MSS)",
+  "hypermutated_rule": "MSI OR TMB in top hypermutated_top_frac of D",
+  "hypermutated_top_frac": 0.05,
+  "continuous_min_nonnan": 20,
+  "expdose_min_expressed_lines": 5,
+  "allele_rules_file": "configs/cgt_allele_rules.json",
+  "allele_classes": [
+   "BRAF_V600",
+   "BRAF_nonV600",
+   "KRAS_G12C",
+   "KRAS_G12D",
+   "KRAS_G12V",
+   "KRAS_G13",
+   "KRAS_Q61",
+   "NRAS_Q61",
+   "EGFR_activating",
+   "PIK3CA_helical",
+   "PIK3CA_kinase",
+   "AKT1_E17K",
+   "IDH1_R132",
+   "ERBB2_TKD",
+   "KIT_ex11",
+   "KIT_D816",
+   "FGFR3_hot"
+  ],
+  "clin_features": [
+   "CLIN:ER_POS",
+   "CLIN:HER2_POS",
+   "CLIN:HRPOS_HER2NEG",
+   "CLIN:BRCA_BIALLELIC",
+   "CLIN:RAS_MUT"
+  ],
+  "clin_source": "configs/cgt_features.csv (scripts/build_cgt_features.py, molecular data only; built before the first dictionary build)",
+  "lof_bi_af_min": 0.7,
+  "partner_priors": "partner genes in configs/positive_controls_spec.csv (feature genes other than the dependency)",
+  "sig_features": [
+   "SIG:MSI",
+   "SIG:MSISCORE",
+   "SIG:PLOIDY",
+   "SIG:WGD",
+   "SIG:CIN",
+   "SIG:ANEUPLOIDY",
+   "SIG:LOH",
+   "SIG:TMB",
+   "SIG:DMG_BURDEN"
+  ],
+  "tmb_definition": "log1p(number of default-entry protein-altering calls in OmicsSomaticMutations)",
+  "methylation": {
+   "_comment": "PI amendment D7 (v3.1): RRBS registered before the first dictionary build.",
+   "source": "external/depmap_extra/CCLE_RRBS_TSS1kb_20181022.txt.gz (CCLE names -> ModelID via Model.csv CCLEName; unmapped columns dropped and counted)",
+   "gene_value": "max over the gene's TSS±1kb loci (locus_id prefix = HGNC symbol) of the methylation fraction",
+   "meth_high": 0.5,
+   "METH_rule": "gene_value >= meth_high AND gene_value - D lineage median >= 0.3; restricted_gene_set genes only; >= min_carriers among RRBS-profiled D lines; NA for lines without RRBS",
+   "SIL_METH_rule": "SIL (as defined) AND gene_value >= meth_high",
+   "universe": "U_G (stage G); access class proxy (not a predictor input)",
+   "lineage_proxy_rule": "same Cramer's V rule as SIL"
   },
-  "s1_s5": {
-    "test": "OLS partial t on FWL residuals; F = t^2 (= Gaussian LRT); df = n - rank(Z) - 2",
-    "min_carriers": 5,
-    "min_resid_var": 1e-8,
-    "bh_q": 0.05
+  "spectra": {
+   "SIG:SPEC_MMR": "log1p(count of 1-bp indels)",
+   "SIG:SPEC_POLE": "1 if SNV count >= D 99th percentile AND indel/SNV ratio < 0.05",
+   "SIG:SPEC_APOBEC": "C>G fraction among C:G SNVs (pyrimidine-collapsed)",
+   "SIG:SPEC_TOBACCO": "C>A fraction among SNVs, SPEC_POLE lines excluded (NA)",
+   "SIG:SPEC_UV": "fraction of CC>TT dinucleotide substitutions among all substitutions",
+   "sanity": {
+    "mmr_vs_msi_spearman_min": 0.5,
+    "uv_top_lineage": "Skin",
+    "tobacco_lung_vs_rest_wilcoxon_p_max": 0.05
+   },
+   "input": "coding (protein-altering) calls only; lines with < min_snvs SNVs are NA",
+   "min_snvs": 10
   },
-  "md_strict_s5": {
-    "d_stage_test": "confounder model on observed D effects, CR2",
-    "pass": "same sign as selection AND BH q_sc < 0.05 within EN-pred selected candidates",
-    "q_sc_bh": 0.05,
-    "label": "selection_conditional (nominal); error rate reported = empirical FDR (§7)"
+  "variant_groups": "locus groups (AMP/DEL/LOSS) and allele groups (HOT:x with ALLELE:x_* and CLIN features built from them)"
+ },
+ "surrogate_s4": {
+  "l1_ratio": 0.9,
+  "fwl_unpenalised": [
+   "lineage",
+   "library_group",
+   "culture block (CellFormat, SerumFree, medium family)",
+   "growth block (ScreenDoublingTime, DT_unknown)",
+   "CN_absent",
+   "MSI_unknown"
+  ],
+  "stages": {
+   "G": [
+    "HOT",
+    "ALLELE",
+    "LOFBI",
+    "AMP",
+    "DEL",
+    "LOSS",
+    "FUS",
+    "SIL-DEL",
+    "SIL-MUT",
+    "YABS",
+    "CLIN",
+    "SIG",
+    "COMP"
+   ],
+   "X": [
+    "EXPDOSE",
+    "EXPPAR",
+    "PROG",
+    "PSCORE",
+    "SIL-other"
+   ]
   },
-  "test_families_s5": {
-    "F1_S1_main": "all (g,d) in U with d not EXPDOSE own; BH at count run",
-    "F2_S1_EXP_own": "EXPDOSE own tests; separate BH; never counted toward recall of non-expression biomarkers",
-    "F3_EN_D_stage": "EN-pred (and EN-obs) selected candidates; BH q_sc; screening only",
-    "F4_cross_lineage_meta": "all (g,d) entering §8.3",
-    "F5_per_lineage": "within each lineage",
-    "F6_R_replication": "no BH; list-level statistics",
-    "F7_cgt_ceiling": "S/W CGT tests with >= 3 carriers; BH q < 0.1"
+  "stage_X_target": "the fit's own stage-G residual (each CV fold, subsample and full fit)",
+  "sis_K_per_stage": 300,
+  "sis_K_fallback": 150,
+  "forced_terms": [
+   "EXPDOSE own",
+   "EXPPAR top-3",
+   "LOSS own",
+   "LOSS paralog/partner",
+   "AMP own",
+   "YABS",
+   "positive-control partner feature"
+  ],
+  "n_lambda": 25,
+  "eps": 0.01,
+  "tol": 0.001,
+  "cv_folds": "P1 splits.csv cv_fold",
+  "lambda_rule": "full_D_1se_fixed",
+  "n_complementary_pairs": 25,
+  "subsample_design": "complementary halves, patient-grouped, lineage-stratified; seed seeds.json:subsample_seed",
+  "selection_freq_min": 0.6,
+  "sign_consistency_min": 0.9,
+  "pilot_genes": 50,
+  "pilot_max_projected_wall_min": 45,
+  "fidelity": "r2_oof_beyond_design",
+  "fidelity_class3_max": 0.1,
+  "rank_rule_EN": [
+   "selection_freq desc",
+   "abs(mean beta over all 50 subsamples, zeros included) desc",
+   "feature_id asc"
+  ],
+  "rank_rule_S1": [
+   "p asc",
+   "abs(beta) desc",
+   "feature_id asc"
+  ],
+  "U_G_families": "stages.G",
+  "drop_column_in_fit": {
+   "resid_sd_lt": 1e-06,
+   "carriers_lt": 2
   },
-  "replication_s6": {
-    "alpha_one_sided": 0.05,
-    "power_min": 0.5,
-    "R_min_carriers": 3,
-    "R_min_noncarriers": 3,
-    "shrinkage": "empirical-Bayes normal scale mixture (20 log-spaced sigma, EM <= 500 iter) fitted once on all F1 S1-obs (beta, SE); posterior mean; identical for all arms",
-    "power_formula": "Phi(|beta_shrunk|/SE_R_pred - z_0.95), SE_R_pred from D residual SD and R carrier counts (molecular data only)",
-    "R_nan_pattern": "expected non-NaN genes per R line from its library (D-derived library NaN sets)",
-    "bootstrap_B": 1000,
-    "bootstrap_unit": "PatientID (R lines)",
-    "bootstrap_seed_key": "bootstrap_seed",
-    "ci": "95% percentile",
-    "xlib_discovery": "D lines with Avana-only screens",
-    "xlib_replication": "D lines with no Avana screen",
-    "xlib_excluded": "Avana+KY and other mixed lines"
+  "min_carriers_in_fit": 2,
+  "subsample_file": "configs/subsamples.json (drawn once from seeds.json:subsample_seed; shared by all genes and arms; fit rows = subsample ∩ non-NaN)",
+  "fwl_cache": "residualised 𝒟 per (NaN-pattern group × fold or subsample), memmapped read-only",
+  "mean_beta_def": "all50",
+  "report_n_tied_at_rank_k": true,
+  "en_unreachable_if_max_attainable_freq_lt": 0.6,
+  "dedup_before_topk": "best-ranked member per (g, variant group), all arms"
+ },
+ "attribution_s4": {
+  "panel_max_genes": 300,
+  "panel_order": [
+   "positive-control genes",
+   "CGT target genes",
+   "MD-strict genes by best rank"
+  ],
+  "m1_proxy_run": "t_E_status_24b46e2a saved folds",
+  "m1_gene_block": 500,
+  "additivity_tol": 1e-05,
+  "m1_named_share_min": 0.5,
+  "agreement_top_n": 5,
+  "line_contribution_share_min": 0.25,
+  "scope": "M1-proxy exact linear attribution only (no M3 refit)"
+ },
+ "confounders_s5": {
+  "blocks": {
+   "design_never_dropped": {
+    "lineage": [
+     "lineage (<10 D lines pooled to _rare)"
+    ],
+    "library": [
+     "library_group (Avana-only, KY-only, Humagne-only, Avana+KY, other)",
+     "screen_days_within_humagne_dev (dropped if VIF > 10)"
+    ],
+    "culture": [
+     "screened CellFormat {adherent, suspension, 3D, mixed/unknown}",
+     "SerumFree {T, F, unknown}",
+     "base-medium family"
+    ],
+    "growth": [
+     "ScreenDoublingTime (NA -> D median)",
+     "DT_unknown"
+    ]
+   },
+   "droppable": [
+    "MSI {MSI, MSS, unknown}",
+    "DMG_BURDEN",
+    "TP53 {mut, WT, unknown}",
+    "own CN of g",
+    "EXPGATE own",
+    "screen_days"
+   ]
   },
-  "null_s7": {
-    "unit": "one within-stratum permutation of line labels applied jointly to all 𝒟 rows (shared and gene-specific); y, predictions and covariates fixed",
-    "strata": "lineage x library_group; strata < 2 lines merged into the lineage's largest stratum",
-    "gene_subset_n": 300,
-    "gene_subset_seed_key": "null_gene_subset_seed",
-    "gene_subset_file": "configs/null_genes.txt",
-    "B_base": 20,
-    "B_raised": 50,
-    "raise_rule": "B = 50 iff 50 x wall(permutation 1) <= wall_cap_min, decided from timing only, before any observed-run output is read",
-    "wall_cap_min": 180,
-    "per_draw_seed": "permutation_seed + b",
-    "fdr_emp_max": 0.10,
-    "s1_vectorised_B": 200,
-    "lists": ["S1-obs BH", "S1-pred BH", "EN-obs selected", "EN-pred selected", "MD-strict"]
+  "drop_rules": [
+   "only droppable covariates may be dropped",
+   "covariate is d or in d's variant group",
+   "association with d > drop_assoc_r2_gt (R^2 of d on the covariate's dummies; numeric: r^2)",
+   "own CN omitted when d is CN-derived and its group contains g (own-CN-adjusted = sensitivity)",
+   "TP53 omitted when d derives from TP53 or MDM2 amplification"
+  ],
+  "vif_max": 10,
+  "se_type": "CR2 (PatientID clusters; HC2 for singletons) for all tests; CR1 logged sensitivity only",
+  "delta_flag": "|b_full - b_minus| > 0.5*|b_minus| AND |b_full - b_minus| > 1*SE_minus (drop-one-block)",
+  "primary_disease_sensitivity_min_lines": 5,
+  "media_column_rule": "parse base medium from the column whose values match the formulation regex in >= 90% of non-empty cells (Model.csv OnboardedMedia/FormulationID appear swapped); screened condition first (ModelCondition), else Model.csv, else unknown",
+  "category_maps": "configs/build_params.json: covariates",
+  "drop_assoc_r2_gt": 0.49,
+  "collinear_with_design_r2_gt": 0.49,
+  "collinear_with_design_rule": "R^2(d ~ lineage + library + culture + growth) > 0.49: keep design, label collinear_with_design, never a determinant (class 6 or lineage-unresolvable)",
+  "leverage": {
+   "merge_levels_with_lt_lines_in_fit": 2,
+   "merge_into": "block reference level (lineage -> _rare); logged",
+   "exclude_from_meat_if_1_minus_h_lt": 1e-08,
+   "log_column": "n_lev1_excluded"
   },
-  "negative_controls_s7": {
-    "_comment": "Provisional bounds; scripts/simulate_control_bounds.py replaces each with the 95th percentile of its toy null at real D dimensions before freeze-design (AF8). The replacing commit must precede any real-data control run.",
-    "NC1_fdr_emp_max": 0.10,
-    "NC2_lowtier_n_genes": 100,
-    "NC2_lowtier_median_fidelity_max": 0.02,
-    "NC2_lowtier_md_strict_per_gene_max": 0.10,
-    "NC3_self_null_dependent_frac_max": 0.10,
-    "NC3_dependent_rule": "carrier median effect < -0.5",
-    "NC4_fold_ami_max": 0.02,
-    "NC5_false_sensitivity_rate_max": 0.20,
-    "NC6_lineage_tf_class3_frac_min": 0.70
+  "df_rule": "t with df = min(n - rank(Z) - 2, nu), nu = max(1, (sum_c W_c)^2 / sum_c W_c^2 - 1), W_c = sum over lines i of cluster c of dtilde_i^2",
+  "df_fallback_if_calibration_fails": "binary d: df = number of carrier clusters - 1",
+  "cr2_implementation": "singletons: h_ii = h_Z,ii + dtilde_i^2/sum(dtilde^2); multi-line clusters (2-4 lines): batched closed-form (I - H_cc)^-1/2 with rank-1 update; computed per (NaN group, d) and reused across genes",
+  "calibration_test": {
+   "n_sims": 20000,
+   "n": [
+    255,
+    1022
+   ],
+   "carriers": [
+    3,
+    5,
+    10
+   ],
+   "variance": [
+    "homoskedastic",
+    "carrier SD x 2"
+   ],
+   "size_at_0.05": [
+    0.035,
+    0.065
+   ],
+   "size_at_1e-3_max": 0.002
   },
-  "subtypes_s8": {
-    "module_line_frac_min": 0.5,
-    "gene_cluster_abs_r": 0.5,
-    "gene_cluster_linkage": "average",
-    "cross_lineage": {
-      "testable_lineage": ">= 10 D lines, >= 3 carriers and >= 3 non-carriers",
-      "powered_lineage_power_min": 0.5,
-      "meta": "REML tau2, HKSJ CI, I2, tau, 95% prediction interval",
-      "meta_bh_q": 0.05,
-      "min_powered_lineages": 2,
-      "min_organ_groups": 2,
-      "same_sign_frac_min": 0.8,
-      "lolo": "sign kept when each contributing lineage is dropped",
-      "restricted": "per-lineage BH q < 0.05 (F5) AND d x lineage interaction LRT p < 0.05"
-    },
-    "lineage_groups": {
-      "haematopoietic": ["Myeloid", "Lymphoid"],
-      "gastrointestinal": ["Bowel", "Esophagus/Stomach", "Pancreas", "Biliary Tract", "Ampulla of Vater", "Liver"],
-      "neural_crest_neuro": ["CNS/Brain", "Peripheral Nervous System", "Skin", "Eye"],
-      "thoracic": ["Lung", "Pleura"],
-      "breast_gynaecological": ["Breast", "Ovary/Fallopian Tube", "Uterus", "Cervix", "Vulva/Vagina"],
-      "genitourinary": ["Kidney", "Bladder/Urinary Tract", "Prostate", "Testis"],
-      "mesenchymal": ["Bone", "Soft Tissue"],
-      "head_neck_endocrine": ["Head and Neck", "Thyroid", "Adrenal Gland"]
-    },
-    "culture_genesets": {
-      "integrin_fak_actin": ["ITGB1", "ITGAV", "ITGB5", "PTK2", "ILK", "PXN", "TLN1", "VCL", "LIMS1", "PARVA", "CRKL", "RAC1"],
-      "cholesterol_srebp": ["SREBF1", "SREBF2", "SCAP", "MBTPS1", "MBTPS2", "HMGCR", "HMGCS1", "LDLR", "FDFT1", "SQLE", "DHCR7", "LSS"],
-      "ferroptosis_selenoprotein": ["GPX4", "SEPHS2", "SEPSECS", "PSTK", "EEFSEC", "SECISBP2", "TXNRD1", "SLC7A11"],
-      "amino_acid_synthesis": ["ASNS", "PYCR1", "PHGDH", "PSAT1", "PSPH", "GOT2", "ASS1", "GLS"]
-    },
-    "culture_overlap_bh_q": 0.05,
-    "cutting": {"unexpressed_log2tpm": 1.0, "neighbour_effect_delta_max": -0.2, "labels": ["cutting artefact", "amplified-driver addiction", "unresolved"]},
-    "hypermutation_persist": "same sign and |beta_nonhyper| >= 0.5*|beta_full|",
-    "clustering_tierC": {"input": "fold-centred M5 OOF over eligible genes, raw and lineage-residualised", "pca": 50, "knn_k": 15, "metric": "cosine", "backend": "networkx louvain_communities", "resolutions": [0.5, 1.0, 2.0], "n_seeds": 10, "fold_ami_max": 0.02}
+  "delta_blocks": [
+   "lineage",
+   "library",
+   "culture",
+   "growth",
+   "burden",
+   "TP53",
+   "own CN"
+  ]
+ },
+ "s1_s5": {
+  "test": "OLS partial t on FWL residuals with CR2 SE and nu df (confounders_s5.df_rule); F = t^2",
+  "min_carriers": 5,
+  "min_resid_var": 1e-08,
+  "bh_q": 0.05
+ },
+ "md_strict_s5": {
+  "d_stage_test": "confounder model on observed D effects, CR2 + nu",
+  "pass": "same sign as selection AND BH q_sc < 0.05 within EN-pred selected candidates",
+  "q_sc_bh": 0.05,
+  "label": "selection_conditional (nominal); error rate reported = empirical FDR (§7)"
+ },
+ "test_families_s5": {
+  "F1_S1_main": "all (g,d) in U with d not EXPDOSE own; BH at count run",
+  "F2_S1_EXP_own": "own EXPDOSE tests; separate BH; excluded from P1 pools and from recall of non-expression biomarkers",
+  "F3_EN_D_stage": "EN-pred (and EN-obs) selected candidates; BH q_sc; screening only",
+  "F4_cross_lineage_meta": "pooled confounder-model tests restricted to testable lineages, all (g,d) entering §8.3",
+  "F5_per_lineage": "within each lineage",
+  "F6_R_replication": "no BH; list-level statistics",
+  "F7_cgt_ceiling": "S/W CGT tests with >= 3 carriers; BH q < 0.1"
+ },
+ "replication_s6": {
+  "alpha_one_sided": 0.05,
+  "power_min": 0.5,
+  "R_min_carriers": 3,
+  "R_min_noncarriers": 3,
+  "shrinkage": "empirical-Bayes normal scale mixture (20 log-spaced sigma, EM <= 500 iter) on standardised effects beta* = beta*SD_D(dtilde) of all U rows incl. F2; posterior mean back-transformed; identical for all arms",
+  "power_formula": "1 - F_t(t_0.95,nu_R; ncp = |beta_shrunk| / SE_R_pred), nu_R from confounders_s5.df_rule on R carriers",
+  "R_nan_pattern": "gene expected non-NaN for an R line if >= R_nan_frac_min of D lines with the same library string are non-NaN; unseen strings use the union NaN set of their component libraries",
+  "bootstrap_B": 1000,
+  "bootstrap_unit": "PatientID (R lines)",
+  "bootstrap_seed_key": "bootstrap_seed",
+  "ci": "95% percentile",
+  "xlib_discovery": "D lines whose library string is exactly 'Avana'",
+  "xlib_replication": "D lines with no Avana in the library string",
+  "xlib_excluded": "all other D lines",
+  "R_evaluable": {
+   "binary": ">= 3 carriers and >= 3 non-carriers with expected non-NaN effect",
+   "continuous": ">= 20 non-NaN R lines and SD_R(dtilde_R) > 0"
   },
-  "gate_s9": {
-    "recovered": "(g, primary or secondary feature) in the list with the expected sign",
-    "gate_eligible": "dependency gene has >= 100 non-NaN D lines AND feature in 𝒟 with >= min_carriers (binary) or available (continuous)",
-    "overall_recall_min": 0.6,
-    "family_recall_min": 0.5,
-    "family_min_eligible_rows": 2,
-    "decided_on": "MD-strict; all arms reported",
-    "ci": "exact binomial 95%",
-    "attempt1_file": "results/gates/G_pc_attempt1.json (immutable)",
-    "iterations_file": "results/gate_iterations.csv"
+  "se_r_pred": {
+   "binary": "sigma_resid,D(g) * sqrt(1/n1_R + 1/n0_R)",
+   "continuous": "sigma_resid,D(g) / (SD_R(dtilde_R) * sqrt(n_R))"
   },
-  "clinical_s10": {
-    "ceiling_min_carriers": 3,
-    "ceiling_bh_q": 0.1,
-    "ceiling_robustness": "Wilcoxon rank-sum, one-sided",
-    "testable_min_carriers": 5,
-    "partitions": ["sensitivity", "bypass-resistance", "acquired-resistance", "expected-null", "clinically-refuted"],
-    "ko_classes": ["concordant", "concordant-family", "concordant-KO/combination-required", "discordant-mechanism", "population-only", "non-cell-autonomous", "untestable"],
-    "family_rule": "recovered if any member hit; ceiling uses Bonferroni x |T| within the test",
-    "tiers": ["T1 regulatory approval with label biomarker", "T2 CIViC A/B Supports or NCCN-cited, not approved", "T3 trial-stage biomarker-selected NCT only", "refuted"],
-    "trend_test_min_per_tier": 5,
-    "n_partition_random_pairs": 1000,
-    "n_partition_flag_ratio": 2.0,
-    "actionability_null_permutations": 200,
-    "expression_biomarker_exempt": ["ESR1", "ERBB2", "AR", "PGR", "FOLR1"],
-    "er_mixture": {"components": 2, "posterior_cut": 0.5, "lineages": ["Breast", "Uterus", "Ovary/Fallopian Tube"]},
-    "population_min_carriers": 3,
-    "prevalence": {"log2_ratio_flag": 1.0, "spearman_min_D_lines": 20, "ci": "Wilson 95%"}
+  "R_nan_frac_min": 0.95,
+  "bootstrap_rules": [
+   "lists, covariate drops and pool fixed from the full-R fit",
+   "resampled patient copies get new cluster ids",
+   "zero-variance columns dropped by pivoted QR and logged",
+   "pair with < 2 distinct carrier or < 2 distinct non-carrier patients in a draw = not replicated",
+   "report frac_degenerate per arm"
+  ],
+  "deming": "scipy.odr, sx = SE_D, sy = SE_R",
+  "xlib_arms": [
+   "S1-obs",
+   "EN-obs"
+  ],
+  "xlib_u_rules": [
+   "all_D",
+   "discovery_only"
+  ]
+ },
+ "null_s7": {
+  "unit": "one within-stratum permutation of line labels applied jointly to all 𝒟 rows (shared, gene-specific, and NA indicators/masks CN_absent, MSI_unknown); targets, predictions and covariates (incl. own CN, EXPGATE) fixed",
+  "strata": "lineage x library_group; strata < 2 lines merged into the lineage's largest stratum",
+  "gene_subset_n": 300,
+  "gene_subset_seed_key": "null_gene_subset_seed",
+  "gene_subset_file": "configs/null_genes.txt",
+  "B_base": 20,
+  "B_raised": 50,
+  "raise_rule": "B = 50 iff 50 x wall(permutation 1) <= wall_cap_min, decided from timing only, before any observed-run output is read",
+  "wall_cap_min": 180,
+  "per_draw_seed": "permutation_seed + b",
+  "fdr_emp_max": 0.1,
+  "s1_vectorised_B": 200,
+  "lists": [
+   "S1-obs",
+   "S1-pred",
+   "EN-obs selected",
+   "EN-pred selected",
+   "MD-strict"
+  ],
+  "primary": "fixed-threshold null: observed per-gene per-stage lambda_1SE, SIS K, freq/sign rules, observed F1 BH p-cutoff p*_F1 (full observed family), observed S1-pred cutoff, observed MD-strict cutoff p*_sc with same-sign rule",
+  "primary_statistic": "FDR_emp_fixed = mean_b |hits_b| / max(1, |hits_obs|)",
+  "secondary": "selection-adaptive re-run incl. lambda CV and BH (FDR_emp_rerun); reported only",
+  "secondary_B": 10,
+  "workers": 6
+ },
+ "negative_controls_s7": {
+  "_comment": "NC1 is a pre-declared target and is never replaced. NC2-NC6 values are provisional; the toy run (tests/test_toy_pipeline.py, DESIGN §13.1) writes the 95th percentile (5th for NC6) of each toy statistic at real D dimensions; frozen at tag freeze-bounds.",
+  "NC1_fdr_emp_max": 0.1,
+  "NC2_lowtier_n_genes": 100,
+  "NC2_lowtier_median_fidelity_max": 0.02,
+  "NC2_lowtier_md_strict_per_gene_max": 0.1,
+  "NC3_self_null_dependent_frac_max": 0.1,
+  "NC3_dependent_rule": "carrier median effect < -0.5",
+  "NC5_false_sensitivity_rate_max": 0.2,
+  "NC6_lineage_tf_class3_frac_min": 0.7,
+  "status_NC2_NC6": "provisional",
+  "NC1_replaceable": false,
+  "NC2_seed_key": "lowtier_seed",
+  "NC4_rule": "toy fold-offset plant (toy_s13.pass.fold_offset_*)"
+ },
+ "subtypes_s8": {
+  "module_line_frac_min": 0.5,
+  "gene_cluster_abs_r": 0.5,
+  "gene_cluster_linkage": "average",
+  "cross_lineage": {
+   "testable_lineage": ">= 10 D lines, >= 3 carriers and >= 3 non-carriers",
+   "powered_lineage_power_min": 0.5,
+   "meta": "descriptive: Paule-Mandel tau2 with HKSJ CI (statsmodels combine_effects, method_re='iterated'), I2, tau, prediction interval",
+   "meta_bh_q": 0.05,
+   "min_powered_lineages": 2,
+   "min_organ_groups": 2,
+   "same_sign_frac_min": 0.8,
+   "lolo": "sign kept when each contributing lineage is dropped",
+   "restricted": ">= 2 testable lineages AND per-lineage BH q < 0.05 (F5) AND d x lineage interaction p < 0.05",
+   "pooled_significance": "confounder model restricted to testable lineages (lineage fixed effects, CR2 + nu); BH over F4",
+   "powered_lineage": "per-lineage power >= powered_lineage_power_min at one-sided alpha 0.05 under replication_s6.power_formula",
+   "powered_alpha_one_sided": 0.05,
+   "unresolvable": "< 2 powered lineages ('single-lineage carriers' when one lineage has carriers)",
+   "precedence": [
+    "cross-lineage",
+    "lineage-restricted",
+    "lineage-unresolvable",
+    "undetermined"
+   ]
   },
-  "combinatorial_s11": {
-    "sources": ["dede2020", "thompson2021", "esmaeili2024", "klingbeil2024_biorxiv (analysis only)"],
-    "excluded": ["parrish2021 (counts only; processed GI tables blocked)", "predicted-SL resources"],
-    "gold_standard": "hit in >= 2 screens or >= 2 cell lines",
-    "background": "screened pairs matched on sequence-identity decile and family size",
-    "test": "Fisher exact with 95% CI",
-    "timebox_min": 60
+  "lineage_groups": {
+   "haematopoietic": [
+    "Myeloid",
+    "Lymphoid"
+   ],
+   "gastrointestinal": [
+    "Bowel",
+    "Esophagus/Stomach",
+    "Pancreas",
+    "Biliary Tract",
+    "Ampulla of Vater",
+    "Liver"
+   ],
+   "neural_crest_neuro": [
+    "CNS/Brain",
+    "Peripheral Nervous System",
+    "Skin",
+    "Eye"
+   ],
+   "thoracic": [
+    "Lung",
+    "Pleura"
+   ],
+   "breast_gynaecological": [
+    "Breast",
+    "Ovary/Fallopian Tube",
+    "Uterus",
+    "Cervix",
+    "Vulva/Vagina"
+   ],
+   "genitourinary": [
+    "Kidney",
+    "Bladder/Urinary Tract",
+    "Prostate",
+    "Testis"
+   ],
+   "mesenchymal": [
+    "Bone",
+    "Soft Tissue"
+   ],
+   "head_neck_endocrine": [
+    "Head and Neck",
+    "Thyroid",
+    "Adrenal Gland"
+   ]
   },
-  "lmm_s6": {"top_n_per_list": 200, "kernel": "D-only dependency profiles of non-eligible genes", "keep_p": 0.001},
-  "compute_s14": {"workers": 12, "chunk_genes": 50, "blas_threads_in_worker": 1, "peak_rss_gb_max": 12, "gene_seed": "seed_list[i] XOR int(entrez)"},
-  "toy_s13": {
-    "n_lines": 600, "n_lineages": 12, "n_genes": 300, "n_features": 400, "n_folds": 5,
-    "library_nested_in_lineages": 3,
-    "correlated_block_r": 0.9,
-    "predictor": "ridge trained by 5-fold CV on noisy toy observations, plus per-fold offsets",
-    "seed_key": "toy_seed",
-    "planted": {"pan_lineage": 20, "lineage_restricted": 5, "own_locus_cn": 5, "msi_like": 5, "co_located_passenger": 5, "culture_confounded": 5, "lineage_only_genes": 10, "fold_offset_artefact": 5, "genomic_with_expression_proxy": 5, "wrong_sign_cgt": 1},
-    "pass": {
-      "pan_lineage_recall_min": 0.8,
-      "own_locus_cn_recall_min": 0.8,
-      "msi_like_signature_recovered_min": 4,
-      "msi_like_passenger_lof_selected_max": 1,
-      "co_located_locus_level_min": 4,
-      "culture_confounded_in_md_strict_max": 1,
-      "lineage_only_in_md_strict_max": 0,
-      "lineage_only_class3_frac_min": 0.8,
-      "fold_offset_selected_after_centring_max": 1,
-      "fold_offset_selected_without_centring_min": 3,
-      "genomic_stage_G_recovered_min": 4,
-      "null_fdr_emp_max": 0.10,
-      "null_B": 20,
-      "wrong_sign_counts_as_sign_error": true
-    }
+  "culture_genesets": {
+   "integrin_fak_actin": [
+    "ITGB1",
+    "ITGAV",
+    "ITGB5",
+    "PTK2",
+    "ILK",
+    "PXN",
+    "TLN1",
+    "VCL",
+    "LIMS1",
+    "PARVA",
+    "CRKL",
+    "RAC1"
+   ],
+   "cholesterol_srebp": [
+    "SREBF1",
+    "SREBF2",
+    "SCAP",
+    "MBTPS1",
+    "MBTPS2",
+    "HMGCR",
+    "HMGCS1",
+    "LDLR",
+    "FDFT1",
+    "SQLE",
+    "DHCR7",
+    "LSS"
+   ],
+   "ferroptosis_selenoprotein": [
+    "GPX4",
+    "SEPHS2",
+    "SEPSECS",
+    "PSTK",
+    "EEFSEC",
+    "SECISBP2",
+    "TXNRD1",
+    "SLC7A11"
+   ],
+   "amino_acid_synthesis": [
+    "ASNS",
+    "PYCR1",
+    "PHGDH",
+    "PSAT1",
+    "PSPH",
+    "GOT2",
+    "ASS1",
+    "GLS"
+   ]
+  },
+  "culture_overlap_bh_q": 0.05,
+  "cutting": {
+   "unexpressed_log2tpm": 1.0,
+   "neighbour_effect_delta_max": -0.2,
+   "labels": [
+    "cutting artefact",
+    "amplified-driver addiction",
+    "unresolved"
+   ],
+   "alpha": 0.05,
+   "depleted": "carrier median effect of g < -0.5"
+  },
+  "hypermutation_persist": "same sign and |beta_nonhyper| >= 0.5*|beta_full|",
+  "line_share_def": "s = beta_gd*(xtilde_ld - xbar_d) / sum over selected d' (both stages, FWL-residualised features, full-D EN-pred fit) of beta_gd'*(xtilde_ld' - xbar_d'); only lines with negative sum; binary d also needs carrier status",
+  "line_share_min": 0.25,
+  "culture_flag_cramers_v": 0.3,
+  "culture_flag_rescue": "within-stratum test keeps sign at p < 0.05"
+ },
+ "gate_s9": {
+  "recovered": "(g, primary or secondary feature) in the list with the expected sign",
+  "gate_eligible": "dependency gene has >= 100 non-NaN D lines AND feature in 𝒟 with >= min_carriers (binary) or available (continuous)",
+  "overall_recall_min": 0.6,
+  "family_recall_min": 0.5,
+  "family_min_eligible_rows": 2,
+  "decided_on": "MD-strict; all arms reported",
+  "ci": "exact binomial 95%",
+  "attempt1_file": "results/gates/G_pc_attempt1.json (immutable)",
+  "iterations_file": "results/gate_iterations.csv",
+  "spec_file": "configs/positive_controls_spec.csv",
+  "report_strata": [
+   "access_class",
+   "PAR rows with a non-direct encoding",
+   "en_unreachable rows"
+  ]
+ },
+ "clinical_s10": {
+  "ceiling_min_carriers": 3,
+  "ceiling_bh_q": 0.1,
+  "ceiling_robustness": "Wilcoxon rank-sum, one-sided",
+  "testable_min_carriers": 5,
+  "partitions": [
+   "sensitivity",
+   "bypass-resistance",
+   "acquired-resistance",
+   "expected-null",
+   "clinically-refuted"
+  ],
+  "ko_classes": [
+   "concordant",
+   "concordant-family",
+   "concordant-KO/combination-required",
+   "discordant-mechanism",
+   "population-only",
+   "non-cell-autonomous",
+   "untestable"
+  ],
+  "family_rule": "recovered if any member hit; ceiling uses Bonferroni x |T| within the test",
+  "tiers": [
+   "T1 regulatory approval with label biomarker",
+   "T2 CIViC A/B Supports or NCCN-cited, not approved",
+   "T3 trial-stage biomarker-selected NCT only",
+   "refuted"
+  ],
+  "trend_test_min_per_tier": 5,
+  "n_partition_random_pairs": 1000,
+  "n_partition_flag_ratio": 2.0,
+  "actionability_null_permutations": 200,
+  "expression_biomarker_exempt": [
+   "ESR1",
+   "ERBB2",
+   "AR",
+   "PGR",
+   "FOLR1"
+  ],
+  "er_mixture": {
+   "components": 2,
+   "posterior_cut": 0.5,
+   "lineages": [
+    "Breast",
+    "Uterus",
+    "Ovary/Fallopian Tube"
+   ]
+  },
+  "population_min_carriers": 3,
+  "prevalence": {
+   "log2_ratio_flag": 1.0,
+   "spearman_min_D_lines": 20,
+   "ci": "Wilson 95%"
+  },
+  "source_types": [
+   "civic",
+   "moalmanac",
+   "fda",
+   "nct",
+   "pmid_only (clinically-refuted rows only, PubMed-verified)"
+  ],
+  "config_files": [
+   "configs/cgt_mapping.csv",
+   "configs/cgt_corrections.csv",
+   "configs/cgt_allele_rules.json",
+   "configs/fusion_known_positives.csv"
+  ],
+  "proxy_rule": "allele tests use ALLELE features (proxy=0); a labelled secondary copy with HOT:<gene>, proxy=1, only where the gene-level call approximates the allele; never in the headline",
+  "allele_proxy_excluded": [
+   "KRAS_G12C vs other KRAS",
+   "EGFR T790M/C797S",
+   "KIT D816V vs exon 11",
+   "ERBB2 TKD"
+  ],
+  "testable_rule": "feature_D in U with >= testable_min_carriers carriers",
+  "miss_decomposition": [
+   "ineligible gene (class 1/2/3)",
+   "no feature_D or feature not in 𝒟_g",
+   "eligible, ranked below k",
+   "ceiling data-null"
+  ],
+  "fusion_known_positives_file": "configs/fusion_known_positives.csv (cell-line names resolved to ModelID via Model.csv)",
+  "alk_carriers_max": 10,
+  "brca_biallelic": "dosage 2, or damaging with AF >= 0.7 or own CN < 0.75, or SIL BRCA1; hypermutated lines excluded"
+ },
+ "combinatorial_s11": {
+  "sources": [
+   "dede2020",
+   "thompson2021",
+   "esmaeili2024",
+   "klingbeil2024_biorxiv (analysis only)"
+  ],
+  "excluded": [
+   "parrish2021 (counts only; processed GI tables blocked)",
+   "predicted-SL resources"
+  ],
+  "gold_standard": "hit in >= 2 screens or >= 2 cell lines",
+  "background": "screened pairs matched on sequence-identity decile and family size",
+  "test": "Fisher exact with 95% CI",
+  "timebox_min": 45,
+  "tier": "A (never cut)"
+ },
+ "compute_s14": {
+  "workers": 12,
+  "chunk_genes": 50,
+  "blas_threads_in_worker": 1,
+  "peak_rss_gb_max": 12,
+  "null_workers": 6,
+  "foreground_workers_during_null": 6,
+  "determinism": "shared configs/subsamples.json; coordinate descent deterministic; no per-gene seeds"
+ },
+ "toy_s13": {
+  "n_lines": 600,
+  "n_lineages": 12,
+  "n_genes": 300,
+  "n_features": 400,
+  "n_folds": 5,
+  "library_nested_in_lineages": 3,
+  "correlated_block_r": 0.9,
+  "predictor": "ridge trained by 5-fold CV on noisy toy observations, plus per-fold offsets",
+  "seed_key": "toy_seed",
+  "planted": {
+   "pan_lineage": 20,
+   "lineage_restricted": 5,
+   "own_locus_cn": 5,
+   "msi_like": 5,
+   "co_located_passenger": 5,
+   "culture_confounded": 5,
+   "lineage_only_genes": 10,
+   "fold_offset_artefact": 5,
+   "genomic_with_expression_proxy": 5,
+   "wrong_sign_cgt": 1,
+   "six_carrier_strong": 1
+  },
+  "pass": {
+   "pan_lineage_recall_min": 0.8,
+   "own_locus_cn_recall_min": 0.8,
+   "msi_like_signature_recovered_min": 4,
+   "msi_like_passenger_lof_selected_max": 1,
+   "co_located_locus_level_min": 4,
+   "culture_confounded_in_md_strict_max": 1,
+   "lineage_only_in_md_strict_max": 0,
+   "lineage_only_class3_frac_min": 0.8,
+   "fold_offset_selected_after_centring_max": 1,
+   "fold_offset_selected_without_centring_min": 3,
+   "genomic_stage_G_recovered_min": 4,
+   "wrong_sign_counts_as_sign_error": true,
+   "six_carrier_selected_subsample_frac_min": 0.5,
+   "planted_fdp_true_max": 0.15,
+   "fdr_emp_fixed_minus_fdp_true_min": -0.05,
+   "pure_null_bh_lists_p_any_hit_max": 0.1,
+   "pure_null_B": 20,
+   "anticonservative_d_stage": "reported diagnostic"
+  },
+  "null_seed_key": "toy_null_seed",
+  "writes_nc_bounds": "NC2-NC6: 95th percentiles (5th for NC6) at real D dimensions",
+  "authorship": "different agent; commits carry an 'Agent: <name>' trailer"
+ },
+ "limits_s12": {
+  "universe": "variable ∪ selective genes ∪ controls",
+  "gene_level_classes": [
+   "1 SD < 0.15",
+   "2 low tier",
+   "3 r_within < 0.10 or fidelity < 0.10 or M1 named share < 0.5",
+   "3b predictable and nameable, no MD-strict determinant"
+  ],
+  "aggregation": "9 if any pair is class 9, else max pair class; all pair classes listed",
+  "class5": "< 5 D carriers or R power < 0.5",
+  "clinical_expression_exempt": "clinical_s10.expression_biomarker_exempt",
+  "cards": {
+   "known_recovery": "results/candidates/known_recovery.csv",
+   "shortlist": "results/candidates/shortlist.csv",
+   "shortlist_rank": [
+    "cross-lineage label precedence",
+    "R one-sided p asc",
+    "n powered lineages desc"
+   ],
+   "report_top_rows": 15,
+   "case_studies": 3,
+   "not_in_curated_lists": "not in positive_controls ∪ CGT ∪ P1 biomarker_pairs ∪ oncogene_pairs",
+   "setA_flag": "fraction of set A lines dependent on g"
   }
+ },
+ "indep_s13": {
+  "start": "after results/gates/G_pc_attempt1.json",
+  "genes": 20,
+  "delta_pairs": 10,
+  "s1_p_tol_abs_log10": 1e-06,
+  "counts": "exact",
+  "en_freq_tol": 0.04,
+  "en_selected_set": "identical excluding features within en_freq_tol of selection_freq_min",
+  "en_beta_rel_tol": 0.001
+ }
 }

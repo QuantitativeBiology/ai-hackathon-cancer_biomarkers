@@ -12,3 +12,5 @@ keep their Part 1 evidence until this project adds its own.
 7. (P1) Ask reviewer subagents to return their report as text as well as writing it. [Part 1: reviewer file writes were refused.]
 8. Tell every web-facing agent never to send the user's email or other identifiers to external services. [M1: the methods-survey agent passed the user's email to NCBI's ID converter once, unrequested.]
 9. Have a "technical brief" agent map the upstream codebase before designing. [M1: the Part 1 brief found exact-attribution feasibility, cached OOF/test predictions and 5 hidden write-paths into the read-only Part 1 in one pass.]
+10. On a machine suspend, commit only finished work, write the resume point into the tree, and resume stalled agents with SendMessage (context kept) rather than re-dispatching. [M3b: all 4 agents stalled at suspend; each was resumed from its last step with no rework.]
+11. Split curation tasks that query many clinical sources into a curated-mapping step and a mechanical-build step, with narrow per-source queries. [M3b: the first CGT agent was halted mid wide multi-source query and produced no files.]
