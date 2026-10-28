@@ -15,3 +15,4 @@ after a fresh-agent "stop doing / worked well" review (reviews/lessons_review_m2
 10. Split curation work over many clinical sources into a curated-mapping step and a mechanical-build step, one narrow query per source, with a handover file for any halted agent. [D5; cgt_handover.md]
 11. Have a technical-brief agent map the upstream codebase before design. [M1: part1_brief found exact attribution, cached OOF/test predictions and 5 write hazards into Part 1]
 12. Tell every web-facing agent never to send the user's email or other identifiers to external services. [M1: methods-survey agent passed the email to NCBI once; D5 PubMed check explicitly "no email or identifiers sent"]
+13. Audit curated ground truth with an independent agent before freezing it, opening the cited records. [M3b: the CGT audit found a refuted row citing a wrong-direction record, read-through KMT2A "fusions" and an ER+ cut at 1.84 log2TPM, none caught by the builder's 19 passing tests.]
