@@ -1,0 +1,23 @@
+# Raw, restricted and derived bulk data are never committed (DepMap terms, third-party licences, size).
+# Committed: code, configs, small derived results tables (per-gene / per-pair summaries), documents.
+data/
+cache/
+external/
+*.parquet
+*.feather
+*.npy
+*.npz
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+*.gz
+*.zip
+*.tar
+*.xlsx
+*.maf
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+.venv/
+*.log
