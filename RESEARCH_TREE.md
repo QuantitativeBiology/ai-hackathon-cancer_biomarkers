@@ -17,7 +17,13 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
 
 ## Tree
 - [x] M0 Setup — PROMPT.md, .gitignore, DATA.md, LESSONS.md, RESEARCH_TREE.md
-- [~] M1 Literature and data availability → LITERATURE.md (5 parallel agents: part1 brief, methods, clinical, combinatorial+confounders, data access)
-- [ ] M2 Design → DESIGN.md, review rounds (≤3) in `reviews/`
+- [~] M1 Literature and data availability → LITERATURE.md
+  - [x] docs/part1_brief.md — OOF/test preds cached; M1/M2/T linear (exact attribution), M3 TreeSHAP; 5 write hazards into P1
+  - [x] docs/lit/methods_prior_work.md, clinical_ground_truth.md, combinatorial_confounders.md; docs/data_availability.md
+  - [x] LITERATURE.md synthesis (writer); clinical survey pair counts inconsistent → recount by script at CGT freeze
+  - [~] User download request sent (DepMap extras: GlobalSignatures, CRISPRConfounders, full mutations, CN segments; optional RRBS, PRISM)
+  - [~] External fetch (clinical: CIViC, MOAlmanac, FDA CDx, OncoKB gene lists; combinatorial screens)
+- [~] M2 Design → DESIGN.md v1 drafted; review round 1 (7 reviewers: PI, prior work, stats, data, algorithms/compute, agent failure modes, clinical) running
+- [~] M3 Infrastructure (design-independent): src/biomark loaders, replication guard, Part-1-untouched test
 - [ ] M3+ Implementation (defined by DESIGN.md)
 - [ ] Final REPORT.md
