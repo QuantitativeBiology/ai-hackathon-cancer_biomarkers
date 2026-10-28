@@ -4,7 +4,7 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
-### 2026-10-28 — SUSPEND (machine suspended by the user mid-M2/M3b) — RESUME HERE
+### 2026-10-28 — SUSPEND (machine suspended by the user mid-M2/M3b) — resumed 19:02; all 4 agents resumed via SendMessage
 Done and committed: M0 setup; M1 literature (LITERATURE.md, docs/lit/*, data availability, Part 1 brief); DESIGN v1 → v2
 after round 1 (84 items, reviews/round1_response.md); round-2 reviews (reviews/round2_*.md, decisions D5–D6); core
 library src/biomark/{paths,p1,guard,gitutil}.py with 31 passing tests; input checksums verified; external clinical and
@@ -36,6 +36,8 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D7 (M2): the user supplied CCLE RRBS promoter methylation before the first dictionary build, so methylation is in scope
+  (families METH and SIL-METH, U_G, access class proxy); coverage is limited to RRBS-profiled CCLE lines.
 - D6 (M2, R2): accept round 2 nearly in full: HC2/CR2 with carrier-based df (small-carrier size inflation, R2-ST1);
   fixed-threshold null (R2-ST2); EN in-fit carrier floor 2 (R2-ST4); P1 headline on genomic universe U_G with access-class
   strata (R2-FP-3/4); two freeze tags and a pre-listed R request file (R2-IM1/2); budget cuts (LMM, Tier C, M3 refit).
@@ -57,7 +59,8 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   - [x] DESIGN v1; round 1: 7 reviewers, 84 items (18 critical) in reviews/round1_*.md
   - [x] DESIGN v2 + reviews/round1_response.md (PI decisions D1–D3); configs/{design_params,primary_endpoints,tiers}.json
   - [x] Round 2: fresh PI + statistics + implementability, 23 items (6 critical) in reviews/round2_*.md
-  - [~] DESIGN v3 + reviews/round2_response.md (D6)
+  - [x] DESIGN v3 + reviews/round2_response.md (D6), all 23 accepted; v3.1 amendment D7 (RRBS methylation: METH, SIL-METH)
+  - [~] Round 3: single fresh reviewer (blockers to freeze only)
 - [~] M3 Infrastructure
   - [x] src/biomark (paths, p1 loaders, guard, P1 write-block); 31 tests pass; input sha256 11/11 OK
   - [x] External fetch: CIViC, MOAlmanac (GPL-2.0), FDA CDx (232 rows), OncoKB lists; combinatorial: Esmaeili 2024 harmonised table (covers Dede/Parrish/Thompson/CHyMErA/Ito), Dede, Thompson, Flister 2024 bioRxiv (analysis-only licence); Parrish processed tables blocked (not needed)
