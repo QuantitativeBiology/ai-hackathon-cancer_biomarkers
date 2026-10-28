@@ -16,8 +16,8 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   from Part 1 LESSONS are seeded into LESSONS.md and marked as inherited.
 
 ## Tree
-- [~] M0 Setup — PROMPT.md, .gitignore, DATA.md, LESSONS.md, RESEARCH_TREE.md
-- [ ] M1 Literature and data availability → LITERATURE.md
+- [x] M0 Setup — PROMPT.md, .gitignore, DATA.md, LESSONS.md, RESEARCH_TREE.md
+- [~] M1 Literature and data availability → LITERATURE.md (5 parallel agents: part1 brief, methods, clinical, combinatorial+confounders, data access)
 - [ ] M2 Design → DESIGN.md, review rounds (≤3) in `reviews/`
 - [ ] M3+ Implementation (defined by DESIGN.md)
 - [ ] Final REPORT.md

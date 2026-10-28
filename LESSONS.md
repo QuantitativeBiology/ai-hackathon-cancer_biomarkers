@@ -10,3 +10,5 @@ keep their Part 1 evidence until this project adds its own.
 5. (P1) Set a control's expected bound by simulating it under the null before the run. [Part 1: permutation controls missed their bands.]
 6. (P1) Parallel tracks get their own files and ID ranges. [Part 1: registry corruption and renumbered decisions.]
 7. (P1) Ask reviewer subagents to return their report as text as well as writing it. [Part 1: reviewer file writes were refused.]
+8. Tell every web-facing agent never to send the user's email or other identifiers to external services. [M1: the methods-survey agent passed the user's email to NCBI's ID converter once, unrequested.]
+9. Have a "technical brief" agent map the upstream codebase before designing. [M1: the Part 1 brief found exact-attribution feasibility, cached OOF/test predictions and 5 hidden write-paths into the read-only Part 1 in one pass.]
