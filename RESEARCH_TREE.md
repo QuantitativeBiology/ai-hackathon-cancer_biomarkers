@@ -90,7 +90,9 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
 - [~] M3 Infrastructure
   - [x] src/biomark (paths, p1 loaders, guard, P1 write-block); 31 tests pass; input sha256 11/11 OK
   - [x] External fetch: CIViC, MOAlmanac (GPL-2.0), FDA CDx (232 rows), OncoKB lists; combinatorial: Esmaeili 2024 harmonised table (covers Dede/Parrish/Thompson/CHyMErA/Ito), Dede, Thompson, Flister 2024 bioRxiv (analysis-only licence); Parrish processed tables blocked (not needed)
-  - [x] CGT table: 64 tests (29 testable, 22 P2-scored), 524/526 record IDs resolve; [~] independent audit → freeze-cgt
+  - [x] CGT table: 64 tests; independent audit (2 critical, 5 major, 11 minor, all fixed: AUD-1..18) → 27 testable,
+    18 P2-headline, 8 gate-disjoint; tag `freeze-cgt` (no dependency data joined); DESIGN amendments A1–A5 (append-only)
+  - [x] Dictionary track committed; [~] single rebuild #4 with ALLELE/CLIN
   - [~] M3b parallel tracks (started during round 2, D4): dictionary/eligibility/controls · CGT table (no dependency data) · toy simulation (separate verification agent)
 - [~] M4 Core pipeline engine (stats/HC2, two-stage stability EN, 4 arms, MD-strict, fixed-threshold null) — pipeline author agent; unit tests on synthetic data; real run after freeze-bounds
 - [ ] Final REPORT.md
