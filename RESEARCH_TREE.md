@@ -52,6 +52,19 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D14 (M4, ~23:15, NC bound rulings before any ridge NC2 value or real result):
+  - R1: NC2 (low-tier false hits) is an error-type control, so per A6 its toy value is the max over 5 ridge-toy replicates.
+    On the smooth toy EN-pred selects nothing on low-tier genes, so the value is degenerate (≈ 0).
+  - R2: a toy NC statistic with zero between-replicate variance at the edge of its range, or with a zero underlying count,
+    has no resolution. Its provisional value becomes final (DEV-TOY row), as for NC3/NC5. NC6 (1.0 in 5/5) → 0.7 stays.
+  - Interim diagnostics on 8cffc91 found no engine bug.
+    - Fold artefact: the EN frequency is 0.36–0.50 without centring and ≤ 0.04 with it. The bound was derived from S1-pred
+      BH, not from EN.
+    - S1-obs smooth: false hits 10/4/8/3/9 over 5 replicates; the null gives 5.5/draw. This is variability plus a
+      denominator mismatch in the test (FDR_emp counts neutral hits, FDP_true does not).
+    - [!] Pure null P(any hit): MD-strict 0.30, S1-pred 0.25. The candidate secondary list MD-global (EN-pred ∩ S1-obs BH)
+      gives 0.00, with FDP 0 and recall 0.87–0.88 on the smooth toys (MD-strict: FDP ≤ 0.046, same recall). Whether it
+      becomes the error-controlled catalogue (amendment A7) waits for the ridge-toy numbers.
 - D13 (M4, ~23:00, process-guard findings before freeze-bounds, no association result yet):
   - (i) The CR2 + ν test is anti-conservative at n = 255 with heteroskedastic carriers (size 0.069–0.073 at α 0.05). This
     triggers the pre-declared §5.3 fallback, binary d → df = carrier clusters − 1, applied in every S1 test and in power
