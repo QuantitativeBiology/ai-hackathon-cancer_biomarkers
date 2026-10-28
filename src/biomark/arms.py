@@ -207,19 +207,23 @@ def run_en(data, arms=EN_ARMS, genes=None, U=None, workers: int = 1, lam: dict |
     if workers <= 1 or len(genes) <= chunk:
         eng = en_engine(data)
         for a in arms:
+            t_arm = time.time()
             t, l, tm, _ = run_en_genes(data, a, genes, gf, engine=eng, lam=None if lam is None else lam.get(a), K=K)
             tabs.append(t), lts.append(l), tims.append(tm)
+            tims.append({"arm": a, "kind": "arm_wall", "start_epoch": t_arm, "end_epoch": time.time(), "workers": 1})
     else:
         from concurrent.futures import ProcessPoolExecutor
         gi = {g: i for i, g in enumerate(data.genes)}
         order = sorted(genes, key=lambda g: data.rows_ok[:, gi[g]].tobytes())
         for a in arms:
+            t_arm = time.time()
             jobs = [(a, order[i:i + chunk], None if lam is None else lam.get(a), K) for i in range(0, len(order), chunk)]
             payload = {"data": data.for_workers(include_obs=TARGET_OF[a] == "obs"), "gf": gf,
                        "blas_threads": PR.null_params()["blas_threads"]}
             with ProcessPoolExecutor(max_workers=workers, initializer=_worker_init, initargs=(payload,)) as ex:
                 for t, l, tm in ex.map(_worker_en, jobs):
                     tabs.append(t), lts.append(l), tims.append(tm)
+            tims.append({"arm": a, "kind": "arm_wall", "start_epoch": t_arm, "end_epoch": time.time(), "workers": workers})
     tab = finish_en(pd.concat([t for t in tabs if len(t)], ignore_index=True)) if any(len(t) for t in tabs) \
         else pd.DataFrame()
     lt = pd.concat(lts, ignore_index=True) if lts else pd.DataFrame()
@@ -237,8 +241,8 @@ def strict(en_tab: pd.DataFrame, s1_obs: pd.DataFrame, arm: str = "EN-pred", p_c
     sp = PR.stats_params()
     sel = en_tab[(en_tab["arm"] == arm) & en_tab["selected"].astype(bool)]
     cols = ["gene", "feature", "beta", "se", "df", "nu", "p", "n_obs", "n_carriers", "dropped_cov",
-            "collinear_with_design", "se_type"]
-    d = s1_obs[s1_obs["arm"] == "S1-obs"][cols].rename(columns={"p": "p_sc"})
+            "collinear_with_design", "se_type", "df_rule", "df_nu", "p_nu"]
+    d = s1_obs[s1_obs["arm"] == "S1-obs"][[c for c in cols if c in s1_obs]].rename(columns={"p": "p_sc", "p_nu": "p_sc_nu"})
     m = sel[["gene", "feature", "selection_freq", "beta", "maj_sign", "stage"]].rename(
         columns={"beta": "beta_en"}).merge(d, on=["gene", "feature"], how="left")
     m["d_stage_testable"] = m["p_sc"].notna()
@@ -248,6 +252,27 @@ def strict(en_tab: pd.DataFrame, s1_obs: pd.DataFrame, arm: str = "EN-pred", p_c
     passed &= (m["q_sc"] < sp["q_sc"]) if p_cut is None else (m["p_sc"] <= p_cut)
     m["pass"] = passed.fillna(False).astype(bool)
     m["list"] = "MD-strict" if arm == "EN-pred" else "EN-obs-strict"
+    return m
+
+
+def md_global(en_tab: pd.DataFrame, s1_obs: pd.DataFrame, arm: str = "EN-pred", p_cut: float | None = None) -> pd.DataFrame:
+    """MD-global (amendment A7, the catalogue): EN-pred selected ∩ S1-obs F1 BH hits (full-family BH at s1_s5.bh_q,
+    not collinear_with_design), same sign (S1-obs β vs the EN majority sign). ``p_cut`` given (fixed-threshold
+    null): the S1-obs condition is F1 and p <= p_cut (the observed p*_F1). One row per EN-pred selected candidate
+    with ``pass`` = in MD-global; ``list`` = 'MD-global'."""
+    sel = en_tab[(en_tab["arm"] == arm) & en_tab["selected"].astype(bool)]
+    cols = ["gene", "feature", "beta", "se", "df", "p", "q", "test_family", "selected", "n_obs", "n_carriers",
+            "dropped_cov", "collinear_with_design", "se_type", "df_rule", "p_nu"]
+    s = s1_obs[s1_obs["arm"] == "S1-obs"]
+    d = s[[c for c in cols if c in s]].rename(columns={"selected": "s1_obs_selected"})
+    m = sel[["gene", "feature", "selection_freq", "beta", "maj_sign", "stage"]].rename(
+        columns={"beta": "beta_en"}).merge(d, on=["gene", "feature"], how="left")
+    m["same_sign"] = np.sign(m["beta"]) == m["maj_sign"]
+    f1 = (m["test_family"] == "F1") & ~m["collinear_with_design"].fillna(False).astype(bool)
+    hit = m["s1_obs_selected"].fillna(False).astype(bool) if p_cut is None else (m["p"] <= p_cut)
+    m["s1_f1_hit"] = (f1 & hit).fillna(False).astype(bool)
+    m["pass"] = (m["same_sign"] & m["s1_f1_hit"]).fillna(False).astype(bool)
+    m["list"] = "MD-global" if arm == "EN-pred" else "EN-obs-global"
     return m
 
 
@@ -329,6 +354,7 @@ def run_arms(data, arms=ARMS, workers: int = 1, genes=None, timings: dict | None
     else:
         s1 = pd.DataFrame()
     timings["s1_obs_pred"] = time.perf_counter() - t0
+    timings["s1_window"] = (time.time() - timings["s1_obs_pred"], time.time())
     U = (s1[s1["arm"] == s1["arm"].iloc[0]][["gene", "feature"]] if len(s1) else universe(data, genes))
     en_arms = tuple(a for a in EN_ARMS if a in arms)
     t0 = time.perf_counter()
@@ -344,6 +370,11 @@ def run_arms(data, arms=ARMS, workers: int = 1, genes=None, timings: dict | None
         out["md_strict_all"] = md
         out["md_strict"] = md[md["pass"]].reset_index(drop=True)
         out["p_cut_sc"] = p_cut_sc(md)
+        mg = md_global(en_tab, s1, "EN-pred")                # A7: the catalogue
+        out["md_global_all"] = mg
+        out["md_global"] = mg[mg["pass"]].reset_index(drop=True)
+        mds = set(zip(out["md_strict"]["gene"], out["md_strict"]["feature"]))
+        out["md_global"]["in_md_strict"] = [(g, f) in mds for g, f in zip(out["md_global"]["gene"], out["md_global"]["feature"])]
     if "EN-obs" in arms and len(s1) and (s1["arm"] == "S1-obs").any():
         mo = strict(en_tab, s1, "EN-obs")
         out["en_obs_strict_all"] = mo

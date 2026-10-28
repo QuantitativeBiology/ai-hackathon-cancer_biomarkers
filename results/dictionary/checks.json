@@ -83,7 +83,7 @@
  },
  "nmf": {
   "n_iter": 252,
-  "reconstruction_err": 2357.458984375,
+  "reconstruction_err": 2357.526642744882,
   "n_genes": 5000,
   "seed": 0
  },

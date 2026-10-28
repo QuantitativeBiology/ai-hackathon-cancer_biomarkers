@@ -51,6 +51,7 @@
   },
   "toy": {"cgt_k": 200, "gate_lists": ["MD-strict", "S1-obs", "S1-pred", "EN-obs", "EN-pred"]},
   "se_type": "CR2",
+  "df_rule": {"_comment": "DESIGN 5.3 df_fallback_if_calibration_fails, triggered by tests/test_inference_calibration.py (n = 255, carrier SD x 2; results/deviations.csv). Binary d: df = min(n - rank(Z) - 2, carrier clusters - 1); continuous d: min(n - rank(Z) - 2, nu). The nu-based df and p stay as the logged sensitivity (df_nu, p_nu).", "binary": "fallback_carrier_clusters", "continuous": "nu"},
   "pair_classes": {"_comment": "DESIGN §12.2 pair-class codes", "expression_gating": 4, "too_rare": 5, "confounded": 6, "valid": 9},
   "timing_dir": "results/timing"
 }

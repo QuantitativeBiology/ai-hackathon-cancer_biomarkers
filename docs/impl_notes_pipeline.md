@@ -197,3 +197,49 @@ Ambiguities resolved:
    decomposition, and the tumour-agnostic ⇒ cross-lineage check (needs the §8.3 labels from M5).
 7. Comment-only change in `stats.py` (`# literal-ok` on the EB Gaussian density) so the project leakscan passes on
    the engine; no semantic change.
+
+# Fixes before freeze-bounds (F1–F6) and amendment A7
+
+- **F1 df fallback (DESIGN §5.3, A7 iv; deviations.csv DEV-DF-FALLBACK).** `stats.shared_df` is the single df rule of
+  every test and of power. cap = n − rank(Z) − 2. Binary d: df = min(cap, carrier clusters − 1), where carrier
+  clusters = distinct PatientID clusters among the carriers in the fit rows (`stats.carrier_clusters`). Continuous d:
+  min(cap, ν). df ≤ 0 gives p = NaN. The ν-rule df and p stay as the logged sensitivity (`df_nu`, `p_nu`), and
+  `df_rule` is a column of every S1 / MD / R table. Selected by `pipeline_params.json:df_rule.binary`.
+  - Where it applies: `s1_scan` (D, XLIB, the null); `pair_test` (`binary=None` detects 0/1 d from the raw
+    values); `audit.pair_fit`; `RFitter` (R tests, bootstrap; feature types from the dictionary).
+  - `cr2_core` only sees the residualised d̃, so it applies the fallback only when given `car_clusters`. Without
+    them it is the ν rule, which is what `tests/test_inference_calibration.py` measures (see the report: that test
+    must pass carrier counts to measure the active rule).
+  - The same simulation with the fallback (seeds and counts unchanged) has max size 0.0587 at α 0.05 and 0.0011 at
+    1e-3. Four cells are below the 0.035 floor: (255, 3, SD × 2) 0.0318; (255, 3, homoskedastic) 0.0104;
+    (255, 5, homoskedastic) 0.0293; (1022, 3, homoskedastic) 0.0276.
+  - 50-gene pilot, F1 BH hits: S1-obs 16 → 12 and S1-pred 5,996 → 5,264 (strictly nested). EN is unaffected.
+- **F2 power df = test df.** `endpoints.pool_power` builds the R test's own design: `RDesign.model_Z`, shared with
+  `RFitter.fit`, with the gene covariates and the D drops. It then calls `stats.shared_df` with the cap and the
+  fallback. SD_R(d̃_R) uses the same residual. `RFitter.cov` is now an `RDesign`, a `CovDesign` that carries own
+  CN / EXPGATE.
+- **F3 NMF D-only invariance.** `dictionary.fam_prog` fits on D (unchanged) and runs `transform` separately per role
+  (D, R, set A), in float64 with one BLAS thread (`threadpoolctl`). `tests/test_nmf.py` passes 3/3.
+  - Dictionary rebuild: only `PROG.parquet` and `nmf_components.parquet` changed (50 PROG feature hashes; `sd_D` of
+    11 PROG features changed at the 6th decimal). PSCORE and every other family are unchanged.
+  - `eligible_genes.csv`, `eligibility.csv`, `positive_controls.csv` and `pc_eligibility.csv` are byte-identical
+    after re-running `build_eligibility.py` and `build_positive_controls.py`.
+- **F4 timing schema.** `analyses.write_timing` writes job, utc (end), start_utc, numeric wall_s, workers and a
+  per-process run_id; it raises if wall_s cannot be determined.
+  - `run_arms`: s1_obs and s1_pred share one window and run_id; en_obs and en_pred get per-arm windows recorded in
+    `arms.run_en` (timing only); md_strict has workers 1. `pilot` records numeric wall_s and workers.
+  - XLIB: per-stem windows. `run_gate`: stem gate_pc plus a registry row.
+  - `run_null --s1-vectorised`: a sub-record `s1_vectorised` of `null_fixed.json`, never a new stem.
+- **F5** gene constants of `scripts/build_cgt.py` -> `configs/cgt_build_rules.json` (`params.cgt_build_rules`).
+  The unmodified script first reproduced every CGT output byte for byte, and so did the refactored one: the
+  sha256 of `clinical_ground_truth.csv`, `cgt_curated_mapping.csv`, `cgt_features.csv`, `results/cgt/*`,
+  `cgt_dropped.csv` and `cache/cgt/*` is unchanged.
+- **F6** `literal-ok` reasons on guard.py 79/102/148/203 and p1.py 55/209/219/399. Project leakscan: 0 hits.
+- **A7 MD-global** = EN-pred selected ∩ S1-obs F1 BH hits (not collinear), same sign (`arms.md_global`).
+  - Outputs: `res/out["md_global"]` and `["md_global_all"]`, with flags `pass`, `s1_f1_hit`, `same_sign` and
+    `in_md_strict`; `results/md/md_global{,_all}.csv`. In the fixed-threshold null it is the list `MD-global`
+    (F1 p ≤ observed p*_F1, same sign).
+  - Downstream defaults (`IO.catalogue()` = MD-global): audits' pair and gene classes; `r_requests` (reason
+    MD-global; MD-strict kept); Q4b actionability; component readout and confounder audit (both lists, flagged);
+    replicate `r_lines`.
+  - The gate is decided on MD-strict, with MD-global reported. The P1/P2 contrasts are unchanged.

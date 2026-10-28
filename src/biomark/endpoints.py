@@ -394,57 +394,69 @@ def expected_nonnan(nan_D: pd.DataFrame, lib_D: pd.Series, lib_R: pd.Series) -> 
 
 
 def pool_power(U_rows: pd.DataFrame, beta_shrunk: pd.Series, sigma_g: pd.Series, XR: np.ndarray, fpos: pd.Series,
-               binary: pd.Series, covR: ST.CovDesign, patientsR: np.ndarray, expR: pd.DataFrame,
-               drops: pd.Series) -> pd.DataFrame:
+               binary: pd.Series, covR, patientsR: np.ndarray, expR: pd.DataFrame, drops: pd.Series) -> pd.DataFrame:
     """R-evaluability and power of every (g, d) of ``U_rows`` from R molecular data only (no R effect).
-    d̃_R = d residualised on the R shared design (design blocks + droppable covariates not dropped for (g, d)) on
-    R lines expected non-NaN for g and non-NaN for d; gene covariates are not used for power (approximation)."""
+
+    The df is the R test's own df (DESIGN §6.1 "the test and its power share one df rule"): the same §5.3 design as
+    ``RFitter.fit`` (``covR.model_Z``: design blocks, droppable covariates and, when ``covR`` is an ``RDesign``, the
+    gene covariates of g, all with the D drops), the same cap and the same binary fallback (``stats.shared_df``), on
+    the R lines expected non-NaN for g and non-NaN for d. SD_R(d̃_R) for SE_R_pred uses that residual too."""
     r6 = PR.dp()["replication_s6"]
     nmin1, nmin0 = int(r6["R_min_carriers"]), int(r6["R_min_noncarriers"])
     cmin = int(PR.dp()["dictionary_s3"]["continuous_min_nonnan"])
     pm = float(r6["power_min"])
-    drop_names = set(covR.droppable_names)
-    U = U_rows.copy()
+    U = U_rows[["gene", "feature"]].copy().reset_index(drop=True)
     U["gene"] = U["gene"].astype(str)
-    U["sdrop"] = [ "|".join(sorted(set(str(x).split("|")) & drop_names)) if isinstance(x, str) else "" for x in drops.reindex(
-        pd.MultiIndex.from_arrays([U["gene"], U["feature"]])).to_numpy()]
-    gpat = {g: expR[g].to_numpy().tobytes() for g in U["gene"].unique()}
-    U["gpat"] = U["gene"].map(gpat)
-    cache = {}
-    res = {k: np.full(len(U), np.nan) for k in ("n_R", "n1_R", "n0_R", "sd_R", "nu_R")}
-    for (gp, sd_key), idx in U.groupby(["gpat", "sdrop"]).groups.items():
-        rows_g = np.frombuffer(gp, dtype=bool)
-        sub = U.loc[idx]
-        S = set(sd_key.split("|")) if sd_key else set()
-        for f, fidx in sub.groupby("feature").groups.items():
-            key = (gp, sd_key, f)
-            if key not in cache:
-                x = XR[:, int(fpos[f])]
-                rows = rows_g & np.isfinite(x)
-                nr = int(rows.sum())
-                if nr < 2:
-                    cache[key] = (nr, 0, 0, 0.0, np.nan)
-                else:
-                    Q = ST.orth(covR.Z(rows, covR.design_names + [n for n in covR.droppable_names if n not in S]))
-                    dt = ST.resid(Q, x[rows][:, None])[:, 0]
-                    n1 = int((x[rows] == 1).sum())
-                    cache[key] = (nr, n1, nr - n1, float(np.sqrt((dt ** 2).mean())), ST.nu_from(dt, patientsR[rows]))
-            v = cache[key]
-            loc = U.index.get_indexer(fidx)
-            for j, nm in enumerate(("n_R", "n1_R", "n0_R", "sd_R", "nu_R")):
-                res[nm][loc] = v[j]
+    key = pd.MultiIndex.from_arrays([U["gene"], U["feature"]])
+    dr = drops.reindex(key).to_numpy()
+    U["dkey"] = ["|".join(sorted(set(str(x).split("|")) - {""})) if isinstance(x, str) else "" for x in dr]
+    fp = fpos.reindex(U["feature"]).to_numpy().astype(np.int64)
+    bin_f = binary.reindex(U["feature"]).fillna(True).to_numpy().astype(bool)
+    finite = np.isfinite(XR)
+    pats = np.asarray(patientsR).astype(str)
+    model_Z = getattr(covR, "model_Z", None)
+    res = {k: np.full(len(U), np.nan) for k in ("n_R", "n1_R", "n0_R", "sd_R", "nu_R", "df_nu_R")}
+    rule = np.full(len(U), "", dtype=object)
+    for (g, dk), idx in U.groupby(["gene", "dkey"], sort=False).groups.items():
+        idx = np.asarray(idx)
+        rows_g = expR[g].to_numpy().astype(bool)
+        S = set(dk.split("|")) if dk else set()
+        pat = {}
+        for i in idx:
+            pat.setdefault((rows_g & finite[:, fp[i]]).tobytes(), []).append(i)
+        for pk, ii in pat.items():
+            rows = np.frombuffer(pk, dtype=bool)
+            nr = int(rows.sum())
+            ii = np.asarray(ii)
+            Xr = XR[rows][:, fp[ii]]
+            n1 = (Xr == 1).sum(0)
+            res["n_R"][ii], res["n1_R"][ii], res["n0_R"][ii] = nr, n1, nr - n1
+            if nr < 2:
+                continue
+            Z = model_Z(g, rows, S) if model_Z is not None else covR.Z(
+                rows, covR.design_names + [nm for nm in covR.droppable_names if nm not in S])
+            Q = ST.orth(Z)
+            Dt = ST.resid(Q, Xr)
+            cl = ST.Clusters.of(pats[rows])
+            cc = ST.carrier_clusters(Xr, bin_f[ii], cl)
+            dd = ST.shared_df(Dt, cl, nr, Q.shape[1], car_clusters=cc)
+            res["sd_R"][ii] = np.sqrt((Dt ** 2).mean(0))
+            res["nu_R"][ii] = dd["df"]
+            res["df_nu_R"][ii] = dd["df_nu"]
+            rule[ii] = dd["df_rule"]
     for k, v in res.items():
         U[k] = v
-    b = binary.reindex(U["feature"]).to_numpy().astype(bool)
-    U["binary"] = b
-    U["R_evaluable"] = np.where(b, (U["n1_R"] >= nmin1) & (U["n0_R"] >= nmin0), (U["n_R"] >= cmin) & (U["sd_R"] > 0))
+    U["df_rule"] = rule
+    U["binary"] = bin_f
+    U["R_evaluable"] = np.where(bin_f, (U["n1_R"] >= nmin1) & (U["n0_R"] >= nmin0), (U["n_R"] >= cmin) & (U["sd_R"] > 0))
     sig = sigma_g.reindex(U["gene"]).to_numpy()
-    U["se_R_pred"] = ST.se_r_pred(sig, b, U["n1_R"].to_numpy(), U["n0_R"].to_numpy(), U["sd_R"].to_numpy(), U["n_R"].to_numpy())
-    U["beta_shrunk"] = beta_shrunk.reindex(pd.MultiIndex.from_arrays([U["gene"], U["feature"]])).to_numpy()
+    U["se_R_pred"] = ST.se_r_pred(sig, bin_f, U["n1_R"].to_numpy(), U["n0_R"].to_numpy(), U["sd_R"].to_numpy(),
+                                  U["n_R"].to_numpy())
+    U["beta_shrunk"] = beta_shrunk.reindex(key).to_numpy()
     with np.errstate(invalid="ignore", divide="ignore"):
         U["power"] = ST.power_t(U["beta_shrunk"].to_numpy(), U["se_R_pred"].to_numpy(), U["nu_R"].to_numpy())
     U["powered"] = U["R_evaluable"] & (U["power"] >= pm)
-    return U.drop(columns=["gpat"])
+    return U.drop(columns=["dkey"])
 
 
 def p1_k(pool_size: int) -> int:
@@ -479,15 +491,46 @@ def strata_of(access_class: pd.Series) -> dict:
     return {"direct": a == "direct", "non_direct": a != "direct", "proxy": a == "proxy"}
 
 
+class RDesign(ST.CovDesign):
+    """CovDesign of one line set that also carries the gene covariates (own CN, EXPGATE), so the R test and its power
+    build the identical §5.3 design (``model_Z``)."""
+
+    def __init__(self, cov: pd.DataFrame, own_cn: pd.DataFrame | None = None, expgate: pd.DataFrame | None = None):
+        super().__init__(cov)
+        self.own_cn, self.expgate = own_cn, expgate
+
+    def gene_cols(self, g: str, rows, drops: set) -> list:
+        extra = []
+        if self.own_cn is not None and "own_CN" not in drops and g in self.own_cn.columns:
+            c = self.own_cn[g].to_numpy(dtype=np.float64)[rows]
+            na = np.isnan(c)
+            extra.append(np.where(na, 0.0, c))
+            if na.any() and not na.all():
+                extra.append(na.astype(float))
+        if self.expgate is not None and "EXPGATE" not in drops and g in self.expgate.columns:
+            extra.append(np.nan_to_num(self.expgate[g].to_numpy(dtype=np.float64)[rows]))
+        return extra
+
+    def model_Z(self, g: str, rows, drops: set) -> np.ndarray:
+        """[1, design blocks, droppable shared covariates not in drops, gene covariates of g not in drops]."""
+        Z = self.Z(rows, self.design_names + [nm for nm in self.droppable_names if nm not in drops])
+        extra = self.gene_cols(str(g), rows, drops)
+        return np.hstack([Z, np.column_stack(extra)]) if extra else Z
+
+
 class RFitter:
     """§5.3 confounder model on any line set with FIXED drops (from D), CR2 + ν; rows may be an index array with
     repeats (bootstrap) with matching cluster ids."""
 
     def __init__(self, X: np.ndarray, fpos: pd.Series, cov: pd.DataFrame, own_cn: pd.DataFrame | None,
-                 expgate: pd.DataFrame | None, Y: pd.DataFrame, patients: np.ndarray):
+                 expgate: pd.DataFrame | None, Y: pd.DataFrame, patients: np.ndarray, binary: pd.Series | None = None):
         self.X, self.fpos, self.Y = X, fpos, Y
-        self.cov = ST.CovDesign(cov)
+        self.cov = RDesign(cov, own_cn, expgate)
         self.own_cn, self.expgate = own_cn, expgate
+        if binary is None:
+            vals = [np.unique(X[np.isfinite(X[:, j]), j]) for j in range(X.shape[1])]
+            binary = pd.Series([bool(len(v) and np.isin(v, [0.0, 1.0]).all()) for v in vals], index=fpos.index)
+        self.binary = binary.reindex(fpos.index).fillna(True).astype(bool)
         self.patients = np.asarray(patients).astype(str)
         self.gpos = {g: i for i, g in enumerate(map(str, Y.columns))}
         self.Yv = Y.to_numpy(dtype=np.float64)
@@ -503,18 +546,7 @@ class RFitter:
         ok = np.isfinite(y) & np.isfinite(x)
         S = set(str(drops).split("|")) if isinstance(drops, str) and drops else set()
         rows = idx[ok]
-        Z = self.cov.Z(rows, self.cov.design_names + [nm for nm in self.cov.droppable_names if nm not in S])
-        extra = []
-        if self.own_cn is not None and "own_CN" not in S and g in self.own_cn.columns:
-            c = self.own_cn[g].to_numpy(dtype=np.float64)[rows]
-            na = np.isnan(c)
-            extra.append(np.where(na, 0.0, c))
-            if na.any() and not na.all():
-                extra.append(na.astype(float))
-        if self.expgate is not None and "EXPGATE" not in S and g in self.expgate.columns:
-            extra.append(np.nan_to_num(self.expgate[g].to_numpy(dtype=np.float64)[rows]))
-        if extra:
-            Z = np.hstack([Z, np.column_stack(extra)])
+        Z = self.cov.model_Z(g, rows, S)
         xo = x[ok]
         car = xo == 1
         pat = self.patients[rows]
@@ -523,8 +555,8 @@ class RFitter:
         if ok.sum() < 2:
             out.update(beta=np.nan, se=np.nan, nu=np.nan, df=np.nan, p=np.nan, p_one=np.nan)
             return out
-        r = ST.pair_test(y[ok], xo, Z, clusters[ok])
-        out.update({k: r[k] for k in ("beta", "se", "nu", "df", "p", "n_lev1_excluded")})
+        r = ST.pair_test(y[ok], xo, Z, clusters[ok], binary=bool(self.binary[f]))
+        out.update({k: r[k] for k in ("beta", "se", "nu", "df", "p", "df_nu", "p_nu", "df_rule", "n_lev1_excluded")})
         out["p_one"] = one_sided(r["t"], r["df"], sign)
         return out
 

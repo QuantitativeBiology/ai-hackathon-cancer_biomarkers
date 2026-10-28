@@ -277,11 +277,57 @@ def _inv_sqrt_eigh(M: np.ndarray, floor: float):
     return np.einsum("fij,fj,fkj->fik", V, winv, V), (~ok).sum(1)
 
 
+def carrier_clusters(Xraw: np.ndarray, binary, cl: Clusters) -> np.ndarray:
+    """Distinct patient clusters among the carriers (x == 1) of each column of Xraw (fit rows, same order as ``cl``);
+    NaN for non-binary columns."""
+    Xraw = np.asarray(Xraw, dtype=np.float64)
+    if Xraw.ndim == 1:
+        Xraw = Xraw[:, None]
+    C = (Xraw == 1).astype(np.float64)
+    out = C.sum(0)
+    for idx in cl.multi:
+        out = out - np.maximum(C[idx].sum(0) - 1.0, 0.0)
+    return np.where(np.broadcast_to(np.asarray(binary, dtype=bool), out.shape), out, np.nan)
+
+
+def shared_df(Xt: np.ndarray, cl: Clusters, n: int, rankZ: int, car_clusters=None, sp: dict | None = None) -> dict:
+    """The df rule shared by every test and its power (DESIGN 5.3, 6.1). cap = n - rank(Z) - df_subtract;
+    nu = max(1, (sum_c W_c)^2 / sum_c W_c^2 - 1) with W_c = sum over lines i of cluster c of dtilde_i^2;
+    df_nu = min(cap, nu). Binary d with ``car_clusters`` given and df_rule.binary = fallback_carrier_clusters:
+    df = min(cap, carrier clusters - 1) (the pre-declared calibration fallback); otherwise df = df_nu.
+    Returns df, nu, df_nu, df_rule (per column), cap."""
+    sp = sp or PR.stats_params()
+    Xt = np.asarray(Xt, dtype=np.float64)
+    if Xt.ndim == 1:
+        Xt = Xt[:, None]
+    X2 = Xt ** 2
+    sxx = X2.sum(0)
+    W2 = (X2[cl.single] ** 2).sum(0)
+    for idx in cl.multi:
+        W2 = W2 + X2[idx].sum(0) ** 2
+    with np.errstate(divide="ignore", invalid="ignore"):
+        nu = np.maximum(1.0, sxx ** 2 / np.where(W2 > 0, W2, np.nan) - 1.0)
+    cap = float(n - rankZ - sp["df_subtract"])
+    df_nu = np.minimum(cap, nu)
+    rule = np.full(sxx.shape, "nu", dtype=object)
+    df = df_nu.copy()
+    if car_clusters is not None and sp["df_rule_binary"] == "fallback_carrier_clusters":
+        cc = np.broadcast_to(np.asarray(car_clusters, dtype=np.float64), sxx.shape)
+        fb = np.isfinite(cc)
+        df = np.where(fb, np.minimum(cap, cc - 1.0), df_nu)
+        rule[fb] = "fallback_carrier_clusters"
+    with np.errstate(invalid="ignore"):
+        df = np.where(df > 0, df, np.nan)
+    return {"df": df, "nu": nu, "df_nu": df_nu, "df_rule": rule, "cap": cap}
+
+
 def cr2_core(Yt: np.ndarray, Xt: np.ndarray, hZ: np.ndarray, Qz: np.ndarray, cl: Clusters, rankZ: int,
-             sp: dict | None = None) -> dict:
+             sp: dict | None = None, car_clusters=None) -> dict:
     """Partial-regression CR2 test of every column of Xt (n x F, residualised on Z) against every column of Yt
     (n x T, residualised on Z). ``Qz`` (n x k) orthonormal basis of Z (for the cluster blocks of H), ``hZ`` its row
-    norms. Returns arrays of shape (F, T): beta, se, t, df, nu, p, sxx, n_lev1."""
+    norms. ``car_clusters`` (F; NaN for continuous columns) switches binary columns to the fallback df (shared_df);
+    without it every column uses the nu rule. Returns arrays (F, T): beta, se, t, df, nu, p, df_nu and p_nu (the
+    nu-rule sensitivity); plus sxx, n_lev1, df_rule (F)."""
     sp = sp or PR.stats_params()
     tol, floor = sp["lev1_tol"], sp["eig_floor"]
     n, F = Xt.shape
@@ -290,15 +336,8 @@ def cr2_core(Yt: np.ndarray, Xt: np.ndarray, hZ: np.ndarray, Qz: np.ndarray, cl:
     safe = np.where(sxx > 0, sxx, 1.0)
     B = (Xt.T @ Yt) / safe[:, None]                          # F x T
     X2 = Xt ** 2
-    # nu (target independent)
-    W2 = (X2[cl.single] ** 2).sum(0)
-    Wc = [X2[idx].sum(0) for idx in cl.multi]
-    for w in Wc:
-        W2 = W2 + w ** 2
-    with np.errstate(divide="ignore", invalid="ignore"):
-        nu = np.maximum(1.0, sxx ** 2 / np.where(W2 > 0, W2, np.nan) - 1.0)
-    dfr = float(n - rankZ - sp["df_subtract"])
-    df = np.minimum(dfr, nu)
+    dd = shared_df(Xt, cl, n, rankZ, car_clusters, sp)
+    df, nu, df_nu = dd["df"], dd["nu"], dd["df_nu"]
     # leverages of singleton rows
     hs = hZ[cl.single][:, None] + X2[cl.single] / safe[None, :]
     oneh = 1.0 - hs
@@ -328,10 +367,15 @@ def cr2_core(Yt: np.ndarray, Xt: np.ndarray, hZ: np.ndarray, Qz: np.ndarray, cl:
     with np.errstate(divide="ignore", invalid="ignore"):
         t = np.where(se > 0, B / se, np.nan)
     p = 2 * sps.t.sf(np.abs(t), df[:, None])
+    p_nu = 2 * sps.t.sf(np.abs(t), df_nu[:, None])
     bad = sxx <= 0
-    B[bad], se[bad], t[bad], p[bad] = np.nan, np.nan, np.nan, np.nan
-    return {"beta": B, "se": se, "t": t, "df": np.broadcast_to(df[:, None], B.shape).copy(),
-            "nu": np.broadcast_to(nu[:, None], B.shape).copy(), "p": p, "sxx": sxx, "n_lev1": nlev}
+    B[bad], se[bad], t[bad], p[bad], p_nu[bad] = np.nan, np.nan, np.nan, np.nan, np.nan
+
+    def full(v):
+        return np.broadcast_to(v[:, None], B.shape).copy()
+
+    return {"beta": B, "se": se, "t": t, "df": full(df), "nu": full(nu), "p": p, "df_nu": full(df_nu), "p_nu": p_nu,
+            "sxx": sxx, "n_lev1": nlev, "df_rule": dd["df_rule"]}
 
 
 # ------------------------------------------------------------------------------------------------
@@ -340,10 +384,12 @@ def cr2_core(Yt: np.ndarray, Xt: np.ndarray, hZ: np.ndarray, Qz: np.ndarray, cl:
 
 
 def pair_test(y: np.ndarray, d: np.ndarray, Z: np.ndarray, patients: np.ndarray, one_sided: str | None = None,
-              sp: dict | None = None) -> dict:
-    """CR2 + ν test of d in y ~ Z + d on the rows where y and d are finite (Z must include the intercept).
-    ``one_sided`` in {None, 'neg', 'pos'}: p for H1 β < 0 / β > 0. Returns beta, se, t, df, nu, p, n, n_carriers,
-    n_lev1_excluded, se_type."""
+              sp: dict | None = None, binary: bool | None = None) -> dict:
+    """CR2 test of d in y ~ Z + d on the rows where y and d are finite (Z must include the intercept), df by
+    ``shared_df``. ``binary`` True applies the binary df rule (fallback: carrier clusters - 1), False the nu rule
+    (continuous d); None detects binary d from its finite values (all in {0, 1}). ``one_sided`` in {None, 'neg',
+    'pos'}: p for H1 beta < 0 / beta > 0. Returns beta, se, t, df, nu, p, df_nu, p_nu, df_rule, n, n_carriers,
+    n_carrier_clusters, n_lev1_excluded, se_type."""
     y = np.asarray(y, np.float64)
     d = np.asarray(d, np.float64)
     ok = np.isfinite(y) & np.isfinite(d)
@@ -351,8 +397,13 @@ def pair_test(y: np.ndarray, d: np.ndarray, Z: np.ndarray, patients: np.ndarray,
     Q = orth(Zr)
     yt, dt = resid(Q, y[ok][:, None]), resid(Q, d[ok][:, None])
     cl = Clusters.of(np.asarray(patients)[ok])
-    r = cr2_core(yt, dt, (Q ** 2).sum(1), Q, cl, Q.shape[1], sp)
-    out = {k: float(r[k][0, 0]) for k in ("beta", "se", "t", "df", "nu", "p")}
+    if binary is None:
+        binary = bool(ok.any() and np.isin(d[ok], (0.0, 1.0)).all())
+    cc = carrier_clusters(d[ok], True, cl) if binary else None
+    r = cr2_core(yt, dt, (Q ** 2).sum(1), Q, cl, Q.shape[1], sp, car_clusters=cc)
+    out = {k: float(r[k][0, 0]) for k in ("beta", "se", "t", "df", "nu", "p", "df_nu", "p_nu")}
+    out["df_rule"] = str(r["df_rule"][0])
+    out["n_carrier_clusters"] = float(cc[0]) if cc is not None else np.nan
     if one_sided in ("neg", "pos") and np.isfinite(out["t"]):
         tt = out["t"] if one_sided == "pos" else -out["t"]
         out["p"] = float(sps.t.sf(tt, out["df"]))
@@ -477,6 +528,7 @@ def s1_scan(inp: ScanInputs, targets: dict, compute: bool = True, genes_subset=N
             Ytil = {dk: {a: resid(Qs[dk], Yr[a]) for a in arms} for dk in Qs}
             prow = inp.patients[rows]
             cl = Clusters.of(prow) if compute else None
+            carcl = carrier_clusters(Xr, binary[fcols], cl) if compute else None
             nNA_g = int(grows.sum()) - nr
             Mg = memb[:, fcols]
             for jg in np.flatnonzero(Mg.any(1)):
@@ -512,17 +564,19 @@ def s1_scan(inp: ScanInputs, targets: dict, compute: bool = True, genes_subset=N
                             _acc(out, base)
                             continue
                         Yt = np.column_stack([resid(Qc, Ytil[dk][a][:, [jg]]) for a in arms])
-                        r = cr2_core(Yt, Xc, (Qfull ** 2).sum(1), Qfull, cl, rankZ, sp)
+                        r = cr2_core(Yt, Xc, (Qfull ** 2).sum(1), Qfull, cl, rankZ, sp, car_clusters=carcl[lc])
                         lowvar = r["sxx"] / nr < sp["min_resid_var"]
                         for k, a in enumerate(arms):
                             rec = dict(base)
                             rec["arm"] = np.full(nf, a, dtype=object)
-                            for key in ("beta", "se", "t", "df", "nu", "p"):
+                            for key in ("beta", "se", "t", "df", "nu", "p", "df_nu", "p_nu"):
                                 v = r[key][:, k].copy()
                                 v[lowvar] = np.nan
                                 rec[key] = v
                             rec["n_lev1_excluded"] = r["n_lev1"]
                             rec["sd_dtilde"] = np.sqrt(r["sxx"] / nr)
+                            rec["df_rule"] = r["df_rule"]
+                            rec["n_carrier_clusters"] = carcl[lc]
                             _acc(out, rec)
     cols = (["arm"] if compute else []) + ["gene", "feature", "n_obs", "n_carriers", "n_NA",
                                            "collinear_with_design", "r2_design", "dropped_cov"]

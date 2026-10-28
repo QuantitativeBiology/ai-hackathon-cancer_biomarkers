@@ -47,10 +47,10 @@ def main(argv=None) -> int:
     disc = (split == "discovery").to_numpy()
     repl_ids = list(data.lines[(split == "replication").to_numpy()])
     dD = IO.subset_data(data, disc)
-    t0 = time.perf_counter()
+    s1_start = AN.utc_now()
     s1 = A.run_s1(dD, ("S1-obs",), workers=w)
-    t_s1 = time.perf_counter() - t0
-    t0 = time.perf_counter()
+    s1_end = AN.utc_now()
+    en_start = s1_end
     en, _, _ = A.run_en(dD, ("EN-obs",), U=s1[["gene", "feature"]], workers=w)
     arms_tab = A.assemble(dD, s1, en)
     (P.CACHE / "benchmark").mkdir(parents=True, exist_ok=True)
@@ -106,9 +106,10 @@ def main(argv=None) -> int:
     pd.DataFrame(rows).to_csv(out / "replication_xlib.csv", index=False)
     summ["caveat"] = PR.endpoints()["XLIB_secondary"]["caveat"]
     IO.write_json(out / "xlib_summary.json", summ)
-    t_en = time.perf_counter() - t0
-    AN.write_timing("xlib_s1_obs", {"wall_s": t_s1, "workers": w, "n_genes": len(genes), "n_discovery": int(disc.sum())})
-    AN.write_timing("xlib_en_obs", {"wall_s": t_en, "workers": w, "note": "EN-obs refit + pool + replication bootstrap"})
+    AN.write_timing("xlib_s1_obs", {"n_genes": len(genes), "n_discovery": int(disc.sum())}, workers=w,
+                    start_utc=s1_start, end_utc=s1_end)
+    AN.write_timing("xlib_en_obs", {"note": "EN-obs refit + pool + replication bootstrap"}, workers=w,
+                    start_utc=en_start)
     AN.append_registry("scripts/run_xlib.py", "ok", ["results/benchmark/replication_xlib.csv", "results/benchmark/xlib_summary.json"])
     print(pd.DataFrame(rows).to_string())
     return 0

@@ -54,6 +54,8 @@ def main(argv=None) -> int:
     w = a.workers or npar["workers"]
     out_dir = P.RESULTS / "null"
     out_dir.mkdir(parents=True, exist_ok=True)
+    from biomark import analyses as AN
+    t_start = AN.utc_now()
     t0 = time.perf_counter()
     if a.s1_vectorised:
         nul = NL.run_null(data, res, B=npar["s1_B"], workers=w, genes=genes, s1_only=True)
@@ -71,11 +73,26 @@ def main(argv=None) -> int:
             "wall_draw0_s": nul["wall_draw0_s"], "hits_obs": nul["hits_obs"], "n_genes": len(genes),
             "config_sha256": PR.config_hashes(), "commit": gitutil.head(P.PROJECT)}
     (out_dir / f"summary{sfx}.json").write_text(json.dumps(summ, indent=1, default=float), encoding="utf-8")
+    from biomark import analyses as AN
     td = P.PROJECT / PR.pp()["timing_dir"]
-    td.mkdir(parents=True, exist_ok=True)
-    (td / f"null_fixed{sfx}.json").write_text(json.dumps({
-        "job": f"null_fixed{sfx}", "utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
-        "wall_s": wall, "B": nul["B"], "workers": w, "wall_draw0_s": nul["wall_draw0_s"]}, indent=1), encoding="utf-8")
+    f_t = td / "null_fixed.json"
+    sub_rec = {"wall_s": wall, "B": nul["B"], "workers": w, "wall_draw0_s": nul["wall_draw0_s"],
+               "start_utc": t_start.isoformat(timespec="seconds"), "utc": AN.utc_now().isoformat(timespec="seconds")}
+    prev = json.loads(f_t.read_text(encoding="utf-8")) if f_t.exists() else None
+    if a.s1_vectorised:
+        # the S1-only permutations are part of stage null_fixed_B: a sub-record of the null_fixed job, never a new stem
+        if prev is None:
+            AN.write_timing("null_fixed", {"B": None, "s1_vectorised": sub_rec, "note": "main fixed-threshold null not run yet"},
+                            start_utc=t_start, workers=w)
+        else:
+            prev["s1_vectorised"] = sub_rec
+            f_t.write_text(json.dumps(prev, indent=1, default=float), encoding="utf-8")
+    else:
+        extra = {"s1_vectorised": prev["s1_vectorised"]} if prev and "s1_vectorised" in prev else {}
+        AN.write_timing("null_fixed", {"B": nul["B"], "wall_draw0_s": nul["wall_draw0_s"], **extra}, start_utc=t_start,
+                        workers=w)
+    AN.append_registry("scripts/run_null.py" + (" --s1-vectorised" if a.s1_vectorised else ""), "ok",
+                       [f"results/null/summary{sfx}.json", f"results/null/fdr_fixed{sfx}.csv"])
     print(json.dumps(summ, indent=1, default=float))
     return 0
 

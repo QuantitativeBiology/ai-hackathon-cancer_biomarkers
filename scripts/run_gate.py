@@ -43,7 +43,9 @@ def next_attempt() -> int:
 
 
 def run(reason: str | None, toy_test: str | None, check=None) -> dict:
+    from biomark import analyses as AN
     EP.require_descends(TAG, check=check)
+    t_start = AN.utc_now()
     n = next_attempt()
     if n > 1 and not (reason and toy_test):
         raise EP.EndpointRefusal("attempt > 1 needs --reason and --toy-test (a failing-then-passing toy test)")
@@ -51,7 +53,7 @@ def run(reason: str | None, toy_test: str | None, check=None) -> dict:
     ctl = pd.read_csv(P.CONFIGS / "positive_controls.csv", dtype=str)
     md = IO.md_strict()
     a = IO.arms_table()
-    lists = {"MD-strict": md}
+    lists = {"MD-strict": md, "MD-global": IO.md_global()}     # decided on MD-strict (A7); MD-global reported
     for arm in A.ARMS:
         lists[arm] = a[(a["arm"] == arm) & a["selected"].astype(bool)][["gene", "feature", "beta"]]
     res = EP.gate_attempt(pc, ctl, lists)
@@ -77,6 +79,8 @@ def run(reason: str | None, toy_test: str | None, check=None) -> dict:
     it = pd.read_csv(ITER) if ITER.exists() else pd.DataFrame(columns=list(row))
     it = pd.concat([it, pd.DataFrame([row])], ignore_index=True)
     it.to_csv(ITER, index=False)
+    AN.write_timing("gate_pc", {"attempt": n}, start_utc=t_start, workers=1)
+    AN.append_registry("scripts/run_gate.py", "ok", [f"results/gates/{f.name}", "results/gate_iterations.csv"])
     return out
 
 

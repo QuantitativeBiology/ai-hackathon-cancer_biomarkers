@@ -55,7 +55,7 @@ def pair_fit(data, g, f, extra_rows=None, drop_blocks=(), add_blocks=(), add_col
             Z = np.hstack([Z, np.column_stack(cols)])
     if add_cols is not None:
         Z = np.hstack([Z, np.asarray(add_cols, float)[rows]])
-    r = ST.pair_test(y[rows], xr, Z, data.patients[rows])
+    r = ST.pair_test(y[rows], xr, Z, data.patients[rows], binary=data.fmeta.at[f, "d_type"] == "binary")
     r["rows"] = rows
     return r
 
@@ -63,9 +63,10 @@ def pair_fit(data, g, f, extra_rows=None, drop_blocks=(), add_blocks=(), add_col
 def _pairs_of(res: dict, data, controls: pd.DataFrame | None, top_s1: int | None = None) -> pd.DataFrame:
     a = res["arms"]
     parts = []
-    md = res.get("md_strict")
-    if md is not None and len(md):
-        parts.append(md[["gene", "feature"]].assign(source="MD-strict"))
+    for key, label in (("md_global", "MD-global"), ("md_strict", "MD-strict")):
+        md = res.get(key)
+        if md is not None and len(md):
+            parts.append(md[["gene", "feature"]].assign(source=label))
     s1 = a[(a["arm"] == "S1-obs") & a["selected"]]
     if top_s1 is not None:
         s1 = s1.sort_values("rank").head(top_s1)
@@ -461,6 +462,7 @@ def gate(controls: pd.DataFrame, lists: dict) -> pd.DataFrame:
 def run_audits(data, res: dict, toy=None) -> dict:
     a = res["arms"]
     md = res.get("md_strict", pd.DataFrame(columns=["gene", "feature", "beta"]))
+    cat = res.get("md_global", md)          # A7: the catalogue (pair / gene classes, catalogue signs)
     controls = toy.controls if toy is not None else _real_controls()
     cgt = toy.cgt if toy is not None else None
     if toy is not None:
@@ -473,7 +475,8 @@ def run_audits(data, res: dict, toy=None) -> dict:
         effects_of, expression_of = _real_loaders(data)
     has_obs = (a["arm"] == "S1-obs").any()
     pairs = _pairs_of(res, data, controls) if has_obs else pd.DataFrame(columns=["gene", "feature"])
-    sign_of = {(g, f): s for g, f, s in zip(md.get("gene", []), md.get("feature", []), np.sign(md.get("beta", [])))}
+    sign_of = {(g, f): s for L in (md, cat) for g, f, s in zip(L.get("gene", []), L.get("feature", []),
+                                                                np.sign(L.get("beta", [])))}
     out = {}
     out["confounding_delta"] = confounding_delta(data, pairs) if has_obs else pd.DataFrame(
         columns=["gene", "feature", "block", "flagged"])
@@ -501,19 +504,19 @@ def run_audits(data, res: dict, toy=None) -> dict:
         out["self_null"] = self_null(sn, effects_of, lambda f: toy.features[f].to_numpy())
     else:
         out["self_null"] = pd.DataFrame(columns=["gene", "feature", "frac_dependent"])
-    pc = pair_classes(data, md, out["confounding_delta"], out["locus_resolution"], out["amplicon_test"])
+    pc = pair_classes(data, cat, out["confounding_delta"], out["locus_resolution"], out["amplicon_test"])
     out["pair_classes"] = pc
     if toy is not None:
         sd_obs = toy.effects.std()
         out["gene_classes"] = gene_classes(data.extras.get("all_genes", data.genes), toy.genes,
-                                           data.extras["eligibility"], res["lam"], md, pc, sd_obs)
+                                           data.extras["eligibility"], res["lam"], cat, pc, sd_obs)
         k = int(PR.endpoints()["P2_primary_clinical"]["k"])
         out["cgt_scores"] = cgt_scores(a, cgt, k) if cgt is not None and len(cgt) else pd.DataFrame(
             columns=["arm", "test_id", "hit", "sign_correct"])
     else:
         out["gene_classes"] = pd.DataFrame(columns=["gene", "failure_class"])
         out["cgt_scores"] = pd.DataFrame(columns=["arm", "test_id", "hit", "sign_correct"])
-    lists = {"MD-strict": md}
+    lists = {"MD-strict": md, "MD-global": cat}          # the gate is decided on MD-strict; MD-global reported
     for arm in A.ARMS:
         lists[arm] = a[(a["arm"] == arm) & a["selected"]]
     out["gate"] = gate(controls, lists) if controls is not None and len(controls) else pd.DataFrame(

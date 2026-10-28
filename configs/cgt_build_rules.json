@@ -1,0 +1,24 @@
+{
+  "_comment": "Gene-level rule constants of scripts/build_cgt.py (DESIGN 10.1-10.3), moved out of the script so the leakscan (DESIGN 13.4) finds no gene symbol in scripts/. Content and order are exactly the previous in-script constants; the CGT outputs frozen at tag freeze-cgt are byte-identical after the move (sha256 checked). Loaded via biomark.params.cgt_build_rules().",
+  "aliases": {
+    "ABL1": ["ABL"],
+    "ERBB2": ["HER2", "HER-2"],
+    "ESR1": ["ESR1", "ER ", "ER+", "ER-positive", "estrogen", "Overexpression"],
+    "KMT2A": ["KMT2A", "MLL"],
+    "CDKN2A": ["CDKN2A", "CCND"],
+    "BRCA1;BRCA2": ["BRCA"],
+    "MSI": ["MSI", "Microsatellite", "MLH1", "mismatch"],
+    "TP53": ["17p", "TP53"],
+    "MTAP": ["MTAP"],
+    "CD274": ["PD-L1"],
+    "FOLR1": ["FOLR1"],
+    "CLDN18": ["Claudin", "CLDN18"]
+  },
+  "mutation_cache_extra_genes": ["CDKN2A", "CCND1", "TP53", "BRCA1", "BRCA2", "PTEN", "RB1", "ATM", "SMARCA4", "MTAP", "ERBB2", "ESR1", "CCNE1", "EGFR"],
+  "her2_cn_gene": "ERBB2",
+  "brca_biallelic_genes": ["BRCA1", "BRCA2"],
+  "brca_sil_gene": "BRCA1",
+  "cdk46_sel": {"loss_gene": "CDKN2A", "amp_gene": "CCND1"},
+  "er_expression_gene": "ESR1",
+  "fusion_driver_features": {"ALK": "CLIN:ALK_FUS", "ABL1": "CLIN:BCR_ABL1", "KMT2A": "CLIN:KMT2A_R", "NRG1": "CLIN:NRG1_FUS"}
+}

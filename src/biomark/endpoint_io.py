@@ -30,6 +30,16 @@ def md_strict() -> pd.DataFrame:
     return pd.read_csv(P.RESULTS / "md" / "md_strict.csv", dtype={"gene": str})
 
 
+def md_global() -> pd.DataFrame:
+    """The catalogue (amendment A7): results/md/md_global.csv."""
+    return pd.read_csv(P.RESULTS / "md" / "md_global.csv", dtype={"gene": str})
+
+
+def catalogue() -> pd.DataFrame:
+    """Default catalogue of every downstream analysis (A7) = MD-global."""
+    return md_global()
+
+
 def en_obs_strict() -> pd.DataFrame:
     f = P.RESULTS / "md" / "en_obs_strict.csv"
     return pd.read_csv(f, dtype={"gene": str}) if f.exists() else pd.DataFrame(columns=["gene", "feature"])
@@ -145,11 +155,14 @@ def make_pool(arms_tab: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, 
     fl = feature_meta()
     stage = fl["stage"].reindex(s["feature"]).to_numpy()
     UG = s[(stage == "G") & (s["test_family"] == "F1")][["gene", "feature"]].drop_duplicates()
+    from . import endpoints as EP
     feats = list(dict.fromkeys(UG["feature"]))
     XR = line_values(R_ids, feats)
     fpos = pd.Series(np.arange(len(feats)), index=feats)
-    covR = ST.CovDesign(line_covariates(R_ids))
-    patR = line_covariates(R_ids)["PatientID"].astype(str).to_numpy()
+    covR_df = line_covariates(R_ids)
+    ocR, egR = line_gene_covs(R_ids, sorted(UG["gene"].unique()))
+    covR = EP.RDesign(covR_df, ocR, egR)
+    patR = covR_df["PatientID"].astype(str).to_numpy()
     genes = sorted(UG["gene"].unique())
     expR = EP.expected_nonnan(nan_D.reindex(index=list(D_ids), columns=genes), library_strings(D_ids),
                               library_strings(R_ids))
@@ -177,7 +190,7 @@ REQUEST_COLS = ["gene", "feature", "reasons", "beta_D", "se_D", "dropped_cov", "
 
 def build_requests(pool: pd.DataFrame, lists: dict, s1_obs: pd.DataFrame, md: pd.DataFrame, eos: pd.DataFrame,
                    s1_hits: pd.DataFrame, controls: pd.DataFrame | None, cgt_tests: pd.DataFrame | None,
-                   extra: pd.DataFrame | None = None) -> pd.DataFrame:
+                   extra: pd.DataFrame | None = None, mg: pd.DataFrame | None = None) -> pd.DataFrame:
     """configs/catalogue/r_requests.csv rows: every (g, d) needing R statistics, with '|'-joined reasons."""
     rows = []
 
@@ -192,6 +205,9 @@ def build_requests(pool: pd.DataFrame, lists: dict, s1_obs: pd.DataFrame, md: pd
         for arm, v in L.items():
             for g, f, _ in v["rows"]:
                 add(g, f, f"P1:k{kk}:{arm}")
+    if mg is not None:
+        for g, f in zip(mg.get("gene", []), mg.get("feature", [])):
+            add(g, f, "MD-global")
     for g, f in zip(md.get("gene", []), md.get("feature", [])):
         add(g, f, "MD-strict")
     for g, f in zip(eos.get("gene", []), eos.get("feature", [])):
@@ -237,5 +253,7 @@ def fitter_for(ids, genes, features, Y: pd.DataFrame):
     X = line_values(ids, features)
     oc, eg = line_gene_covs(ids, genes)
     cov = line_covariates(ids)
+    binary = feature_meta()["d_type"].reindex(X.columns) == "binary"
     return EP.RFitter(X.to_numpy(dtype=np.float64), pd.Series(np.arange(X.shape[1]), index=X.columns), cov, oc, eg,
-                      Y.reindex(index=list(ids), columns=list(genes)), cov["PatientID"].astype(str).to_numpy())
+                      Y.reindex(index=list(ids), columns=list(genes)), cov["PatientID"].astype(str).to_numpy(),
+                      binary=binary)

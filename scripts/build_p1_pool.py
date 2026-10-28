@@ -28,7 +28,8 @@ from biomark import p1  # noqa: E402
 from biomark import paths as P  # noqa: E402
 from biomark import stats as ST  # noqa: E402
 
-CATALOGUE_FILES = ["configs/catalogue/r_requests.csv", "results/benchmark/p1_pool.json", "results/md/md_strict.csv",
+CATALOGUE_FILES = ["configs/catalogue/r_requests.csv", "results/benchmark/p1_pool.json", "results/md/md_global.csv",
+                   "results/md/md_strict.csv",
                    "results/md/en_obs_strict.csv", "results/benchmark/p_cut.json", "results/benchmark/lambda.csv"]
 
 
@@ -55,7 +56,7 @@ def main() -> int:
     ez = GS.symbol_to_entrez(sorted({x for v in cgt["target_set"] for x in EP._targets(v)}))
     tests = EP.p2_test_set(cgt, s1o, "incl_proxy", entrez_of=ez.dropna().astype(str).to_dict())
     s1h = a[(a["arm"] == "S1-obs") & a["selected"].astype(bool)]
-    req = IO.build_requests(pool, lists, s1o, IO.md_strict(), IO.en_obs_strict(), s1h, ctl, tests)
+    req = IO.build_requests(pool, lists, s1o, IO.md_strict(), IO.en_obs_strict(), s1h, ctl, tests, mg=IO.md_global())
     out = P.CONFIGS / "catalogue" / "r_requests.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
     req.to_csv(out, index=False)

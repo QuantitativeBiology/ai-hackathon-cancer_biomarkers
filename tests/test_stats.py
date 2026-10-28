@@ -68,7 +68,13 @@ def test_cr2_and_nu_match_brute_force():
         W = pd.Series(dt ** 2).groupby(cl.astype(str)).sum().to_numpy()
         nu = max(1.0, W.sum() ** 2 / (W ** 2).sum() - 1)
         assert r["nu"] == pytest.approx(nu, rel=1e-10)
-        assert r["df"] == pytest.approx(min(n - Z.shape[1] - 2, nu))
+        assert r["df_nu"] == pytest.approx(min(n - Z.shape[1] - 2, nu))          # nu rule (sensitivity)
+        car_cl = len(set(cl.astype(str)[d == 1]))                                 # distinct carrier patients
+        assert r["n_carrier_clusters"] == car_cl
+        assert r["df"] == pytest.approx(min(n - Z.shape[1] - 2, car_cl - 1))     # fallback (DESIGN 5.3)
+        assert r["df_rule"] == "fallback_carrier_clusters"
+        rc = ST.pair_test(y, d, Z, cl.astype(str), binary=False)                  # continuous rule unchanged
+        assert rc["df"] == pytest.approx(r["df_nu"]) and rc["df_rule"] == "nu"
 
 
 def test_vectorised_scan_equals_pair_test():
@@ -155,3 +161,18 @@ def test_power_invariant_to_feature_rescaling_and_df_shared():
     rng = np.random.default_rng(7)
     dt = rng.normal(size=50)
     assert ST.nu_from(dt, np.arange(50)) == pytest.approx(max(1, (dt ** 2).sum() ** 2 / (dt ** 4).sum() - 1))
+
+
+def test_scan_uses_the_binary_fallback_df():
+    data = make_data(seed=9)
+    res = A.run_s1(data, ("S1-obs",))
+    b = res[res["feature"].str.startswith(("HOT:", "LOFBI:"))]
+    c = res[res["feature"].str.startswith(("PROG:", "EXPDOSE:", "SIG:DMG"))]
+    assert (b["df_rule"] == "fallback_carrier_clusters").all() and (c["df_rule"] == "nu").all()
+    cap = b["n_obs"] - 0                                                      # df <= carrier clusters - 1
+    assert (b["df"] <= b["n_carrier_clusters"] - 1 + 1e-9).all() and (b["df"] <= cap).all()
+    assert np.allclose(c["df"], c["df_nu"])
+    from biomark import audit
+    r = b.iloc[0]
+    p = audit.pair_fit(data, r["gene"], r["feature"])
+    assert p["df"] == pytest.approx(r["df"]) and p["df_rule"] == "fallback_carrier_clusters"

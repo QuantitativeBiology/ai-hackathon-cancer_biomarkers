@@ -37,7 +37,10 @@ def main(argv=None) -> int:
     EP.require_descends("freeze-bounds")
     t0 = time.perf_counter()
     w = a.workers or PR.null_params()["fg_workers"]
-    md = IO.md_strict()
+    mg, ms = IO.catalogue(), IO.md_strict()                            # A7: MD-global; MD-strict alongside
+    md = pd.concat([mg[["gene", "feature"]], ms[["gene", "feature"]]]).astype({"gene": str}).drop_duplicates()
+    md["in_md_global"] = [k in set(zip(mg["gene"].astype(str), mg["feature"])) for k in zip(md["gene"], md["feature"])]
+    md["in_md_strict"] = [k in set(zip(ms["gene"].astype(str), ms["feature"])) for k in zip(md["gene"], md["feature"])]
     genes = sorted(md["gene"].astype(str).unique())
     data = PL.Data.from_real(genes=genes)
     arms_tab = IO.arms_table()
@@ -57,11 +60,12 @@ def main(argv=None) -> int:
     pd.concat(tabs, ignore_index=True).to_parquet(P.CACHE / "benchmark" / "component_en.parquet")
     acc = arms_tab[arms_tab["arm"] == "EN-pred"].set_index(["gene", "feature"])["access_class"]
     sel = AN.component_selection(md, comp, acc)
+    sel["in_md_global"], sel["in_md_strict"] = md["in_md_global"].to_numpy(), md["in_md_strict"].to_numpy()
     out = P.RESULTS / "components"
     out.mkdir(parents=True, exist_ok=True)
     sel.to_csv(out / "component_selection.csv", index=False)
-    AN.write_timing("component_readout", {"wall_s": time.perf_counter() - t0, "workers": w, "n_genes": len(genes),
-                                          "n_pairs": int(len(sel))})
+    AN.write_timing("component_readout", {"n_genes": len(genes), "n_pairs": int(len(sel))},
+                    wall_s=time.perf_counter() - t0, workers=w)
     AN.append_registry("scripts/run_component_readout.py", "ok", ["results/components/component_selection.csv"])
     print(sel["layer"].value_counts().to_string())
     return 0

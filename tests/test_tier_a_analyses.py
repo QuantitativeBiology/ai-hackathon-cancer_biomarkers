@@ -142,3 +142,18 @@ def test_scripts_refuse_before_freeze_bounds(name, monkeypatch):
     monkeypatch.setattr(EP, "descends_from", lambda tag, repo=None: False)
     with pytest.raises(EP.EndpointRefusal, match="freeze-bounds"):
         mod.main([]) if name != "run_q4" else mod.main()
+
+
+def test_timing_schema_fields(tmp_path):
+    import datetime as dt
+    import json
+    s = AN.utc_now() - dt.timedelta(seconds=30)
+    AN.write_timing("vif", {"note": "x"}, timing_dir=tmp_path, start_utc=s, workers=3)
+    r = json.loads((tmp_path / "vif.json").read_text(encoding="utf-8"))
+    assert r["job"] == "vif" and r["workers"] == 3 and isinstance(r["wall_s"], float) and r["wall_s"] >= 29
+    assert r["start_utc"] < r["utc"] and r["run_id"]
+    AN.write_timing("gate_pc", {}, timing_dir=tmp_path, wall_s=1.0)
+    r2 = json.loads((tmp_path / "gate_pc.json").read_text(encoding="utf-8"))
+    assert r2["workers"] == 1 and r2["run_id"] == r["run_id"]          # one run id per process
+    with pytest.raises(ValueError):
+        AN.write_timing("vif", {}, timing_dir=tmp_path)                # numeric wall_s required

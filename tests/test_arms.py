@@ -98,3 +98,27 @@ def test_parallel_s1_equals_serial():
     a, b = a.sort_values(key).reset_index(drop=True), b.sort_values(key).reset_index(drop=True)
     pd.testing.assert_frame_equal(a, b)
     assert not a.loc[a["test_family"] == "F2", "selected"].any()          # S1 list = F1 (A6-iii)
+
+
+def test_md_global_rule_and_outputs():
+    en = pd.DataFrame({"arm": "EN-pred", "gene": ["g1", "g1", "g2", "g3", "g4"], "feature": ["a", "b", "a", "c", "d"],
+                       "selected": True, "selection_freq": 0.9, "beta": -0.2, "maj_sign": [-1.0, 1.0, -1.0, -1.0, -1.0],
+                       "stage": "G"})
+    s1 = pd.DataFrame({"arm": "S1-obs", "gene": ["g1", "g1", "g2", "g3", "g4"], "feature": ["a", "b", "a", "c", "d"],
+                       "beta": [-0.5, -0.5, -0.3, -0.6, -0.4], "se": 0.1, "df": 50.0, "p": [1e-6, 1e-6, 0.5, 1e-5, 1e-4],
+                       "q": [1e-4, 1e-4, 0.6, 1e-3, 0.01], "test_family": ["F1", "F1", "F1", "F1", "F2"],
+                       "selected": [True, True, False, False, False], "n_obs": 100, "n_carriers": 10, "dropped_cov": "",
+                       "collinear_with_design": [False, False, False, True, False], "se_type": "CR2"})
+    m = A.md_global(en, s1)
+    assert list(m["pass"]) == [True, False, False, False, False]   # sign flip; not a BH hit; collinear; F2 excluded
+    m2 = A.md_global(en, s1, p_cut=0.6)
+    assert list(m2["pass"]) == [True, False, True, False, False]   # fixed-threshold null rule: F1 and p <= p*_F1
+    data = make_data(seed=5, plant_beta=-1.5)
+    res = A.run_arms(data, arms=A.ARMS, workers=1)
+    mg = res["md_global"]
+    a = res["arms"]
+    en_sel = set(zip(*[a.loc[(a.arm == "EN-pred") & a.selected, c] for c in ("gene", "feature")]))
+    s1_sel = set(zip(*[a.loc[(a.arm == "S1-obs") & a.selected, c] for c in ("gene", "feature")]))
+    got = set(zip(mg["gene"], mg["feature"]))
+    assert got <= (en_sel & s1_sel) and ("9100001", "HOT:9200001") in got
+    assert "in_md_strict" in mg.columns

@@ -32,6 +32,9 @@ warnings.filterwarnings("ignore", message="This pattern is interpreted as a regu
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 from biomark import genesets, molecular, p1  # noqa: E402  (molecular data only)
+from biomark import params as PR  # noqa: E402
+
+BR = PR.cgt_build_rules()          # gene-level rule constants (configs/cgt_build_rules.json)
 
 CFG = ROOT / "configs"
 EXT = ROOT / "external" / "clinical"
@@ -51,9 +54,7 @@ STANDARD_FAMILIES = {"AMP", "DEL", "LOSS", "LOFBI", "HOT", "SIL", "EXPDOSE"}
 SCORED_PARTITIONS = {"sensitivity", "bypass-resistance", "clinically-refuted"}
 P2_HEADLINE_TIERS = {"T1", "T2", "T3"}  # PI: 'preclinical' (RB1->CDK4/6) is a secondary, never in the P2 headline
 P2_KO_CLASSES = {"concordant", "concordant-family", "concordant-KO/combination-required"}
-ALIASES = {"ABL1": ["ABL"], "ERBB2": ["HER2", "HER-2"], "ESR1": ["ESR1", "ER ", "ER+", "ER-positive", "estrogen", "Overexpression"],
-           "KMT2A": ["KMT2A", "MLL"], "CDKN2A": ["CDKN2A", "CCND"], "BRCA1;BRCA2": ["BRCA"], "MSI": ["MSI", "Microsatellite", "MLH1", "mismatch"],
-           "TP53": ["17p", "TP53"], "MTAP": ["MTAP"], "CD274": ["PD-L1"], "FOLR1": ["FOLR1"], "CLDN18": ["Claudin", "CLDN18"]}
+ALIASES = {k: list(v) for k, v in BR["aliases"].items()}
 
 INDICATION_MAP = CFG / "indication_map.csv"
 
@@ -268,7 +269,7 @@ class Molecular:
         genes = set()
         for r in rules["features"].values():
             genes |= {g for g in str(r.get("gene", "")).split(";") if g}
-        genes |= {"CDKN2A", "CCND1", "TP53", "BRCA1", "BRCA2", "PTEN", "RB1", "ATM", "SMARCA4", "MTAP", "ERBB2", "ESR1", "CCNE1", "EGFR"}
+        genes |= set(BR["mutation_cache_extra_genes"])
         self.mut, self.mut_profiled, self.pa_count = load_mutations(genes)
         self.mut["cls"] = mut_class(self.mut)
         self.mut["codon"] = pd.to_numeric(self.mut["ProteinChange"].str.extract(r"^p\.[A-Z\*](\d+)")[0], errors="coerce")
@@ -438,7 +439,7 @@ class Molecular:
             out[prof.intersection(pd.Index(f.loc[sel, "ModelID"].unique()))] = 1.0
             return out
         if t == "her2_pos":
-            c = self.cn("ERBB2")
+            c = self.cn(BR["her2_cn_gene"])
             tok = self.subtype_tokens().map(lambda s: bool(s & set(self.P["her2_subtype_pos_tokens"])))
             out = (c > self.P["cn_amp"]).astype(float).where(c.notna())
             out[tok] = 1.0
@@ -455,19 +456,20 @@ class Molecular:
             return self.lofbi(r["gene"])
         if t == "brca_biallelic":
             parts = []
-            for g in ("BRCA1", "BRCA2"):
+            for g in tuple(BR["brca_biallelic_genes"]):
                 d, c = self.dmg(g), self.cn(g)
                 af = self.mut[(self.mut["HugoSymbol"] == g) & (self.mut["LikelyLoF"].astype(str) == "True") &
                               (self.mut["AF"] >= self.P["lofbi_af_min"])]["ModelID"].unique()
                 hit = (d >= 2) | ((d >= 1) & ((c < self.P["cn_loss"]) | self.ids.isin(af)))
                 parts.append(hit.astype(float).where(d.notna()))
-            parts.append(self.sil("BRCA1"))
+            parts.append(self.sil(BR["brca_sil_gene"]))
             df = pd.concat(parts, axis=1)
             out = df.max(axis=1, skipna=True).where(df.notna().any(axis=1))
             out[self.hypermutated() & out.notna()] = 0.0
             return out
         if t == "cdk46_sel":
-            c, d, cc = self.cn("CDKN2A"), self.dmg("CDKN2A"), self.cn("CCND1")
+            lg, ag = BR["cdk46_sel"]["loss_gene"], BR["cdk46_sel"]["amp_gene"]
+            c, d, cc = self.cn(lg), self.dmg(lg), self.cn(ag)
             df = pd.concat([(c < self.P["cn_del"]).astype(float).where(c.notna()), (d >= 1).astype(float).where(d.notna()),
                             (cc > self.P["cn_amp"]).astype(float).where(cc.notna())], axis=1)
             return df.max(axis=1, skipna=True).where(df.notna().any(axis=1))
@@ -500,7 +502,7 @@ class Molecular:
     def _er_pos_v3(self) -> pd.Series:
         """AUD-4: Breast AND PAM50 luminal AND ESR1 log2(TPM+1) >= fixed cut; non-breast NA."""
         breast = self.pop["OncotreeLineage"] == "Breast"
-        x = self.expr("ESR1")
+        x = self.expr(BR["er_expression_gene"])
         gs = molecular.global_signatures()
         cols = self.P["er_pam50_columns"]
         lum = pd.Series(np.nan, index=self.ids)
@@ -523,7 +525,7 @@ class Molecular:
         neg = tok.map(lambda s: bool(s & set(self.P["er_subtype_neg_tokens"])))
         lin = self.pop["OncotreeLineage"]
         inl = lin.isin(self.P["er_mixture_lineages"])
-        x = self.expr("ESR1")
+        x = self.expr(BR["er_expression_gene"])
         out = pd.Series(0.0, index=self.ids)
         fit = inl & x.notna() & (self.pop["role"] == "dev")
         seed = json.loads((CFG / "seeds.json").read_text(encoding="utf-8"))
@@ -813,7 +815,7 @@ def main() -> None:
     for col in ("CellLineName", "StrippedCellLineName"):
         for mid, nm in mt[col].dropna().items():
             name_map.setdefault(str(nm).upper().replace("-", "").replace(" ", ""), mid)
-    fus_feat = {"ALK": "CLIN:ALK_FUS", "ABL1": "CLIN:BCR_ABL1", "KMT2A": "CLIN:KMT2A_R", "NRG1": "CLIN:NRG1_FUS"}
+    fus_feat = dict(BR["fusion_driver_features"])
     kp_res = []
     for _, k in kp.iterrows():
         mid = name_map.get(str(k["cell_line_name"]).upper().replace("-", "").replace(" ", ""))
@@ -860,7 +862,7 @@ def main() -> None:
     for nm, ser in (("ESR1_ge_cut_breast", mol.er_expression_rule), ("ER_POS", mol.feature("CLIN:ER_POS")),
                     ("HR_POS_HER2_NEG", mol.feature("CLIN:HR_POS_HER2_NEG"))):
         checks["er_d9"][nm] = {"breast_D": int(((ser == 1) & brd & dv).sum()), "breast_R": int(((ser == 1) & brd & ~dv).sum())}
-    esr1 = mol.expr("ESR1")
+    esr1 = mol.expr(BR["er_expression_gene"])
     san = []
     for want, names in ((1, rules["params"]["er_sanity_positive"]), (0, rules["params"]["er_sanity_negative"])):
         for nm in names:

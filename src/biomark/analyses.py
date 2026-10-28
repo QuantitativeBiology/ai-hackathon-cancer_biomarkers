@@ -57,11 +57,43 @@ def append_registry(script: str, status: str, outputs, registry=None) -> dict:
     return row
 
 
-def write_timing(stem: str, rec: dict, timing_dir=None) -> None:
+_RUN_ID = None
+
+
+def run_id() -> str:
+    """One id per process, shared by every timing stem the process writes (budget_check counts the process once)."""
+    global _RUN_ID
+    if _RUN_ID is None:
+        import os
+        import sys
+        script = os.path.basename(sys.argv[0] or "python").replace(".py", "")
+        _RUN_ID = f"{script}-{os.getpid()}-{dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%S')}"
+    return _RUN_ID
+
+
+def utc_now() -> dt.datetime:
+    return dt.datetime.now(dt.timezone.utc)
+
+
+def write_timing(stem: str, rec: dict, timing_dir=None, *, wall_s: float | None = None, workers: int | None = None,
+                 start_utc: dt.datetime | None = None, end_utc: dt.datetime | None = None) -> dict:
+    """results/timing/<stem>.json with the minimal schema of docs/process_checks.md §1.1: job (= stem), utc (end time),
+    numeric wall_s, integer workers >= 1, start_utc and run_id. ``wall_s`` / ``workers`` may also come in ``rec``."""
     d = timing_dir or (P.PROJECT / PR.pp()["timing_dir"])
     d.mkdir(parents=True, exist_ok=True)
-    out = {"job": stem, "utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), **rec}
+    rec = dict(rec)
+    wall = float(rec.pop("wall_s")) if wall_s is None and "wall_s" in rec else wall_s
+    wk = rec.pop("workers", None) if workers is None else workers
+    end = end_utc or utc_now()
+    if wall is None and start_utc is not None:
+        wall = (end - start_utc).total_seconds()
+    if wall is None or not isinstance(wall, (int, float)):
+        raise ValueError(f"timing {stem}: numeric wall_s required")
+    start = start_utc or (end - dt.timedelta(seconds=float(wall)))
+    out = {"job": stem, "utc": end.isoformat(timespec="seconds"), "start_utc": start.isoformat(timespec="seconds"),
+           "wall_s": float(wall), "workers": max(1, int(wk or 1)), "run_id": rec.pop("run_id", run_id()), **rec}
     (d / f"{stem}.json").write_text(json.dumps(out, indent=1, default=float), encoding="utf-8")
+    return out
 
 
 # ------------------------------------------------------------------------------------------------

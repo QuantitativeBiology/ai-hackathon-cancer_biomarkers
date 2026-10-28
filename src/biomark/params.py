@@ -40,6 +40,11 @@ def tiers() -> dict:
     return _load("tiers.json")
 
 
+def cgt_build_rules() -> dict:
+    """configs/cgt_build_rules.json: gene-level constants of scripts/build_cgt.py (aliases, builder genes)."""
+    return _load("cgt_build_rules.json")
+
+
 def sha256(name: str) -> str:
     return hashlib.sha256((P.CONFIGS / name).read_bytes()).hexdigest()
 
@@ -73,6 +78,7 @@ def stats_params() -> dict:
         "tiny": float(p["numerics"]["tiny"]),
         "eigh_min_size": int(p["numerics"]["cluster_eigh_min_size"]),
         "df_subtract": 2,  # DESIGN 5.3: df = min(n - rank(Z) - 2, nu)
+        "df_rule_binary": str(p["df_rule"]["binary"]),
     }
 
 

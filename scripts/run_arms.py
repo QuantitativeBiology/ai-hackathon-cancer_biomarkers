@@ -38,13 +38,16 @@ def sha(path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def write_timing(stem: str, rec: dict, tag: str = "") -> None:
-    """results/timing/<stem>.json for the eligible universe (stems of tiers.json stage_job_map); other universes
-    write to results/benchmark/timing<tag>/ so budget_check.py never sees an unmapped stem."""
-    d = P.PROJECT / PR.pp()["timing_dir"] if not tag else P.RESULTS / "benchmark" / f"timing{tag}"
-    d.mkdir(parents=True, exist_ok=True)
-    rec = {"job": stem, "utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), **rec}
-    (d / f"{stem}.json").write_text(json.dumps(rec, indent=1, default=float), encoding="utf-8")
+def write_timing(stem: str, rec: dict, tag: str = "", **kw) -> None:
+    """results/timing/<stem>.json (schema of analyses.write_timing) for the eligible universe; other universes write
+    to results/benchmark/timing<tag>/ so budget_check.py never sees an unmapped stem."""
+    from biomark import analyses as AN
+    d = None if not tag else P.RESULTS / "benchmark" / f"timing{tag}"
+    AN.write_timing(stem, rec, timing_dir=d, **kw)
+
+
+def _epoch(t: float) -> dt.datetime:
+    return dt.datetime.fromtimestamp(t, tz=dt.timezone.utc)
 
 
 def ensure_nan_mask(genes, path: Path) -> Path:
@@ -99,11 +102,11 @@ def pilot(args) -> int:
         tab, lam, det = A.run_en(data, (arm,), U=U, workers=w, chunk=chunk)
         tim[arm] = time.perf_counter() - t0
         res[arm] = (tab, lam, det)
-    hits = sum(d["cache_hits"] for a in res for d in res[a][2])
-    miss = sum(d["cache_misses"] for a in res for d in res[a][2])
+    hits = sum(d.get("cache_hits", 0) for a in res for d in res[a][2])
+    miss = sum(d.get("cache_misses", 0) for a in res for d in res[a][2])
     n_all = len(elig)
     full_workers = npar["all_workers"]
-    cpu_en = sum(d["wall_s"] for a in res for d in res[a][2])            # summed worker seconds, both arms
+    cpu_en = sum(d["wall_s"] for a in res for d in res[a][2] if "wall_s" in d)   # summed worker seconds, both arms
     per_gene_en = cpu_en / len(genes)
     proj_en_min = per_gene_en * n_all / full_workers / npar["sec_per_min"]
     proj_s1_min = tim["s1_both"] / len(genes) * n_all / full_workers / npar["sec_per_min"]
@@ -119,7 +122,8 @@ def pilot(args) -> int:
     draw_min = per_gene_draw * npar["gene_subset_n"] / npar["sec_per_min"]
     del lamd
     rec = {"n_genes": len(genes), "n_features": int(data.X.shape[1]), "n_lines": int(data.X.shape[0]),
-           "workers_used": w, "chunk": chunk, "worker_cpu_s_en": cpu_en, "load_s": t_load, "wall_s": tim, "cache_hit_rate": hits / max(1, hits + miss),
+           "workers": w, "chunk": chunk, "worker_cpu_s_en": cpu_en, "load_s": t_load, "stage_wall_s": tim,
+           "wall_s": float(t_load + sum(tim.values()) + t_draw), "cache_hit_rate": hits / max(1, hits + miss),
            "cache_hits": hits, "cache_misses": miss, "n_eligible": n_all, "projection_workers": full_workers,
            "projected_wall_min": {"s1_obs_pred": proj_s1_min, "en_obs_pred": proj_en_min,
                                   "null_one_draw_single_worker": draw_min,
@@ -165,22 +169,29 @@ def full(args) -> int:
     res["lam"].to_csv(rb / f"lambda{tag}.csv", index=False)
     pc = dict(res["p_cut"], **({"MD-strict": res["p_cut_sc"]} if "p_cut_sc" in res else {}))
     (rb / f"p_cut{tag}.json").write_text(json.dumps(pc, indent=1), encoding="utf-8")
-    res["md_strict"].to_csv(rm / f"md_strict{tag}.csv", index=False)
+    res["md_global"].to_csv(rm / f"md_global{tag}.csv", index=False)          # A7: the catalogue
+    res["md_global_all"].to_csv(rm / f"md_global_all{tag}.csv", index=False)
+    res["md_strict"].to_csv(rm / f"md_strict{tag}.csv", index=False)          # frozen secondary
     res["md_strict_all"].to_csv(rm / f"md_strict_all{tag}.csv", index=False)
     if "en_obs_strict" in res:
         res["en_obs_strict"].to_csv(rm / f"en_obs_strict{tag}.csv", index=False)
     summ = {"universe": args.universe, "n_genes": len(data.genes), "n_rows_U": int(len(res["universe"])),
-            "selected": a.groupby("arm")["selected"].sum().astype(int).to_dict(), "n_md_strict": int(len(res["md_strict"])),
+            "selected": a.groupby("arm")["selected"].sum().astype(int).to_dict(), "n_md_global": int(len(res["md_global"])), "n_md_strict": int(len(res["md_strict"])),
             "config_sha256": PR.config_hashes(), "subsamples_sha256": sha(P.CONFIGS / "subsamples.json"),
             "dictionary_built_utc": data.extras.get("dictionary_built_utc"), "commit": gitutil.head(P.PROJECT)}
     (rb / f"summary{tag}.json").write_text(json.dumps(summ, indent=1, default=str), encoding="utf-8")
     n = len(data.genes)
-    for stem, key in (("s1_obs", "s1_obs_pred"), ("s1_pred", "s1_obs_pred")):
-        write_timing(stem, {"wall_s": tim[key], "note": "S1-obs and S1-pred computed in one scan", "n_genes": n}, tag)
+    s0, s1e = tim["s1_window"]
+    for stem in ("s1_obs", "s1_pred"):          # one scan, two stems: same window and run_id (counted once)
+        write_timing(stem, {"note": "S1-obs and S1-pred computed in one scan", "n_genes": n}, tag,
+                     workers=w, start_utc=_epoch(s0), end_utc=_epoch(s1e))
     for arm, stem in (("EN-obs", "en_obs"), ("EN-pred", "en_pred")):
-        cpu = sum(d["wall_s"] for d in tim["en_detail"] if d["arm"] == arm)
-        write_timing(stem, {"worker_cpu_s": cpu, "wall_s_both_arms": tim["en_obs_pred"], "workers": w, "n_genes": n}, tag)
-    write_timing("md_strict", {"wall_s": 0.0, "note": "computed from S1-obs and EN-pred tables inside run_arms"}, tag)
+        win = [d for d in tim["en_detail"] if d.get("kind") == "arm_wall" and d["arm"] == arm][0]
+        cpu = sum(d["wall_s"] for d in tim["en_detail"] if d["arm"] == arm and "wall_s" in d)
+        write_timing(stem, {"worker_cpu_s": cpu, "n_genes": n}, tag, workers=int(win["workers"]),
+                     start_utc=_epoch(win["start_epoch"]), end_utc=_epoch(win["end_epoch"]))
+    write_timing("md_strict", {"note": "computed from S1-obs and EN-pred tables inside run_arms"}, tag, wall_s=0.0,
+                 workers=1)
     print(json.dumps(summ, indent=1, default=str))
     return 0
 

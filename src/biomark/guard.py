@@ -76,7 +76,7 @@ def dirty_entries() -> list[str]:
     log_rel = _rel(ACCESS_LOG)
     bad = []
     for ln in gitutil.status_porcelain(REPO, untracked=True):
-        code, path = ln[:2], ln[3:].strip().strip('"')
+        code, path = ln[:2], ln[3:].strip().strip('"')  # literal-ok: git porcelain status columns
         if " -> " in path:
             path = path.split(" -> ", 1)[1]
         if path == log_rel:
@@ -99,7 +99,7 @@ def unblind_check(purpose=None) -> list[str]:
     if os.environ.get(UNBLIND_ENV) != "1":
         reasons.append(f"env {UNBLIND_ENV} != '1'")
     if not tree_clean():
-        reasons.append(f"working tree not clean: {dirty_entries()[:5]}")
+        reasons.append(f"working tree not clean: {dirty_entries()[:5]}")  # literal-ok: error-message preview length
     if not (isinstance(purpose, str) and purpose.strip()):
         reasons.append("no purpose string given")
     return reasons
@@ -145,7 +145,7 @@ def _log(purpose, scope, roles: pd.Series, n_genes) -> None:
            "commit": _commit(), "purpose": purpose, "scope": scope, "n_ids": int(len(roles)),
            "roles": ";".join(f"{k}:{int(v)}" for k, v in sorted(vc.items())), "n_genes": n_genes,
            "caller": _caller()}
-    with FileLock(str(LOCK_FILE), timeout=120):
+    with FileLock(str(LOCK_FILE), timeout=120):  # literal-ok: file-lock wait seconds
         new = not log.exists() or log.stat().st_size == 0
         with open(log, "a", newline="", encoding="utf-8") as fh:
             w = csv.DictWriter(fh, fieldnames=LOG_COLS)
@@ -200,7 +200,7 @@ def load_effects(ids=None, scope: str = "dev", purpose: str | None = None, genes
     df = pd.read_parquet(CRISPR_PARQUET, columns=cols, filters=[("ModelID", "in", sorted(set(ids)))])
     miss = sorted(set(ids) - set(df.index))
     if miss:
-        raise KeyError(f"{len(miss)} ModelIDs have no CRISPR screen, e.g. {miss[:3]}")
+        raise KeyError(f"{len(miss)} ModelIDs have no CRISPR screen, e.g. {miss[:3]}")  # literal-ok: error-message preview length
     df = df.loc[ids]
     df.columns = df.columns.astype(str)
     return df

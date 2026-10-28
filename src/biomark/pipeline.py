@@ -334,6 +334,8 @@ def run_pipeline(data, *, fold_centre: bool = True, null_B=None, arms=ARMS, work
     md = res.get("md_strict", pd.DataFrame(columns=["gene", "feature", "beta", "q_sc", "dropped_cov"]))
     out["md_strict"] = md
     out["md_strict_all"] = res.get("md_strict_all")
+    out["md_global"] = res.get("md_global", pd.DataFrame(columns=["gene", "feature", "beta", "q", "dropped_cov"]))
+    out["md_global_all"] = res.get("md_global_all")
     out["en_obs_strict"] = res.get("en_obs_strict")
     out["p_cut"] = dict(res.get("p_cut", {}), **({"MD-strict": res["p_cut_sc"]} if "p_cut_sc" in res else {}))
     s1 = res["s1"]

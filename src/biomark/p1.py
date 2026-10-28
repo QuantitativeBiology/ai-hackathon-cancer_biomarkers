@@ -52,7 +52,7 @@ def _in_p1(path) -> bool:
 
 def _audit(event, args):
     if event == "open":
-        path, mode, flags = (tuple(args) + (None, None, None))[:3]
+        path, mode, flags = (tuple(args) + (None, None, None))[:3]  # literal-ok: audit-hook (path, mode, flags) arity
         writing = (isinstance(mode, str) and any(c in mode for c in "wax+")) or \
                   (isinstance(flags, int) and bool(flags & _WRITE_FLAGS))
         if writing and _in_p1(path):
@@ -206,7 +206,7 @@ def read_parquet(path, columns=None, ids=None, strict: bool = True) -> pd.DataFr
         have = set(_schema_columns(path))
         miss = [c for c in columns if c not in have]
         if miss and strict:
-            raise KeyError(f"{len(miss)} columns not in {Path(path).name}, e.g. {miss[:5]}")
+            raise KeyError(f"{len(miss)} columns not in {Path(path).name}, e.g. {miss[:5]}")  # literal-ok: error-message preview length
         columns = [c for c in columns if c in have]
     filters = None
     if ids is not None:
@@ -216,7 +216,7 @@ def read_parquet(path, columns=None, ids=None, strict: bool = True) -> pd.DataFr
     if ids is not None:
         miss = [i for i in ids if i not in df.index]
         if miss and strict:
-            raise KeyError(f"{len(miss)} ModelIDs not in {Path(path).name}, e.g. {miss[:5]}")
+            raise KeyError(f"{len(miss)} ModelIDs not in {Path(path).name}, e.g. {miss[:5]}")  # literal-ok: error-message preview length
         df = df.loc[[i for i in ids if i in df.index]]
     df.columns = df.columns.astype(str)
     return df
@@ -396,7 +396,7 @@ def fold_centre(pred: pd.DataFrame, fold_of: pd.Series | None = None) -> pd.Data
     """
     f = (folds() if fold_of is None else fold_of).reindex(pred.index)
     if f.isna().any():
-        raise KeyError(f"{int(f.isna().sum())} rows of pred have no fold, e.g. {list(f.index[f.isna()][:3])}")
+        raise KeyError(f"{int(f.isna().sum())} rows of pred have no fold, e.g. {list(f.index[f.isna()][:3])}")  # literal-ok: error-message preview length
     X = pred.to_numpy(copy=True)
     fv = f.to_numpy()
     for k in np.unique(fv):

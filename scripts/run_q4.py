@@ -69,9 +69,12 @@ def main() -> int:
     pd.concat(scores_all, ignore_index=True).to_csv(out / "p2_scores.csv", index=False)
     # Q4b actionability
     cg = cgt.assign(target_set=[";".join(ez.get(x, x) for x in EP._targets(v)) for v in cgt["target_set"]])
-    md = IO.md_strict()
     s1h = a[(a["arm"] == "S1-obs") & a["selected"].astype(bool)]
-    EP.actionability(md, s1h, cg).to_csv(out / "actionability.csv", index=False)
+    act = EP.actionability(IO.catalogue(), s1h, cg)                    # A7: catalogue = MD-global
+    act["list"] = act["list"].replace({"MD-strict": "MD-global"})
+    act2 = EP.actionability(IO.md_strict(), s1h.iloc[:0], cg)          # MD-strict reported alongside
+    act2 = act2[act2["list"] == "MD-strict"]
+    pd.concat([act, act2], ignore_index=True).to_csv(out / "actionability.csv", index=False)
     # Q4c population on D
     T = EP.p2_test_set(cgt, U, "non_proxy", entrez_of=ez)
     T = T[T["testable"]]
@@ -112,7 +115,7 @@ def main() -> int:
                    "indication_mapping": "OncotreeCode, or OncoTree term (frozen MOAlmanac code/term pairs) equal to the "
                                          "line's Model.csv Subtype / PrimaryDisease / Lineage name; no full OncoTree file"}
     IO.write_json(out / "q4_summary.json", summ)
-    AN.write_timing("q4_summary", {"wall_s": time.perf_counter() - t0, "n_tests": int(len(T))})
+    AN.write_timing("q4_summary", {"n_tests": int(len(T))}, wall_s=time.perf_counter() - t0, workers=1)
     AN.append_registry("scripts/run_q4.py", "ok", ["results/clinical/q4_summary.json", "results/clinical/p2_scores.csv",
                                                    "results/clinical/q4c_labels.csv"])
     print(summ["results"][f"non_proxy|{summ['headline_subset']}|k{pc['k']}"]["verdict"])

@@ -411,8 +411,12 @@ def fam_fus(inp: Inputs, drivers: pd.DataFrame):
 
 
 def fam_prog(inp: Inputs, seed: int):
-    """NMF programmes (pinned settings) fitted on D, every row scored with model.transform."""
+    """NMF programmes (pinned settings) fitted on D. Rows are scored with model.transform separately per role (D, R,
+    set A): sklearn's transform solves its rows jointly (shared initial scale from the mean of the matrix, one
+    stopping rule), so scoring each role on its own keeps D scores identical whatever other rows exist (DESIGN 1.7).
+    float64 and one BLAS thread make the fit and the scores reproducible run to run."""
     from sklearn.decomposition import NMF
+    from threadpoolctl import threadpool_limits
 
     n = ds3()["nmf"]
     E = inp.expr
@@ -421,9 +425,16 @@ def fam_prog(inp: Inputs, seed: int):
     genes = list(var.index[: int(n["n_top_var_genes"])])
     model = NMF(n_components=int(n["n_components"]), init=n["init"], solver=n["solver"],
                 max_iter=int(n["max_iter"]), random_state=int(seed))
-    XD = ED[genes].to_numpy(dtype=np.float32)
-    model.fit(XD)
-    W = model.transform(np.nan_to_num(E[genes].to_numpy(dtype=np.float32)))
+    XD = ED[genes].to_numpy(dtype=np.float64)
+    Xall = np.nan_to_num(E[genes].to_numpy(dtype=np.float64))
+    W = np.zeros((Xall.shape[0], int(n["n_components"])))
+    with threadpool_limits(1):
+        model.fit(XD)
+        roles = inp.pop["role"].to_numpy()
+        order = [r for r in pd.unique(roles)]
+        for r in sorted(order, key=lambda x: (x != bpd()["fit_role"], str(x))):
+            m = roles == r
+            W[m] = model.transform(Xall[m])
     k = W.shape[1]
     cols = [f"PROG:NMF{i + 1:02d}" for i in range(k)]
     H = pd.DataFrame(model.components_.astype(np.float32), index=cols, columns=genes)

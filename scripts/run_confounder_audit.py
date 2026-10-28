@@ -42,12 +42,13 @@ def _chunk(pairs):
 
 
 def audit_pairs() -> pd.DataFrame:
-    md = IO.md_strict()
+    md, mg = IO.md_strict(), IO.catalogue()                            # A7: MD-global (catalogue) and MD-strict
     a = IO.arms_table()
     s1h = a[(a["arm"] == "S1-obs") & a["selected"].astype(bool)]
     ctl = pd.read_csv(P.CONFIGS / "positive_controls.csv", dtype=str)
     ctl = ctl[ctl["scope"] == "gate"]
-    rows = [(g, f, "MD-strict") for g, f in zip(md["gene"], md["feature"])]
+    rows = [(g, f, "MD-global") for g, f in zip(mg["gene"], mg["feature"])]
+    rows += [(g, f, "MD-strict") for g, f in zip(md["gene"], md["feature"])]
     rows += [(g, f, "S1-obs BH") for g, f in zip(s1h["gene"], s1h["feature"])]
     for _, c in ctl.iterrows():
         rows += [(str(c["dependency_entrez"]), f, "control") for f in EP.control_features(c)]
@@ -84,7 +85,7 @@ def main(argv=None) -> int:
     flags["blocks_flagged"] = delta[~sens & delta["flagged"]].groupby(["gene", "feature"])["block"].agg("|".join).reindex(
         flags.index).fillna("")
     flags.reset_index().merge(pairs, on=["gene", "feature"]).to_csv(out / "delta_flags.csv", index=False)
-    AN.write_timing("confounder_delta", {"wall_s": time.perf_counter() - t0, "workers": w, "n_pairs": int(len(pairs))})
+    AN.write_timing("confounder_delta", {"n_pairs": int(len(pairs))}, wall_s=time.perf_counter() - t0, workers=w)
     # VIF / condition number of the D design
     t1 = time.perf_counter()
     v, cond, aliases = AN.design_vif(data.cov)
@@ -98,7 +99,7 @@ def main(argv=None) -> int:
                                             "condition_number": cond, "n_columns": int(len(v)),
                                             "aliased_columns": aliases,
                                             "top": {k: float(x) for k, x in v.head(10).items()}})
-    AN.write_timing("vif", {"wall_s": time.perf_counter() - t1})
+    AN.write_timing("vif", {}, wall_s=time.perf_counter() - t1, workers=1)
     AN.append_registry("scripts/run_confounder_audit.py", "ok",
                        ["results/confounders/delta.csv", "results/confounders/delta_flags.csv",
                         "results/covariates/vif_check.json"])

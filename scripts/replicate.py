@@ -145,7 +145,7 @@ def main(argv=None) -> int:
     lists, _ = list_sets(pool_json)
     genes = sorted(set(req["gene"]) | {g for L in lists.values() for g, _, _ in L})
     feats = sorted(set(req["feature"]) | {f for L in lists.values() for _, f, _ in L})
-    md_genes = sorted(set(req.loc[req["reasons"].str.contains("MD-strict"), "gene"]))
+    md_genes = sorted(set(req.loc[req["reasons"].str.contains("MD-global|MD-strict"), "gene"]))   # catalogue (A7) + MD-strict
     dev = list(p1.dev_ids())
     if a.pseudo_r:
         if a.reproduce:
@@ -190,8 +190,8 @@ def main(argv=None) -> int:
                                                      "utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")})
         files = sorted(str(p.relative_to(P.PROJECT).as_posix()) for p in out.glob("*") if p.is_file())
         AN.append_registry("scripts/replicate.py --pseudo-r fold0", "dryrun", files)
-        AN.write_timing("replicate", {"wall_s": (dt.datetime.now(dt.timezone.utc) - t_start).total_seconds(),
-                                      "mode": "dryrun"}, timing_dir=out)     # not under results/timing (no stem)
+        AN.write_timing("replicate", {"mode": "dryrun"}, timing_dir=out, start_utc=t_start,
+                        workers=a.workers)                                   # not under results/timing (no stem)
         print(summ["strata"].get("G", {}))
         return 0
     # ---- the real, single R run (preconditions checked above) -------------------------------------------------
@@ -213,8 +213,7 @@ def main(argv=None) -> int:
                                      "utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")})
     files = sorted(str(p.relative_to(P.PROJECT).as_posix()) for p in out.glob("*") if p.is_file())
     AN.append_registry("scripts/replicate.py", "ok", files)
-    AN.write_timing("replicate", {"wall_s": (dt.datetime.now(dt.timezone.utc) - t_start).total_seconds(),
-                                  "mode": "replication", "n_requests": int(len(req))})
+    AN.write_timing("replicate", {"mode": "replication", "n_requests": int(len(req))}, start_utc=t_start, workers=1)
     return 0
 
 

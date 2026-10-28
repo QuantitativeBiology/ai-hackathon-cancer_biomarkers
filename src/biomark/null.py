@@ -22,7 +22,7 @@ from . import arms as A
 from . import params as PR
 from . import stats as ST
 
-LISTS = ("S1-obs", "S1-pred", "EN-obs selected", "EN-pred selected", "MD-strict")
+LISTS = ("S1-obs", "S1-pred", "EN-obs selected", "EN-pred selected", "MD-strict", "MD-global")
 
 
 def null_genes(data, n: int | None = None, seed: int | None = None) -> list:
@@ -106,8 +106,10 @@ def _draw(data, res_obs: dict, genes: list, b: int, s1_only: bool = False) -> di
         if len(en_tab):
             md = A.strict(en_tab, s1, "EN-pred", p_cut=p_sc)
             out["MD-strict"] = int(md["pass"].sum())
+            mg = A.md_global(en_tab, s1, "EN-pred", p_cut=cut.get("S1-obs|F1", 0.0))   # A7 at the observed p*_F1
+            out["MD-global"] = int(mg["pass"].sum())
         else:
-            out["MD-strict"] = 0
+            out["MD-strict"] = out["MD-global"] = 0
     out["wall_s"] = time.perf_counter() - t0
     return out
 
@@ -143,6 +145,8 @@ def observed_hits(res_obs: dict, genes: list) -> dict:
         out[f"{arm} selected"] = int(s["selected"].sum())
     md = res_obs.get("md_strict")
     out["MD-strict"] = int(md["gene"].isin(gs).sum()) if md is not None else 0
+    mg = res_obs.get("md_global")
+    out["MD-global"] = int(mg["gene"].isin(gs).sum()) if mg is not None else 0
     return out
 
 
@@ -174,7 +178,8 @@ def run_null(data, res_obs: dict, B: int | None = None, workers: int = 1, genes=
     B = npar["B_base"] if B is None else int(B)
     draws = []
     data.target("obs")
-    payload = {"data": data.for_workers(include_obs=True), "res": {k: res_obs[k] for k in ("p_cut", "lam", "arms", "p_cut_sc") if k in res_obs},
+    payload = {"data": data.for_workers(include_obs=True), "res": {k: res_obs[k] for k in ("p_cut", "lam", "arms", "p_cut_sc")
+                                                                    if k in res_obs},
                "genes": genes, "blas_threads": npar["blas_threads"]}
     if workers <= 1:
         _WN.update(payload)
