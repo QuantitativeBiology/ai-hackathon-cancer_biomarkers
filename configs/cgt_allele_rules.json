@@ -1,6 +1,6 @@
 {
   "_comment": "CGT feature operationalisation (DESIGN v3 10.1/10.3). Read by scripts/build_cgt.py; molecular data only. Mutation rules apply to OmicsSomaticMutations default entries (IsDefaultEntryForModel == Yes). codon = first integer in ProteinChange (p.V600E -> 600; p.E746_A750del -> 746). Classes: missense (VariantType SNV/substitution and ProteinChange without del/ins/dup/fs/Ter), inframe (del/ins/dup/delins without fs), frameshift (fs), splice (VariantInfo contains splice_donor/splice_acceptor). CN = P1 cn cache (relative CN, linear). Fusions = P1 fusion cache (OmicsFusionFiltered), default entries, Gene1 = 5-prime, Gene2 = 3-prime, partner != driver, FFPM >= ffpm_min.",
-  "version": "cgt-rules-1",
+  "version": "cgt-rules-2 (AUD rulings)",
   "params": {
     "ffpm_min": 0.1,
     "cn_amp": 2.0,
@@ -13,12 +13,6 @@
     "sil_min_lineage_lines": 10,
     "hypermutated_top_frac": 0.05,
     "msi_score_threshold": 20.0,
-    "er_mixture_lineages": [
-      "Breast",
-      "Uterus",
-      "Ovary/Fallopian Tube"
-    ],
-    "er_mixture_posterior_cut": 0.5,
     "er_subtype_pos_tokens": [
       "ER+",
       "luminal ER+"
@@ -32,14 +26,36 @@
     "her2_subtype_pos_tokens": [
       "HER2+",
       "basal_A HER2+"
+    ],
+    "er_pam50_gate_lineage": "Breast",
+    "er_pam50_columns": [
+      "Breast_PAM50_Basal_score",
+      "Breast_PAM50_Her2_score",
+      "Breast_PAM50_LumA_score",
+      "Breast_PAM50_LumB_score",
+      "Breast_PAM50_Normal_score"
+    ],
+    "er_pam50_luminal": [
+      "LumA",
+      "LumB"
+    ],
+    "er_esr1_min_log2tpm": 3.0,
+    "er_sanity_positive": [
+      "MCF7",
+      "T47D",
+      "ZR-75-1"
+    ],
+    "er_sanity_negative": [
+      "MDA-MB-231",
+      "BT-549"
     ]
   },
   "features": {
     "ALLELE:BRAF_V600": {
       "gene": "BRAF",
       "type": "mutation",
-      "protein_regex": "^p\\.V600[A-Z]$",
-      "definition": "BRAF V600 (any substitution; class I)",
+      "protein_regex": "^p\\.(V600[A-Z]|V600_K601delins[EDK])$",
+      "definition": "BRAF V600 (any substitution) or V600_K601delinsE/D/K (class I)",
       "source": "FDA CDx V600E/V600K labels; CIViC BRAF V600 profiles"
     },
     "ALLELE:BRAF_V600E": {
@@ -76,8 +92,11 @@
       "codon_min": 729,
       "codon_max": 761,
       "protein_regex": "del",
-      "definition": "EGFR exon-19 in-frame deletion/delins (codons 729-761; frameshifts excluded)",
-      "source": "FDA CDx; CIViC EGFR Exon 19 Deletion"
+      "definition": "EGFR exon-19 in-frame deletion/delins (codons 729-761; frameshifts excluded); two frameshift deletions in exon 19 of one line within 10 bp whose summed length is a multiple of 3 are merged and called in-frame (AUD minor, ACH-002529)",
+      "source": "FDA CDx; CIViC EGFR Exon 19 Deletion",
+      "merge_adjacent_frameshifts": {
+        "max_gap_bp": 10
+      }
     },
     "ALLELE:EGFR_EX20INS": {
       "gene": "EGFR",
@@ -106,17 +125,16 @@
       "definition": "EGFR T790M",
       "source": "FDA CDx rows 42, 50, 62; CIViC AID 130"
     },
-    "ALLELE:EGFR_ACT": {
+    "ALLELE:EGFR_activating": {
       "gene": "EGFR",
       "type": "union",
       "of": [
         "ALLELE:EGFR_L858R",
         "ALLELE:EGFR_EX19DEL",
         "ALLELE:EGFR_EX20INS",
-        "ALLELE:EGFR_UNCOMMON",
-        "ALLELE:EGFR_T790M"
+        "ALLELE:EGFR_UNCOMMON"
       ],
-      "definition": "EGFR activating alleles: L858R, exon-19 del, G719X, L861Q, S768I, exon-20 ins, T790M (CL1d)",
+      "definition": "EGFR activating alleles: L858R, exon-19 del, G719X, L861Q, S768I, exon-20 ins (T790M excluded: acquired, co-occurs with a sensitiser; AUD minor)",
       "source": "DESIGN 10.3 / R1-CL1d"
     },
     "ALLELE:EGFR_C797S": {
@@ -232,7 +250,7 @@
       "gene": "PIK3CA;AKT1;PTEN",
       "type": "union",
       "of": [
-        "ALLELE:PIK3CA_ACT",
+        "ALLELE:PIK3CA_CAPI",
         "ALLELE:AKT1_E17K",
         "CLIN:PTEN_LOF"
       ],
@@ -358,14 +376,9 @@
     "ALLELE:ESR1_LBD": {
       "gene": "ESR1",
       "type": "mutation",
-      "classes": [
-        "missense",
-        "inframe"
-      ],
-      "codon_min": 303,
-      "codon_max": 549,
-      "definition": "ESR1 ligand-binding-domain alteration (K303R, missense codons 310-547, V422del, L549P per SERD labels)",
-      "source": "FDA CDx rows 4, 10, 17, 18, 102, 227"
+      "definition": "ESR1 SERD-label alleles: K303R, E380Q, V422del, S463P, L469X, L536X, Y537X, D538G, L549P (AUD minor)",
+      "source": "FDA CDx rows 4, 10, 17, 18, 102, 227",
+      "protein_regex": "^p\\.(K303R|E380Q|V422del|S463P|L469[A-Z]|L536[A-Z]|Y537[A-Z]|D538G|L549P)$"
     },
     "ALLELE:ABL1_T315I": {
       "gene": "ABL1",
@@ -564,9 +577,12 @@
       "driver": "KMT2A",
       "driver_end": "5p",
       "partners": "*",
-      "partner_source": "mechanistic rule (PI ruling): any partner gene; KMT2A must be the 5-prime gene; KMT2A::KMT2A (partial tandem duplication / self-fusion) excluded",
-      "definition": "KMT2A rearrangement = any KMT2A fusion call (FFPM >= ffpm_min, default entry) with KMT2A as the 5-prime gene and a partner other than KMT2A",
-      "source": "PI ruling (replaces curator partner list)"
+      "partner_source": "rule-based (PI ruling AUD-1); no partner list",
+      "definition": "KMT2A rearrangement = KMT2A 5-prime fusion call (FFPM >= ffpm_min, default entry), partner != KMT2A, excluding partners within +/-2 Mb of KMT2A (Ensembl 116 coordinates; local read-through/artefact) and lncRNA-type partners (RP11-/LINC/AC.../-AS, or no Ensembl gene id)",
+      "source": "PI ruling (replaces curator partner list)",
+      "exclude_partner_within_bp": 2000000,
+      "exclude_partner_regex": "^(RP\\d+-|LINC|AC\\d{6}|AL\\d{6}|AP\\d{6}|CTD-|CTC-|LOC\\d)|-AS\\d*$|^MIR\\d",
+      "exclude_partner_without_ensembl": true
     },
     "CLIN:HER2_POS": {
       "gene": "ERBB2",
@@ -576,9 +592,9 @@
     },
     "CLIN:ER_POS": {
       "gene": "ESR1",
-      "type": "er_pos",
-      "definition": "ModelSubtypeFeatures ER+ / luminal ER+ (ER-/TNBC tokens = negative); otherwise 2-component Gaussian mixture on ESR1 log2(TPM+1) fitted on dev lines of Breast, Uterus, Ovary/Fallopian Tube (posterior of high component > 0.5); other lineages 0",
-      "source": "DESIGN 10.3"
+      "type": "er_pos_v3",
+      "definition": "AUD-4 / PI: Breast lineage AND PAM50 luminal (argmax of OmicsGlobalSignatures Breast_PAM50_* in {LumA, LumB}) AND ESR1 log2(TPM+1) >= er_esr1_min_log2tpm (3.0, fixed); non-breast lines NA; breast lines lacking PAM50 or expression NA",
+      "source": "DESIGN 10.3 + PI rulings D9, AUD-4"
     },
     "CLIN:HR_POS_HER2_NEG": {
       "gene": "ESR1;ERBB2",
@@ -587,8 +603,8 @@
         "CLIN:ER_POS",
         "CLIN:HER2_POS"
       ],
-      "definition": "ER+ and not HER2+",
-      "source": "DESIGN 10.3"
+      "definition": "ER_POS (AUD-4 rule) AND NOT HER2_POS; NA wherever ER_POS is NA",
+      "source": "DESIGN 10.3 + AUD-4"
     },
     "CLIN:MTAP_LOSS": {
       "gene": "MTAP",
@@ -651,6 +667,16 @@
       "type": "not_assayable",
       "definition": "TMB >= 10 mut/Mb (per-Mb territory not defined for DepMap calls; SIG:TMB is a different, log-count feature)",
       "source": "FDA CDx row 79"
+    },
+    "ALLELE:PIK3CA_CAPI": {
+      "gene": "PIK3CA",
+      "type": "mutation",
+      "classes": [
+        "missense"
+      ],
+      "hotspot_flag_or_regex": "^p\\.R88Q$",
+      "definition": "capivasertib PIK3CA set: PIK3CA missense flagged Hotspot in OmicsSomaticMutations, or R88Q (CIViC EID12034); FDA row 87 label reads 'PIK3CA/AKT1/PTEN alterations' without an allele list",
+      "source": "FDA CDx row 87; CIViC EID12034; DepMap Hotspot annotation"
     }
   },
   "standard_features": {

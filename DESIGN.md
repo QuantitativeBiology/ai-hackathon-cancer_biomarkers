@@ -557,3 +557,17 @@ Each row maps 1:1 to a key in the named file; code reads only the file.
 | 8 | subtypes, lineage, cutting, culture | share 0.25; module 50%; 3/3; power 0.5; q 0.05; 2 groups; 80%; −0.2; V 0.3 | design_params : subtypes_s8 |
 | 9–11 | gate; CGT; P2; combinatorial | 60% / 50%; ceiling ≥ 3, q 0.1, testable ≥ 5; k 200, ≥ 15 tests; 45 min | design_params : gate_s9, clinical_s10, combinatorial_s11; primary_endpoints : P2_primary_clinical |
 | 12–14 | limits; toy; independent; compute, tiers; seeds | aggregation, 3b; plants, bounds; tolerances; 6 + 6 workers, budgets | design_params : limits_s12, toy_s13, indep_s13, compute_s14; tiers.json; seeds.json |
+
+## Amendments after freeze (logged; none made after any association result existed)
+- **A1 (D9, CGT audit AUD-1…18, before `freeze-cgt`; molecular-only operationalisation).** CLIN:ER_POS = Breast ∧ PAM50
+  luminal ∧ ESR1 log2(TPM+1) ≥ 3.0, non-breast NA; HR+/HER2− = ER_POS ∧ ¬HER2+. CLIN:KMT2A_R = KMT2A 5′ fusion excluding
+  partners within ±2 Mb and lncRNA partners. ALLELE:EGFR_activating excludes T790M (CL1d). FGFR targets are the altered
+  gene (FGFR3 bladder, FGFR2 cholangiocarcinoma). Merged-indication tests use an indication fixed effect.
+- **A2 (§10.1).** FDA De Novo / 513(f)(2) grants are allowed source record types.
+- **A3 (§10.6).** The clinically-refuted set has 3 rows by construction (BRAF V600E colorectal monotherapy is folded into
+  the combination test; EID1405 kept in notes). Refuted rows may cite only "Does Not Support"+Sensitivity or
+  "Supports"+Resistance records (build check).
+- **A4 (§10 tiers).** Tier `preclinical` (no A/B record isolating the biomarker; e.g. RB1 → CDK4/6) is reported as a
+  secondary and excluded from the P2 headline set (headline tiers T1–T3).
+- **A5 (§3, D10).** KMT2A added to the 5′-driver fusion exception (DEV-DICT-1); SPEC_MMR excluded after failing its
+  pre-declared sanity check.

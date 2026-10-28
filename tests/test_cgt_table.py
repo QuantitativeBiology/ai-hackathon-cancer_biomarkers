@@ -55,12 +55,17 @@ def test_vocabularies(cgt):
     assert set(cgt["sign"]) <= {"S", "W", "N"}
     assert set(cgt["partition"]) <= set(S10["partitions"])
     assert set(cgt["ko_class"]) <= set(S10["ko_classes"])
-    assert set(cgt["tier"]) <= {"T1", "T2", "T3", "refuted"}
+    assert set(cgt["tier"]) <= {"T1", "T2", "T3", "refuted", "preclinical"}  # preclinical: AUD-5 demotion
     assert set(cgt["proxy"]) <= {"0", "1"}
     for c in ("in_gate", "tumour_agnostic", "allele_level_required", "testable"):
         assert set(cgt[c]) <= {"0", "1"}, c
     comp = cgt["comparator"]
     assert comp.str.match(r"^(within-indication(:.+)?|pan-cancer\+lineage|listed-only)$").all()
+    # AUD-7: merged within-indication tests use an indication fixed effect
+    wi = cgt[comp.str.startswith("within-indication")]
+    multi = wi["indication_codes"].str.count(";") >= 1
+    assert wi.loc[multi, "comparator"].str.contains("stratified").all()
+    assert (wi.loc[multi, "indication_fixed_effect"] == "1").all()
 
 
 def test_sign_partition_consistency(cgt):
@@ -119,7 +124,10 @@ def test_cl1_corrections(cgt):
     assert len(braf_s) >= 1 and braf_s["feature"].str.contains("V600").all()                               # CL1c
     egfr_amp = cgt[cgt["feature"].isin(["AMP:EGFR"]) | cgt["feature_D"].eq("AMP:1956")]
     assert (egfr_amp["partition"] == "clinically-refuted").all()                                           # CL1d
-    assert cgt[cgt["test_id"].str.startswith("EGFR_ACT") & (cgt["proxy"] == "0")]["feature"].eq("ALLELE:EGFR_ACT").all()
+    egfr = cgt[cgt["test_id"].str.startswith("EGFR_ACT") & (cgt["proxy"] == "0")]
+    assert len(egfr) == 1 and egfr["feature"].eq("ALLELE:EGFR_activating").all()
+    rules = json.loads(RULES.read_text(encoding="utf-8"))["features"]
+    assert "ALLELE:EGFR_T790M" not in rules["ALLELE:EGFR_activating"]["of"]                                 # AUD minor
     akt = cgt[cgt["target_set"].str.contains("AKT")]
     assert len(akt) >= 1 and akt["target_set"].map(lambda s: sorted(s.split(";")) == ["AKT1", "AKT2", "AKT3"]).all()  # CL1e
     ras = cgt[cgt["target_set"].eq("EGFR") & cgt["feature"].str.contains("RAS")]
@@ -217,3 +225,53 @@ def test_build_reads_no_effects():
                  r"CRISPRGeneEffect", r"crispr\.parquet", r"raw_matrix\(\s*['\"]crispr", r"import_essml"]
     hits = [f for f in forbidden if re.search(f, src)]
     assert not hits, hits
+
+
+def test_audit_rulings(cgt):
+    rules = json.loads(RULES.read_text(encoding="utf-8"))
+    s = json.loads(SUMMARY.read_text(encoding="utf-8"))
+    t = cgt.set_index("test_id")
+    # AUD-1 KMT2A: no partners near KMT2A / lncRNA; EOL-1 not a carrier
+    k = rules["features"]["CLIN:KMT2A_R"]
+    assert k["exclude_partner_within_bp"] == 2000000 and k["exclude_partner_regex"]
+    for c in s["checks"]["kmt2a_carriers"]:
+        assert c["line"] != "EOL1" and not any(re.search(k["exclude_partner_regex"], p) for p in c["partners"])
+        assert not set(c["partners"]) & {"ATP5MG", "CD3G", "UBE4A", "SCN2B", "PHLDB1", "TMPRSS4"}
+    # AUD-2 CDK46_SEL
+    r = t.loc["CDK46_SEL__CDK46__refuted"]
+    assert "CIViC:EID7444" not in r["source_ids"] and "IND:BRCA" in r["comparator_exclude"] and "LOFBI:RB1" in r["comparator_exclude"]
+    # AUD-3 ER+ -> ESR1
+    r = t.loc["ER_POS__ESR1__BRCA"]
+    assert "letrozole" not in r["drugs"] and r["headline_exclude"] and r["p2_scored"] == "0"
+    # AUD-4 ER_POS rule and sanity lines
+    assert rules["features"]["CLIN:ER_POS"]["type"] == "er_pos_v3" and rules["params"]["er_esr1_min_log2tpm"] == 3.0
+    assert s["checks"]["er_sanity_pass"] is True
+    # AUD-5 RB1
+    assert t.loc["RB1_LOF__CDK46__pan", "tier"] != "T2"
+    # AUD-6 FGFR single-gene targets
+    assert t.loc["FGFR3_ALT__FGFR3__BLCA", "target_set"] == "FGFR3"
+    assert t.loc["FGFR2_FUS__FGFR2__CHOL", "target_set"] == "FGFR2"
+    # AUD-7 carrier-defined codes
+    for tid in ("ALK_FUS__ALK__NSCLC_ALCL_IMT", "BCR_ABL1__ABL1__CML_ALL"):
+        assert "cross-lineage=" in t.loc[tid, "comparator"] and t.loc[tid, "cross_lineage_codes_all_carriers"] == "1"
+    # minor items
+    assert "CIViC:EID1405" not in t.loc["BRAF_V600E__BRAF__CRC", "source_ids"]
+    assert t.loc["ABL1_T315I__ABL1__listed", "drugs"] == "dasatinib;imatinib"
+    assert "V600_K601delins" in rules["features"]["ALLELE:BRAF_V600"]["protein_regex"]
+    assert "ALLELE:PIK3CA_CAPI" in rules["features"]["CLIN:CAPI_ALT"]["of"]
+    assert t.loc["BRAF_V600__MEK__MEL", "secondary_comparator_exclude"] == "ALLELE:NRAS_MUT;LOFBI:NF1"
+    assert "PRE-REGISTERED" in t.loc["MTAP_LOSS__PRMT5__pan", "notes"]
+
+
+def test_refuted_records_are_refuting(cgt, build):
+    src = build.load_sources()
+    for _, r in cgt[cgt["partition"] == "clinically-refuted"].iterrows():
+        for tok in [x for x in r["source_ids"].split(";") if x.startswith("CIViC:EID")]:
+            e = src["eid"].loc[int(tok[9:])]
+            assert (e["evidence_direction"], e["significance"]) in build.REFUTING, (r["test_id"], tok)
+
+
+def test_p2_headline_tiers(cgt):
+    """PI: P2 headline tiers = T1-T3 only; 'preclinical' rows are secondaries."""
+    assert set(cgt.loc[cgt["p2_scored"] == "1", "tier"]) <= {"T1", "T2", "T3"}
+    assert (cgt.loc[cgt["tier"] == "preclinical", "p2_scored"] == "0").all()

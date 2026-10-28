@@ -6,5 +6,16 @@
   "configs/tiers.json": "b0f2ef1919fd8a9f759b2be758f902bead2a49711a28e10099eced0c26b80cfa",
   "configs/seeds.json": "19d1d9b47b965e9a2db943d3a1aa6689925de10ed0202085413e48893f22419e"
  },
- "_comment": "sha256 (LF-normalised) of frozen files; 'design' at tag freeze-design, 'bounds' at freeze-bounds"
+ "_comment": "sha256 (LF-normalised) of frozen files; 'design' at tag freeze-design, 'bounds' at freeze-bounds",
+ "design_amendments": {
+  "DESIGN.md": "4e7cca361a544beff866dc5a1201ffb7e8d2b28297ea9f2f740678c03ebba5b9",
+  "amendments": [
+   "A1",
+   "A2",
+   "A3",
+   "A4",
+   "A5"
+  ],
+  "note": "appended section 'Amendments after freeze'; text above it unchanged from freeze-design"
+ }
 }

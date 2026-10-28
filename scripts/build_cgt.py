@@ -31,7 +31,7 @@ os.environ.setdefault("LOKY_MAX_CPU_COUNT", "1")
 warnings.filterwarnings("ignore", message="This pattern is interpreted as a regular expression")
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
-from biomark import molecular, p1  # noqa: E402  (molecular data only)
+from biomark import genesets, molecular, p1  # noqa: E402  (molecular data only)
 
 CFG = ROOT / "configs"
 EXT = ROOT / "external" / "clinical"
@@ -49,6 +49,7 @@ MOA_JSON = EXT / "moalmanac" / "extracted" / "vanallenlab-moalmanac-db-6d3bd09" 
 
 STANDARD_FAMILIES = {"AMP", "DEL", "LOSS", "LOFBI", "HOT", "SIL", "EXPDOSE"}
 SCORED_PARTITIONS = {"sensitivity", "bypass-resistance", "clinically-refuted"}
+P2_HEADLINE_TIERS = {"T1", "T2", "T3"}  # PI: 'preclinical' (RB1->CDK4/6) is a secondary, never in the P2 headline
 P2_KO_CLASSES = {"concordant", "concordant-family", "concordant-KO/combination-required"}
 ALIASES = {"ABL1": ["ABL"], "ERBB2": ["HER2", "HER-2"], "ESR1": ["ESR1", "ER ", "ER+", "ER-positive", "estrogen", "Overexpression"],
            "KMT2A": ["KMT2A", "MLL"], "CDKN2A": ["CDKN2A", "CCND"], "BRCA1;BRCA2": ["BRCA"], "MSI": ["MSI", "Microsatellite", "MLH1", "mismatch"],
@@ -76,7 +77,8 @@ def log(*a):
 # ------------------------------------------------------------------------------------------------- sources
 def load_sources() -> dict:
     civ_e = pd.read_csv(EXT / "civic" / "nightly-ClinicalEvidenceSummaries.tsv", sep="\t", low_memory=False,
-                        usecols=["evidence_id", "molecular_profile", "therapies", "evidence_type", "evidence_status"])
+                        usecols=["evidence_id", "molecular_profile", "therapies", "evidence_type", "evidence_status",
+                                 "evidence_direction", "significance"])
     civ_a = pd.read_csv(EXT / "civic" / "nightly-AssertionSummaries.tsv", sep="\t",
                         usecols=["assertion_id", "molecular_profile", "therapies", "assertion_type"])
     moa = {int(x["assertion_id"]): x for x in json.loads(MOA_JSON.read_text(encoding="utf-8"))}
@@ -102,14 +104,25 @@ def ctg_text(nct: str) -> str:
     return "\n".join(p for p in parts if p)
 
 
-def resolve_id(tok: str, src: dict, ctg_regex: str) -> tuple[bool, str, str]:
-    """(resolved, reason, record_text)."""
+REFUTING = {("Does Not Support", "Sensitivity/Response"), ("Supports", "Resistance")}
+
+
+def fda_kind(pma: str) -> str:
+    return ("De Novo" if pma.startswith("DEN") else "510(k)" if pma.startswith("K") else "HDE" if pma.startswith("H")
+            else "PMA" if pma.startswith("P") else "other")
+
+
+def resolve_id(tok: str, src: dict, ctg_regex: str, refuted: bool = False) -> tuple[bool, str, str]:
+    """(resolved, reason, record_text). For clinically-refuted rows a CIViC EID must be a refuting record
+    (Does Not Support + Sensitivity/Response, or Supports + Resistance; AUD-2)."""
     try:
         if tok.startswith("CIViC:EID"):
             i = int(tok[9:])
             if i not in src["eid"].index:
                 return False, "EID not in CIViC nightly", ""
             r = src["eid"].loc[i]
+            if refuted and (r["evidence_direction"], r["significance"]) not in REFUTING:
+                return False, f"not a refuting record ({r['evidence_direction']} / {r['significance']})", ""
             return True, "", f"{r['molecular_profile']} {r['therapies']}"
         if tok.startswith("CIViC:AID"):
             i = int(tok[9:])
@@ -183,10 +196,11 @@ def load_mutations(genes: set[str]) -> tuple[pd.DataFrame, pd.Index, pd.Series]:
     if MUT_CACHE.exists() and MUT_COUNT_CACHE.exists() and gfile.exists() and             MUT_CACHE.stat().st_mtime >= MUT_FILE.stat().st_mtime and genes <= set(json.loads(gfile.read_text())):
         m = pd.read_parquet(MUT_CACHE)
         cnt = pd.read_parquet(MUT_COUNT_CACHE)["n"]
-        return m, cnt.index, cnt
+        if "Hotspot" in m.columns:
+            return m, cnt.index, cnt
     import pyarrow.csv as pc
     cols = ["ModelID", "IsDefaultEntryForModel", "HugoSymbol", "ProteinChange", "VariantType", "VariantInfo", "Exon",
-            "Intron", "DNAChange", "AF", "LikelyLoF", "VepImpact"]
+            "Intron", "DNAChange", "AF", "LikelyLoF", "VepImpact", "Hotspot"]
     tb = pc.read_csv(MUT_FILE, convert_options=pc.ConvertOptions(include_columns=cols))
     m = tb.to_pandas()
     m = m[m["IsDefaultEntryForModel"] == "Yes"]
@@ -219,7 +233,32 @@ def fusion_select(f: pd.DataFrame, r: dict) -> pd.Series:
     sel = f[own].isin(drv) & ~f[other].isin(drv)
     if r["partners"] != "*":
         sel &= f[other].isin(r["partners"])
+    if r.get("exclude_partner_regex"):
+        sel &= ~f[other].str.contains(r["exclude_partner_regex"], regex=True)
+    if r.get("exclude_partner_without_ensembl"):
+        col = "Gene2" if other == "g3" else "Gene1"
+        sel &= ~f[col].str.contains(r"\(\.\)", regex=True)
+    if r.get("exclude_partner_within_bp"):
+        co = _coords_by_symbol()
+        w = int(r["exclude_partner_within_bp"])
+        for dsym in drv:
+            if dsym not in co.index:
+                continue
+            ch, st, en = co.loc[dsym, ["chrom", "start", "end"]]
+            pc = co.reindex(f[other])
+            near = (pc["chrom"].to_numpy() == ch) & (pc["end"].to_numpy() >= st - w) & (pc["start"].to_numpy() <= en + w)
+            sel &= ~pd.Series(near, index=f.index)
     return sel
+
+
+_COORDS = None
+
+
+def _coords_by_symbol() -> pd.DataFrame:
+    global _COORDS
+    if _COORDS is None:
+        _COORDS = genesets.gene_coords().drop_duplicates("symbol").set_index("symbol")[["chrom", "start", "end"]]
+    return _COORDS
 
 
 class Molecular:
@@ -374,7 +413,13 @@ class Molecular:
                 keep &= m["Exon"].fillna("").astype(str).str.contains(r["exon_regex"], regex=True)
             if "dna_regex" in r:
                 keep &= m["DNAChange"].fillna("").str.contains(r["dna_regex"], regex=True)
-            return self._mprof(pd.Index(m.loc[keep, "ModelID"].unique()))
+            if "hotspot_flag_or_regex" in r:
+                hs = m["Hotspot"].astype(str).eq("True")
+                keep &= hs | m["ProteinChange"].fillna("").str.contains(r["hotspot_flag_or_regex"], regex=True)
+            ids = set(m.loc[keep, "ModelID"])
+            if "merge_adjacent_frameshifts" in r:
+                ids |= self._merged_inframe(m, r)
+            return self._mprof(pd.Index(sorted(ids)))
         if t == "union":
             parts = [self.feature(f) for f in r["of"]]
             df = pd.concat(parts, axis=1)
@@ -400,6 +445,8 @@ class Molecular:
             return out
         if t == "er_pos":
             return self._er_pos()
+        if t == "er_pos_v3":
+            return self._er_pos_v3()
         if t == "del_or_sil":
             c, s = self.cn(r["gene"]), self.sil(r["gene"])
             out = pd.concat([(c < self.P["cn_del"]).astype(float).where(c.notna()), s], axis=1)
@@ -431,6 +478,44 @@ class Molecular:
             return pd.Series(np.nan, index=self.ids)
         raise KeyError(f"unknown rule type {t} for {fid}")
 
+    def _merged_inframe(self, m: pd.DataFrame, r: dict) -> set:
+        """Lines with >= 2 frameshift deletions in the rule's exon within max_gap_bp whose summed deleted length
+        is a multiple of 3 (a complex in-frame indel split into two calls)."""
+        gap = r["merge_adjacent_frameshifts"]["max_gap_bp"]
+        x = m[(m["cls"] == "frameshift") & m["Exon"].fillna("").astype(str).str.contains(r.get("exon_regex", "."), regex=True)]
+        pos = x["DNAChange"].fillna("").str.extract(r"c\.(\d+)(?:_(\d+))?del$")
+        x = x.assign(a=pd.to_numeric(pos[0], errors="coerce"), b=pd.to_numeric(pos[1], errors="coerce")).dropna(subset=["a"])
+        x["b"] = x["b"].fillna(x["a"])
+        out = set()
+        for mid, g in x.groupby("ModelID"):
+            g = g.sort_values("a")
+            if len(g) < 2:
+                continue
+            span_ok = (g["a"].iloc[1:].to_numpy() - g["b"].iloc[:-1].to_numpy() <= gap).all()
+            if span_ok and int((g["b"] - g["a"] + 1).sum()) % 3 == 0:
+                out.add(mid)
+        self.merged_inframe = sorted(set(getattr(self, "merged_inframe", [])) | out)
+        return out
+
+    def _er_pos_v3(self) -> pd.Series:
+        """AUD-4: Breast AND PAM50 luminal AND ESR1 log2(TPM+1) >= fixed cut; non-breast NA."""
+        breast = self.pop["OncotreeLineage"] == "Breast"
+        x = self.expr("ESR1")
+        gs = molecular.global_signatures()
+        cols = self.P["er_pam50_columns"]
+        lum = pd.Series(np.nan, index=self.ids)
+        if gs is not None and all(c in gs.columns for c in cols):
+            sc = gs.reindex(self.ids)[cols].dropna(how="any")
+            arg = sc.idxmax(axis=1).str.replace("Breast_PAM50_", "").str.replace("_score", "")
+            lum[sc.index] = arg.isin(self.P["er_pam50_luminal"]).astype(float)
+        hi = (x >= self.P["er_esr1_min_log2tpm"]).astype(float).where(x.notna())
+        out = (hi * lum).where(breast & hi.notna() & lum.notna())
+        self.er_expression_rule = hi.where(breast)
+        self.er_pam50_luminal = lum
+        self.er_d9 = {"breast_lines": int(breast.sum()), "breast_without_pam50_or_expr": int((breast & out.isna()).sum()),
+                      "non_breast": "NA (AUD-4)"}
+        return out
+
     def _er_pos(self) -> pd.Series:
         from sklearn.mixture import GaussianMixture
         tok = self.subtype_tokens()
@@ -453,6 +538,21 @@ class Molecular:
         out[pos] = 1.0
         out[neg & ~pos] = 0.0
         self.er_fit = {"n_fit": int(fit.sum()), "means": [float(v) for v in gm.means_.ravel()], "high_component": hi}
+        self.er_expression_rule = out.copy()
+        # PI ruling D9: breast lines additionally require PAM50 luminal (argmax in {LumA, LumB})
+        gate = lin == self.P["er_pam50_gate_lineage"]
+        gs = molecular.global_signatures()
+        cols = self.P["er_pam50_columns"]
+        lum = pd.Series(np.nan, index=self.ids)
+        if gs is not None and all(c in gs.columns for c in cols):
+            sc = gs.reindex(self.ids)[cols].dropna(how="any")
+            arg = sc.idxmax(axis=1).str.replace("Breast_PAM50_", "").str.replace("_score", "")
+            lum[sc.index] = arg.isin(self.P["er_pam50_luminal"]).astype(float)
+        self.er_pam50_luminal = lum
+        out[gate] = (out[gate] * lum[gate]).where(lum[gate].notna() & out[gate].notna())
+        self.er_d9 = {"breast_lines": int(gate.sum()), "breast_without_pam50": int((gate & lum.isna()).sum()),
+                      "non_breast_er_pos_expression_rule_only": int(((~gate) & (out == 1)).sum()),
+                      "flag_non_breast": "ER+ outside breast uses the expression rule only; no CGT test uses ER+ outside breast"}
         return out
 
 
@@ -568,9 +668,10 @@ def main() -> None:
         ok_ids, reasons = [], []
         ctg_ok = False
         for t in toks:
-            ok, why, text = resolve_id(t, src, r.get("ctg_biomarker_regex", ""))
+            ok, why, text = resolve_id(t, src, r.get("ctg_biomarker_regex", ""), r["partition"] == "clinically-refuted")
             gm = ok and (t.startswith(("CTG:", "PMID:")) or any(g.lower() in text.lower() for g in genes))
-            id_rows.append({"test_id": r["test_id"], "record_id": t, "resolved": ok, "reason": why, "gene_consistent": bool(gm)})
+            id_rows.append({"test_id": r["test_id"], "record_id": t, "resolved": ok, "reason": why, "gene_consistent": bool(gm),
+                            "fda_kind": fda_kind(t.split("|", 1)[1]) if t.startswith("FDA:") else ""})
             if ok:
                 ok_ids.append(t)
                 ctg_ok |= t.startswith("CTG:")
@@ -616,7 +717,8 @@ def main() -> None:
 
     feats = sorted(set(cg["feature"]) | {f for s in cg["comparator_restrict"] for f in s.split(";") if f} |
                    {f for s in cg["comparator_exclude"] for f in s.split(";") if f and not f.startswith("IND:")} |
-                   {f for s in cg["feature_secondary"] for f in s.split(";") if f})
+                   {f for s in cg["feature_secondary"] for f in s.split(";") if f} |
+                   {f for s in cg["secondary_comparator_exclude"] for f in s.split(";") if f})
     for f in feats:
         mol.feature(f)
     dev = pop["role"] == "dev"
@@ -671,7 +773,36 @@ def main() -> None:
         rec["untestable_reason"] = reason
         rec["ceiling_testable"] = int(reason == "" and r["sign"] in ("S", "W"))
         rec["p2_scored"] = int(rec["testable"] == 1 and r["partition"] in ("sensitivity", "bypass-resistance")
-                               and r["ko_class"] in P2_KO_CLASSES)
+                               and r["ko_class"] in P2_KO_CLASSES and not r.get("headline_exclude")
+                               and r["tier"] in P2_HEADLINE_TIERS)
+        # AUD-7: merged-indication tests -> indication fixed effect; per-indication strata (beta per stratum downstream)
+        strat = "stratified" in str(r["comparator"])
+        rec["indication_fixed_effect"] = int(strat)
+        if strat:
+            st = {}
+            for code in [c for c in str(r["indication_codes"]).split(";") if c]:
+                im = indication_mask(code, mtp) & cm
+                st[code] = [int(((v == 1) & im & dev).sum()), int(((v == 0) & im & dev).sum())]
+            rec["indication_strata_D"] = json.dumps(st)
+        else:
+            rec["indication_strata_D"] = ""
+        xl = re.findall(r"cross-lineage=([A-Za-z0-9_,]+)", str(r["comparator"]))
+        rec["cross_lineage_codes"] = ";".join(xl)
+        if xl:
+            codes = xl[0].split(",")
+            cc = cm & mtp["OncotreeCode"].isin(codes)
+            rec["cross_lineage_codes_all_carriers"] = int(bool(((v[cc & dev] == 1).all()) and (cc & dev).any()))
+        else:
+            rec["cross_lineage_codes_all_carriers"] = ""
+        sec = [t for t in str(r.get("secondary_comparator_exclude") or "").split(";") if t]
+        if sec:
+            cm2 = cm.copy()
+            for tkn in sec:
+                cm2 &= ~(mol.feature(tkn).reindex(mtp.index) == 1)
+            rec["secondary_n_carriers_comparator_D"] = int(((v == 1) & cm2 & dev).sum())
+            rec["secondary_n_noncarriers_comparator_D"] = int(((v == 0) & cm2 & dev).sum())
+        else:
+            rec["secondary_n_carriers_comparator_D"] = rec["secondary_n_noncarriers_comparator_D"] = ""
         out.append(rec)
     res = pd.DataFrame(out)
 
@@ -723,6 +854,25 @@ def main() -> None:
                                  "lineage": pop.at[mid, "OncotreeLineage"], "partners": sorted(set(g["g3"]))}
                                 for mid, g in km_rows.groupby("ModelID")]
     checks["er_concordance"] = er_concordance(mol, pop)
+    checks["er_d9"] = dict(getattr(mol, "er_d9", {}))
+    dv = pop["role"] == "dev"
+    brd = (pop["OncotreeLineage"] == "Breast")
+    for nm, ser in (("ESR1_ge_cut_breast", mol.er_expression_rule), ("ER_POS", mol.feature("CLIN:ER_POS")),
+                    ("HR_POS_HER2_NEG", mol.feature("CLIN:HR_POS_HER2_NEG"))):
+        checks["er_d9"][nm] = {"breast_D": int(((ser == 1) & brd & dv).sum()), "breast_R": int(((ser == 1) & brd & ~dv).sum())}
+    esr1 = mol.expr("ESR1")
+    san = []
+    for want, names in ((1, rules["params"]["er_sanity_positive"]), (0, rules["params"]["er_sanity_negative"])):
+        for nm in names:
+            mid = name_map.get(nm.upper().replace("-", "").replace(" ", ""))
+            v = mol.feature("CLIN:ER_POS").get(mid) if mid in mol.ids else None
+            san.append({"line": nm, "ModelID": mid, "in_D_or_R": mid in mol.ids, "expected": want,
+                        "ER_POS": None if v is None or pd.isna(v) else int(v),
+                        "ESR1_log2tpm": None if mid not in mol.ids or pd.isna(esr1.get(mid)) else round(float(esr1[mid]), 2),
+                        "pam50_luminal": None if mid not in mol.ids or pd.isna(mol.er_pam50_luminal.get(mid)) else int(mol.er_pam50_luminal[mid])})
+    checks["er_sanity_lines"] = san
+    checks["er_sanity_pass"] = all(x["ER_POS"] == x["expected"] for x in san if x["ER_POS"] is not None)
+    checks["egfr_ex19_merged_frameshift_lines"] = getattr(mol, "merged_inframe", [])
     checks["er_mixture"] = getattr(mol, "er_fit", None)
     checks["corrections"] = corr["correction_id"].tolist()
     checks["unresolved_ids_in_kept_rows"] = int(sum(bool(x) for x in res["unresolved_ids"]))
@@ -738,7 +888,10 @@ def main() -> None:
             "allele_level_required", "proxy", "proxy_of", "correction", "target_in_library", "targets_missing_library",
             "n_carriers_D", "n_carriers_R", "n_profiled_D", "n_profiled_R", "n_comparator_D", "n_carriers_comparator_D",
             "n_noncarriers_comparator_D", "n_carriers_comparator_R", "n_noncarriers_comparator_R", "testable",
-            "ceiling_testable", "p2_scored", "untestable_reason", "unresolved_ids", "citation", "notes"]
+            "ceiling_testable", "p2_scored", "headline_exclude", "indication_fixed_effect", "indication_strata_D",
+            "cross_lineage_codes", "cross_lineage_codes_all_carriers", "secondary_comparator_exclude",
+            "secondary_n_carriers_comparator_D", "secondary_n_noncarriers_comparator_D", "untestable_reason",
+            "unresolved_ids", "citation", "notes"]
     res[cols].to_csv(OUT_CGT, index=False)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     DROPPED.parent.mkdir(parents=True, exist_ok=True)
@@ -776,6 +929,8 @@ def main() -> None:
                                       ["test_id", "feature_D", "target_set", "sign", "partition", "tier", "n_carriers_D",
                                        "n_carriers_comparator_D", "n_carriers_R", "in_gate"]].to_dict("records"),
         "deviations": deviations,
+        "headline_excluded": res.loc[res["headline_exclude"].astype(str) != "", ["test_id", "headline_exclude"]].to_dict("records"),
+        "fda_id_kinds": vc(idd.loc[idd["fda_kind"] != "", "fda_kind"]),
         "recorded_gaps": [
             "ER+ -> endocrine therapy: no endocrine-monotherapy ER+ record in frozen CIViC/MOA/FDA (ER_POS__ESR1__BRCA rests on CIViC EID1541)",
             "avapritinib for KIT D816V systemic mastocytosis: no CIViC/MOA/FDA record (drug not listed)",
