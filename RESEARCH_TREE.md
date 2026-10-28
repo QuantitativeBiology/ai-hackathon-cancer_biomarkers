@@ -4,6 +4,23 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-28 — SUSPEND (machine suspended by the user mid-M2/M3b) — RESUME HERE
+Done and committed: M0 setup; M1 literature (LITERATURE.md, docs/lit/*, data availability, Part 1 brief); DESIGN v1 → v2
+after round 1 (84 items, reviews/round1_response.md); round-2 reviews (reviews/round2_*.md, decisions D5–D6); core
+library src/biomark/{paths,p1,guard,gitutil}.py with 31 passing tests; input checksums verified; external clinical and
+combinatorial data fetched; user-supplied DepMap extras registered (configs/depmap_extra_sha256.txt). No analysis
+result exists yet; the replication set R has never been read; no freeze tag exists.
+
+Interrupted (uncommitted files left on disk; treat as unverified drafts, re-check before use):
+(1) DESIGN v3 + reviews/round2_response.md + configs/{design_params,primary_endpoints,tiers,seeds}.json edits — the
+editor was applying D6; check that round2_response.md has a row for all 23 items and configs match DESIGN §F, then commit
+and tag `freeze-design`. (2) M3b dictionary/eligibility/controls track: src/biomark/{dictionary,covariates,eligibility,
+molecular,genesets,datastatus}.py, scripts/data_status.py, configs/{build_params.json,positive_controls_spec.csv,
+fusion_known_positives.csv}, results/data_status.json, p1.py edit — re-dispatch with "finish and test" against v3.
+(3) CGT build (2nd attempt, two-step; docs/cgt_handover.md): scripts/fetch_cgt_records.py only — re-dispatch.
+(4) Toy simulation (verification agent): configs/toy_answer_key.json only — re-dispatch; must stay a different agent from
+the pipeline author. Next after these: freeze-bounds → M4 (four arms, MD-strict, gate, null).
+
 ### 2026-10-28 — M0: setup
 Project started. Prompt saved verbatim (PROMPT.md), `.gitignore` set (no raw/derived bulk data), tracking files created.
 Part 1 (../project, DepMap 26Q3, headline model M5 = average of kernel ridge M1, paralog stage M2, LightGBM M3) is read
