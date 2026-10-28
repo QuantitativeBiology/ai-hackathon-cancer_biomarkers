@@ -114,3 +114,43 @@ EN-pred fidelity is 0.29 (consistent with amendment A6: prediction arms are dens
   effects, so the screen does not remove these candidates.
 - `pure_null`: S1-pred P(any non-neutral hit) 0.25 > 0.10 (5/20 toys, 1-2 background hits each); S1-obs 0/20. The
   assertion stops at S1-pred, so MD-strict was not evaluated by the test.
+
+# Endpoint code (gate, P1 replication, P2 CGT recall)
+
+| File | Content |
+|---|---|
+| `src/biomark/endpoints.py` | pure functions: `descends_from` / `require_descends` (tag is an ancestor of HEAD), `require_single_r_read`, `catalogue_manifest` / `catalogue_mismatches`, `clopper_pearson`, `mcnemar_exact`, `p1_verdict`, `p2_verdict`, `gate_attempt`, `RankIndex` (fast `rank_of_feature_D`, equality with `arms.rank_of_feature` tested), `p2_test_set`, `p2_score`, `p2_summary` (recall + CI, direction accuracy, sign errors, McNemar, verdict), `actionability`, `population_by_lineage`, `expected_nonnan`, `pool_power`, `p1_k`, `build_lists`, `strata_of`, `RFitter` (§5.3 model with fixed drops on any line set, CR2 + ν), `replicated`, `bootstrap_rates`, `p1_contrasts` |
+| `src/biomark/endpoint_io.py` | real-data loaders for any line set (values, covariates, own CN, EXPGATE, library strings), σ̂_resid,D(g), `subset_data`, `make_pool`, `build_requests` |
+| `scripts/run_gate.py` | §9.3 attempt n -> `results/gates/G_pc_attempt{n}.json` (never overwritten) + row in `results/gate_iterations.csv` (commit, reason, toy test, gate before/after, file sha256); attempt > 1 needs `--reason` and `--toy-test`; refuses unless HEAD descends from `freeze-bounds` |
+| `scripts/build_p1_pool.py` | pre-tag: Pool_G, k_G, k_s, frozen lists (k_G, strata, secondary k) -> `results/benchmark/p1_pool.json` (+ bulk pool parquet), `configs/catalogue/r_requests.csv`, `configs/freeze_catalogue.json`; R contributes molecular data only; refuses before `freeze-bounds` or after `freeze-catalogue` |
+| `scripts/replicate.py` | the single R run and `--pseudo-r fold0` (writes only `results/dryrun/`) |
+| `tests/test_endpoint_branches.py` | 16 tests: every P1 branch (both contrasts, three branches + descriptive), end-to-end bootstrap reaching "predictor adds value", every P2 branch + descriptive, headline set (A4), gate pass/fail branches, refusals (pre-tag replicate / gate / pool build, second R open after the tag before any effect read, reproduction rules, catalogue hash mismatch), expected-NaN rule, pool/power/list builder |
+
+Ambiguities resolved:
+1. **Who freezes the pool.** §6.1 fixes k_G, the pool and power "before the tag", so they are built by a separate pre-tag
+   script (`build_p1_pool.py`) that also writes `r_requests.csv` (reasons: P1 lists at k_G, every stratum and
+   secondary k; MD-strict; EN-obs-strict; S1-obs BH; gate controls; CGT tests incl. proxy copies; an `extra` hook
+   for cross-lineage / shortlist rows from M5) and the `freeze_catalogue.json` manifest that `replicate.py` checks.
+2. **Pseudo-R dry run.** §1.3 calls it in-sample; the coordinator asked for refits on the other folds. Lists stay the
+   frozen full-D ranks (re-running the arms on D′ is out of scope); everything else on the D side is refitted on
+   D′ = folds 1–4: S1-obs (β, SE, drops, SD(d̃)) for the requested genes with the unchanged engine, σ̂_resid, the
+   expected-NaN rule, EB shrinkage, pool and power. Fold-0 effects are read with scope dev; set A is not read
+   (`setA_lines.csv` has status dryrun); `registry_status.json` = dryrun, uncitable. `--no-refit` and `--boot-B`
+   exist for the dry run only.
+3. **σ̂_resid,D(g)** = gene-level residual SD of y_g on [1, design blocks, droppable covariates]. **d̃_R for power**
+   omits the gene covariates (own CN, EXPGATE); the R test itself uses the full model with the D drops.
+4. **Replication sign.** A list row replicates with its arm's sign (EN majority sign; S1 sign of β); `r_tests.csv`
+   tests CGT/control rows in their pre-registered direction, others in the direction of β_D. The degenerate rule
+   (< 2 distinct carrier or non-carrier patients) applies to binary features, counting original patients.
+5. **Single R read.** Any granted `replication` row in the guard log refuses a new run; `--reproduce` allows only the
+   same commit and config digest (stored in the guard purpose string), per §1.3 (h). Set-A (`limits`) reads do not
+   count as R reads.
+6. **P2 headline set** is recomputed (tiers T1–T3, A4; S/W; sensitivity + bypass-resistance; concordant KO classes;
+   proxy = 0; `headline_exclude` empty; `gate_disjoint` drops `in_gate`), with testable = `feature_D` in U with ≥ 5
+   carriers for some g in T (CGT symbols mapped to Entrez). The CGT file's `p2_scored` column is not used, so any
+   disagreement shows up.
+7. **Gate features** = primary + secondary ids, plus the fallback ids when `gate_feature = fallback`.
+8. **Q4c population**: indicated lines = OncotreeCode exactly in `indication_codes` (no OncoTree hierarchy, so parent
+   codes such as SOLID match nothing unless tumour-agnostic); population precision and the carriers-only OR are
+   not implemented yet. P1 secondary variants (U_all, gene-matched, Deming, XLIB) are not implemented; the
+   secondary-k lists are frozen and requested.
