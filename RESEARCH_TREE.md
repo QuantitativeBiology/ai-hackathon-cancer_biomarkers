@@ -52,6 +52,9 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D9 (M3b): ER+ (and HR+/HER2−) operationalised as ESR1-expression rule AND PAM50 luminal call, decided before any
+  dependency data were joined: the expression-only rule over-called (29/65 breast lines ER+, 14 non-luminal). ALK cap of 10
+  was a pre-data estimate; 11 real carriers kept (DEV-CGT-1). KMT2A-r = any KMT2A-5′ fusion (no memory-based partner list).
 - D8 (M2 milestone): design frozen at v3.2 after 3 rounds (113 items total, none open). Further changes only as logged
   amendments with reason; parameters cannot change after results are seen.
 - D7 (M2): the user supplied CCLE RRBS promoter methylation before the first dictionary build, so methylation is in scope
@@ -82,6 +85,7 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
 - [~] M3 Infrastructure
   - [x] src/biomark (paths, p1 loaders, guard, P1 write-block); 31 tests pass; input sha256 11/11 OK
   - [x] External fetch: CIViC, MOAlmanac (GPL-2.0), FDA CDx (232 rows), OncoKB lists; combinatorial: Esmaeili 2024 harmonised table (covers Dede/Parrish/Thompson/CHyMErA/Ito), Dede, Thompson, Flister 2024 bioRxiv (analysis-only licence); Parrish processed tables blocked (not needed)
+  - [x] CGT table: 64 tests (29 testable, 22 P2-scored), 524/526 record IDs resolve; [~] independent audit → freeze-cgt
   - [~] M3b parallel tracks (started during round 2, D4): dictionary/eligibility/controls · CGT table (no dependency data) · toy simulation (separate verification agent)
 - [~] M4 Core pipeline engine (stats/HC2, two-stage stability EN, 4 arms, MD-strict, fixed-threshold null) — pipeline author agent; unit tests on synthetic data; real run after freeze-bounds
 - [ ] Final REPORT.md
