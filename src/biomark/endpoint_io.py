@@ -229,3 +229,13 @@ def build_requests(pool: pd.DataFrame, lists: dict, s1_obs: pd.DataFrame, md: pd
     acc = U["access_class"] if "access_class" in U else pd.Series(dtype=object)
     agg["access_class"] = acc.reindex(key).to_numpy() if len(acc) else ""
     return agg[REQUEST_COLS]
+
+
+def fitter_for(ids, genes, features, Y: pd.DataFrame):
+    """endpoints.RFitter on any line set (values, covariates, own CN, EXPGATE from the dictionary caches)."""
+    from . import endpoints as EP
+    X = line_values(ids, features)
+    oc, eg = line_gene_covs(ids, genes)
+    cov = line_covariates(ids)
+    return EP.RFitter(X.to_numpy(dtype=np.float64), pd.Series(np.arange(X.shape[1]), index=X.columns), cov, oc, eg,
+                      Y.reindex(index=list(ids), columns=list(genes)), cov["PatientID"].astype(str).to_numpy())

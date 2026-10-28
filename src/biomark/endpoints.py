@@ -603,11 +603,12 @@ def p1_contrasts(point: dict, boot: pd.DataFrame, k_of: dict, prefix: str = "") 
 
 
 def population_by_lineage(fitter: RFitter, tests: pd.DataFrame, drops: dict, lineage: np.ndarray,
-                          oncotree_code: np.ndarray) -> tuple:
+                          oncotree_code: np.ndarray, indicated_of=None) -> tuple:
     """Per testable test and target g: within-indication β (lines whose OncotreeCode is in the indication codes, all
     lines when tumour-agnostic) and β in each non-indicated lineage with >= population_min_carriers carriers and
     non-carriers; test label on-label / beyond-label / off-label-only / indication-untestable / not supported
-    (support = expected sign with one-sided p < alpha_one_sided)."""
+    (support = expected sign with one-sided p < alpha_one_sided). ``indicated_of(test_row)`` overrides the exact
+    OncotreeCode match (bool per fitter line)."""
     cs = PR.dp()["clinical_s10"]
     nmin = int(cs["population_min_carriers"])
     alpha = float(PR.dp()["replication_s6"]["alpha_one_sided"])
@@ -618,7 +619,12 @@ def population_by_lineage(fitter: RFitter, tests: pd.DataFrame, drops: dict, lin
         sgn = -1.0 if t["sign"] == "S" else 1.0
         codes = set(_targets(str(t.get("indication_codes", "")).replace(";", "|")))
         agnostic = str(t.get("tumour_agnostic", "0")) in ("1", "True", "true")
-        ind = np.ones(len(code), dtype=bool) if agnostic else np.isin(code, list(codes))
+        if agnostic:
+            ind = np.ones(len(code), dtype=bool)
+        elif indicated_of is not None:
+            ind = np.asarray(indicated_of(t), dtype=bool)          # e.g. analyses.indicated_lines (parent codes)
+        else:
+            ind = np.isin(code, list(codes))
         for g in t["targets"]:
             if g not in fitter.gpos or t["feature_D"] not in fitter.fpos.index:
                 continue

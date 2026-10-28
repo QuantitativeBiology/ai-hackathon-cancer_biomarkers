@@ -1,0 +1,118 @@
+"""XLIB secondary (DESIGN v3.2 §6.3, primary_endpoints.XLIB_secondary): S1-obs and EN-obs only.
+
+    python -B scripts/run_xlib.py [--workers N]      # background, after the fixed-threshold null
+
+Discovery = D lines whose library string is exactly the discovery library; replication = D lines with no such
+component; others in neither. The two arms are refitted on discovery lines with their own λ CV (same params,
+Part 1 folds and subsamples restricted to discovery lines); pool, power (discovery-set shrunk effects, replication
+molecular data), k and lists follow the P1 rules; replication tests use the same confounder model and drops; paired
+patient bootstrap over replication lines; contrast EN-obs − S1-obs with the P1 branches. u_rule all_D uses U and
+eligibility as built on all D; discovery_only recomputes eligibility on discovery lines (no refit) and restricts the
+pool. Writes results/benchmark/replication_xlib.csv (+ xlib_summary.json), cache/benchmark/xlib_arms.parquet and
+results/timing/{xlib_s1_obs, xlib_en_obs}.json. Refuses unless HEAD descends from freeze-bounds.
+"""
+from __future__ import annotations
+
+import argparse
+import sys
+import time
+from pathlib import Path
+
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+from biomark import analyses as AN  # noqa: E402
+from biomark import arms as A  # noqa: E402
+from biomark import endpoint_io as IO  # noqa: E402
+from biomark import endpoints as EP  # noqa: E402
+from biomark import params as PR  # noqa: E402
+from biomark import paths as P  # noqa: E402
+from biomark import pipeline as PL  # noqa: E402
+from biomark import stats as ST  # noqa: E402
+
+XARMS = tuple(PR.dp()["replication_s6"]["xlib_arms"])
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--workers", type=int, default=None)
+    a = ap.parse_args(argv)
+    EP.require_descends("freeze-bounds")
+    w = a.workers or PR.null_params()["fg_workers"]
+    data = PL.Data.from_real()
+    split = AN.xlib_split(IO.library_strings(list(data.lines)))
+    disc = (split == "discovery").to_numpy()
+    repl_ids = list(data.lines[(split == "replication").to_numpy()])
+    dD = IO.subset_data(data, disc)
+    t0 = time.perf_counter()
+    s1 = A.run_s1(dD, ("S1-obs",), workers=w)
+    t_s1 = time.perf_counter() - t0
+    t0 = time.perf_counter()
+    en, _, _ = A.run_en(dD, ("EN-obs",), U=s1[["gene", "feature"]], workers=w)
+    arms_tab = A.assemble(dD, s1, en)
+    (P.CACHE / "benchmark").mkdir(parents=True, exist_ok=True)
+    arms_tab.to_parquet(P.CACHE / "benchmark" / "xlib_arms.parquet")
+    s1o = arms_tab[arms_tab["arm"] == "S1-obs"]
+    genes = list(dD.genes)
+    disc_ids = list(dD.lines)
+    nan_D = pd.read_parquet(P.CACHE / "effect_nan_mask.parquet").reindex(index=list(data.lines), columns=genes)
+    Yd = dD.target("obs")
+    sig = IO.sigma_resid_genes(Yd, dD.rows_ok, ST.CovDesign(dD.cov_df), genes)
+    pool, pj = IO.make_pool(arms_tab, s1o, sig, disc_ids, repl_ids, nan_D)
+    # u_rule discovery_only
+    el = pd.read_csv(P.CONFIGS / "eligible_genes.csv", dtype={"entrez": str})
+    strata = (dD.cov_df["lineage"].astype(str) + "|" + dD.cov_df["library_group"].astype(str)).to_numpy()
+    ok_disc = AN.discovery_eligibility(el, dD.pred, np.where(dD.rows_ok, Yd, np.nan), strata, genes)
+    keep = set(ok_disc.index[ok_disc.to_numpy()])
+    Pd = pool[pool["powered"] & pool["gene"].isin(keep)]
+    pj_disc = {"pool_size": int(len(Pd)), "k": EP.p1_k(len(Pd)), "lists": {"G": EP.build_lists(arms_tab, Pd, XARMS)},
+               "strata": {}}
+    for name, m in EP.strata_of(Pd["access_class"]).items():
+        sub = Pd[m.to_numpy()]
+        pj_disc["strata"][name] = {"pool_size": int(len(sub)), "k": EP.p1_k(len(sub))}
+        pj_disc["lists"][name] = EP.build_lists(arms_tab, sub, XARMS)
+    # replication on non-Avana D lines (observed D effects, scope dev)
+    Y_all = pd.DataFrame(data.target("obs"), index=data.lines, columns=genes)
+    feats = sorted({f for pjx in (pj, pj_disc) for L in pjx["lists"].values() for arm in XARMS
+                    for _, f, _ in L.get(arm, {}).get("rows", [])})
+    fl = IO.feature_meta()
+    binary = (fl["d_type"] == "binary").to_dict()
+    drops = {(str(g), f): (d if isinstance(d, str) else "") for g, f, d in zip(s1o["gene"], s1o["feature"], s1o["dropped_cov"])}
+    fitter = IO.fitter_for(repl_ids, genes, feats, Y_all.loc[repl_ids])
+    rows, summ = [], {"discovery_lines": int(disc.sum()), "replication_lines": len(repl_ids), "u_rules": {}}
+    for u_rule, pjx in (("all_D", pj), ("discovery_only", pj_disc)):
+        lists, k_of = {}, {}
+        for stratum, L in pjx["lists"].items():
+            for arm in XARMS:
+                v = L.get(arm, {"rows": [], "k": 0})
+                lists[f"{stratum}|{arm}"] = [(str(g), f, float(s)) for g, f, s in v["rows"]]
+                k_of[f"{stratum}|{arm}"] = int(v["k"])
+        point = {nm: float(np.mean([EP.replicated(fitter.fit(g, f, drops.get((g, f), ""), sign=s), s,
+                                                  binary=binary.get(f, True)) for g, f, s in L])) if L else np.nan
+                 for nm, L in lists.items()}
+        bt = EP.bootstrap_rates(fitter, lists, drops, binary)
+        summ["u_rules"][u_rule] = {"pool_size": pjx["pool_size"], "k": pjx["k"]}
+        for stratum in pjx["lists"]:
+            for c in EP.p1_contrasts(point, bt["rates"], {nm: k_of[nm] for nm in lists if nm.startswith(stratum + "|")},
+                                     prefix=f"{stratum}|"):
+                if c["contrast"] != "multivariate_adds_value":
+                    continue
+                rows.append({"u_rule": u_rule, "stratum": stratum, **{f"rate_{arm}": point[f"{stratum}|{arm}"] for arm in XARMS},
+                             **c, "frac_degenerate_EN-obs": float(bt["frac_degenerate"][f"{stratum}|EN-obs"].mean())})
+    out = P.RESULTS / "benchmark"
+    pd.DataFrame(rows).to_csv(out / "replication_xlib.csv", index=False)
+    summ["caveat"] = PR.endpoints()["XLIB_secondary"]["caveat"]
+    IO.write_json(out / "xlib_summary.json", summ)
+    t_en = time.perf_counter() - t0
+    AN.write_timing("xlib_s1_obs", {"wall_s": t_s1, "workers": w, "n_genes": len(genes), "n_discovery": int(disc.sum())})
+    AN.write_timing("xlib_en_obs", {"wall_s": t_en, "workers": w, "note": "EN-obs refit + pool + replication bootstrap"})
+    AN.append_registry("scripts/run_xlib.py", "ok", ["results/benchmark/replication_xlib.csv", "results/benchmark/xlib_summary.json"])
+    print(pd.DataFrame(rows).to_string())
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

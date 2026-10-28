@@ -38,8 +38,10 @@ def sha(path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def write_timing(stem: str, rec: dict) -> None:
-    d = P.PROJECT / PR.pp()["timing_dir"]
+def write_timing(stem: str, rec: dict, tag: str = "") -> None:
+    """results/timing/<stem>.json for the eligible universe (stems of tiers.json stage_job_map); other universes
+    write to results/benchmark/timing<tag>/ so budget_check.py never sees an unmapped stem."""
+    d = P.PROJECT / PR.pp()["timing_dir"] if not tag else P.RESULTS / "benchmark" / f"timing{tag}"
     d.mkdir(parents=True, exist_ok=True)
     rec = {"job": stem, "utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), **rec}
     (d / f"{stem}.json").write_text(json.dumps(rec, indent=1, default=float), encoding="utf-8")
@@ -174,11 +176,11 @@ def full(args) -> int:
     (rb / f"summary{tag}.json").write_text(json.dumps(summ, indent=1, default=str), encoding="utf-8")
     n = len(data.genes)
     for stem, key in (("s1_obs", "s1_obs_pred"), ("s1_pred", "s1_obs_pred")):
-        write_timing(stem + tag, {"wall_s": tim[key], "note": "S1-obs and S1-pred computed in one scan", "n_genes": n})
+        write_timing(stem, {"wall_s": tim[key], "note": "S1-obs and S1-pred computed in one scan", "n_genes": n}, tag)
     for arm, stem in (("EN-obs", "en_obs"), ("EN-pred", "en_pred")):
         cpu = sum(d["wall_s"] for d in tim["en_detail"] if d["arm"] == arm)
-        write_timing(stem + tag, {"worker_cpu_s": cpu, "wall_s_both_arms": tim["en_obs_pred"], "workers": w, "n_genes": n})
-    write_timing("md_strict" + tag, {"wall_s": 0.0, "note": "computed from S1-obs and EN-pred tables inside run_arms"})
+        write_timing(stem, {"worker_cpu_s": cpu, "wall_s_both_arms": tim["en_obs_pred"], "workers": w, "n_genes": n}, tag)
+    write_timing("md_strict", {"wall_s": 0.0, "note": "computed from S1-obs and EN-pred tables inside run_arms"}, tag)
     print(json.dumps(summ, indent=1, default=str))
     return 0
 

@@ -623,7 +623,7 @@ def eb_scale_mixture(b: np.ndarray, s: np.ndarray, rp: dict | None = None) -> di
     hi = rp["eb_sigma_max_mult"] * np.sqrt(max(np.max(bo ** 2 - so ** 2), (2 * lo) ** 2))
     sig = np.geomspace(lo, max(hi, lo * 2), rp["eb_n_sigma"])
     var = sig[None, :] ** 2 + so[:, None] ** 2
-    L = np.exp(-0.5 * bo[:, None] ** 2 / var) / np.sqrt(var)
+    L = np.exp(-0.5 * bo[:, None] ** 2 / var) / np.sqrt(var)  # literal-ok: normal log-density factor
     pi = np.full(sig.size, 1.0 / sig.size)
     for _ in range(rp["eb_max_iter"]):
         w = L * pi

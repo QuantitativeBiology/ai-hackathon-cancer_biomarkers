@@ -154,3 +154,46 @@ Ambiguities resolved:
    codes such as SOLID match nothing unless tumour-agnostic); population precision and the carriers-only OR are
    not implemented yet. P1 secondary variants (U_all, gene-matched, Deming, XLIB) are not implemented; the
    secondary-k lists are frozen and requested.
+
+# Remaining Tier A pieces (XLIB, component readout, confounder audit, Q4, registry)
+
+| File | Content | Timing stem(s) |
+|---|---|---|
+| `src/biomark/analyses.py` | `append_registry` (file-locked `results/registry.csv`, §13.6 columns), `write_timing`, `xlib_split`, `discovery_eligibility`, `component_targets`, `data_with_pred`, `component_selection`, `design_vif` (alias-aware), `oncotree_terms`, `indicated_lines`, `population_precision` | — |
+| `scripts/run_xlib.py` | §6.3 S1-obs + EN-obs refitted on discovery lines (own λ CV, folds / subsamples restricted), pool / power / k / lists by the P1 rules (replication molecular data), replication fits on non-Avana D lines, paired patient bootstrap, contrast EN-obs − S1-obs, `u_rule` all_D and discovery_only -> `results/benchmark/replication_xlib.csv` (+ `xlib_summary.json`, `cache/benchmark/xlib_arms.parquet`) | xlib_s1_obs, xlib_en_obs |
+| `scripts/run_component_readout.py` | §4.2 EN (unchanged engine) on fold-centred ŷ_M1, ŷ_M2n − ŷ_M1, ŷ_M3n − ŷ_M1 for MD-strict genes -> `results/components/component_selection.csv` | component_readout |
+| `scripts/run_confounder_audit.py` | §5.5 deltas for MD-strict ∪ S1-obs BH ∪ gate controls (parallel chunks of `audit.confounding_delta`) -> `results/confounders/delta.csv`, `delta_flags.csv`; §5.3 VIF / condition number -> `results/covariates/vif_check.json` | confounder_delta, vif |
+| `scripts/run_q4.py` | §10.5 Q4a/P2 (all sets / subsets / k), direction, Q4b actionability, Q4c population labels + precision + carriers-only OR -> `results/clinical/{q4_summary.json, p2_scores.csv, actionability.csv, q4c_population.csv, q4c_labels.csv}` | q4_summary |
+| `scripts/replicate.py` | now appends a registry row (status ok, or dryrun for `--pseudo-r`) and writes stem `replicate` (the dry run writes its timing into `results/dryrun/`, never an unmapped stem) | replicate |
+| `scripts/run_arms.py` | `--universe ctrl` timings go to `results/benchmark/timing_ctrl/` (no unmapped stems) | unchanged |
+| `tests/test_tier_a_analyses.py` | 13 tests (XLIB split, discovery eligibility, component labels, component target with the unchanged engine, VIF + alias detection, precision / OR vs scipy, parent-code mapping, registry / timing writers, every scripted stem is in `stage_job_map`, all four scripts refuse before freeze-bounds) | — |
+
+Ambiguities resolved:
+1. **XLIB refit.** The two arms are refitted on discovery lines with the engine unchanged; the 50 subsamples and the
+   Part 1 folds are the full-D ones restricted to discovery lines (still complementary and patient-grouped);
+   standardisation is on discovery lines. The replication string rule ("no Avana in the library string") is read
+   as no `+`-component equal to the discovery library. `discovery_only` recomputes r_within on discovery lines
+   with the class and tier criteria of `eligible_genes.csv` and restricts the pool; the lists are re-cut in that
+   pool from the same discovery ranks (no refit).
+2. **Component readout.** "Full-D fits": a component pair counts as present when its full-D β at λ_1SE ≠ 0
+   (frequency and the stability selection are reported alongside). layer = expression-mediated (M1 only),
+   genomics-layer (M2n − M1 and/or M3n − M1 only), both, none; `carrier_input` names the component inputs for
+   proxy-class features.
+3. **VIF.** Computed on the design as the scan codes it (merge rule on all D rows). Real D: serumfree = unknown and
+   medium_family = unknown are the same 14 lines, so two culture dummies are exactly aliased (condition number
+   ~1e16). The estimating code is unaffected (rank-revealing QR); `design_vif` reports the alias and drops it,
+   giving max VIF 6.17 (≤ 10) and condition number 10.8. `results/covariates/vif.csv` belongs to the covariate builder
+   and is written only if absent.
+4. **OncoTree parents.** There is no OncoTree hierarchy file locally. A partial parent mapping is built from local
+   files: a line is indicated if its OncotreeCode equals the code, or its Model.csv Subtype / PrimaryDisease /
+   Lineage name equals an OncoTree term paired with that code in the frozen MOAlmanac release. This raises e.g.
+   NSCLC 5 → 80, COADREAD 15 → 66, BRCA 20 → 51 and OVT 0 → 40 D lines. Codes without a term or a name match
+   (e.g. SOLID, BTC, CESC, GB, TNBC, DLBCL, ALCL) fall back to exact matching and are listed as
+   `unmapped_indication_codes` in `q4_summary.json`.
+5. **Population precision** = share of carriers that are accurate-dependent (D rule), within and outside the
+   indication. **Carriers-only OR** = conditional-MLE OR of accurate-dependent membership, indicated vs not, with an
+   exact 95% CI and Fisher p (NaN when one side has no carriers).
+6. **Not yet done in Q4**: the tier trend test (reported as not run when a tier has < 5 tests), the miss
+   decomposition, and the tumour-agnostic ⇒ cross-lineage check (needs the §8.3 labels from M5).
+7. Comment-only change in `stats.py` (`# literal-ok` on the EB Gaussian density) so the project leakscan passes on
+   the engine; no semantic change.

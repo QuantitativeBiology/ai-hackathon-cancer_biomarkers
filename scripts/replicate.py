@@ -33,6 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
+from biomark import analyses as AN  # noqa: E402
 from biomark import endpoint_io as IO  # noqa: E402
 from biomark import endpoints as EP  # noqa: E402
 from biomark import eligibility as ELG  # noqa: E402
@@ -52,12 +53,7 @@ def config_digest() -> str:
     return hashlib.sha256("".join(f"{k}={h[k]}" for k in sorted(h)).encode()).hexdigest()[:16]  # literal-ok: id length
 
 
-def fitter_for(ids, genes, features, Y: pd.DataFrame) -> EP.RFitter:
-    X = IO.line_values(ids, features)
-    oc, eg = IO.line_gene_covs(ids, genes)
-    cov = IO.line_covariates(ids)
-    return EP.RFitter(X.to_numpy(dtype=np.float64), pd.Series(np.arange(X.shape[1]), index=X.columns), cov, oc, eg,
-                      Y.reindex(index=list(ids), columns=list(genes)), cov["PatientID"].astype(str).to_numpy())
+fitter_for = IO.fitter_for
 
 
 def list_sets(pool_json: dict) -> tuple:
@@ -131,6 +127,7 @@ def main(argv=None) -> int:
     ap.add_argument("--no-refit", action="store_true", help="dry run only: use full-D S1-obs instead of refitting on D'")
     ap.add_argument("--workers", type=int, default=2)
     a = ap.parse_args(argv)
+    t_start = dt.datetime.now(dt.timezone.utc)
     if not a.pseudo_r:
         if a.boot_B is not None or a.no_refit:
             raise SystemExit("--boot-B / --no-refit are dry-run options")
@@ -191,6 +188,10 @@ def main(argv=None) -> int:
                       "frac_dependent": np.nan}).to_csv(out / "setA_lines.csv", index=False)
         IO.write_json(out / "registry_status.json", {"status": "dryrun", "citable": False,
                                                      "utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")})
+        files = sorted(str(p.relative_to(P.PROJECT).as_posix()) for p in out.glob("*") if p.is_file())
+        AN.append_registry("scripts/replicate.py --pseudo-r fold0", "dryrun", files)
+        AN.write_timing("replicate", {"wall_s": (dt.datetime.now(dt.timezone.utc) - t_start).total_seconds(),
+                                      "mode": "dryrun"}, timing_dir=out)     # not under results/timing (no stem)
         print(summ["strata"].get("G", {}))
         return 0
     # ---- the real, single R run (preconditions checked above) -------------------------------------------------
@@ -210,6 +211,10 @@ def main(argv=None) -> int:
                                                                                                 index=False)
     IO.write_json(out / "run.json", {"commit": commit, "config_digest": cfg, "status": "ok",
                                      "utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")})
+    files = sorted(str(p.relative_to(P.PROJECT).as_posix()) for p in out.glob("*") if p.is_file())
+    AN.append_registry("scripts/replicate.py", "ok", files)
+    AN.write_timing("replicate", {"wall_s": (dt.datetime.now(dt.timezone.utc) - t_start).total_seconds(),
+                                  "mode": "replication", "n_requests": int(len(req))})
     return 0
 
 
