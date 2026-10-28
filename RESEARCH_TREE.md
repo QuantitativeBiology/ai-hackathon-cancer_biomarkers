@@ -83,5 +83,5 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   - [x] src/biomark (paths, p1 loaders, guard, P1 write-block); 31 tests pass; input sha256 11/11 OK
   - [x] External fetch: CIViC, MOAlmanac (GPL-2.0), FDA CDx (232 rows), OncoKB lists; combinatorial: Esmaeili 2024 harmonised table (covers Dede/Parrish/Thompson/CHyMErA/Ito), Dede, Thompson, Flister 2024 bioRxiv (analysis-only licence); Parrish processed tables blocked (not needed)
   - [~] M3b parallel tracks (started during round 2, D4): dictionary/eligibility/controls · CGT table (no dependency data) · toy simulation (separate verification agent)
-- [ ] M3+ Implementation (defined by DESIGN.md)
+- [~] M4 Core pipeline engine (stats/HC2, two-stage stability EN, 4 arms, MD-strict, fixed-threshold null) — pipeline author agent; unit tests on synthetic data; real run after freeze-bounds
 - [ ] Final REPORT.md
