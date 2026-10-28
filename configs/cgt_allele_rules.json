@@ -1,0 +1,664 @@
+{
+  "_comment": "CGT feature operationalisation (DESIGN v3 10.1/10.3). Read by scripts/build_cgt.py; molecular data only. Mutation rules apply to OmicsSomaticMutations default entries (IsDefaultEntryForModel == Yes). codon = first integer in ProteinChange (p.V600E -> 600; p.E746_A750del -> 746). Classes: missense (VariantType SNV/substitution and ProteinChange without del/ins/dup/fs/Ter), inframe (del/ins/dup/delins without fs), frameshift (fs), splice (VariantInfo contains splice_donor/splice_acceptor). CN = P1 cn cache (relative CN, linear). Fusions = P1 fusion cache (OmicsFusionFiltered), default entries, Gene1 = 5-prime, Gene2 = 3-prime, partner != driver, FFPM >= ffpm_min.",
+  "version": "cgt-rules-1",
+  "params": {
+    "ffpm_min": 0.1,
+    "cn_amp": 2.0,
+    "cn_del": 0.25,
+    "cn_loss": 0.75,
+    "lofbi_af_min": 0.7,
+    "sil_log2tpm_max": 1.0,
+    "sil_below_lineage_median_by": 2.0,
+    "sil_lineage_expressed_frac": 0.5,
+    "sil_min_lineage_lines": 10,
+    "hypermutated_top_frac": 0.05,
+    "msi_score_threshold": 20.0,
+    "er_mixture_lineages": [
+      "Breast",
+      "Uterus",
+      "Ovary/Fallopian Tube"
+    ],
+    "er_mixture_posterior_cut": 0.5,
+    "er_subtype_pos_tokens": [
+      "ER+",
+      "luminal ER+"
+    ],
+    "er_subtype_neg_tokens": [
+      "ER-",
+      "TNBC",
+      "basal_A TNBC",
+      "basal_B TNBC"
+    ],
+    "her2_subtype_pos_tokens": [
+      "HER2+",
+      "basal_A HER2+"
+    ]
+  },
+  "features": {
+    "ALLELE:BRAF_V600": {
+      "gene": "BRAF",
+      "type": "mutation",
+      "protein_regex": "^p\\.V600[A-Z]$",
+      "definition": "BRAF V600 (any substitution; class I)",
+      "source": "FDA CDx V600E/V600K labels; CIViC BRAF V600 profiles"
+    },
+    "ALLELE:BRAF_V600E": {
+      "gene": "BRAF",
+      "type": "mutation",
+      "protein_regex": "^p\\.V600E$",
+      "definition": "BRAF V600E",
+      "source": "FDA CDx CRC encorafenib labels (V600E)"
+    },
+    "ALLELE:EGFR_L858R_EX19DEL": {
+      "gene": "EGFR",
+      "type": "union",
+      "of": [
+        "ALLELE:EGFR_L858R",
+        "ALLELE:EGFR_EX19DEL"
+      ],
+      "definition": "EGFR L858R or exon-19 in-frame deletion (label core)",
+      "source": "FDA CDx rows 41-51 (exon 19 deletion or exon 21 L858R)"
+    },
+    "ALLELE:EGFR_L858R": {
+      "gene": "EGFR",
+      "type": "mutation",
+      "protein_regex": "^p\\.L858R$",
+      "definition": "EGFR L858R",
+      "source": "FDA CDx"
+    },
+    "ALLELE:EGFR_EX19DEL": {
+      "gene": "EGFR",
+      "type": "mutation",
+      "classes": [
+        "inframe"
+      ],
+      "exon_regex": "^19/",
+      "codon_min": 729,
+      "codon_max": 761,
+      "protein_regex": "del",
+      "definition": "EGFR exon-19 in-frame deletion/delins (codons 729-761; frameshifts excluded)",
+      "source": "FDA CDx; CIViC EGFR Exon 19 Deletion"
+    },
+    "ALLELE:EGFR_EX20INS": {
+      "gene": "EGFR",
+      "type": "mutation",
+      "classes": [
+        "inframe"
+      ],
+      "exon_regex": "^20/",
+      "codon_min": 762,
+      "codon_max": 775,
+      "protein_regex": "(ins|dup)",
+      "definition": "EGFR exon-20 in-frame insertion/duplication (codons 762-775)",
+      "source": "FDA CDx rows 21, 99, 127, 216; CIViC EID 11227/11228/12718"
+    },
+    "ALLELE:EGFR_UNCOMMON": {
+      "gene": "EGFR",
+      "type": "mutation",
+      "protein_regex": "^p\\.(G719[A-Z]|L861Q|S768I)$",
+      "definition": "EGFR G719X, L861Q, S768I (afatinib uncommon-mutation label)",
+      "source": "FDA CDx row 151 (P120022/S016)"
+    },
+    "ALLELE:EGFR_T790M": {
+      "gene": "EGFR",
+      "type": "mutation",
+      "protein_regex": "^p\\.T790M$",
+      "definition": "EGFR T790M",
+      "source": "FDA CDx rows 42, 50, 62; CIViC AID 130"
+    },
+    "ALLELE:EGFR_ACT": {
+      "gene": "EGFR",
+      "type": "union",
+      "of": [
+        "ALLELE:EGFR_L858R",
+        "ALLELE:EGFR_EX19DEL",
+        "ALLELE:EGFR_EX20INS",
+        "ALLELE:EGFR_UNCOMMON",
+        "ALLELE:EGFR_T790M"
+      ],
+      "definition": "EGFR activating alleles: L858R, exon-19 del, G719X, L861Q, S768I, exon-20 ins, T790M (CL1d)",
+      "source": "DESIGN 10.3 / R1-CL1d"
+    },
+    "ALLELE:EGFR_C797S": {
+      "gene": "EGFR",
+      "type": "mutation",
+      "protein_regex": "^p\\.C797S$",
+      "definition": "EGFR C797S (acquired osimertinib resistance)",
+      "source": "CIViC EID 964"
+    },
+    "ALLELE:KRAS_G12C": {
+      "gene": "KRAS",
+      "type": "mutation",
+      "protein_regex": "^p\\.G12C$",
+      "definition": "KRAS G12C",
+      "source": "FDA CDx sotorasib/adagrasib"
+    },
+    "ALLELE:KRAS_MUT": {
+      "gene": "KRAS",
+      "type": "mutation",
+      "classes": [
+        "missense"
+      ],
+      "protein_regex": "^p\\.(G12|G13|A59|Q61|K117|A146)[A-Z]$",
+      "definition": "KRAS activating missense at codons 12, 13, 59, 61, 117, 146",
+      "source": "FDA CDx RAS exon 2-4 labels; CIViC KRAS Mutation (SELECT-1)"
+    },
+    "ALLELE:KRAS_MUT_NONG12C": {
+      "gene": "KRAS",
+      "type": "difference",
+      "of": [
+        "ALLELE:KRAS_MUT",
+        "ALLELE:KRAS_G12C"
+      ],
+      "definition": "KRAS activating missense other than G12C (lines also carrying G12C excluded)",
+      "source": "R1-CL6 (G12C vs other KRAS alleles = N)"
+    },
+    "ALLELE:NRAS_MUT": {
+      "gene": "NRAS",
+      "type": "mutation",
+      "classes": [
+        "missense"
+      ],
+      "protein_regex": "^p\\.(G12|G13|A59|Q61|K117|A146)[A-Z]$",
+      "definition": "NRAS activating missense at codons 12, 13, 59, 61, 117, 146",
+      "source": "FDA CDx panitumumab RAS label (rows 71, 182)"
+    },
+    "CLIN:RAS_MUT": {
+      "gene": "KRAS;NRAS",
+      "type": "union",
+      "of": [
+        "ALLELE:KRAS_MUT",
+        "ALLELE:NRAS_MUT"
+      ],
+      "definition": "KRAS or NRAS exon 2-4 activating mutation (CL1f merged W test)",
+      "source": "FDA CDx rows 5, 71, 182, 187, 203"
+    },
+    "ALLELE:ERBB2_TKD": {
+      "gene": "ERBB2",
+      "type": "union",
+      "of": [
+        "ALLELE:ERBB2_TKD_SNV",
+        "ALLELE:ERBB2_EX20INS"
+      ],
+      "definition": "ERBB2 tyrosine-kinase-domain activating SNV or exon-20 in-frame insertion",
+      "source": "FDA CDx rows 24, 219, 229 (SNVs exons 18-21 within TKD + exon 20 ins)"
+    },
+    "ALLELE:ERBB2_TKD_SNV": {
+      "gene": "ERBB2",
+      "type": "mutation",
+      "classes": [
+        "missense"
+      ],
+      "protein_regex": "^p\\.(L755[A-Z]|I767[A-Z]|D769[A-Z]|G776[A-Z]|V777[A-Z]|T798[A-Z]|V842[A-Z]|T862[A-Z]|L869[A-Z])$",
+      "definition": "ERBB2 TKD activating missense (L755, I767, D769, G776, V777, T798, V842, T862, L869)",
+      "source": "FDA CDx rows 24/219/229"
+    },
+    "ALLELE:ERBB2_EX20INS": {
+      "gene": "ERBB2",
+      "type": "mutation",
+      "classes": [
+        "inframe"
+      ],
+      "codon_min": 770,
+      "codon_max": 781,
+      "protein_regex": "(ins|dup)",
+      "definition": "ERBB2 exon-20 in-frame insertion/duplication (codons 770-781)",
+      "source": "FDA CDx rows 23, 101, 129"
+    },
+    "ALLELE:PIK3CA_ACT": {
+      "gene": "PIK3CA",
+      "type": "mutation",
+      "classes": [
+        "missense"
+      ],
+      "protein_regex": "^p\\.(C420R|E542K|E545[ADGK]|Q546[ER]|H1047[LRY])$",
+      "definition": "PIK3CA alpelisib-label alleles: C420R, E542K, E545A/D/G/K, Q546E/R, H1047L/R/Y",
+      "source": "FDA CDx rows 74, 97, 158, 202"
+    },
+    "ALLELE:AKT1_E17K": {
+      "gene": "AKT1",
+      "type": "mutation",
+      "protein_regex": "^p\\.E17K$",
+      "definition": "AKT1 E17K",
+      "source": "CIViC EID 3039"
+    },
+    "CLIN:PTEN_LOF": {
+      "gene": "PTEN",
+      "type": "lofbi",
+      "definition": "PTEN biallelic loss: deep deletion (CN < cn_del) or damaging dosage 2 or damaging >= 1 with own CN < cn_loss (genomic proxy for PTEN protein loss)",
+      "source": "FDA CDx row 14 (PTEN IHC); MOA 939-942"
+    },
+    "CLIN:CAPI_ALT": {
+      "gene": "PIK3CA;AKT1;PTEN",
+      "type": "union",
+      "of": [
+        "ALLELE:PIK3CA_ACT",
+        "ALLELE:AKT1_E17K",
+        "CLIN:PTEN_LOF"
+      ],
+      "definition": "capivasertib label: >= 1 PIK3CA/AKT1/PTEN alteration",
+      "source": "FDA CDx row 87; CIViC EID 12020"
+    },
+    "ALLELE:IDH1_R132": {
+      "gene": "IDH1",
+      "type": "mutation",
+      "protein_regex": "^p\\.R132[CHGSL]$",
+      "definition": "IDH1 R132C/H/G/S/L",
+      "source": "FDA CDx rows 29, 30, 177"
+    },
+    "ALLELE:IDH2_R140_R172": {
+      "gene": "IDH2",
+      "type": "mutation",
+      "protein_regex": "^p\\.(R140[QLGW]|R172[KMGSW])$",
+      "definition": "IDH2 R140Q/L/G/W, R172K/M/G/S/W",
+      "source": "FDA CDx row 31"
+    },
+    "ALLELE:KIT_D816V": {
+      "gene": "KIT",
+      "type": "mutation",
+      "protein_regex": "^p\\.D816V$",
+      "definition": "KIT D816V",
+      "source": "CIViC AID 85, EID 1725"
+    },
+    "ALLELE:KIT_EX11": {
+      "gene": "KIT",
+      "type": "mutation",
+      "classes": [
+        "missense",
+        "inframe"
+      ],
+      "codon_min": 550,
+      "codon_max": 592,
+      "definition": "KIT exon-11 (juxtamembrane, codons 550-592) missense or in-frame indel",
+      "source": "CIViC KIT Exon 11 Mutation (EID 654)"
+    },
+    "ALLELE:PDGFRA_D842V": {
+      "gene": "PDGFRA",
+      "type": "mutation",
+      "protein_regex": "^p\\.D842V$",
+      "definition": "PDGFRA D842V",
+      "source": "FDA CDx row 28"
+    },
+    "ALLELE:FLT3_ITD_TKD": {
+      "gene": "FLT3",
+      "type": "union",
+      "of": [
+        "ALLELE:FLT3_ITD",
+        "ALLELE:FLT3_TKD"
+      ],
+      "definition": "FLT3 ITD (in-frame ins/dup codons 572-630) or TKD D835/I836",
+      "source": "FDA CDx rows 115, 116, 185"
+    },
+    "ALLELE:FLT3_ITD": {
+      "gene": "FLT3",
+      "type": "mutation",
+      "classes": [
+        "inframe"
+      ],
+      "codon_min": 572,
+      "codon_max": 630,
+      "protein_regex": "(ins|dup)",
+      "definition": "FLT3 juxtamembrane in-frame insertion/duplication (ITD proxy from short-read calls)",
+      "source": "FDA CDx row 115"
+    },
+    "ALLELE:FLT3_TKD": {
+      "gene": "FLT3",
+      "type": "mutation",
+      "protein_regex": "^p\\.(D835[A-Z]|I836[A-Z]|I836del)$",
+      "definition": "FLT3 D835X/I836X",
+      "source": "FDA CDx row 115; CIViC AID 33"
+    },
+    "ALLELE:FGFR3_HOT": {
+      "gene": "FGFR3",
+      "type": "mutation",
+      "protein_regex": "^p\\.(R248C|S249C|G370C|Y373C)$",
+      "definition": "FGFR3 R248C, S249C, G370C, Y373C",
+      "source": "FDA CDx row 157"
+    },
+    "CLIN:FGFR3_ALT": {
+      "gene": "FGFR3",
+      "type": "union",
+      "of": [
+        "ALLELE:FGFR3_HOT",
+        "CLIN:FGFR3_FUS"
+      ],
+      "definition": "erdafitinib label: FGFR3 hotspot or FGFR3::TACC3/BAIAP2L1 fusion",
+      "source": "FDA CDx row 157; MOA 32"
+    },
+    "ALLELE:MET_EX14": {
+      "gene": "MET",
+      "type": "mutation",
+      "classes": [
+        "splice",
+        "inframe"
+      ],
+      "dna_regex": "c\\.(2888-[12]|3028\\+[12])(?![0-9])|c\\.(28[89][0-9]|29[0-9][0-9]|30[0-2][0-9])[_-].*del",
+      "definition": "MET exon-14 skipping: splice variant at the intron-13 acceptor (c.2888-1/-2) or intron-14 donor (c.3028+1/+2), or deletion within/overlapping exon 14 (c.2888-3028)",
+      "source": "FDA CDx rows 25, 76, 93, 200; CIViC EID 8847"
+    },
+    "ALLELE:EZH2_GOF": {
+      "gene": "EZH2",
+      "type": "mutation",
+      "protein_regex": "^p\\.(Y646[A-Z]|A682G|A692V)$",
+      "definition": "EZH2 Y646X, A682G, A692V",
+      "source": "FDA CDx row 52; CIViC EID 11220"
+    },
+    "ALLELE:NPM1_EX11": {
+      "gene": "NPM1",
+      "type": "mutation",
+      "classes": [
+        "frameshift",
+        "inframe"
+      ],
+      "codon_min": 280,
+      "codon_max": 294,
+      "definition": "NPM1 exon-11 C-terminal frameshift/insertion (W288fs type A/B/D)",
+      "source": "MOA 1014-1018"
+    },
+    "ALLELE:ESR1_LBD": {
+      "gene": "ESR1",
+      "type": "mutation",
+      "classes": [
+        "missense",
+        "inframe"
+      ],
+      "codon_min": 303,
+      "codon_max": 549,
+      "definition": "ESR1 ligand-binding-domain alteration (K303R, missense codons 310-547, V422del, L549P per SERD labels)",
+      "source": "FDA CDx rows 4, 10, 17, 18, 102, 227"
+    },
+    "ALLELE:ABL1_T315I": {
+      "gene": "ABL1",
+      "type": "mutation",
+      "protein_regex": "^p\\.T315I$",
+      "definition": "ABL1 T315I",
+      "source": "CIViC EID 234; MOA 69"
+    },
+    "ALLELE:RET_MTC": {
+      "gene": "RET",
+      "type": "mutation",
+      "classes": [
+        "missense",
+        "inframe"
+      ],
+      "protein_regex": "^p\\.(C609|C611|C618|C620|C630|C634|E632|P628|L633|E768|L790|V804|A883|S891|M918)",
+      "definition": "RET MTC driver alleles (cysteine-rich codons 609-634 incl. in-frame del, E768, L790, V804, A883, S891, M918T)",
+      "source": "CIViC AID 200, 201, 211; FDA CDx rows 1, 131"
+    },
+    "CLIN:ALK_FUS": {
+      "gene": "ALK",
+      "type": "fusion",
+      "driver": "ALK",
+      "driver_end": "3p",
+      "partners": [
+        "CAD",
+        "CLTC",
+        "DCTN1",
+        "EML4",
+        "HIP1",
+        "KANK4",
+        "NPM1",
+        "RANBP2",
+        "STRN"
+      ],
+      "partner_source": "CIViC VariantSummaries 5-prime partners of ALK",
+      "definition": "ALK 3-prime fusion with a CIViC canonical 5-prime partner",
+      "source": "CIViC VariantSummaries"
+    },
+    "CLIN:ROS1_FUS": {
+      "gene": "ROS1",
+      "type": "fusion",
+      "driver": "ROS1",
+      "driver_end": "3p",
+      "partners": [
+        "CD72",
+        "CD74",
+        "EEF1G",
+        "GOPC",
+        "SDC4",
+        "SLC4A4",
+        "TFG",
+        "SLC34A2",
+        "EZR"
+      ],
+      "partner_source": "CIViC VariantSummaries + curator-added SLC34A2, EZR (classic NSCLC ROS1 partners; HCC78 SLC34A2::ROS1)",
+      "definition": "ROS1 3-prime fusion with canonical partner",
+      "source": "CIViC VariantSummaries"
+    },
+    "CLIN:RET_FUS": {
+      "gene": "RET",
+      "type": "fusion",
+      "driver": "RET",
+      "driver_end": "3p",
+      "partners": [
+        "CCDC6",
+        "KIF5B",
+        "NCOA4"
+      ],
+      "partner_source": "CIViC VariantSummaries + curator-added NCOA4 (PTC3)",
+      "definition": "RET 3-prime fusion with canonical partner",
+      "source": "CIViC VariantSummaries"
+    },
+    "CLIN:NTRK_FUS": {
+      "gene": "NTRK1;NTRK2;NTRK3",
+      "type": "fusion",
+      "driver": [
+        "NTRK1",
+        "NTRK2",
+        "NTRK3"
+      ],
+      "driver_end": "3p",
+      "partners": [
+        "CRABP2",
+        "DDR2",
+        "ETV6",
+        "GON4L",
+        "LMNA",
+        "PDE4DIP",
+        "SCP2",
+        "SQSTM1",
+        "TPM3",
+        "TPR",
+        "TRIM63",
+        "AFAP1",
+        "BCR",
+        "EML1",
+        "KANK1",
+        "QKI",
+        "STRN",
+        "UFD1",
+        "VCL",
+        "DPP10",
+        "EML4",
+        "RALGPS2",
+        "VPS18"
+      ],
+      "partner_source": "CIViC VariantSummaries 5-prime partners of NTRK1/2/3 (pooled)",
+      "definition": "NTRK1/2/3 3-prime fusion with canonical partner",
+      "source": "CIViC VariantSummaries"
+    },
+    "CLIN:BCR_ABL1": {
+      "gene": "ABL1",
+      "type": "fusion",
+      "driver": "ABL1",
+      "driver_end": "3p",
+      "partners": [
+        "BCR"
+      ],
+      "partner_source": "CIViC BCR::ABL1",
+      "definition": "BCR::ABL1",
+      "source": "CIViC; FDA CDx row 117"
+    },
+    "CLIN:NRG1_FUS": {
+      "gene": "NRG1",
+      "type": "fusion",
+      "driver": "NRG1",
+      "driver_end": "3p",
+      "partners": [
+        "APP",
+        "ATP1B1",
+        "CD74",
+        "SDC4",
+        "SLC3A2",
+        "TENM4"
+      ],
+      "partner_source": "CIViC VariantSummaries + TENM4 from configs/fusion_known_positives.csv (MDA-MB-175-VII)",
+      "definition": "NRG1 3-prime fusion with canonical partner",
+      "source": "CIViC VariantSummaries"
+    },
+    "CLIN:BRAF_FUS": {
+      "gene": "BRAF",
+      "type": "fusion",
+      "driver": "BRAF",
+      "driver_end": "3p",
+      "partners": [
+        "AGAP3",
+        "AGK",
+        "AKAP9",
+        "CUX1",
+        "KIAA1549",
+        "MACF1",
+        "NRF1",
+        "PAPSS1",
+        "PPFIBP2",
+        "TRIM24",
+        "ZKSCAN1"
+      ],
+      "partner_source": "CIViC VariantSummaries",
+      "definition": "BRAF 3-prime fusion with canonical partner",
+      "source": "CIViC VariantSummaries"
+    },
+    "CLIN:FGFR2_FUS": {
+      "gene": "FGFR2",
+      "type": "fusion",
+      "driver": "FGFR2",
+      "driver_end": "5p",
+      "partners": [
+        "ACOT11",
+        "AHCYL1",
+        "BICC1",
+        "CCDC6",
+        "OGA",
+        "TACC3"
+      ],
+      "partner_source": "CIViC VariantSummaries 3-prime partners of FGFR2",
+      "definition": "FGFR2 5-prime fusion with canonical partner",
+      "source": "CIViC VariantSummaries"
+    },
+    "CLIN:FGFR3_FUS": {
+      "gene": "FGFR3",
+      "type": "fusion",
+      "driver": "FGFR3",
+      "driver_end": "5p",
+      "partners": [
+        "BAIAP2L1",
+        "TACC3"
+      ],
+      "partner_source": "CIViC VariantSummaries",
+      "definition": "FGFR3 5-prime fusion with canonical partner",
+      "source": "CIViC VariantSummaries"
+    },
+    "CLIN:KMT2A_R": {
+      "gene": "KMT2A",
+      "type": "fusion",
+      "driver": "KMT2A",
+      "driver_end": "5p",
+      "partners": "*",
+      "partner_source": "mechanistic rule (PI ruling): any partner gene; KMT2A must be the 5-prime gene; KMT2A::KMT2A (partial tandem duplication / self-fusion) excluded",
+      "definition": "KMT2A rearrangement = any KMT2A fusion call (FFPM >= ffpm_min, default entry) with KMT2A as the 5-prime gene and a partner other than KMT2A",
+      "source": "PI ruling (replaces curator partner list)"
+    },
+    "CLIN:HER2_POS": {
+      "gene": "ERBB2",
+      "type": "her2_pos",
+      "definition": "AMP:ERBB2 (relative CN > cn_amp) or ModelSubtypeFeatures HER2+",
+      "source": "DESIGN 10.3"
+    },
+    "CLIN:ER_POS": {
+      "gene": "ESR1",
+      "type": "er_pos",
+      "definition": "ModelSubtypeFeatures ER+ / luminal ER+ (ER-/TNBC tokens = negative); otherwise 2-component Gaussian mixture on ESR1 log2(TPM+1) fitted on dev lines of Breast, Uterus, Ovary/Fallopian Tube (posterior of high component > 0.5); other lineages 0",
+      "source": "DESIGN 10.3"
+    },
+    "CLIN:HR_POS_HER2_NEG": {
+      "gene": "ESR1;ERBB2",
+      "type": "difference",
+      "of": [
+        "CLIN:ER_POS",
+        "CLIN:HER2_POS"
+      ],
+      "definition": "ER+ and not HER2+",
+      "source": "DESIGN 10.3"
+    },
+    "CLIN:MTAP_LOSS": {
+      "gene": "MTAP",
+      "type": "del_or_sil",
+      "definition": "MTAP deep deletion (CN < cn_del) or SIL (log2TPM+1 < 1, below own-lineage median - 2, gene expressed in >= 50% of lineage)",
+      "source": "DESIGN 10.3"
+    },
+    "CLIN:BRCA_BIALLELIC": {
+      "gene": "BRCA1;BRCA2",
+      "type": "brca_biallelic",
+      "definition": "BRCA1 or BRCA2: damaging dosage 2, or damaging with AF >= 0.7 or own CN < 0.75, or SIL BRCA1; hypermutated lines (MSI or top 5% protein-altering count among dev) excluded (set to 0)",
+      "source": "DESIGN 10.3"
+    },
+    "CLIN:CDK46_SEL": {
+      "gene": "CDKN2A;CCND1",
+      "type": "cdk46_sel",
+      "definition": "CDKN2A deep deletion or damaging CDKN2A mutation, or CCND1 amplification (PALOMA-1 cohort-2 / basket selection biomarker)",
+      "source": "CIViC EID 7299, 7300, 7444, 11653, 11654, 11673"
+    },
+    "CLIN:DEL17P": {
+      "gene": "TP53",
+      "type": "cn_below",
+      "cn_gene": "TP53",
+      "threshold_key": "cn_loss",
+      "definition": "TP53 locus hemizygous loss (relative CN < cn_loss) as del(17p) proxy",
+      "source": "FDA CDx row 176"
+    },
+    "CLIN:HER2_LOW": {
+      "gene": "ERBB2",
+      "type": "not_assayable",
+      "definition": "HER2 IHC 1+/2+ ISH- or ultralow (protein IHC; not assayable in DepMap)",
+      "source": "FDA CDx rows 136, 215"
+    },
+    "CLIN:MET_IHC": {
+      "gene": "MET",
+      "type": "not_assayable",
+      "definition": "c-Met protein >= 50% 3+ (IHC; not assayable)",
+      "source": "FDA CDx row 224"
+    },
+    "CLIN:PDL1_IHC": {
+      "gene": "CD274",
+      "type": "not_assayable",
+      "definition": "PD-L1 TPS/CPS (IHC; not assayable)",
+      "source": "FDA CDx PD-L1 rows"
+    },
+    "CLIN:FOLR1_IHC": {
+      "gene": "FOLR1",
+      "type": "not_assayable",
+      "definition": "FRalpha IHC >= 75% (not assayable)",
+      "source": "FDA CDx row 166"
+    },
+    "CLIN:CLDN18_IHC": {
+      "gene": "CLDN18",
+      "type": "not_assayable",
+      "definition": "CLDN18 IHC >= 75% (not assayable)",
+      "source": "FDA CDx row 199"
+    },
+    "CLIN:TMB_H": {
+      "gene": "",
+      "type": "not_assayable",
+      "definition": "TMB >= 10 mut/Mb (per-Mb territory not defined for DepMap calls; SIG:TMB is a different, log-count feature)",
+      "source": "FDA CDx row 79"
+    }
+  },
+  "standard_features": {
+    "_comment": "dictionary (DESIGN 3) features computed here only to count carriers; feature_D = FAMILY:<entrez>",
+    "AMP": "relative CN > cn_amp",
+    "DEL": "relative CN < cn_del",
+    "LOFBI": "damaging dosage 2, or damaging >= 1 with own CN < cn_loss, or damaging >= 1 with SIL (SIL as in CLIN:MTAP_LOSS); X-linked male rule not applied (no CGT X-linked gene)",
+    "HOT": "P1 hotspot matrix > 0 (gene-level; proxy copies only)",
+    "SIG:MSI": "OmicsGlobalSignatures MSIScore >= 20 via biomark.molecular.msi_status (unknown = NaN, not a carrier)"
+  }
+}

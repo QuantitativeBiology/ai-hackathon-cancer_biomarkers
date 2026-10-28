@@ -1,0 +1,62 @@
+feature_id,family,gene,type,definition,protein_regex,classes,codon_range,exon_or_dna_pattern,components,fusion_driver_end,fusion_partners,source
+ALLELE:BRAF_V600,ALLELE,BRAF,mutation,BRAF V600 (any substitution; class I),^p\.V600[A-Z]$,,,,,,,FDA CDx V600E/V600K labels; CIViC BRAF V600 profiles
+ALLELE:BRAF_V600E,ALLELE,BRAF,mutation,BRAF V600E,^p\.V600E$,,,,,,,FDA CDx CRC encorafenib labels (V600E)
+ALLELE:EGFR_L858R_EX19DEL,ALLELE,EGFR,union,EGFR L858R or exon-19 in-frame deletion (label core),,,,,ALLELE:EGFR_L858R;ALLELE:EGFR_EX19DEL,,,FDA CDx rows 41-51 (exon 19 deletion or exon 21 L858R)
+ALLELE:EGFR_L858R,ALLELE,EGFR,mutation,EGFR L858R,^p\.L858R$,,,,,,,FDA CDx
+ALLELE:EGFR_EX19DEL,ALLELE,EGFR,mutation,EGFR exon-19 in-frame deletion/delins (codons 729-761; frameshifts excluded),del,inframe,729-761,^19/,,,,FDA CDx; CIViC EGFR Exon 19 Deletion
+ALLELE:EGFR_EX20INS,ALLELE,EGFR,mutation,EGFR exon-20 in-frame insertion/duplication (codons 762-775),(ins|dup),inframe,762-775,^20/,,,,"FDA CDx rows 21, 99, 127, 216; CIViC EID 11227/11228/12718"
+ALLELE:EGFR_UNCOMMON,ALLELE,EGFR,mutation,"EGFR G719X, L861Q, S768I (afatinib uncommon-mutation label)",^p\.(G719[A-Z]|L861Q|S768I)$,,,,,,,FDA CDx row 151 (P120022/S016)
+ALLELE:EGFR_T790M,ALLELE,EGFR,mutation,EGFR T790M,^p\.T790M$,,,,,,,"FDA CDx rows 42, 50, 62; CIViC AID 130"
+ALLELE:EGFR_ACT,ALLELE,EGFR,union,"EGFR activating alleles: L858R, exon-19 del, G719X, L861Q, S768I, exon-20 ins, T790M (CL1d)",,,,,ALLELE:EGFR_L858R;ALLELE:EGFR_EX19DEL;ALLELE:EGFR_EX20INS;ALLELE:EGFR_UNCOMMON;ALLELE:EGFR_T790M,,,DESIGN 10.3 / R1-CL1d
+ALLELE:EGFR_C797S,ALLELE,EGFR,mutation,EGFR C797S (acquired osimertinib resistance),^p\.C797S$,,,,,,,CIViC EID 964
+ALLELE:KRAS_G12C,ALLELE,KRAS,mutation,KRAS G12C,^p\.G12C$,,,,,,,FDA CDx sotorasib/adagrasib
+ALLELE:KRAS_MUT,ALLELE,KRAS,mutation,"KRAS activating missense at codons 12, 13, 59, 61, 117, 146",^p\.(G12|G13|A59|Q61|K117|A146)[A-Z]$,missense,,,,,,FDA CDx RAS exon 2-4 labels; CIViC KRAS Mutation (SELECT-1)
+ALLELE:KRAS_MUT_NONG12C,ALLELE,KRAS,difference,KRAS activating missense other than G12C (lines also carrying G12C excluded),,,,,ALLELE:KRAS_MUT;ALLELE:KRAS_G12C,,,R1-CL6 (G12C vs other KRAS alleles = N)
+ALLELE:NRAS_MUT,ALLELE,NRAS,mutation,"NRAS activating missense at codons 12, 13, 59, 61, 117, 146",^p\.(G12|G13|A59|Q61|K117|A146)[A-Z]$,missense,,,,,,"FDA CDx panitumumab RAS label (rows 71, 182)"
+CLIN:RAS_MUT,CLIN,KRAS;NRAS,union,KRAS or NRAS exon 2-4 activating mutation (CL1f merged W test),,,,,ALLELE:KRAS_MUT;ALLELE:NRAS_MUT,,,"FDA CDx rows 5, 71, 182, 187, 203"
+ALLELE:ERBB2_TKD,ALLELE,ERBB2,union,ERBB2 tyrosine-kinase-domain activating SNV or exon-20 in-frame insertion,,,,,ALLELE:ERBB2_TKD_SNV;ALLELE:ERBB2_EX20INS,,,"FDA CDx rows 24, 219, 229 (SNVs exons 18-21 within TKD + exon 20 ins)"
+ALLELE:ERBB2_TKD_SNV,ALLELE,ERBB2,mutation,"ERBB2 TKD activating missense (L755, I767, D769, G776, V777, T798, V842, T862, L869)",^p\.(L755[A-Z]|I767[A-Z]|D769[A-Z]|G776[A-Z]|V777[A-Z]|T798[A-Z]|V842[A-Z]|T862[A-Z]|L869[A-Z])$,missense,,,,,,FDA CDx rows 24/219/229
+ALLELE:ERBB2_EX20INS,ALLELE,ERBB2,mutation,ERBB2 exon-20 in-frame insertion/duplication (codons 770-781),(ins|dup),inframe,770-781,,,,,"FDA CDx rows 23, 101, 129"
+ALLELE:PIK3CA_ACT,ALLELE,PIK3CA,mutation,"PIK3CA alpelisib-label alleles: C420R, E542K, E545A/D/G/K, Q546E/R, H1047L/R/Y",^p\.(C420R|E542K|E545[ADGK]|Q546[ER]|H1047[LRY])$,missense,,,,,,"FDA CDx rows 74, 97, 158, 202"
+ALLELE:AKT1_E17K,ALLELE,AKT1,mutation,AKT1 E17K,^p\.E17K$,,,,,,,CIViC EID 3039
+CLIN:PTEN_LOF,CLIN,PTEN,lofbi,PTEN biallelic loss: deep deletion (CN < cn_del) or damaging dosage 2 or damaging >= 1 with own CN < cn_loss (genomic proxy for PTEN protein loss),,,,,,,,FDA CDx row 14 (PTEN IHC); MOA 939-942
+CLIN:CAPI_ALT,CLIN,PIK3CA;AKT1;PTEN,union,capivasertib label: >= 1 PIK3CA/AKT1/PTEN alteration,,,,,ALLELE:PIK3CA_ACT;ALLELE:AKT1_E17K;CLIN:PTEN_LOF,,,FDA CDx row 87; CIViC EID 12020
+ALLELE:IDH1_R132,ALLELE,IDH1,mutation,IDH1 R132C/H/G/S/L,^p\.R132[CHGSL]$,,,,,,,"FDA CDx rows 29, 30, 177"
+ALLELE:IDH2_R140_R172,ALLELE,IDH2,mutation,"IDH2 R140Q/L/G/W, R172K/M/G/S/W",^p\.(R140[QLGW]|R172[KMGSW])$,,,,,,,FDA CDx row 31
+ALLELE:KIT_D816V,ALLELE,KIT,mutation,KIT D816V,^p\.D816V$,,,,,,,"CIViC AID 85, EID 1725"
+ALLELE:KIT_EX11,ALLELE,KIT,mutation,"KIT exon-11 (juxtamembrane, codons 550-592) missense or in-frame indel",,missense;inframe,550-592,,,,,CIViC KIT Exon 11 Mutation (EID 654)
+ALLELE:PDGFRA_D842V,ALLELE,PDGFRA,mutation,PDGFRA D842V,^p\.D842V$,,,,,,,FDA CDx row 28
+ALLELE:FLT3_ITD_TKD,ALLELE,FLT3,union,FLT3 ITD (in-frame ins/dup codons 572-630) or TKD D835/I836,,,,,ALLELE:FLT3_ITD;ALLELE:FLT3_TKD,,,"FDA CDx rows 115, 116, 185"
+ALLELE:FLT3_ITD,ALLELE,FLT3,mutation,FLT3 juxtamembrane in-frame insertion/duplication (ITD proxy from short-read calls),(ins|dup),inframe,572-630,,,,,FDA CDx row 115
+ALLELE:FLT3_TKD,ALLELE,FLT3,mutation,FLT3 D835X/I836X,^p\.(D835[A-Z]|I836[A-Z]|I836del)$,,,,,,,FDA CDx row 115; CIViC AID 33
+ALLELE:FGFR3_HOT,ALLELE,FGFR3,mutation,"FGFR3 R248C, S249C, G370C, Y373C",^p\.(R248C|S249C|G370C|Y373C)$,,,,,,,FDA CDx row 157
+CLIN:FGFR3_ALT,CLIN,FGFR3,union,erdafitinib label: FGFR3 hotspot or FGFR3::TACC3/BAIAP2L1 fusion,,,,,ALLELE:FGFR3_HOT;CLIN:FGFR3_FUS,,,FDA CDx row 157; MOA 32
+ALLELE:MET_EX14,ALLELE,MET,mutation,"MET exon-14 skipping: splice variant at the intron-13 acceptor (c.2888-1/-2) or intron-14 donor (c.3028+1/+2), or deletion within/overlapping exon 14 (c.2888-3028)",,splice;inframe,,c\.(2888-[12]|3028\+[12])(?![0-9])|c\.(28[89][0-9]|29[0-9][0-9]|30[0-2][0-9])[_-].*del,,,,"FDA CDx rows 25, 76, 93, 200; CIViC EID 8847"
+ALLELE:EZH2_GOF,ALLELE,EZH2,mutation,"EZH2 Y646X, A682G, A692V",^p\.(Y646[A-Z]|A682G|A692V)$,,,,,,,FDA CDx row 52; CIViC EID 11220
+ALLELE:NPM1_EX11,ALLELE,NPM1,mutation,NPM1 exon-11 C-terminal frameshift/insertion (W288fs type A/B/D),,frameshift;inframe,280-294,,,,,MOA 1014-1018
+ALLELE:ESR1_LBD,ALLELE,ESR1,mutation,"ESR1 ligand-binding-domain alteration (K303R, missense codons 310-547, V422del, L549P per SERD labels)",,missense;inframe,303-549,,,,,"FDA CDx rows 4, 10, 17, 18, 102, 227"
+ALLELE:ABL1_T315I,ALLELE,ABL1,mutation,ABL1 T315I,^p\.T315I$,,,,,,,CIViC EID 234; MOA 69
+ALLELE:RET_MTC,ALLELE,RET,mutation,"RET MTC driver alleles (cysteine-rich codons 609-634 incl. in-frame del, E768, L790, V804, A883, S891, M918T)",^p\.(C609|C611|C618|C620|C630|C634|E632|P628|L633|E768|L790|V804|A883|S891|M918),missense;inframe,,,,,,"CIViC AID 200, 201, 211; FDA CDx rows 1, 131"
+CLIN:ALK_FUS,CLIN,ALK,fusion,ALK 3-prime fusion with a CIViC canonical 5-prime partner,,,,,,ALK 3p,CAD;CLTC;DCTN1;EML4;HIP1;KANK4;NPM1;RANBP2;STRN,CIViC VariantSummaries 5-prime partners of ALK
+CLIN:ROS1_FUS,CLIN,ROS1,fusion,ROS1 3-prime fusion with canonical partner,,,,,,ROS1 3p,CD72;CD74;EEF1G;GOPC;SDC4;SLC4A4;TFG;SLC34A2;EZR,"CIViC VariantSummaries + curator-added SLC34A2, EZR (classic NSCLC ROS1 partners; HCC78 SLC34A2::ROS1)"
+CLIN:RET_FUS,CLIN,RET,fusion,RET 3-prime fusion with canonical partner,,,,,,RET 3p,CCDC6;KIF5B;NCOA4,CIViC VariantSummaries + curator-added NCOA4 (PTC3)
+CLIN:NTRK_FUS,CLIN,NTRK1;NTRK2;NTRK3,fusion,NTRK1/2/3 3-prime fusion with canonical partner,,,,,,NTRK1;NTRK2;NTRK3 3p,CRABP2;DDR2;ETV6;GON4L;LMNA;PDE4DIP;SCP2;SQSTM1;TPM3;TPR;TRIM63;AFAP1;BCR;EML1;KANK1;QKI;STRN;UFD1;VCL;DPP10;EML4;RALGPS2;VPS18,CIViC VariantSummaries 5-prime partners of NTRK1/2/3 (pooled)
+CLIN:BCR_ABL1,CLIN,ABL1,fusion,BCR::ABL1,,,,,,ABL1 3p,BCR,CIViC BCR::ABL1
+CLIN:NRG1_FUS,CLIN,NRG1,fusion,NRG1 3-prime fusion with canonical partner,,,,,,NRG1 3p,APP;ATP1B1;CD74;SDC4;SLC3A2;TENM4,CIViC VariantSummaries + TENM4 from configs/fusion_known_positives.csv (MDA-MB-175-VII)
+CLIN:BRAF_FUS,CLIN,BRAF,fusion,BRAF 3-prime fusion with canonical partner,,,,,,BRAF 3p,AGAP3;AGK;AKAP9;CUX1;KIAA1549;MACF1;NRF1;PAPSS1;PPFIBP2;TRIM24;ZKSCAN1,CIViC VariantSummaries
+CLIN:FGFR2_FUS,CLIN,FGFR2,fusion,FGFR2 5-prime fusion with canonical partner,,,,,,FGFR2 5p,ACOT11;AHCYL1;BICC1;CCDC6;OGA;TACC3,CIViC VariantSummaries 3-prime partners of FGFR2
+CLIN:FGFR3_FUS,CLIN,FGFR3,fusion,FGFR3 5-prime fusion with canonical partner,,,,,,FGFR3 5p,BAIAP2L1;TACC3,CIViC VariantSummaries
+CLIN:KMT2A_R,CLIN,KMT2A,fusion,"KMT2A rearrangement = any KMT2A fusion call (FFPM >= ffpm_min, default entry) with KMT2A as the 5-prime gene and a partner other than KMT2A",,,,,,KMT2A 5p,*,mechanistic rule (PI ruling): any partner gene; KMT2A must be the 5-prime gene; KMT2A::KMT2A (partial tandem duplication / self-fusion) excluded
+CLIN:HER2_POS,CLIN,ERBB2,her2_pos,AMP:ERBB2 (relative CN > cn_amp) or ModelSubtypeFeatures HER2+,,,,,,,,DESIGN 10.3
+CLIN:ER_POS,CLIN,ESR1,er_pos,"ModelSubtypeFeatures ER+ / luminal ER+ (ER-/TNBC tokens = negative); otherwise 2-component Gaussian mixture on ESR1 log2(TPM+1) fitted on dev lines of Breast, Uterus, Ovary/Fallopian Tube (posterior of high component > 0.5); other lineages 0",,,,,,,,DESIGN 10.3
+CLIN:HR_POS_HER2_NEG,CLIN,ESR1;ERBB2,difference,ER+ and not HER2+,,,,,CLIN:ER_POS;CLIN:HER2_POS,,,DESIGN 10.3
+CLIN:MTAP_LOSS,CLIN,MTAP,del_or_sil,"MTAP deep deletion (CN < cn_del) or SIL (log2TPM+1 < 1, below own-lineage median - 2, gene expressed in >= 50% of lineage)",,,,,,,,DESIGN 10.3
+CLIN:BRCA_BIALLELIC,CLIN,BRCA1;BRCA2,brca_biallelic,"BRCA1 or BRCA2: damaging dosage 2, or damaging with AF >= 0.7 or own CN < 0.75, or SIL BRCA1; hypermutated lines (MSI or top 5% protein-altering count among dev) excluded (set to 0)",,,,,,,,DESIGN 10.3
+CLIN:CDK46_SEL,CLIN,CDKN2A;CCND1,cdk46_sel,"CDKN2A deep deletion or damaging CDKN2A mutation, or CCND1 amplification (PALOMA-1 cohort-2 / basket selection biomarker)",,,,,,,,"CIViC EID 7299, 7300, 7444, 11653, 11654, 11673"
+CLIN:DEL17P,CLIN,TP53,cn_below,TP53 locus hemizygous loss (relative CN < cn_loss) as del(17p) proxy,,,,,,,,FDA CDx row 176
+CLIN:HER2_LOW,CLIN,ERBB2,not_assayable,HER2 IHC 1+/2+ ISH- or ultralow (protein IHC; not assayable in DepMap),,,,,,,,"FDA CDx rows 136, 215"
+CLIN:MET_IHC,CLIN,MET,not_assayable,c-Met protein >= 50% 3+ (IHC; not assayable),,,,,,,,FDA CDx row 224
+CLIN:PDL1_IHC,CLIN,CD274,not_assayable,PD-L1 TPS/CPS (IHC; not assayable),,,,,,,,FDA CDx PD-L1 rows
+CLIN:FOLR1_IHC,CLIN,FOLR1,not_assayable,FRalpha IHC >= 75% (not assayable),,,,,,,,FDA CDx row 166
+CLIN:CLDN18_IHC,CLIN,CLDN18,not_assayable,CLDN18 IHC >= 75% (not assayable),,,,,,,,FDA CDx row 199
+CLIN:TMB_H,CLIN,,not_assayable,"TMB >= 10 mut/Mb (per-Mb territory not defined for DepMap calls; SIG:TMB is a different, log-count feature)",,,,,,,,FDA CDx row 79

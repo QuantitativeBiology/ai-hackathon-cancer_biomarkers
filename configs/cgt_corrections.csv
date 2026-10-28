@@ -1,0 +1,9 @@
+correction_id,problem,applied_change,test_ids,assertion
+CL1a,KIT D816V -> imatinib S is wrong,"split: KIT_D816V__KIT__SM (midostaurin, S, sensitivity); KIT_D816V__KIT__imatinib_listed (acquired-resistance)",KIT_D816V__KIT__SM;KIT_D816V__KIT__imatinib_listed,"no (KIT D816V, imatinib, S) row"
+CL1b,del(17p)/TP53 -> BCL2 S is wrong,"DEL17P__BCL2__CLL: sign N, ko_class population-only, partition expected-null",DEL17P__BCL2__CLL,"no (DEL17P|TP53, BCL2, S) row"
+CL1c,BRAF hotspot pools class I/III,BRAF sensitivity tests use ALLELE:BRAF_V600 / BRAF_V600E; HOT:BRAF only as proxy=1 copies,BRAF_V600__BRAF__agnostic;BRAF_V600__MEK__MEL;BRAF_V600E__BRAF__CRC,every proxy=0 BRAF S row feature contains V600
+CL1d,EGFR amplification is not a predictive biomarker,EGFR feature = ALLELE:EGFR_ACT; AMP:EGFR appears only in the clinically-refuted GBM row,EGFR_ACT__EGFR__NSCLC;EGFR_AMP__EGFR__GBM_refuted,AMP:EGFR only in partition clinically-refuted
+CL1e,PTEN loss -> AKT1 single gene,target_set AKT1;AKT2;AKT3 (concordant-family),CAPI_ALT__AKT__HRpos_BRCA;PTEN_LOF__AKT__PRAD,AKT rows |T| = 3
+CL1f,KRAS/NRAS WT and mutant -> EGFR counted twice,"one W test CLIN:RAS_MUT -> EGFR, bypass-resistance, reference RAS/BRAF-WT CRC",RAS_MUT__EGFR__CRC,"single RAS->EGFR row, sign W"
+CL1g,ESR1 LBD expected S,sign N vs ER+ WT (comparator_restrict CLIN:ER_POS); testability computed (1 dev carrier expected),ESR1_LBD__ESR1__ERpos_BRCA,sign N
+CL1h,CDKN2A+/-MTAP duplicates MTAP row,"merged into CLIN:MTAP_LOSS tests (PRMT5, MAT2A); no CDKN2A->PRMT5 row",MTAP_LOSS__PRMT5__pan;MTAP_LOSS__MAT2A__pan,no CDKN2A feature with target PRMT5/MAT2A

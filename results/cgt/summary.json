@@ -1,0 +1,834 @@
+{
+  "n_curated_rows": 66,
+  "n_tests": 64,
+  "n_headline_tests (proxy=0)": 57,
+  "n_proxy_tests": 7,
+  "n_dropped": 2,
+  "dropped": [
+    {
+      "test_id": "BRCA_BI__USP1__pan",
+      "reason": "no resolvable source record id"
+    },
+    {
+      "test_id": "ATM_LOF__ATR__pan",
+      "reason": "T3 row without a regex-matching cached CTG record (DESIGN 10.3)"
+    }
+  ],
+  "by_partition": {
+    "acquired-resistance": 3,
+    "bypass-resistance": 2,
+    "clinically-refuted": 3,
+    "expected-null": 13,
+    "sensitivity": 36
+  },
+  "by_tier": {
+    "T1": 41,
+    "T2": 8,
+    "T3": 5,
+    "refuted": 3
+  },
+  "by_ko_class": {
+    "concordant": 31,
+    "concordant-KO/combination-required": 1,
+    "concordant-family": 11,
+    "discordant-mechanism": 3,
+    "non-cell-autonomous": 7,
+    "population-only": 1,
+    "untestable": 3
+  },
+  "by_sign": {
+    "N": 16,
+    "S": 39,
+    "W": 2
+  },
+  "testable": 29,
+  "untestable": 28,
+  "untestable_by_reason": {
+    "< 3 D carriers in comparator": 4,
+    "< 5 D carriers (feature not in D)": 15,
+    "acquired-resistance: listed only": 3,
+    "feature not assayable (no feature_D)": 6
+  },
+  "testable_by_partition": {
+    "bypass-resistance": 2,
+    "clinically-refuted": 3,
+    "expected-null": 4,
+    "sensitivity": 20
+  },
+  "testable_by_tier": {
+    "T1": 17,
+    "T2": 4,
+    "T3": 5,
+    "refuted": 3
+  },
+  "testable_by_ko_class": {
+    "concordant": 18,
+    "concordant-KO/combination-required": 1,
+    "concordant-family": 7,
+    "discordant-mechanism": 2,
+    "non-cell-autonomous": 1
+  },
+  "p2_scored_headline": 22,
+  "p2_scored_headline_gate_disjoint": 10,
+  "p2_min_testable_tests": 15,
+  "p2_status_expected": "primary",
+  "ceiling_testable_headline": 25,
+  "refuted_rows": 3,
+  "refuted_testable": 3,
+  "testable_SW_tests": [
+    {
+      "test_id": "BRAF_V600__BRAF__agnostic",
+      "feature_D": "ALLELE:BRAF_V600",
+      "target_set": "BRAF",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 61,
+      "n_carriers_comparator_D": 52,
+      "n_carriers_R": 18,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "BRAF_V600__MEK__MEL",
+      "feature_D": "ALLELE:BRAF_V600",
+      "target_set": "MAP2K1;MAP2K2",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 61,
+      "n_carriers_comparator_D": 38,
+      "n_carriers_R": 18,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "BRAF_V600E__BRAF__CRC",
+      "feature_D": "ALLELE:BRAF_V600E",
+      "target_set": "BRAF",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 58,
+      "n_carriers_comparator_D": 8,
+      "n_carriers_R": 16,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "EGFR_ACT__EGFR__NSCLC",
+      "feature_D": "ALLELE:EGFR_ACT",
+      "target_set": "EGFR",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 7,
+      "n_carriers_comparator_D": 4,
+      "n_carriers_R": 3,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "HER2_POS__ERBB2__BRCA_GEA_CRC_BTC",
+      "feature_D": "CLIN:HER2_POS",
+      "target_set": "ERBB2",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 47,
+      "n_carriers_comparator_D": 27,
+      "n_carriers_R": 9,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "ALK_FUS__ALK__NSCLC_ALCL_IMT",
+      "feature_D": "CLIN:ALK_FUS",
+      "target_set": "ALK",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 11,
+      "n_carriers_comparator_D": 10,
+      "n_carriers_R": 0,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "BCR_ABL1__ABL1__CML_ALL",
+      "feature_D": "CLIN:BCR_ABL1",
+      "target_set": "ABL1",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 11,
+      "n_carriers_comparator_D": 9,
+      "n_carriers_R": 1,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "KRAS_G12C__KRAS__NSCLC_CRC",
+      "feature_D": "ALLELE:KRAS_G12C",
+      "target_set": "KRAS",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 17,
+      "n_carriers_comparator_D": 14,
+      "n_carriers_R": 5,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "RAS_MUT__EGFR__CRC",
+      "feature_D": "CLIN:RAS_MUT",
+      "target_set": "EGFR",
+      "sign": "W",
+      "partition": "bypass-resistance",
+      "tier": "T1",
+      "n_carriers_D": 220,
+      "n_carriers_comparator_D": 35,
+      "n_carriers_R": 46,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "CAPI_ALT__AKT__HRpos_BRCA",
+      "feature_D": "CLIN:CAPI_ALT",
+      "target_set": "AKT1;AKT2;AKT3",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 180,
+      "n_carriers_comparator_D": 4,
+      "n_carriers_R": 53,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "ER_POS__ESR1__BRCA",
+      "feature_D": "CLIN:ER_POS",
+      "target_set": "ESR1",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T2",
+      "n_carriers_D": 45,
+      "n_carriers_comparator_D": 23,
+      "n_carriers_R": 13,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "ER_POS__CDK46__BRCA",
+      "feature_D": "CLIN:HR_POS_HER2_NEG",
+      "target_set": "CDK4;CDK6",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T2",
+      "n_carriers_D": 28,
+      "n_carriers_comparator_D": 8,
+      "n_carriers_R": 10,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "RB1_LOF__CDK46__pan",
+      "feature_D": "LOFBI:5925",
+      "target_set": "CDK4;CDK6",
+      "sign": "W",
+      "partition": "bypass-resistance",
+      "tier": "T2",
+      "n_carriers_D": 62,
+      "n_carriers_comparator_D": 59,
+      "n_carriers_R": 16,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "BRCA_BI__POLQ__pan",
+      "feature_D": "CLIN:BRCA_BIALLELIC",
+      "target_set": "POLQ",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T3",
+      "n_carriers_D": 18,
+      "n_carriers_comparator_D": 18,
+      "n_carriers_R": 7,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "CCNE1_AMP__PKMYT1__pan",
+      "feature_D": "AMP:898",
+      "target_set": "PKMYT1",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T3",
+      "n_carriers_D": 34,
+      "n_carriers_comparator_D": 31,
+      "n_carriers_R": 7,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "SMARCA4_LOF__SMARCA2__pan",
+      "feature_D": "LOFBI:6597",
+      "target_set": "SMARCA2",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T3",
+      "n_carriers_D": 33,
+      "n_carriers_comparator_D": 32,
+      "n_carriers_R": 10,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "MSI__WRN__pan",
+      "feature_D": "SIG:MSI",
+      "target_set": "WRN",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T3",
+      "n_carriers_D": 63,
+      "n_carriers_comparator_D": 50,
+      "n_carriers_R": 14,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "MTAP_LOSS__PRMT5__pan",
+      "feature_D": "CLIN:MTAP_LOSS",
+      "target_set": "PRMT5",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T2",
+      "n_carriers_D": 201,
+      "n_carriers_comparator_D": 163,
+      "n_carriers_R": 45,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "MTAP_LOSS__MAT2A__pan",
+      "feature_D": "CLIN:MTAP_LOSS",
+      "target_set": "MAT2A",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T3",
+      "n_carriers_D": 201,
+      "n_carriers_comparator_D": 163,
+      "n_carriers_R": 45,
+      "in_gate": "1"
+    },
+    {
+      "test_id": "FGFR3_ALT__FGFR__BLCA",
+      "feature_D": "CLIN:FGFR3_ALT",
+      "target_set": "FGFR1;FGFR2;FGFR3;FGFR4",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 9,
+      "n_carriers_comparator_D": 5,
+      "n_carriers_R": 2,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "KMT2A_R__MEN1__acute_leuk",
+      "feature_D": "CLIN:KMT2A_R",
+      "target_set": "MEN1",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 19,
+      "n_carriers_comparator_D": 12,
+      "n_carriers_R": 2,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "EZH2_GOF__EZH2__BNHL",
+      "feature_D": "ALLELE:EZH2_GOF",
+      "target_set": "EZH2",
+      "sign": "S",
+      "partition": "sensitivity",
+      "tier": "T1",
+      "n_carriers_D": 7,
+      "n_carriers_comparator_D": 5,
+      "n_carriers_R": 2,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "KRAS_MUT__MEK__NSCLC_refuted",
+      "feature_D": "ALLELE:KRAS_MUT",
+      "target_set": "MAP2K1;MAP2K2",
+      "sign": "S",
+      "partition": "clinically-refuted",
+      "tier": "refuted",
+      "n_carriers_D": 167,
+      "n_carriers_comparator_D": 29,
+      "n_carriers_R": 36,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "CDK46_SEL__CDK46__refuted",
+      "feature_D": "CLIN:CDK46_SEL",
+      "target_set": "CDK4;CDK6",
+      "sign": "S",
+      "partition": "clinically-refuted",
+      "tier": "refuted",
+      "n_carriers_D": 454,
+      "n_carriers_comparator_D": 414,
+      "n_carriers_R": 110,
+      "in_gate": "0"
+    },
+    {
+      "test_id": "EGFR_AMP__EGFR__GBM_refuted",
+      "feature_D": "AMP:1956",
+      "target_set": "EGFR",
+      "sign": "S",
+      "partition": "clinically-refuted",
+      "tier": "refuted",
+      "n_carriers_D": 62,
+      "n_carriers_comparator_D": 15,
+      "n_carriers_R": 20,
+      "in_gate": "0"
+    }
+  ],
+  "deviations": [
+    {
+      "id": "DEV-CGT-1",
+      "item": "ALK carriers <= 10 (R1-CL5, clinical_s10.alk_carriers_max)",
+      "observed": 11,
+      "ruling": "PI: the cap was a pre-data estimate, not a rule; all carriers with canonical partners kept, no tuning",
+      "check_instead": "every ALK carrier's partner is in the frozen CLIN:ALK_FUS partner rule"
+    }
+  ],
+  "recorded_gaps": [
+    "ER+ -> endocrine therapy: no endocrine-monotherapy ER+ record in frozen CIViC/MOA/FDA (ER_POS__ESR1__BRCA rests on CIViC EID1541)",
+    "avapritinib for KIT D816V systemic mastocytosis: no CIViC/MOA/FDA record (drug not listed)",
+    "ribociclib/abemaciclib ER+/HER2- breast: no approval record in frozen sources (ER_POS__CDK46__BRCA lists palbociclib, T2)"
+  ],
+  "checks": {
+    "fusion_known_positives": [
+      {
+        "line": "NCI-H3122",
+        "ModelID": "ACH-000337",
+        "feature": "CLIN:ALK_FUS",
+        "role": "dev",
+        "carrier": true
+      },
+      {
+        "line": "NCI-H2228",
+        "ModelID": "ACH-000447",
+        "feature": "CLIN:ALK_FUS",
+        "role": "unassigned",
+        "carrier": true
+      },
+      {
+        "line": "K562",
+        "ModelID": "ACH-000551",
+        "feature": "CLIN:BCR_ABL1",
+        "role": "dev",
+        "carrier": true
+      },
+      {
+        "line": "MV4-11",
+        "ModelID": "ACH-000045",
+        "feature": "CLIN:KMT2A_R",
+        "role": "dev",
+        "carrier": true
+      },
+      {
+        "line": "MDA-MB-175-VII",
+        "ModelID": "ACH-000759",
+        "feature": "CLIN:NRG1_FUS",
+        "role": "unassigned",
+        "carrier": true
+      }
+    ],
+    "fusion_known_positives_pass": true,
+    "alk_carriers_D": 11,
+    "alk_carriers": [
+      {
+        "ModelID": "ACH-000053",
+        "role": "dev",
+        "line": "KARPAS299",
+        "lineage": "Lymphoid",
+        "partners": [
+          "NPM1"
+        ],
+        "max_ffpm": 13.249165
+      },
+      {
+        "ModelID": "ACH-000226",
+        "role": "dev",
+        "line": "SUPM2",
+        "lineage": "Lymphoid",
+        "partners": [
+          "NPM1"
+        ],
+        "max_ffpm": 13.050132
+      },
+      {
+        "ModelID": "ACH-000233",
+        "role": "dev",
+        "line": "DEL",
+        "lineage": "Lymphoid",
+        "partners": [
+          "NPM1"
+        ],
+        "max_ffpm": 4.0146794
+      },
+      {
+        "ModelID": "ACH-000337",
+        "role": "dev",
+        "line": "NCIH3122",
+        "lineage": "Lung",
+        "partners": [
+          "EML4"
+        ],
+        "max_ffpm": 2.6404247
+      },
+      {
+        "ModelID": "ACH-000338",
+        "role": "dev",
+        "line": "SR786",
+        "lineage": "Lymphoid",
+        "partners": [
+          "NPM1"
+        ],
+        "max_ffpm": 2.7894223
+      },
+      {
+        "ModelID": "ACH-000664",
+        "role": "dev",
+        "line": "SUDHL1",
+        "lineage": "Lymphoid",
+        "partners": [
+          "NPM1"
+        ],
+        "max_ffpm": 14.301787
+      },
+      {
+        "ModelID": "ACH-000773",
+        "role": "dev",
+        "line": "KIJK",
+        "lineage": "Lymphoid",
+        "partners": [
+          "NPM1"
+        ],
+        "max_ffpm": 15.792763
+      },
+      {
+        "ModelID": "ACH-001111",
+        "role": "dev",
+        "line": "L82",
+        "lineage": "Lymphoid",
+        "partners": [
+          "NPM1"
+        ],
+        "max_ffpm": 3.8488562
+      },
+      {
+        "ModelID": "ACH-001454",
+        "role": "dev",
+        "line": "C10",
+        "lineage": "Bowel",
+        "partners": [
+          "EML4"
+        ],
+        "max_ffpm": 1.9036697
+      },
+      {
+        "ModelID": "ACH-002522",
+        "role": "dev",
+        "line": "SNU2292",
+        "lineage": "Lung",
+        "partners": [
+          "EML4"
+        ],
+        "max_ffpm": 2.5819578
+      },
+      {
+        "ModelID": "ACH-002531",
+        "role": "dev",
+        "line": "SNU2535",
+        "lineage": "Lung",
+        "partners": [
+          "EML4"
+        ],
+        "max_ffpm": 3.1871862
+      }
+    ],
+    "alk_partner_rule": [
+      "CAD",
+      "CLTC",
+      "DCTN1",
+      "EML4",
+      "HIP1",
+      "KANK4",
+      "NPM1",
+      "RANBP2",
+      "STRN"
+    ],
+    "kmt2a_carriers_D": 19,
+    "kmt2a_carriers_R": 2,
+    "kmt2a_carriers": [
+      {
+        "ModelID": "ACH-000045",
+        "role": "dev",
+        "line": "MV411",
+        "lineage": "Myeloid",
+        "partners": [
+          "AFF1"
+        ]
+      },
+      {
+        "ModelID": "ACH-000113",
+        "role": "dev",
+        "line": "OCIAML2",
+        "lineage": "Myeloid",
+        "partners": [
+          "AFDN"
+        ]
+      },
+      {
+        "ModelID": "ACH-000146",
+        "role": "dev",
+        "line": "THP1",
+        "lineage": "Myeloid",
+        "partners": [
+          "MLLT3"
+        ]
+      },
+      {
+        "ModelID": "ACH-000168",
+        "role": "dev",
+        "line": "NOMO1",
+        "lineage": "Myeloid",
+        "partners": [
+          "MLLT3"
+        ]
+      },
+      {
+        "ModelID": "ACH-000198",
+        "role": "dev",
+        "line": "EOL1",
+        "lineage": "Myeloid",
+        "partners": [
+          "RP11-770J1.8"
+        ]
+      },
+      {
+        "ModelID": "ACH-000276",
+        "role": "dev",
+        "line": "HCC38",
+        "lineage": "Breast",
+        "partners": [
+          "ATP5MG"
+        ]
+      },
+      {
+        "ModelID": "ACH-000362",
+        "role": "dev",
+        "line": "MOLM13",
+        "lineage": "Myeloid",
+        "partners": [
+          "MLLT3"
+        ]
+      },
+      {
+        "ModelID": "ACH-000397",
+        "role": "dev",
+        "line": "TEN",
+        "lineage": "Uterus",
+        "partners": [
+          "CD3G"
+        ]
+      },
+      {
+        "ModelID": "ACH-000435",
+        "role": "test",
+        "line": "EFE184",
+        "lineage": "Uterus",
+        "partners": [
+          "UBE4A"
+        ]
+      },
+      {
+        "ModelID": "ACH-000454",
+        "role": "dev",
+        "line": "HCC95",
+        "lineage": "Lung",
+        "partners": [
+          "SCN2B"
+        ]
+      },
+      {
+        "ModelID": "ACH-000580",
+        "role": "dev",
+        "line": "C32",
+        "lineage": "Skin",
+        "partners": [
+          "LINC02553",
+          "RP11-693I21.1"
+        ]
+      },
+      {
+        "ModelID": "ACH-000713",
+        "role": "dev",
+        "line": "CAOV3",
+        "lineage": "Ovary/Fallopian Tube",
+        "partners": [
+          "PHLDB1"
+        ]
+      },
+      {
+        "ModelID": "ACH-000776",
+        "role": "dev",
+        "line": "ONS76",
+        "lineage": "CNS/Brain",
+        "partners": [
+          "WNT3"
+        ]
+      },
+      {
+        "ModelID": "ACH-000782",
+        "role": "dev",
+        "line": "SEM",
+        "lineage": "Lymphoid",
+        "partners": [
+          "AFF1"
+        ]
+      },
+      {
+        "ModelID": "ACH-000869",
+        "role": "dev",
+        "line": "NCIH1568",
+        "lineage": "Lung",
+        "partners": [
+          "RP11-522B15.3"
+        ]
+      },
+      {
+        "ModelID": "ACH-000874",
+        "role": "dev",
+        "line": "RS411",
+        "lineage": "Lymphoid",
+        "partners": [
+          "AFF1"
+        ]
+      },
+      {
+        "ModelID": "ACH-001129",
+        "role": "dev",
+        "line": "MONOMAC1",
+        "lineage": "Myeloid",
+        "partners": [
+          "MLLT3"
+        ]
+      },
+      {
+        "ModelID": "ACH-001496",
+        "role": "test",
+        "line": "ESO26",
+        "lineage": "Esophagus/Stomach",
+        "partners": [
+          "TMPRSS4"
+        ]
+      },
+      {
+        "ModelID": "ACH-001574",
+        "role": "dev",
+        "line": "MOLM14",
+        "lineage": "Myeloid",
+        "partners": [
+          "MLLT3"
+        ]
+      },
+      {
+        "ModelID": "ACH-001647",
+        "role": "dev",
+        "line": "SHI1",
+        "lineage": "Myeloid",
+        "partners": [
+          "AFDN"
+        ]
+      },
+      {
+        "ModelID": "ACH-001735",
+        "role": "dev",
+        "line": "SEMK2",
+        "lineage": "Lymphoid",
+        "partners": [
+          "AFF1"
+        ]
+      }
+    ],
+    "er_concordance": {
+      "n_breast_lines": 65,
+      "n_er_pos": 29,
+      "n_er_pos_dev": 23,
+      "n_pam50_scored": 65,
+      "pam50_call_counts": {
+        "Basal": 27,
+        "Her2": 12,
+        "LumB": 12,
+        "LumA": 9,
+        "Normal": 5
+      },
+      "er_pos_vs_pam50_luminal": {
+        "n": 65,
+        "table": {
+          "ER_POS=1|PAM50_luminal=1": 15,
+          "ER_POS=1|PAM50_luminal=0": 14,
+          "ER_POS=0|PAM50_luminal=1": 6,
+          "ER_POS=0|PAM50_luminal=0": 30
+        },
+        "agreement": 0.6923076923076923
+      },
+      "gmm_only_vs_pam50_luminal": {
+        "n": 65,
+        "table": {
+          "GMM=1|PAM50_luminal=1": 15,
+          "GMM=1|PAM50_luminal=0": 24,
+          "GMM=0|PAM50_luminal=1": 6,
+          "GMM=0|PAM50_luminal=0": 20
+        },
+        "agreement": 0.5384615384615384
+      },
+      "n_subtype_ERplus": 3,
+      "er_pos_vs_subtype_ERplus": {
+        "n": 65,
+        "table": {
+          "ER_POS=1|subtype_ER+=1": 3,
+          "ER_POS=1|subtype_ER+=0": 26,
+          "ER_POS=0|subtype_ER+=1": 0,
+          "ER_POS=0|subtype_ER+=0": 36
+        },
+        "agreement": 0.6
+      },
+      "gmm_only_vs_subtype_ERplus": {
+        "n": 65,
+        "table": {
+          "GMM=1|subtype_ER+=1": 3,
+          "GMM=1|subtype_ER+=0": 36,
+          "GMM=0|subtype_ER+=1": 0,
+          "GMM=0|subtype_ER+=0": 26
+        },
+        "agreement": 0.4461538461538462
+      },
+      "note": "subtype 'ER+' absent is treated as 0 (unannotated lines included). ER_POS uses ModelSubtypeFeatures first, so ER_POS=0|subtype=1 is 0 by construction; GMM-only rows show the mixture alone. Flag only: the frozen rule is unchanged."
+    },
+    "er_mixture": {
+      "n_fit": 126,
+      "means": [
+        0.06725007251391066,
+        1.8377042192291333
+      ],
+      "high_component": 1
+    },
+    "corrections": [
+      "CL1a",
+      "CL1b",
+      "CL1c",
+      "CL1d",
+      "CL1e",
+      "CL1f",
+      "CL1g",
+      "CL1h"
+    ],
+    "unresolved_ids_in_kept_rows": 0,
+    "record_ids_total": 526,
+    "record_ids_resolved": 524,
+    "record_ids_gene_inconsistent": []
+  },
+  "inputs": {
+    "mapping": "configs\\cgt_curated_mapping.csv",
+    "rules": "configs\\cgt_allele_rules.json",
+    "rules_version": "cgt-rules-1"
+  }
+}
