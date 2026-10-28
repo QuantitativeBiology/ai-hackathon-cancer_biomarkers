@@ -81,7 +81,7 @@ def _simulate(des: dict, k: int, sd_carrier: float, n_sims: int, seed: int) -> n
         Y = rng.standard_normal((n, N_Y)) * sd[:, None]
         Xt = ST.resid(Q, d[:, None])
         Yt = ST.resid(Q, Y)
-        r = ST.cr2_core(Yt, Xt, hZ, Q, cl, Q.shape[1])
+        r = ST.cr2_core(Yt, Xt, hZ, Q, cl, Q.shape[1], car_clusters=ST.carrier_clusters(d, True, cl))
         out[i] = r["p"][0]
     return out.ravel()
 
@@ -97,7 +97,8 @@ def test_vectorised_core_equals_pair_test(designs):
         y = rng.standard_normal(n) * np.where(d == 1, 2.0, 1.0)
         r = ST.pair_test(y, d, des["Z"], des["patients"])
         Xt, Yt = ST.resid(des["Q"], d[:, None]), ST.resid(des["Q"], y[:, None])
-        c = ST.cr2_core(Yt, Xt, des["hZ"], des["Q"], des["cl"], des["Q"].shape[1])
+        c = ST.cr2_core(Yt, Xt, des["hZ"], des["Q"], des["cl"], des["Q"].shape[1],
+                        car_clusters=ST.carrier_clusters(d, True, des["cl"]))
         assert c["p"][0, 0] == pytest.approx(r["p"], rel=1e-10)
 
 

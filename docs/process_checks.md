@@ -105,12 +105,12 @@ section and tag do not exist yet.
 
 | §13.2 item | test | status |
 |---|---|---|
-| inference calibration (20,000 sims × n {255, 1022} × carriers {3, 5, 10} × {homosk., carrier SD × 2}) | `tests/test_inference_calibration.py` (new; ~7 min) | **3 of 12 cells FAIL**: n = 255, carrier SD × 2 (size 0.05 = 0.072 / 0.073 / 0.069 for 3 / 5 / 10 carriers; size 1e-3 = 0.0002 / 0.0021 / 0.0025). Other 9 pass; homosk. 3 carriers is conservative (0.038). Core = `pair_test` (1e-10) |
+| inference calibration (20,000 sims × n {255, 1022} × carriers {3, 5, 10} × {homosk., carrier SD × 2}) | `tests/test_inference_calibration.py` (new; 1-7 min) | ν rule (82c3240): 3/12 FAIL, anti-conservative at n = 255, SD × 2 (0.072 / 0.073 / 0.069; 1e-3: 0.0002 / 0.0021 / 0.0025). **Deployed fallback (04aa982, df = carrier clusters − 1 for binary d): 8/12 pass, 4 FAIL conservative** (size 0.05 < 0.035): n255/3/SD×2 0.03175, n255/3/homo 0.01040, n255/5/homo 0.02930, n1022/3/homo 0.02760; none anti-conservative (max 0.0587, 1e-3 max 0.0011). Accepted by the coordinator as the pre-declared fallback; left failing |
 | `test_cr2.py` | `test_stats.py::test_cr2_and_nu_match_brute_force`, `::test_hc2_matches_statsmodels_singletons` | covered under another name |
 | (§5.4 `test_s1_vectorised.py`: 200 random tests vs brute CR2) | `test_stats.py::test_vectorised_scan_equals_pair_test` (≥ 15 of 25 vs `pair_test`) | partial (fewer tests; reference is `pair_test`, which is itself brute-force-checked) |
 | `test_eb_mixture.py` (3 components, r > 0.99 vs oracle) | `test_stats.py::test_eb_mixture_recovers_oracle` | covered under another name |
 | `test_bootstrap_clusters.py` | `tests/test_bootstrap_clusters.py` (new) | 3/3 pass |
-| power df = test df | `tests/test_power_df.py` (new) | **2 of 3 FAIL** (see §5) |
+| power df = test df | `tests/test_power_df.py` (new) | 2/3 FAIL at 82c3240; **3/3 pass at 04aa982** (`pool_power` uses `stats.shared_df`) |
 | power invariant to feature rescaling | `test_stats.py::test_power_invariant_to_feature_rescaling_and_df_shared` | covered |
 | cross-lineage labels | `tests/test_cross_lineage_labels.py` (new; each label reachable, one label per case); toy: `test_toy_answers.py::test_pipeline_cross_lineage_labels` (env-gated) | 4/4 pass |
 | culture map | `tests/test_culture_map.py` (new; §5.3 culture block maps, formulation-column detection, built levels) | 21/21 pass |
@@ -123,12 +123,18 @@ section and tag do not exist yet.
 | FWL | `test_en.py::test_fwl_en_equals_en_with_huge_scaled_unpenalised_columns` | covered |
 | determinism | `test_en.py::test_planted_feature_selected_and_deterministic`, `test_arms.py::test_parallel_s1_equals_serial`, `test_toy_answers.py::test_determinism_and_seed_dependence` | covered (no end-to-end byte-identical rerun of `run_arms`) |
 | additivity (attribution 1e-5) | — | **missing**: M1-proxy attribution (§4.3, Tier B, M5) has no code yet |
-| NMF | `tests/test_nmf.py` (new; D-only fit, D-row invariance to deleting R/set A, reproduces cached PROG) | **2 of 3 FAIL** (see §5): components H identical with/without R rows (pass); D-row scores move by up to 8.3e-4 (largest score 1.32) when R/set-A rows are deleted; refit vs cached PROG differs by up to 2.4e-4 (H rel. ≤ 1.2e-4; float32, not bit-reproducible). ~90 s |
+| NMF | `tests/test_nmf.py` (new; D-only fit, D-row invariance to deleting R/set A, reproduces cached PROG) | 2/3 FAIL at 82c3240 (D rows moved ≤ 8.3e-4; cache ≠ refit ≤ 2.4e-4); **3/3 pass at 04aa982** (per-role transform, float64, 1 BLAS thread; dictionary rebuilt) |
 | CGT schema | `test_cgt_table.py::test_schema`, `::test_vocabularies` | covered |
 | EN-pred blind | `test_en.py::test_en_pred_is_blind_to_observed_effects` | covered |
-| guard refusals | `test_guard.py`; `test_endpoint_branches.py` refusal tests | covered |
+| guard refusals | `test_guard.py`; `test_endpoint_branches.py` refusal tests | covered (note: `test_guard.py::test_dev_allowed_real_data_no_log` and `::test_dev_default_all_dev` read real dev effects, and `test_loaders.py` reads OOF/test predictions; agents barred from effects must deselect them) |
 
-## 5. Findings for the engine owner (not fixed here)
+## 5. Findings for the engine owner (as found at 82c3240)
+
+Re-verified at 04aa982: items 1, 2 and 6 are fixed (calibration now conservative-only, see §4; power df and NMF
+tests pass), leakscan has 0 hits (item 4), the timing writers emit the §1.1 schema (§1.2 table is historical).
+Remaining remarks on 04aa982: `analyses.write_timing` defaults a missing `workers` to 1 (`max(1, int(wk or 1))`),
+so a writer that forgets it is recorded as serial rather than rejected; `run_null.py --s1-vectorised` stores its
+run as a sub-record of `null_fixed`, so its interval is not counted in the stage wall or in concurrency.
 
 1. **Calibration (§5.3 fallback trigger).** With R's 255-line design and carrier SD × 2, the CR2 + ν test is
    anti-conservative at α 0.05 (0.069–0.073) and at 1e-3 for 5 and 10 carriers. §5.3 pre-declares the fallback
