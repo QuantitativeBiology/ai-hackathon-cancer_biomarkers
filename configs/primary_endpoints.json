@@ -1,0 +1,47 @@
+{
+  "_comment": "DESIGN.md v2 §6. Frozen at tag freeze-design; the report script reads k, ranking, CI settings and verdict rules only from this file and fails if its sha256 differs from configs/frozen_hashes.json.",
+  "version": "v2",
+  "arms": {
+    "S1-obs": {"method": "univariate confounder-model test", "target": "observed D effect", "rank": ["p asc", "abs(beta) desc", "feature_id asc"]},
+    "S1-pred": {"method": "univariate confounder-model test", "target": "fold-centred OOF M5 prediction", "rank": ["p asc", "abs(beta) desc", "feature_id asc"]},
+    "EN-obs": {"method": "hierarchical stability elastic net (DESIGN §4.1)", "target": "observed D effect", "rank": ["selection_freq desc", "abs(mean beta) desc", "feature_id asc"]},
+    "EN-pred": {"method": "hierarchical stability elastic net (DESIGN §4.1); = MD-pure; built without reading observed effects", "target": "fold-centred OOF M5 prediction", "rank": ["selection_freq desc", "abs(mean beta) desc", "feature_id asc"]}
+  },
+  "universe": "identical (g, d) universe U for all arms: g eligible (§2), d in 𝒟_g with >= 5 carriers among non-NaN D lines; CN features deduplicated per (g, locus group) to the best-ranked member before top-k",
+  "P1_primary": {
+    "question": "Q2",
+    "statistic": "replication rate among the arm's top-k candidates",
+    "k": 100,
+    "candidate_pool": "(g, d) in U that are R-evaluable (>= 3 carriers and >= 3 non-carriers with expected non-NaN effect) and have R power >= 0.5",
+    "power": "from EB-shrunk D effect (design_params replication_s6.shrinkage), identical for all arms, computed before freeze-catalogue",
+    "replicated": "same sign as D AND one-sided p < 0.05 in R (confounder model, same covariate drops, CR2 by PatientID)",
+    "ci": {"method": "paired bootstrap over R lines grouped by PatientID; lists fixed; tests refitted", "B": 1000, "level": 0.95, "type": "percentile", "seed_key": "bootstrap_seed"},
+    "contrasts": {
+      "predictor_adds_value": {"diff": "EN-pred - EN-obs", "claim_if": "CI lower bound > 0", "branches": {"lower > 0": "predictor adds value", "upper < 0": "predictor loses value", "else": "no detectable difference"}},
+      "multivariate_adds_value": {"diff": "EN-obs - S1-obs", "claim_if": "CI lower bound > 0", "branches": {"lower > 0": "multivariate adds value", "upper < 0": "univariate better", "else": "no detectable difference"}}
+    },
+    "secondary_k": [50, 200, 500],
+    "secondary_variants": ["top-k over all U (non-evaluable counted as not replicated)", "gene-matched: at most 2 features per gene", "overlap strata EN-pred∩S1-obs, EN-pred-only, S1-obs-only", "set differences EN-pred\\S1-obs, S1-obs\\EN-pred, EN-pred\\EN-obs", "list-level: sign concordance (binomial vs 0.5), Deming slope beta_R on beta_D, observed/expected replications", "S1-pred contrasts (ablation ladder)"]
+  },
+  "XLIB_co_endpoint": {
+    "question": "Q2 (secondary co-endpoint)",
+    "discovery": "D lines with Avana-only screens; all four arms re-run (same params, own lambda CV on the discovery lines)",
+    "replication": "D lines with no Avana screen (KY-only, Humagne-only); Avana+KY and other mixed lines excluded from both",
+    "k": 100,
+    "statistic_and_ci": "as P1 (power from discovery-set shrunk effects; bootstrap over replication-set patients)",
+    "caveat": "OOF predictions of discovery lines come from Part 1 fold models trained on replication-set effects: pred arms are not independent here. EN-pred vs EN-obs on XLIB is descriptive; EN-obs vs S1-obs is a valid co-endpoint. Tier B adds EN-pred-clean from an M1 refit cross-validated within the discovery lines only."
+  },
+  "P2_primary_clinical": {
+    "question": "Q4a",
+    "statistic": "recall of testable S/W CGT tests (partitions sensitivity + bypass-resistance; ko_class concordant, concordant-family, concordant-KO/combination-required)",
+    "hit": "a (g in target set T, d = test feature) in the arm's top-k, any sign",
+    "k": 200,
+    "secondary_k": [100, 500],
+    "direction_accuracy": "separate: hits with pre-registered sign / all hits",
+    "paired_test": "exact McNemar per pair of arms on test-level hit outcomes",
+    "sets": {"all": "all testable tests", "gate_disjoint": "tests not in configs/positive_controls.csv; headline whenever results/gate_iterations.csv has more than one row"},
+    "also_reported": "recall over data-supported tests (ceiling, §10.4)"
+  },
+  "everything_else": "secondary; REPORT.md labels it as such",
+  "wording_rules": ["MD-strict D-stage results are 'selection-conditional (nominal)', never 'significant'", "MSI->WRN and MTAP->PRMT5/MAT2A recovery is 'recovered, also used as a pipeline gate', never 'independent validation'"]
+}

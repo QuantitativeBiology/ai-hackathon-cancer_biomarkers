@@ -21,3 +21,6 @@ __pycache__/
 .pytest_cache/
 .venv/
 *.log
+
+# Results policy (DESIGN v2 §13.5, R1-AF5): *.gz and *.parquet above also match under results/, so committed
+# results must be plain .csv/.json (<= 5 MB); bulk tables stay in cache/ with sha256 in results/bulk_manifest.csv.

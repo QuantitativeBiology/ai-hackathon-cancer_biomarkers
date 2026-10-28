@@ -1,0 +1,45 @@
+{
+  "_comment": "DESIGN.md v2 §14. scripts/budget_check.py compares results/timing/<stage>.json against these timeboxes and lists any Tier B/C stage started before all Tier A stages were done. Anything unfinished is reported 'not done: time'.",
+  "version": "v2",
+  "hours_remaining_at_v2": 19.0,
+  "milestones": [
+    {"id": "M2", "content": "DESIGN v2, round-2 review, freeze-design (sim bounds, pc_eligibility, frozen hashes)", "budget_h": 1.5},
+    {"id": "M3b", "content": "dictionary, screen covariates, eligibility, controls csv, cgt features, guard/gate extensions, data_status (start of M4 deadline), toy simulation (separate agent, parallel)", "budget_h": 3.0},
+    {"id": "M4", "content": "4 arms + MD-strict, confounder audit, gate attempt 1, null (background), replication dry run", "budget_h": 3.0},
+    {"id": "M5", "content": "subtypes per gene and per module, cross-lineage, co-location, cutting, culture, hypermutation; Tier B attribution in background", "budget_h": 2.5},
+    {"id": "M6", "content": "CGT build + freeze-cgt (may start in M3b), ceiling, Q4a-d, combinatorial lookup", "budget_h": 2.0},
+    {"id": "M7", "content": "independent reimplementation check, freeze-catalogue, replication in R (once), XLIB", "budget_h": 1.0},
+    {"id": "M8", "content": "limits classes, claims table, REPORT.md, report-number check, review", "budget_h": 3.5}
+  ],
+  "milestone_total_h": 16.5,
+  "reserve_h": 2.5,
+  "tiers": {
+    "A": {
+      "rule": "must; never cut",
+      "stages": {
+        "dictionary": 10, "screen_covariates": 10, "eligibility": 10, "s1_obs_pred": 15, "en_obs_pred": 30, "md_strict": 10,
+        "confounder_audit": 20, "gate": 10, "null_B": 180, "subtypes_gene_module": 30, "cross_lineage": 20,
+        "colocation_cutting_culture_hypermut": 30, "cgt_build_freeze": 90, "cgt_recovery_direction_actionability_population_by_lineage": 45,
+        "replication_R": 20, "replication_xlib": 20, "limits_classes": 30, "component_readout_AC5": 10
+      },
+      "unit": "minutes wall"
+    },
+    "B": {
+      "rule": "after all Tier A stages of the current milestone are done",
+      "stages": {
+        "direct_attribution_panel": 75, "combinatorial_lookup": 60, "tcga_prevalence_cbioportal": 45,
+        "lmm_top200": 45, "xlib_en_pred_clean_m1_refit": 20
+      },
+      "unit": "minutes wall",
+      "attribution_rules": "M1-proxy from saved t_E_status folds (exact linear); M3 refit for panel genes with pred_contrib; per-gene reproduction r >= 0.999 else report shortfall and continue; one diagnosis attempt <= 30 min"
+    },
+    "C": {
+      "rule": "only if ahead of schedule",
+      "stages": {"unsupervised_clustering_networkx_louvain": 30, "clinicaltrials_gov_harvest": 45, "crossfit_sensitivity_ST1": 45},
+      "unit": "minutes wall"
+    }
+  },
+  "cut_order_if_M4_ends_gt_1h_late": ["Tier C (all)", "lmm_top200", "direct_attribution_panel (AC5 component readout is the pre-declared fallback)", "null B 20 -> 10 (logged deviation)", "tcga_prevalence_cbioportal", "combinatorial per-line concordance"],
+  "never_cut": ["gate", "confounder model", "CGT pre-registration and freeze-cgt", "single R replication", "limits classes", "null B >= 10"],
+  "concurrency": "never run the Tier B refit (4-6 processes, ~3.3 GB) concurrently with a 12-worker job"
+}
