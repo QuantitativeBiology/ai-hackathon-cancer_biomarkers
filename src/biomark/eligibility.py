@@ -57,7 +57,7 @@ def compute(cov: pd.DataFrame, chunk: int = 2000) -> pd.DataFrame:  # literal-ok
     """Per gene (all genes of the m5 tier table): flags, tier, r_within, n_used, eligible, reason."""
     e = _e()
     min_r = float(e["r_within_lin_lib_min"])
-    min_lines = int(e["r_within_stratum_min_lines"])
+    min_lines = int(P.load_config("build_params")["eligibility"]["eligibility_min_stratum_lines"])  # A6-(ii)
     min_total = int(P.load_config("build_params")["eligibility"]["min_lines_for_r"])
     gc = p1.gene_classes()
     tiers = p1.gene_tiers(e["tier_model"])

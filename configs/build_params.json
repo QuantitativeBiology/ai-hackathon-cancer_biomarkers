@@ -137,7 +137,9 @@
     "library_source": "covariates.library_group (screen map)",
     "stratum_size_counted_on": "non-NaN D lines of the gene",
     "lines_in_small_strata": "excluded from r_within for that gene",
-    "min_lines_for_r": 10
+    "min_lines_for_r": 10,
+    "eligibility_min_stratum_lines": 5,
+    "eligibility_min_stratum_lines_comment": "DESIGN amendment A6-(ii): lines in lineage x library strata with fewer than this many dev lines (non-NaN for the gene) are EXCLUDED from the beyond-lineage x library r, not pooled"
   },
   "dictionary": {
     "population_roles": [

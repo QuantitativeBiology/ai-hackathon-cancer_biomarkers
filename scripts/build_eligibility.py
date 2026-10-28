@@ -30,7 +30,7 @@ def main() -> int:
     e = P.load_config("design_params")["eligibility_s2"]
     summ = {
         "rule": "(variable OR selective) AND m5 tier in {high, medium} AND r_within >= r_within_lin_lib_min",
-        "r_within_lin_lib_min": e["r_within_lin_lib_min"], "stratum_min_lines": e["r_within_stratum_min_lines"],
+        "r_within_lin_lib_min": e["r_within_lin_lib_min"], "stratum_min_lines": P.load_config("build_params")["eligibility"]["eligibility_min_stratum_lines"],
         "n_genes_evaluated": int(len(el)), "n_class_ok": int(el["class_ok"].sum()),
         "n_class_and_tier_ok": int((el["class_ok"] & el["tier_ok"]).sum()),
         "n_eligible": int(el["eligible"].sum()),

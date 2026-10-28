@@ -29,6 +29,7 @@ One line per choice the design (v3.1 + rulings R3-1/R3-2) leaves open: **choice 
 
 ## Eligibility (DESIGN 2)
 - Strata = pooled lineage × screen-map library group; stratum size counted on the gene's non-NaN D lines; lines in strata < 5 excluded from r_within — design says "strata ≥ 5 lines" only.
+- **A6-ii** (DESIGN amendment A6-(ii)): beyond-lineage x library r excludes lines in strata with < 5 dev lines (per gene, non-NaN). Now read from build_params eligibility.eligibility_min_stratum_lines (=5) instead of design_params r_within_stratum_min_lines. The code already excluded (not pooled) such lines, so the rerun gave a byte-identical configs/eligible_genes.csv (2,193 eligible, 0 changed); downstream scripts need no rerun.
 - r_within undefined (NaN, not eligible) if < 10 lines remain — build_params eligibility.min_lines_for_r.
 - Output `configs/eligible_genes.csv` (task) and the identical `results/eligibility.csv` (DESIGN 2); `r_beyond` = r_within.
 - dependent / accurate-dependent rules implemented as functions in `src/biomark/eligibility.py` (D-fitted cuts applied to any lines; R quantile rule target-free).
