@@ -577,3 +577,27 @@ Each row maps 1:1 to a key in the named file; code reads only the file.
   ridge toy is kept as a reported (unbounded) check; recovery bounds use the smooth-predictor toy. (ii) Eligibility's
   beyond-lineage×library r excludes lines in strata with < 5 lines. (iii) Pure-null counts exclude neutral hits and the
   own-EXPDOSE (F2) family. (iv) Toy files are `src/biomark/toysim.py` and `tests/test_toy_answers.py` (§13 names differ).
+- **A7 (D12–D15, toy run of the real engine before `freeze-bounds`; no real association result existed).**
+  - (i) **Catalogue = MD-global.** MD-global = EN-pred selected ∩ S1-obs F1 BH hits (full-family BH, q 0.05), same sign.
+    - MD-strict, which applies BH only within the EN-pred selection, failed its pre-declared error bounds on the engine.
+      Ridge toys: FDP_true 0.228, 0.255 and 0.237 (limit 0.15). Pure nulls: P(any hit) = 0.30 (limit 0.10).
+    - The cause is the double dip: the D-stage screen re-uses the D noise that ridge OOF predictions absorbed.
+    - On the same toys MD-global had FDP 0, 0 and 0.013 (ridge) and 0 in 5/5 smooth replicates, with P(any) = 0.00 on the
+      pure nulls. Its recall equalled MD-strict's on every toy (smooth 0.87–0.88; ridge 0.85–0.93).
+    - Every analysis that §5–§12 runs "on the catalogue" uses MD-global: subtypes, modules, clinical, candidate cards,
+      limits, r_requests.
+    - MD-strict is still computed and reported as the frozen secondary, with its toy error rates.
+    - The gate (§9.3) and NC2b stay as frozen, on MD-strict, with MD-global values reported alongside.
+    - The P1/P2 primary contrasts (arms' ranked lists; EN-pred vs S1-obs) are unchanged.
+    - The toy error bounds (`planted_fdp_true_max`, `pure_null_bh_lists_p_any_hit_max`) are applied unchanged to MD-global.
+  - (ii) **NC bounds.** NC2 is an error-type control, so per A6 its toy statistic is the max over 5 ridge-toy replicates.
+    A toy NC statistic with zero between-replicate variance at the edge of its range, or with a zero underlying count,
+    keeps its provisional value (logged in deviations.csv). This was decided before the ridge NC2 values existed.
+  - (iii) **Reported, not changed.**
+    - The fold-offset positive control (≥ 3/5 without centring) was derived from S1-pred BH. EN stability selection does
+      not pick up the artefact without centring (frequency 0.36–0.50). Centring stays as specified.
+    - The toy check `FDR_emp_fixed ≥ FDP_true − 0.05` compares statistics with different denominators (all hits vs
+      non-neutral hits).
+    - The §8.3 cross-lineage rule can mislabel a one-lineage effect when the null lineages share its sign by chance.
+  - (iv) **Triggered fallback, as pre-declared in §5.3.** The calibration test failed at n = 255 with carrier SD × 2, so
+    binary d uses df = carrier clusters − 1 (deviations.csv).

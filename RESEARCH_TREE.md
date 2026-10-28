@@ -52,6 +52,10 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D15 (M4, ~23:30): [!] The catalogue becomes MD-global (EN-pred ∩ S1-obs full-family BH, same sign); this is amendment
+  A7, made before any real association result. On the engine's ridge toys MD-strict FDP was 0.228, 0.255 and 0.237 and
+  MD-global's was 0, 0 and 0.013. On the pure nulls P(any hit) was 0.30 for MD-strict and 0.00 for MD-global. Recall was
+  identical on all toys. MD-strict stays as a reported secondary; the gate, NC2b and the P1/P2 contrasts are unchanged.
 - D14 (M4, ~23:15, NC bound rulings before any ridge NC2 value or real result):
   - R1: NC2 (low-tier false hits) is an error-type control, so per A6 its toy value is the max over 5 ridge-toy replicates.
     On the smooth toy EN-pred selects nothing on low-tier genes, so the value is degenerate (≈ 0).
