@@ -1,0 +1,205 @@
+{
+ "utc_time": "2026-10-28T17:56:10+00:00",
+ "project_b_commit": "7b434428cce8782e345474ec99be277a3accbdc8",
+ "part1_root": "C:\\Users\\ritab\\Desktop\\project",
+ "part1_head": "7f94b5a52e4df65275a082b19d6d129b51a587eb",
+ "part1_pinned_commit": "7f94b5a52e4df65275a082b19d6d129b51a587eb",
+ "part1_head_matches_pin": true,
+ "part1_tree_clean": true,
+ "part1_dirty_entries": [],
+ "sha256_reference": "configs/depmap_local_sha256.txt",
+ "data_files": {
+  "CRISPRGeneEffect.csv": {
+   "expected": "1e0c492944a7297c0eda179081a1e81a1cfe41a97628facd7eddbdda1a7504ee",
+   "observed": "1e0c492944a7297c0eda179081a1e81a1cfe41a97628facd7eddbdda1a7504ee",
+   "match": true,
+   "bytes": 497139964
+  },
+  "Model.csv": {
+   "expected": "65eb1895800e71a963a3ab56e5d08c8d006cb0d9e7aa68f7e34a3810a2a3cbc7",
+   "observed": "65eb1895800e71a963a3ab56e5d08c8d006cb0d9e7aa68f7e34a3810a2a3cbc7",
+   "match": true,
+   "bytes": 789805
+  },
+  "ModelCondition.csv": {
+   "expected": "a1edda78cd60718e5c99690ce8ab80315b65ddc9346643338d2c1c774fc51326",
+   "observed": "a1edda78cd60718e5c99690ce8ab80315b65ddc9346643338d2c1c774fc51326",
+   "match": true,
+   "bytes": 314820
+  },
+  "OmicsCNGeneWGS.csv": {
+   "expected": "31cace66f202adaace306d975b5661c8b77ea82f07d2ed34045eec9c7958fcd6",
+   "observed": "31cace66f202adaace306d975b5661c8b77ea82f07d2ed34045eec9c7958fcd6",
+   "match": true,
+   "bytes": 661789195
+  },
+  "OmicsExpressionTPMLogp1HumanProteinCodingGenes.csv": {
+   "expected": "252d1fedc7014953b19ffe5d68151b4df973c8078b12c9e5ccd97e292548d177",
+   "observed": "252d1fedc7014953b19ffe5d68151b4df973c8078b12c9e5ccd97e292548d177",
+   "match": true,
+   "bytes": 394997160
+  },
+  "OmicsFusionFiltered.csv": {
+   "expected": "985ac6383a95c39f36856c583f32c7990c9f5464d982a2dd84a9dc07fcbc979b",
+   "observed": "985ac6383a95c39f36856c583f32c7990c9f5464d982a2dd84a9dc07fcbc979b",
+   "match": true,
+   "bytes": 14827737
+  },
+  "OmicsSomaticMutationsMatrixDamaging.csv": {
+   "expected": "736b7a82b4d1f234dc597a409d104186c282f01b0caa56365c27ff987ae49e20",
+   "observed": "736b7a82b4d1f234dc597a409d104186c282f01b0caa56365c27ff987ae49e20",
+   "match": true,
+   "bytes": 300957482
+  },
+  "OmicsSomaticMutationsMatrixHotspot.csv": {
+   "expected": "0cbdacdce2355d2dd600d3741a36ae093dbe77d7bee44bde97411b1e96973058",
+   "observed": "0cbdacdce2355d2dd600d3741a36ae093dbe77d7bee44bde97411b1e96973058",
+   "match": true,
+   "bytes": 2701956
+  },
+  "CRISPRScreenMap.csv": {
+   "expected": "43cc528614053d4c5a96729c2d782375227231a0cfea23de6c519b8989fa1252",
+   "observed": "43cc528614053d4c5a96729c2d782375227231a0cfea23de6c519b8989fa1252",
+   "match": true,
+   "bytes": 41721
+  },
+  "ScreenSequenceMap.csv": {
+   "expected": "acaedf0549afda50e5f3df28645c5c2193acbdb9779f9f8099861b763d1be296",
+   "observed": "acaedf0549afda50e5f3df28645c5c2193acbdb9779f9f8099861b763d1be296",
+   "match": true,
+   "bytes": 412684
+  },
+  "README.txt": {
+   "expected": "5672d9e04f18320e9ca1d25747427275dcabb44bffe45eba34d196f1b44dd3ec",
+   "observed": "5672d9e04f18320e9ca1d25747427275dcabb44bffe45eba34d196f1b44dd3ec",
+   "match": true,
+   "bytes": 48405
+  }
+ },
+ "n_data_files": 11,
+ "n_data_match": 11,
+ "p1_cache_sha256_recorded": {
+  "cache/crispr.parquet": {
+   "sha256": "505da7556d2c9195f697608b18072b8a43bceaa473fb0de12473eb9c82a90365",
+   "bytes": 140181103
+  },
+  "cache/gene_map.parquet": {
+   "sha256": "8098cd2af4dc9978c359c362a1dac863671c7e9401f549b95e2b7d25a1e313bb",
+   "bytes": 313973
+  },
+  "cache/expression.parquet": {
+   "sha256": "0b5f0d7c215e83ebbd5529c686f0134d497611cce40e584f25fb57395911b745",
+   "bytes": 197974804
+  },
+  "cache/cn.parquet": {
+   "sha256": "9b122d728a6e26f4cc0e026cc366c949b2098c66c2ac49a2ff8ba2ab3b0e4e9a",
+   "bytes": 183823738
+  },
+  "cache/damaging.parquet": {
+   "sha256": "c31553d10a7a7c708a57dda06d71a986b56c4376db9f861c2cbfad6e54777f36",
+   "bytes": 10535956
+  },
+  "cache/hotspot.parquet": {
+   "sha256": "3f7a42a022ee7f7c017eb1e0d12fc75f0710b7513253e58326edde03254d5690",
+   "bytes": 107836
+  },
+  "cache/fusion.parquet": {
+   "sha256": "61ea9720a7cd64b4e74530832f6ad9119156bd7226515ca61e28f52f52e7ab6e",
+   "bytes": 3457345
+  },
+  "cache/features/C.parquet": {
+   "sha256": "952e56b953d5d8841b493fa4e0551e82fc18cff260a93beb28b71e0f759d516b",
+   "bytes": 183639173
+  },
+  "cache/features/C_instab.parquet": {
+   "sha256": "cf1733ebc58a1a4aebf6f732a6196f84fcb384d4af84d42d2668e49344aa3837",
+   "bytes": 22075
+  },
+  "cache/features/composite.parquet": {
+   "sha256": "c345820f2c86113a2fec4307a6f732b1892b8428e2160553e457c7d3d8eb5ac7",
+   "bytes": 28151
+  },
+  "cache/features/E.parquet": {
+   "sha256": "0b5f0d7c215e83ebbd5529c686f0134d497611cce40e584f25fb57395911b745",
+   "bytes": 197974804
+  },
+  "cache/features/F_gene.parquet": {
+   "sha256": "1cd0d34960cc8f16f407e981f76eca9997bce095cfaf8553ce15147f8f48fd3f",
+   "bytes": 2265110
+  },
+  "cache/features/F_pair.parquet": {
+   "sha256": "813b089ecc04ca02995bdf2b576ab1a58f6ecc6a8da5316c1bcc8acab83edc1c",
+   "bytes": 242500
+  },
+  "cache/features/H.parquet": {
+   "sha256": "b478a969375b76321894219dad1a97307dfe2f41219ee3c7c2ffea14023861b9",
+   "bytes": 106075
+  },
+  "cache/features/M.parquet": {
+   "sha256": "c31553d10a7a7c708a57dda06d71a986b56c4376db9f861c2cbfad6e54777f36",
+   "bytes": 10535956
+  },
+  "cache/features/M_burden.parquet": {
+   "sha256": "65f66399697f4389f8161333fb834514c7ed9acd768563b1fe5b66a70a47b1e3",
+   "bytes": 21537
+  },
+  "cache/features/meta.parquet": {
+   "sha256": "67a9245557383dbc64cd84cc7974b7436d5d17c48768405b193e3dbe8cfee448",
+   "bytes": 29758
+  },
+  "cache/features/meta_prov.parquet": {
+   "sha256": "16dec9d43cbcd6841380cbf4889f3353040f11e74c1a95b68a215bb75908e3ee",
+   "bytes": 21715
+  },
+  "cache/features/P.parquet": {
+   "sha256": "70e0ddf6cbda8bfd149f1f04a4d3e120cbd84b8973a440c08e5c4f1a3e79217f",
+   "bytes": 23491973
+  },
+  "cache/runs/20261027-161041_m5_avg_6dbebcf4/pred.parquet": {
+   "sha256": "350e8ce47cf81f25564ba891af78f2cdf7ad80c896deb88851d123c374adcec0",
+   "bytes": 108323343
+  },
+  "cache/runs/20261026-222117_m1_E_resB0_91e52f9d/pred.parquet": {
+   "sha256": "6387bf5b0592656d17979a2a7eadadd8f85cfb24bab66cfcce7b03b323a99b0d",
+   "bytes": 108323498
+  },
+  "cache/runs/20261027-044450_m2n_E_paralogs_62ce1575/pred.parquet": {
+   "sha256": "a6bff5e734ba4f8d20f5be99600438d631483669ae8a68f6d92d72aedb28e7cc",
+   "bytes": 108323106
+  },
+  "cache/runs/20261027-014824_g3_m3n_601e3f5e/pred.parquet": {
+   "sha256": "1d146bb20cef35b67864dcc58c711fa9e4edca7f2ca4f9dee6c8ad731e5e7fe2",
+   "bytes": 108323534
+  },
+  "cache/runs/20261026-224125_t_E_status_24b46e2a/pred.parquet": {
+   "sha256": "5850f1dc71a9bbdf4ebcd86d9a3abaac1a0309cb704ba5ccdca0ac7d44fc9c62",
+   "bytes": 108323627
+  },
+  "cache/test/preds/m5_avg.parquet": {
+   "sha256": "e5243018a5a10ab26d89cf3320633ccbb058f5a80391ff2a0dd1f19bb2296e3e",
+   "bytes": 32851383
+  },
+  "configs/splits.csv": {
+   "sha256": "d543cba139b4ae6651c2453d61ec447867d35a4295d4046833fcaf0b017e41f0",
+   "bytes": 50211
+  },
+  "configs/gene_classes.csv": {
+   "sha256": "3f9d61aeee004d0817b222a8a7abb89ae7df4e4dd49ef1cc15da98e1378eb6dc",
+   "bytes": 1298682
+  },
+  "configs/predictable_genes.csv": {
+   "sha256": "c8a32daded480ce7110353d6dad694902e52b49dbf2dbad3ed2b8689b05ba07a",
+   "bytes": 2813183
+  },
+  "configs/predictable_genes_m1.csv": {
+   "sha256": "7cff5391627b45e3126301f993e298e9c99394e823a20bd6166f8ad65390b995",
+   "bytes": 3734871
+  },
+  "configs/library_groups.csv": {
+   "sha256": "4df08069dd4a05b32887a3397298e19dd34c6ce2521ef0faa52ae21e8fbc4012",
+   "bytes": 18444
+  }
+ },
+ "all_ok": true,
+ "seconds": 4.7
+}

@@ -1,0 +1,11 @@
+# Python 3.13.1 (Windows 11, CPU only). Packages imported by src/biomark, scripts/ and tests/.
+numpy==2.1.3
+pandas==2.2.3
+pyarrow==19.0.1
+filelock==3.18.0
+scikit-learn==1.5.2
+pytest==9.1.1
+# Available and pinned as in Part 1, for later analyses (not yet imported):
+# scipy==1.15.2
+# statsmodels==0.14.4
+# lightgbm==4.7.0
