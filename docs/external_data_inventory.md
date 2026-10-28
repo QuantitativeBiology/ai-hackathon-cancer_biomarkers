@@ -1,0 +1,25 @@
+# External data inventory (fetched 2026-10-28)
+
+Files are in `external/` (git-ignored); checksums in `configs/external_sha256.txt`; provenance in `configs/external_manifest.json`. Script: `scripts/fetch_external.py`.
+
+## Combinatorial screens
+
+**Dede 2020** (`dede2020/`, enCas12a, A549, HT29, OVCAR8). MOESM2 = Table S1 (computational paralog scores, Broad and Sanger sheets, 628 and 295 pairs; Gene_A, Gene_B, odds ratios, p, FDR). MOESM3 = Table S2: **zdLFC** matrix, 403 pairs x 3 lines (this is the score). MOESM4 = Table S3: 12,328 construct read counts. MOESM5 = Table S4 controls. Hit: zdLFC < -3. I recounted 24 pairs in >=1 line, 19 in >=2, 14 in all 3, matching the paper.
+
+**Esmaeili Anvar 2024 in4mer** (`esmaeili2024/`, figshare v1). The most useful file is `Supp_table1.xlsx`: one sheet per cell line, with a harmonised, re-scored set of other studies. Columns: pair (`A:B`), gene1_mean, gene2_mean, exp_mean, obs_mean, CohenD, **deltaMean** (obs minus exp; this is the GI score). Sheets (pairs): Dede A549/HT29/OVCAR8 (403), Gonatopoulos-Pournatzis HAP1/RPE1 (688), Parrish HeLa/PC9 (1,030), Thompson A375/MeWo/RPE (1,191), Ito 11 lines (5,065). Hit: deltaMean < -1 and CohenD > 0.8 (from the literature notes; my count with it: Dede 25/30/28, Parrish HeLa 30, PC9 1, Thompson 61/43/85, Ito 2 to 117 per line). Other files: Table S2 hit lists (388 / 26 / 13 gold-standard), S3 prototype read counts, S4 oligos, S5 (not fetched as xlsx, `Supp_table5.txt`, 7.9 MB), S6 construct counts for K562, A549, A375, MelJuSo (51,921 constructs), S7 per-gene single-KO scores, **S8 cross-study synthetic-lethality ranking** (columns sumZ, numObs, normZ, pval_synth, fdr_synth, pval_supp, fdr_supp; 24,549 pairs), S9 GSEA. `Data_for_Figure_0*.xlsx` are plot inputs. The `Figure_01_Step01` zip holds the five-dataset processing code and inputs.
+
+**Parrish 2021** (`parrish2021/`, PC9, HeLa). Only `GSE178179_pgPEN_counts.txt.gz` is on GEO: 33,170 pgRNA rows (pgRNA_id, gRNA1/2 sequence, paralog_pair, plasmid/ETP/LTP replicate counts), about 17.8k distinct pair labels including controls. It is a count table, not a GI table. The authors' GI scores (GI < -0.5 = SL; 122 pairs SL in >=1 line) are in the Cell Rep supplement, which is **blocked** (see below). Esmaeili Supp_table1 has re-scored Parrish deltaMean for 1,030 pairs. Analysis code zip (Zenodo) is included.
+
+**Thompson 2021** (`thompson2021/`, A375, MeWo, RPE-1). MOESM4 = Supplementary Data 1: 1,464 gene pairs with class and per-line RRA/t-test FDR flags (e.g. `A375_D28_rra_fdr_low`) and "passes line filter" columns. Hit: Bliss/Loess residual with FDR < 0.1 (105 pairs fitness-reducing, 27 in >=2 lines). Also MOESM6 pair list, MOESM7 gRNAs (41,840), MOESM8 significant genes, MOESM9 TCGA, MOESM10 De Kegel data.
+
+**bioRxiv 10.1101/2024.07.16.603642 v3** (`klingbeil2024_biorxiv/`; the bioRxiv record lists Flister et al., Pfizer, not Klingbeil). media-1 = S1 library (113,502 constructs). **media-2 = S2**: per-construct expected, observed and diff for H1299 and MDA-MB-231 with replicate counts and Log2FC (105,324 construct rows, 35,108 pairs). media-5 = hybrid screen, 5,116 pairs with Observed, Expected_A/B, diff, diff_z per line. **media-6 = S6**: ComBat-merged SL scores for 36,649 pairs x 49 models (columns `<line>_<source>`, plus `# SL`, `n_screens`, `n_screens_SL`). media-3 = lethal calls vs Ito, Dede, Parrish, Thompson, Gonatopoulos. media-7/8/9 = XGBoost features, pathways, SL probability. Hit: diff_z beyond about -1.64 / -2 (per literature notes, not re-verified). Licence cc_no.
+
+## Clinical
+
+- **CIViC** (nightly 2026-10-28): ClinicalEvidence 4,972 rows (evidence_type: Predictive 2,912; levels A 230, B 1,658); key columns molecular_profile, disease, doid, therapies, evidence_type/direction/level, significance, nct_ids, variant_origin. Assertions 164 (30 Predictive; amp_category, nccn_guideline, regulatory_approval, fda_companion_test). MolecularProfiles 2,005. Variants 2,025 (gene, entrez_id, coordinates, hgvs, fusion partners).
+- **MOAlmanac** v.2026-08-02: `molecular-oncology-almanac.json`, list of 1,018 assertions; keys feature_type, gene1, gene2, disease, oncotree_code, therapy_name, therapy_sensitivity/resistance, predictive_implication (e.g. FDA-Approved), source_type, citation. Licence in the release is GPL-2.0.
+- **FDA CDx** (page current as of 2026-09-28): 232 rows parsed, equal to the page's `<tr>` count. Columns as on the page (device, indication-sample, drug NDA/BLA, biomarker, biomarker details, approval) plus derived pma_ids, approval_dates, drug_application_numbers, suspicious. One row flagged (row 122, a group-labeling entry without an NDA/BLA); 58 distinct biomarker strings. The second table (group-indication labelling, 9 rows) is in `fda_cdx_group_indications_parsed.csv`.
+- **OncoKB**: cancerGeneList 1,247 genes (Hugo Symbol, Gene Type, panel flags, Vogelstein, COSMIC CGC v99); allCuratedGenes 1,144 genes (Highest Level of Evidence sensitivity/resistance, Summary). Data v7.6.
+
+## Blocked
+Parrish 2021 Cell Rep supplement (processed GI scores): PMC returns a bot-challenge page; needs a manual download.
