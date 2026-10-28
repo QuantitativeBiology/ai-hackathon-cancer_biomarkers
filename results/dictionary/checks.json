@@ -49,7 +49,37 @@
   "n_lineages_with_own_stats": 22
  },
  "cgt_features": {
-  "status": "pending: configs/cgt_features.csv absent at build time"
+  "rules_file": "configs/cgt_allele_rules.json",
+  "rules_version": "cgt-rules-2 (AUD rulings)",
+  "extra_file_rows": 62,
+  "extra_file_matches_rules": true,
+  "not_built": [
+   {
+    "feature_id": "CLIN:HER2_LOW",
+    "reason": "not_assayable: HER2 IHC 1+/2+ ISH- or ultralow (protein IHC; not assayable in DepMap)"
+   },
+   {
+    "feature_id": "CLIN:MET_IHC",
+    "reason": "not_assayable: c-Met protein >= 50% 3+ (IHC; not assayable)"
+   },
+   {
+    "feature_id": "CLIN:PDL1_IHC",
+    "reason": "not_assayable: PD-L1 TPS/CPS (IHC; not assayable)"
+   },
+   {
+    "feature_id": "CLIN:FOLR1_IHC",
+    "reason": "not_assayable: FRalpha IHC >= 75% (not assayable)"
+   },
+   {
+    "feature_id": "CLIN:CLDN18_IHC",
+    "reason": "not_assayable: CLDN18 IHC >= 75% (not assayable)"
+   },
+   {
+    "feature_id": "CLIN:TMB_H",
+    "reason": "not_assayable: TMB >= 10 mut/Mb (per-Mb territory not defined for DepMap calls; SIG:TMB is a different, log-count feature)"
+   }
+  ],
+  "list": "                   feature_id  ...                                             source\n0            ALLELE:BRAF_V600  ...  FDA CDx V600E/V600K labels; CIViC BRAF V600 pr...\n1           ALLELE:BRAF_V600E  ...             FDA CDx CRC encorafenib labels (V600E)\n2   ALLELE:EGFR_L858R_EX19DEL  ...  FDA CDx rows 41-51 (exon 19 deletion or exon 2...\n3           ALLELE:EGFR_L858R  ...                                            FDA CDx\n4         ALLELE:EGFR_EX19DEL  ...               FDA CDx; CIViC EGFR Exon 19 Deletion\n5         ALLELE:EGFR_EX20INS  ...  FDA CDx rows 21, 99, 127, 216; CIViC EID 11227...\n6        ALLELE:EGFR_UNCOMMON  ...                     FDA CDx row 151 (P120022/S016)\n7           ALLELE:EGFR_T790M  ...             FDA CDx rows 42, 50, 62; CIViC AID 130\n8      ALLELE:EGFR_activating  ...                              DESIGN 10.3 / R1-CL1d\n9           ALLELE:EGFR_C797S  ...                                      CIViC EID 964\n10           ALLELE:KRAS_G12C  ...                        FDA CDx sotorasib/adagrasib\n11            ALLELE:KRAS_MUT  ...  FDA CDx RAS exon 2-4 labels; CIViC KRAS Mutati...\n12    ALLELE:KRAS_MUT_NONG12C  ...            R1-CL6 (G12C vs other KRAS alleles = N)\n13            ALLELE:NRAS_MUT  ...       FDA CDx panitumumab RAS label (rows 71, 182)\n14               CLIN:RAS_MUT  ...                  FDA CDx rows 5, 71, 182, 187, 203\n15           ALLELE:ERBB2_TKD  ...  FDA CDx rows 24, 219, 229 (SNVs exons 18-21 wi...\n16       ALLELE:ERBB2_TKD_SNV  ...                            FDA CDx rows 24/219/229\n17       ALLELE:ERBB2_EX20INS  ...                          FDA CDx rows 23, 101, 129\n18          ALLELE:PIK3CA_ACT  ...                      FDA CDx rows 74, 97, 158, 202\n19           ALLELE:AKT1_E17K  ...                                     CIViC EID 3039\n20              CLIN:PTEN_LOF  ...             FDA CDx row 14 (PTEN IHC); MOA 939-942\n21              CLIN:CAPI_ALT  ...                    FDA CDx row 87; CIViC EID 12020\n22           ALLELE:IDH1_R132  ...                           FDA CDx rows 29, 30, 177\n23      ALLELE:IDH2_R140_R172  ...                                     FDA CDx row 31\n24           ALLELE:KIT_D816V  ...                             CIViC AID 85, EID 1725\n25            ALLELE:KIT_EX11  ...               CIViC KIT Exon 11 Mutation (EID 654)\n26        ALLELE:PDGFRA_D842V  ...                                     FDA CDx row 28\n27        ALLELE:FLT3_ITD_TKD  ...                         FDA CDx rows 115, 116, 185\n28            ALLELE:FLT3_ITD  ...                                    FDA CDx row 115\n29            ALLELE:FLT3_TKD  ...                      FDA CDx row 115; CIViC AID 33\n30           ALLELE:FGFR3_HOT  ...                                    FDA CDx row 157\n31             CLIN:FGFR3_ALT  ...                            FDA CDx row 157; MOA 32\n32            ALLELE:MET_EX14  ...       FDA CDx rows 25, 76, 93, 200; CIViC EID 8847\n33            ALLELE:EZH2_GOF  ...                    FDA CDx row 52; CIViC EID 11220\n34           ALLELE:NPM1_EX11  ...                                      MOA 1014-1018\n35            ALLELE:ESR1_LBD  ...               FDA CDx rows 4, 10, 17, 18, 102, 227\n36          ALLELE:ABL1_T315I  ...                              CIViC EID 234; MOA 69\n37             ALLELE:RET_MTC  ...       CIViC AID 200, 201, 211; FDA CDx rows 1, 131\n38               CLIN:ALK_FUS  ...                             CIViC VariantSummaries\n39              CLIN:ROS1_FUS  ...                             CIViC VariantSummaries\n40               CLIN:RET_FUS  ...                             CIViC VariantSummaries\n41              CLIN:NTRK_FUS  ...                             CIViC VariantSummaries\n42              CLIN:BCR_ABL1  ...                             CIViC; FDA CDx row 117\n43              CLIN:NRG1_FUS  ...                             CIViC VariantSummaries\n44              CLIN:BRAF_FUS  ...                             CIViC VariantSummaries\n45             CLIN:FGFR2_FUS  ...                             CIViC VariantSummaries\n46             CLIN:FGFR3_FUS  ...                             CIViC VariantSummaries\n47               CLIN:KMT2A_R  ...          PI ruling (replaces curator partner list)\n48              CLIN:HER2_POS  ...                                        DESIGN 10.3\n49                CLIN:ER_POS  ...                 DESIGN 10.3 + PI rulings D9, AUD-4\n50       CLIN:HR_POS_HER2_NEG  ...                                DESIGN 10.3 + AUD-4\n51             CLIN:MTAP_LOSS  ...                                        DESIGN 10.3\n52        CLIN:BRCA_BIALLELIC  ...                                        DESIGN 10.3\n53             CLIN:CDK46_SEL  ...    CIViC EID 7299, 7300, 7444, 11653, 11654, 11673\n54                CLIN:DEL17P  ...                                    FDA CDx row 176\n55         ALLELE:PIK3CA_CAPI  ...  FDA CDx row 87; CIViC EID12034; DepMap Hotspot...\n\n[56 rows x 6 columns]"
  },
  "nmf": {
   "n_iter": 252,
@@ -106,11 +136,17 @@
    "cell_line_name": "MV4-11",
    "ModelID": "ACH-000045",
    "fusion": "KMT2A::AFF1",
-   "fus_features_available": [],
-   "carrier_of": [],
-   "pass": false,
-   "status": "no FUS driver for this fusion",
-   "carrier_feature_in_D": []
+   "fus_features_available": [
+    "FUS:4297"
+   ],
+   "carrier_of": [
+    "FUS:4297"
+   ],
+   "pass": true,
+   "status": "carrier",
+   "carrier_feature_in_D": [
+    "FUS:4297"
+   ]
   },
   {
    "cell_line_name": "MDA-MB-175-VII",
@@ -133,6 +169,7 @@
   "FUS:2261": 5,
   "FUS:2263": 8,
   "FUS:2313": 11,
+  "FUS:4297": 19,
   "FUS:4609": 16,
   "FUS:6098": 5,
   "FUS:7468": 9,

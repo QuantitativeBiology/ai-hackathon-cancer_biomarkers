@@ -368,7 +368,8 @@ def gene_classes(all_genes, gene_info: pd.DataFrame, eligibility: pd.DataFrame, 
                 c = "3b"
             else:
                 pc = pf["pair_class"].astype(int)
-                c = "9" if (pc == 9).any() else str(int(pc.max()))
+                v = PR.pp()["pair_classes"]["valid"]
+                c = str(v) if (pc == v).any() else str(int(pc.max()))
         rows.append({"gene": g, "failure_class": c, "r_within": rw, "fidelity": fid.get(g, np.nan)})
     return pd.DataFrame(rows)
 
@@ -383,21 +384,22 @@ def pair_classes(data, md: pd.DataFrame, delta: pd.DataFrame, locus: pd.DataFram
     loc = locus.set_index(["gene", "feature"])["level"] if len(locus) else pd.Series(dtype=object)
     amp_l = amp.set_index(["gene", "feature"])["label"] if len(amp) else pd.Series(dtype=object)
     gsym = data.extras.get("symbols", {})
+    PC = PR.pp()["pair_classes"]
     out = []
     by_gene = md.groupby("gene")["feature"].apply(set).to_dict()
     for _, r in md.iterrows():
         g, f = r["gene"], r["feature"]
         fam = data.fmeta.at[f, "family"]
         reasons = []
-        cls = 9
+        cls = PC["valid"]
         if fam == "EXPDOSE" and g in set(data.fmeta.at[f, "genes"]) and gsym.get(g) not in exempt:
             backing = [x for x in by_gene.get(g, set()) if data.fmeta.at[x, "family"] in
                        ("AMP", "SIL-DEL", "SIL-MUT", "SIL-METH", "SIL-other", "SIL")]
             if not backing:
-                cls, reasons = 4, ["expression gating only"]
-        if cls == 9 and data.fmeta.at[f, "d_type"] == "binary" and r.get("n_carriers", nmin) < nmin:
-            cls, reasons = 5, ["too rare"]
-        if cls == 9:
+                cls, reasons = PC["expression_gating"], ["expression gating only"]
+        if cls == PC["valid"] and data.fmeta.at[f, "d_type"] == "binary" and r.get("n_carriers", nmin) < nmin:
+            cls, reasons = PC["too_rare"], ["too rare"]
+        if cls == PC["valid"]:
             if bool(r.get("collinear_with_design", False)):
                 reasons.append("collinear_with_design")
             if bool(dflag.get((g, f), False)):
@@ -407,7 +409,7 @@ def pair_classes(data, md: pd.DataFrame, delta: pd.DataFrame, locus: pd.DataFram
             if amp_l.get((g, f)) == "cutting artefact":
                 reasons.append("cutting artefact")
             if reasons:
-                cls = 6
+                cls = PC["confounded"]
         out.append({"gene": g, "feature": f, "pair_class": cls, "reasons": ";".join(reasons)})
     return pd.DataFrame(out)
 

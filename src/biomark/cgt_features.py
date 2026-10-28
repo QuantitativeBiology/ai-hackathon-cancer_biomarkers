@@ -150,7 +150,13 @@ class Evaluator:
                 keep &= m["Exon"].fillna("").astype(str).str.contains(r["exon_regex"], regex=True)
             if "dna_regex" in r:
                 keep &= m["DNAChange"].fillna("").astype(str).str.contains(r["dna_regex"], regex=True)
-            return self._mprof(m.loc[keep, "ModelID"].unique())
+            if "hotspot_flag_or_regex" in r:
+                hs = m["Hotspot"].astype(str).eq("True")
+                keep &= hs | m["ProteinChange"].fillna("").astype(str).str.contains(r["hotspot_flag_or_regex"], regex=True)
+            lines = set(m.loc[keep, "ModelID"])
+            if "merge_adjacent_frameshifts" in r:
+                lines |= self._merged_inframe(m, r)
+            return self._mprof(sorted(lines))
         if t == "union":
             df = pd.concat([self.feature(f) for f in r["of"]], axis=1)
             return df.max(axis=1, skipna=True).where(df.notna().any(axis=1))
@@ -164,6 +170,21 @@ class Evaluator:
             sel = f[own].isin(drv) & ~f[other].isin(drv)
             if r["partners"] != "*":
                 sel &= f[other].isin(r["partners"])
+            if r.get("exclude_partner_regex"):
+                sel &= ~f[other].str.contains(r["exclude_partner_regex"], regex=True)
+            if r.get("exclude_partner_without_ensembl"):
+                col = "Gene2" if other == "g3" else "Gene1"
+                sel &= ~f[col].astype(str).str.contains(r"\(\.\)", regex=True)
+            if r.get("exclude_partner_within_bp"):
+                co = genesets.gene_coords().drop_duplicates("symbol").set_index("symbol")[["chrom", "start", "end"]]
+                w = int(r["exclude_partner_within_bp"])
+                for dsym in drv:
+                    if dsym not in co.index:
+                        continue
+                    ch, st, en = co.loc[dsym, ["chrom", "start", "end"]]
+                    pc = co.reindex(f[other])
+                    near = (pc["chrom"].to_numpy() == ch) & (pc["end"].to_numpy() >= st - w) & (pc["start"].to_numpy() <= en + w)
+                    sel &= ~pd.Series(near, index=f.index)
             out = pd.Series(np.nan, index=self.ids)
             prof = self.ids.intersection(self._fus_prof)
             out[prof] = 0.0
@@ -177,6 +198,8 @@ class Evaluator:
             return out
         if t == "er_pos":
             return self._er_pos(r["gene"])
+        if t == "er_pos_v3":
+            return self._er_pos_v3(r["gene"])
         if t == "del_or_sil":
             c, s = self.cn(r["gene"]), self.sil(r["gene"])
             df = pd.concat([(c < self.Pm["cn_del"]).astype(float).where(c.notna()), s], axis=1)
@@ -205,6 +228,42 @@ class Evaluator:
             c = self.cn(r["cn_gene"])
             return (c < self.Pm[r["threshold_key"]]).astype(float).where(c.notna())
         raise KeyError(f"rule type {t} not built")
+
+    def _merged_inframe(self, m: pd.DataFrame, r: dict) -> set:
+        """Lines with >= 2 frameshift deletions in the rule's exon within max_gap_bp whose summed deleted length
+        is a multiple of 3 (one complex in-frame indel split into two calls)."""
+        gap = r["merge_adjacent_frameshifts"]["max_gap_bp"]
+        x = m[(m["cls"] == "frameshift") & m["Exon"].fillna("").astype(str).str.contains(r.get("exon_regex", "."), regex=True)]
+        pos = x["DNAChange"].fillna("").astype(str).str.extract(r"c\.(\d+)(?:_(\d+))?del$")
+        x = x.assign(a=pd.to_numeric(pos[0], errors="coerce"), b=pd.to_numeric(pos[1], errors="coerce")).dropna(subset=["a"])
+        x["b"] = x["b"].fillna(x["a"])
+        out = set()
+        for mid, g in x.groupby("ModelID"):
+            g = g.sort_values("a")
+            if len(g) < 2:
+                continue
+            ok = (g["a"].iloc[1:].to_numpy() - g["b"].iloc[:-1].to_numpy() <= gap).all()
+            if ok and int((g["b"] - g["a"] + 1).sum()) % 3 == 0:  # literal-ok: codon length (in-frame = multiple of 3)
+                out.add(mid)
+        return out
+
+    def _pam50_luminal(self) -> pd.Series:
+        gs = molecular.global_signatures()
+        cols = self.Pm["er_pam50_columns"]
+        lum = pd.Series(np.nan, index=self.ids)
+        if gs is not None and all(c in gs.columns for c in cols):
+            sc = gs.reindex(self.ids)[cols].dropna(how="any")
+            arg = sc.idxmax(axis=1).str.replace("Breast_PAM50_", "").str.replace("_score", "")
+            lum[sc.index] = arg.isin(self.Pm["er_pam50_luminal"]).astype(float)
+        return lum
+
+    def _er_pos_v3(self, gene) -> pd.Series:
+        """Gate lineage AND PAM50 luminal AND expression >= er_esr1_min_log2tpm; other lineages NA."""
+        gate = self.inp.pop["OncotreeLineage"] == self.Pm["er_pam50_gate_lineage"]
+        x = self._col(self.inp.expr, gene)
+        lum = self._pam50_luminal()
+        hi = (x >= self.Pm["er_esr1_min_log2tpm"]).astype(float).where(x.notna())
+        return (hi * lum).where(gate & hi.notna() & lum.notna())
 
     def _er_pos(self, gene) -> pd.Series:
         from sklearn.mixture import GaussianMixture

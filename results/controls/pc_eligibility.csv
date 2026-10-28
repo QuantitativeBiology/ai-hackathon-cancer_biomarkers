@@ -1,10 +1,10 @@
 control_id,family,dependency_symbol,gate_feature,scope,n_obs_D,n_carriers_D,n_carriers_R,gate_eligible,access_class,en_max_attainable_freq
 ADD-HOT_KRAS_KRAS,ADD-HOT,KRAS,primary,gate,1022,167.0,36.0,True,potentially-direct,1.0
 ADD-HOT_NRAS_NRAS,ADD-HOT,NRAS,primary,gate,1022,52.0,10.0,True,potentially-direct,1.0
-ADD-HOT_BRAF_BRAF_V600,ADD-HOT,BRAF,secondary,gate,1022,,,True,proxy,0.0
+ADD-HOT_BRAF_BRAF_V600,ADD-HOT,BRAF,primary,gate,1022,61.0,18.0,True,proxy,1.0
 ADD-HOT_PIK3CA_PIK3CA,ADD-HOT,PIK3CA,primary,gate,1022,103.0,25.0,True,potentially-direct,1.0
 ADD-HOT_CTNNB1_CTNNB1,ADD-HOT,CTNNB1,primary,gate,1022,31.0,4.0,True,potentially-direct,1.0
-ADD-HOT_EGFR_EGFR_activating,ADD-HOT,EGFR,secondary,gate,1022,,,True,proxy,0.0
+ADD-HOT_EGFR_EGFR_activating,ADD-HOT,EGFR,primary,gate,1022,8.0,3.0,True,proxy,0.94
 ADD-CN_ERBB2_ERBB2,ADD-CN,ERBB2,primary,gate,1022,41.0,8.0,True,direct,1.0
 ADD-CN_MYCN_MYCN,ADD-CN,MYCN,primary,gate,1022,23.0,13.0,True,direct,1.0
 ADD-CN_CCND1_CCND1,ADD-CN,CCND1,primary,gate,1022,96.0,24.0,True,direct,1.0

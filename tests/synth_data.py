@@ -28,7 +28,7 @@ def make_data(n=240, G=4, seed=0, plant_beta=-1.0, obs_loader=None, n_bg=12) -> 
         "medium_family": rng.choice(["RPMI", "DMEM"], size=n),
         "doubling_time": rng.normal(40, 8, n), "DT_unknown": (rng.random(n) < 0.1).astype(float),
         "MSI": np.where(rng.random(n) < 0.1, "MSI", "MSS"), "DMG_BURDEN": rng.normal(5, 0.5, n),
-        "TP53": np.where(rng.random(n) < 0.5, "mut", "WT"), "PatientID": pat,
+        "tp53_status": np.where(rng.random(n) < 0.5, "mut", "WT"), "PatientID": pat,
         "primary_disease": rng.choice(["d1", "d2"], size=n), "lineage_raw": lin}, index=lines)
     genes = [f"{9100001 + j}" for j in range(G)]
     cn_absent = rng.random(n) < 0.05

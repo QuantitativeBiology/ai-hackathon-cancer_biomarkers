@@ -2238,6 +2238,7 @@ entrez,symbol,feature_id,relation,source,access_class
 1956,EGFR,EXPPAR:2064,EXPPAR:paralog_rank2,configs/partner_priors.csv,direct
 1956,EGFR,LOSS:2065,partner_LOSS:paralog_rank3,configs/partner_priors.csv,potentially-direct
 1956,EGFR,EXPPAR:2065,EXPPAR:paralog_rank3,configs/partner_priors.csv,direct
+1956,EGFR,ALLELE:EGFR_activating,control_feature,configs/positive_controls_spec.csv,proxy
 1956,EGFR,HOT:1956,control_feature,configs/positive_controls_spec.csv,potentially-direct
 1956,EGFR,AMP:1956,control_feature,configs/positive_controls_spec.csv,direct
 1956,EGFR,SIL-other:1956,self_null,DESIGN 3 self-null rule,expression-derived
@@ -8993,6 +8994,7 @@ entrez,symbol,feature_id,relation,source,access_class
 673,BRAF,EXPPAR:5894,EXPPAR:paralog_rank2,configs/partner_priors.csv,direct
 673,BRAF,LOSS:4342,partner_LOSS:paralog_rank3,configs/partner_priors.csv,potentially-direct
 673,BRAF,EXPPAR:4342,EXPPAR:paralog_rank3,configs/partner_priors.csv,direct
+673,BRAF,ALLELE:BRAF_V600,control_feature,configs/positive_controls_spec.csv,proxy
 673,BRAF,HOT:673,control_feature,configs/positive_controls_spec.csv,potentially-direct
 6734,SRPRA,EXPDOSE:6734,own_EXPDOSE,DESIGN 3,direct
 6734,SRPRA,AMP:6734,own_AMP,DESIGN 3,direct
