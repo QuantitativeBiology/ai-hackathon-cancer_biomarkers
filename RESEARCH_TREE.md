@@ -52,6 +52,13 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D12 (M4, 21:50, toy run of the real engine before freeze-bounds): 14/19 toy checks pass, 5 fail; no bound or answer
+  key changed. [!] Ridge toy: MD-strict FDP_true 0.228 > 0.15, the double dip the answer key predicted (§4.1). The
+  D-stage observed screen re-uses the D noise that the ridge OOF predictions absorbed, so the catalogue's D-based error
+  rate is not a valid FDR claim with a ridge-type predictor (Part 1 M1/M2 are ridge); R replication (P1) is the arbiter.
+  The other failures (fold-offset positive control, smooth S1-obs FDR_emp −0.004 beyond tolerance, pure-null S1-pred
+  0.25, gate crash, fixed) go to an independent verifier for diagnosis; any resulting amendment (A7) will be written
+  before freeze-bounds and before any real association result.
 - D11 (M3b, toy): [!] with a ridge-type predictor, prediction-based lists have true FDP ≈ 0.7–0.8 that the
   permutation null cannot see (ridge spreads a determinant's signal onto correlated features). Response: MD-strict stays
   the catalogue, EN-pred FDR_emp labelled not calibrated, R replication arbitrates; amendment A6 (also eligibility strata
@@ -99,4 +106,14 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   - [x] Dictionary track committed; [~] single rebuild #4 with ALLELE/CLIN
   - [~] M3b parallel tracks (started during round 2, D4): dictionary/eligibility/controls · CGT table (no dependency data) · toy simulation (separate verification agent)
 - [~] M4 Core pipeline engine (stats/HC2, two-stage stability EN, 4 arms, MD-strict, fixed-threshold null) — pipeline author agent; unit tests on synthetic data; real run after freeze-bounds
+  - [x] Engine committed (8cffc91): 19/19 unit tests; real pilot on 50 genes → K = 300, null B = 20 (≈ 96 min on 6 workers)
+  - [!] Toy run 14/19: ridge-toy MD-strict FDP 0.228 (D12); 4 other failures under independent diagnosis
+  - [~] Independent toy verifier: NC2–NC6 bounds (5 replicates, 45-min timebox), null_genes.txt, diagnostics, suite re-run
+  - [~] Endpoint code (author): run_gate.py, replicate.py (+ pseudo-R fold-0 dry run), P2 McNemar, branch tests
+  - [ ] Tag `freeze-bounds` (frozen_hashes `bounds`), then the real run: 4 arms + MD-strict, confounder audit, gate attempt 1, null (background), dry run
+  - [ ] Independent reimplementation check §13.3 (separate agent, after G_pc_attempt1)
+- [ ] M5 Subtypes: per gene and per module, cross-lineage labels, co-location/cutting/culture/hypermutation audits
+- [ ] M6 Clinical and combinatorial: CGT recovery, direction, actionability, population by lineage; combinatorial-screen lookup (Esmaeili harmonised table)
+- [ ] M7 `freeze-catalogue` + r_requests.csv, then a single replication run on R (+ set A)
+- [ ] M8 Limits classes, candidate cards, REPORT.md (writer), number check, red-team review, LESSONS prune
 - [ ] Final REPORT.md
