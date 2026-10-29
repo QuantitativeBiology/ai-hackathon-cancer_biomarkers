@@ -8,7 +8,10 @@ Ported from Part 1 (scripts/check_report_numbers.py there; read-only). Two citat
 
 * **Inline citation** (the writer's form): a repo-relative source in parentheses, e.g. ``... failed 21/39
   (results/gates/G_pc_attempt2.json)`` or ``(results/a.json; configs/design_params.json)``. Sources are
-  ``results/``, ``configs/`` or ``docs/`` files ending in ``.json`` or ``.csv``. A citation covers every number of its
+  ``results/``, ``configs/`` or ``docs/`` files ending in ``.json`` or ``.csv``, or the text sources DESIGN.md,
+  RESEARCH_TREE.md and results/deviations.csv (a number cited to these must occur there verbatim, as a whole token;
+  a qualifier may follow the path, e.g. ``(DESIGN.md §6.1; RESEARCH_TREE.md D15)``; they need no registry row).
+  A citation covers every number of its
   **segment**: the sentence it stands in (prose, list items), or the table row; a table row without a citation
   inherits the citations of the table's header row and of the line just above the table (its caption). A covered
   number passes if it appears in one of the segment's cited files at the printed precision:
@@ -57,8 +60,11 @@ NUM_ANY = re.compile(r"[+\-−]?" + NUM)
 TAG = re.compile(r"<!--\s*n:(?P<key>[^>]*?)\s*-->[ \t]*(?P<num>[+\-−]?" + NUM + r")?")
 SRC = re.compile(r"<!--\s*n-src:(?P<alias>[\w.\-]+)\s*=\s*(?P<path>[^>]*?)\s*-->")
 COMMENT = re.compile(r"<!--.*?-->", re.S)
-CITE_PATH = r"(?:results|configs|docs)/[\w./\-]+?\.(?:json|csv)"
-CITE = re.compile(r"\((?P<body>\s*" + CITE_PATH + r"(?:\s*[;,]\s*" + CITE_PATH + r")*\s*)\)")
+TEXT_SOURCES = ("DESIGN.md", "RESEARCH_TREE.md", "results/deviations.csv")   # number must appear verbatim
+CITE_PATH = (r"(?:" + "|".join(re.escape(s) for s in TEXT_SOURCES) +
+             r"|(?:results|configs|docs)/[\w./\-]+?\.(?:json|csv))(?![\w./\-])")
+CITE_ITEM = CITE_PATH + r"[^;,()]*"                  # a path, then an optional qualifier such as "§6.1" or "D15"
+CITE = re.compile(r"\((?P<body>\s*" + CITE_ITEM + r"(?:[;,]\s*" + CITE_ITEM + r")*)\)")
 CITE_ONE = re.compile(CITE_PATH)
 LINK_TARGET = re.compile(r"\]\([^)]*\)")
 RUN_ID = re.compile(r"\b\d{8}T\d{6}_[A-Za-z0-9_]+\b")
@@ -153,6 +159,26 @@ class Sources:
             self._vals[rel] = np.unique(np.asarray(vals, dtype=np.float64))
         return self._vals[rel]
 
+    def contains_text(self, rel: str, printed: str) -> bool:
+        """Text sources (TEXT_SOURCES): the printed number occurs verbatim, as a whole number token (minus written
+        as '-' or U+2212; thousands commas optional)."""
+        if rel not in self._json:
+            raw = (self.root / rel).read_text(encoding="utf-8")
+            if rel.endswith(".csv"):                      # cells joined by ' | ' so a delimiter is not a digit group
+                raw = "\n".join(" | ".join(row) for row in csv.reader(raw.splitlines()))
+            self._json[rel] = raw
+        txt = self._json[rel]
+        body = printed.lstrip("+-−")
+        sign = printed[: len(printed) - len(body)]
+        signs = {"-", "−"} if sign in ("-", "−") else {sign}
+        bodies = {body, body.replace(",", "")}
+        mant = body.rstrip("%").split(".")[0].replace(",", "")
+        if "," not in body and mant.isdigit() and len(mant) > 3:
+            bodies.add(f"{int(mant):,}" + body[len(mant):])
+        alts = "|".join(re.escape(s + b) for s in signs for b in sorted(bodies))
+        lead = r"(?<![\d.,])" if not sign else r"(?<![\w.,])"
+        return re.search(lead + "(?:" + alts + r")(?![\d]|[.,]\d)", txt) is not None
+
     def contains(self, rel: str, value: float, tol: float) -> bool:
         a = self.values(rel)
         i = np.searchsorted(a, value - tol, side="left")
@@ -182,7 +208,7 @@ class Sources:
             return f"cited file {rel} does not exist", None
         if rel not in self.tracked():
             return None, f"cited file {rel} is not tracked by git"
-        if not rel.startswith("results/") or rel == "results/registry.csv":
+        if not rel.startswith("results/") or rel in ("results/registry.csv", *TEXT_SOURCES):
             return None, None
         rows = [r for r in self.reg() if any(rel == o or rel.startswith(o.rstrip("/") + "/")
                                              for o in str(r.get("outputs") or "").split(";") if o)]
@@ -393,7 +419,9 @@ def check(report: Path, root: Path = ROOT, strict: bool = False, registry: Path 
                 tol = tolerance(dec)
                 cands = [(pv, tol)] + ([(pv / 100, tol / 100)] if pct else [])
                 usable = [f for f in files if (root / f).is_file()]
-                hit = next((f for f in usable for v, t in cands if src.contains(f, v, t)), None)
+                hit = next((f for f in usable if f in TEXT_SOURCES and src.contains_text(f, printed)), None)
+                hit = hit or next((f for f in usable if f not in TEXT_SOURCES for v, t in cands
+                                   if src.contains(f, v, t)), None)
                 row.update(kind="cited", ok=hit is not None, matched_in=hit or "",
                            msg="" if hit else ("not found in " + ";".join(files) if usable else "cited file missing"))
             rows.append(row)

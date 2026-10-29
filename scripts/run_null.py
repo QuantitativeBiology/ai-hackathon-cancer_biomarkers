@@ -101,7 +101,8 @@ def main(argv=None) -> int:
         if parked.exists():
             parked.unlink()
     AN.append_registry("scripts/run_null.py" + (" --s1-vectorised" if a.s1_vectorised else ""), "ok",
-                       [f"results/null/summary{sfx}.json", f"results/null/fdr_fixed{sfx}.csv"])
+                       [f"results/null/summary{sfx}.json", f"results/null/fdr_fixed{sfx}.csv",
+                        f"results/null/draws{sfx}.csv"])
     print(json.dumps(summ, indent=1, default=float))
     return 0
 

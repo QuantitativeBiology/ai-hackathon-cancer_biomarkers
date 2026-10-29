@@ -237,7 +237,26 @@ def write_outputs(res: dict, data, universe: str, guards: dict, ws1: int) -> dic
     g0, g1e = tim["global_window"]
     write_timing("md_strict", {"note": "global BH / ranks / dedup / MD lists and final parts (blocked.run_streamed)"},
                  td, workers=1, start_utc=_epoch(g0), end_utc=_epoch(g1e))
+    register_outputs(universe)
     return summ
+
+
+def registry_outputs(universe: str, existing_only: bool = True) -> list:
+    """The results files of a full run of ``universe`` (repo-relative; the bulk parts are in bulk_manifest.csv)."""
+    sfx = "" if universe == "eligible" else f"_{universe}"
+    files = [f"results/benchmark{sfx}/{f}" for f in ("selected.csv", "lambda.csv", "p_cut.json", "summary.json")]
+    files += [f"results/md{sfx}/{f}.csv" for f in ("md_global", "md_global_all", "md_strict", "md_strict_all",
+                                                    "en_obs_strict")]
+    assert all((P.PROJECT / f).parent in (output_paths(universe)["benchmark"], output_paths(universe)["md"])
+               for f in files)
+    return [f for f in files if not existing_only or (P.PROJECT / f).exists()]
+
+
+def register_outputs(universe: str) -> None:
+    """results/registry.csv row (status ok) for the files this run wrote (DESIGN §13.5: citable outputs)."""
+    from biomark import analyses as AN
+    script = "scripts/run_arms.py" + ("" if universe == "eligible" else f" --universe {universe}")
+    AN.append_registry(script, "ok", registry_outputs(universe), registry=P.RESULTS / "registry.csv")
 
 
 def main(argv=None) -> int:

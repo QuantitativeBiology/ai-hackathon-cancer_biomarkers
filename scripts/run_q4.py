@@ -123,6 +123,8 @@ def main() -> int:
     IO.write_json(out / "q4_summary.json", summ)
     AN.write_timing("q4_summary", {"n_tests": int(len(T))}, wall_s=time.perf_counter() - t0, workers=1)
     AN.append_registry("scripts/run_q4.py", "ok", ["results/clinical/q4_summary.json", "results/clinical/p2_scores.csv",
+                                                   "results/clinical/actionability.csv",
+                                                   "results/clinical/q4c_population.csv",
                                                    "results/clinical/q4c_labels.csv"])
     print(summ["results"][f"non_proxy|{summ['headline_subset']}|k{pc['k']}"]["verdict"])
     return 0

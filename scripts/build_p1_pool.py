@@ -61,6 +61,10 @@ def main() -> int:
     req.to_csv(out, index=False)
     present = [f for f in CATALOGUE_FILES if (P.PROJECT / f).exists()]
     IO.write_json(P.CONFIGS / "freeze_catalogue.json", EP.catalogue_manifest(present))
+    from biomark import analyses as AN
+    AN.append_registry("scripts/build_p1_pool.py", "ok", ["results/benchmark/p1_pool.json",
+                                                          "configs/catalogue/r_requests.csv",
+                                                          "configs/freeze_catalogue.json"])
     print(f"pool {lists['pool_size']} (k_G = {lists['k']}); r_requests {len(req)} rows")
     return 0
 

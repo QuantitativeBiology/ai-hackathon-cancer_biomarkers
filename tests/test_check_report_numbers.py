@@ -44,6 +44,11 @@ def world(tmp_path_factory):
     (r / "results" / "clinical" / "p2.csv").write_text("arm,recall,n\nEN-pred,0.4167,24\nS1-obs,0.3333,24\n",
                                                        encoding="utf-8")
     (r / "results" / "registry.csv").write_text(REG, encoding="utf-8")
+    (r / "DESIGN.md").write_text("Eligible: r_within >= 0.10 in strata of >= 5 lines; k = 200; B 20 (-> 50); "
+                                 "beta -0.5 shift; 18,434 genes.\n", encoding="utf-8")
+    (r / "RESEARCH_TREE.md").write_text("- D15 MD-global replaces MD-strict: FDP 0.228 vs 0.013.\n", encoding="utf-8")
+    (r / "results" / "deviations.csv").write_text("id,item,toy_value,final_value\nDEV-1,budget,4.5,6.25\n",
+                                                  encoding="utf-8")
     (r / "configs" / "report_number_exemptions.json").write_text(
         (ROOT / "configs" / "report_number_exemptions.json").read_text(encoding="utf-8"), encoding="utf-8")
     _git(r, "init", "-q")
@@ -172,3 +177,21 @@ def test_main_defaults_and_exit_codes(world, capsys):
     C.main(["--root", str(world), "--json", str(js), "--quiet"])
     assert set(json.loads(js.read_text(encoding="utf-8"))) == {str(world / "REPORT.md"),
                                                                str(world / "docs" / "effective_rules.md")}
+
+
+def test_text_sources_need_verbatim_numbers(world):
+    body = ("The rule is r_within 0.10 over 18434 genes (DESIGN.md §2). The switch followed FDP 0.228 "
+            "(RESEARCH_TREE.md D15). The budget moved from 4.5 to 6.25 (results/deviations.csv). "
+            "Shift −0.5 and k 200 (DESIGN.md; results/gates/g.json).")
+    rows = _run(world, body, strict=True)
+    assert not _bad(rows), _bad(rows)
+    assert not [r for r in rows if r["kind"] == "source"]                             # no registry row needed
+    for bad_body, printed in [("The rule is r_within 0.1 (DESIGN.md).", "0.1"),        # verbatim, not rounded
+                              ("FDP 0.23 (RESEARCH_TREE.md D15).", "0.23"),
+                              ("Budget 6.2 (results/deviations.csv).", "6.2"),
+                              ("Strata of 4 lines (DESIGN.md).", "4"),
+                              ("We used 434 genes (DESIGN.md).", "434")]:               # whole token only
+        bad = _bad(_run(world, bad_body))
+        assert [r["printed"] for r in bad] == [printed], (bad_body, bad)
+    # json / csv sources keep numeric matching at the printed precision
+    assert not _bad(_run(world, "Recall 0.5 (results/gates/g.json).", strict=True))
