@@ -75,7 +75,9 @@ def main() -> int:
                    "basic CIs are reported as a diagnostic only, verdicts follow the pre-declared percentile rule")
     f = P.RESULTS / "replication" / "p1_secondary.json"
     f.write_text(json.dumps(out, indent=1), encoding="utf-8")
-    AN.write_timing("p1_secondary", {"k_lists": 3}, start_utc=t_start, workers=1)
+    # timing kept next to the outputs: p1_secondary is not a tiers.json stage (stage_job_map is frozen)
+    (P.RESULTS / "replication" / "timing_p1_secondary.json").write_text(json.dumps(
+        {"job": "p1_secondary", "start_utc": str(t_start), "utc": str(AN.utc_now()), "workers": 1}), encoding="utf-8")
     AN.append_registry("scripts/p1_secondary.py", "ok", ["results/replication/p1_secondary.json"])
     print(json.dumps(out["secondary_k"], indent=1))
     print(json.dumps({s: d["contrasts"] for s, d in diag.items()}, indent=1))

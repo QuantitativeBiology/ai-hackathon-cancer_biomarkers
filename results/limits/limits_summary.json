@@ -2,44 +2,46 @@
  "catalogue": "MD-global (A7); MD-strict alongside (failure_class_md_strict, in_md_strict)",
  "R_status": "available",
  "power_source": "r_tests.csv",
- "ceiling": "cgt_ceiling.csv missing: class 8 from KO class / sign only",
+ "ceiling": "available",
  "m1_attribution": "not run (Tier B); class 3 uses r_within and fidelity",
  "pair_classes_md_global": {
-  "5": 90,
-  "6": 211,
-  "7": 48,
-  "9": 1031
+  "5": 537,
+  "6": 160,
+  "7": 131,
+  "9": 552
  },
  "pair_classes_md_strict": {
   "4": 102,
-  "5": 1326,
-  "6": 1971,
-  "7": 55,
-  "9": 8208
+  "5": 10623,
+  "6": 174,
+  "7": 148,
+  "9": 615
  },
  "pair_class_status": {
-  "final": 11662
+  "final": 11669
  },
  "gene_classes": {
-  "3b": 1416,
+  "3b": 1415,
   "3": 884,
-  "9": 632,
   "2": 417,
-  "6": 60,
-  "5": 41,
-  "7": 30,
-  "1": 21
+  "9": 364,
+  "5": 282,
+  "7": 70,
+  "6": 46,
+  "1": 21,
+  "8": 2
  },
  "gene_classes_md_strict": {
-  "9": 2032,
+  "5": 1590,
   "3": 884,
   "2": 417,
-  "3b": 65,
-  "6": 48,
-  "5": 23,
+  "9": 386,
+  "7": 80,
+  "3b": 64,
+  "6": 47,
   "1": 21,
   "4": 10,
-  "7": 1
+  "8": 2
  },
  "n_universe_genes": 3501,
  "NC6_lineage_tf_class3": {

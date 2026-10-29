@@ -82,12 +82,13 @@ def s1_table() -> pd.DataFrame:
     return s
 
 
-UNIVERSES = ("eligible", "ctrl")
+UNIVERSES = ("eligible", "ctrl")              # universes of the gate / downstream readers
+ALL_UNIVERSES = UNIVERSES + ("lowtier",)       # + the NC2 low-tier universe (DESIGN §7.3; never a reader input)
 
 
 def _sfx(universe: str) -> str:
-    if universe not in UNIVERSES:
-        raise ValueError(f"universe must be one of {UNIVERSES}")
+    if universe not in ALL_UNIVERSES:
+        raise ValueError(f"universe must be one of {ALL_UNIVERSES}")
     return "" if universe == "eligible" else f"_{universe}"
 
 
@@ -292,6 +293,38 @@ def shrunk_beta_lowmem(beta, se, sd_dtilde, chunk: int = EB_CHUNK_ROWS) -> np.nd
     post[ok] = shrink * bo
     with np.errstate(divide="ignore", invalid="ignore"):
         return post / sd
+
+
+def pair_power(pairs: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, D_ids, R_ids, nan_D: pd.DataFrame,
+               workers: int = 1) -> pd.DataFrame:
+    """endpoints.pool_power for any (gene, feature) pairs with the inputs make_pool uses: the EB shrinkage fitted on
+    every S1-obs row (shrunk_beta_lowmem, bit-identical to stats.shrunk_beta), σ̂_resid,D(g), R molecular data
+    (features, covariates, own CN / EXPGATE, library strings for the expected-NaN rule) and the D drops. No R effect.
+    A pair's power depends only on its own gene's inputs, so the values equal the pool's for any pair it holds."""
+    from . import endpoints as EP
+    s = s1_obs.copy()
+    s["gene"] = s["gene"].astype(str)
+    ok = s["beta"].notna() & s["se"].notna() & (s["sd_dtilde"] > 0)
+    bsh = pd.Series(shrunk_beta_lowmem(s.loc[ok, "beta"].to_numpy(), s.loc[ok, "se"].to_numpy(),
+                                       s.loc[ok, "sd_dtilde"].to_numpy()),
+                    index=pd.MultiIndex.from_arrays([s.loc[ok, "gene"], s.loc[ok, "feature"]]))
+    U = pairs[["gene", "feature"]].assign(gene=pairs["gene"].astype(str)).drop_duplicates().reset_index(drop=True)
+    fl = feature_meta()
+    feats = list(dict.fromkeys(U["feature"]))
+    XR = line_values(R_ids, feats)
+    fpos = pd.Series(np.arange(len(feats)), index=feats)
+    covR_df = line_covariates(R_ids)
+    genes = sorted(U["gene"].unique())
+    ocR, egR = line_gene_covs(R_ids, genes)
+    covR = EP.RDesign(covR_df, ocR, egR)
+    patR = covR_df["PatientID"].astype(str).to_numpy()
+    expR = EP.expected_nonnan(nan_D.reindex(index=list(D_ids), columns=genes), library_strings(D_ids),
+                              library_strings(R_ids))
+    drops = s.set_index(["gene", "feature"])["dropped_cov"]
+    drops = drops[~drops.index.duplicated()]
+    binary = fl["d_type"].reindex(feats) == "binary"
+    return EP.pool_power(U, bsh, sigma_g, XR.to_numpy(dtype=np.float64), fpos, binary, covR, patR, expR, drops,
+                         workers=workers)
 
 
 def make_pool(arms_tab: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, D_ids, R_ids,

@@ -39,7 +39,8 @@ DEVIATIONS = ROOT / "results" / "deviations.csv"
 # Timing written outside results/timing on purpose (never budgeted, only counted for visibility): ctrl-universe arms
 # (scripts/run_arms.py --universe ctrl -> results/benchmark_ctrl/timing/; older layout results/benchmark/timing_ctrl/)
 # and dry runs (replicate.py -> results/dryrun/).
-NOT_BUDGETED = (ROOT / "results" / "benchmark", ROOT / "results" / "benchmark_ctrl", ROOT / "results" / "dryrun")
+NOT_BUDGETED = (ROOT / "results" / "benchmark", ROOT / "results" / "benchmark_ctrl",
+                ROOT / "results" / "benchmark_lowtier", ROOT / "results" / "dryrun")
 DEV_COLS = ["id", "utc", "stage", "item", "provisional", "toy_value", "final_value", "reason", "source", "agent"]
 SOURCE = "scripts/budget_check.py"
 AGENT = "budget_check"

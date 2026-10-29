@@ -1,0 +1,1518 @@
+arm,set,subset,k,test_id,testable,category,detail,ceiling_label
+S1-obs,non_proxy,all,200,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,non_proxy,all,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,200,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,all,200,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 2070.0,data-supported
+S1-obs,non_proxy,all,200,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,non_proxy,all,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,all,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,all,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,all,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,200,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-obs,non_proxy,all,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,all,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,all,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,all,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,non_proxy,all,200,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,all,200,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-obs,non_proxy,all,200,MSI__WRN__pan,True,"eligible, ranked below k",rank 779.0,data-supported
+S1-obs,non_proxy,all,200,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 5180.0,data-supported
+S1-obs,non_proxy,all,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,non_proxy,all,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,non_proxy,all,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,200,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,non_proxy,all,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,200,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,non_proxy,all,200,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,non_proxy,all,200,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,non_proxy,all,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,200,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,all,200,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 6832.0,data-supported
+S1-pred,non_proxy,all,200,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,non_proxy,all,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,all,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,all,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,all,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,200,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-pred,non_proxy,all,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,all,200,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-pred,non_proxy,all,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,all,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,all,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,non_proxy,all,200,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,all,200,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-pred,non_proxy,all,200,MSI__WRN__pan,True,"eligible, ranked below k",rank 9434.0,data-supported
+S1-pred,non_proxy,all,200,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 706.0,data-supported
+S1-pred,non_proxy,all,200,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 2355405.0,data-supported
+S1-pred,non_proxy,all,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,non_proxy,all,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,non_proxy,all,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,200,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,non_proxy,all,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,200,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,non_proxy,all,200,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,non_proxy,all,200,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,non_proxy,all,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,200,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,all,200,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,non_proxy,all,200,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,non_proxy,all,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,all,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,all,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,all,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,200,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-obs,non_proxy,all,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,all,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,all,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,all,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,non_proxy,all,200,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,all,200,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-obs,non_proxy,all,200,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,non_proxy,all,200,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 216.0,data-supported
+EN-obs,non_proxy,all,200,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 6945.0,data-supported
+EN-obs,non_proxy,all,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,non_proxy,all,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,non_proxy,all,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,200,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,non_proxy,all,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,200,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,non_proxy,all,200,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,non_proxy,all,200,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,non_proxy,all,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,200,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,all,200,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 198964.0,data-supported
+EN-pred,non_proxy,all,200,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,non_proxy,all,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,all,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,all,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,all,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,200,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-pred,non_proxy,all,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,all,200,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to HOT:5290,untestable
+EN-pred,non_proxy,all,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,all,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,all,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,all,200,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,all,200,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-pred,non_proxy,all,200,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,all,200,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 7961.0,data-supported
+EN-pred,non_proxy,all,200,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,all,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,non_proxy,all,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,non_proxy,all,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,200,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,non_proxy,all,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,100,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-obs,non_proxy,all,100,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,non_proxy,all,100,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-obs,non_proxy,all,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,100,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,all,100,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 2070.0,data-supported
+S1-obs,non_proxy,all,100,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,non_proxy,all,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,all,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,all,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,all,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,100,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-obs,non_proxy,all,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,all,100,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-obs,non_proxy,all,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,all,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,all,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,non_proxy,all,100,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,all,100,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-obs,non_proxy,all,100,MSI__WRN__pan,True,"eligible, ranked below k",rank 779.0,data-supported
+S1-obs,non_proxy,all,100,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 139.0,data-supported
+S1-obs,non_proxy,all,100,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 5180.0,data-supported
+S1-obs,non_proxy,all,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,non_proxy,all,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,non_proxy,all,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,100,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,non_proxy,all,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,100,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,non_proxy,all,100,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,non_proxy,all,100,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,non_proxy,all,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,100,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,all,100,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 6832.0,data-supported
+S1-pred,non_proxy,all,100,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,non_proxy,all,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,all,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,all,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,all,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,100,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-pred,non_proxy,all,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,all,100,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-pred,non_proxy,all,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,all,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,all,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,non_proxy,all,100,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,all,100,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-pred,non_proxy,all,100,MSI__WRN__pan,True,"eligible, ranked below k",rank 9434.0,data-supported
+S1-pred,non_proxy,all,100,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 706.0,data-supported
+S1-pred,non_proxy,all,100,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 2355405.0,data-supported
+S1-pred,non_proxy,all,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,non_proxy,all,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,non_proxy,all,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,100,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,non_proxy,all,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,100,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,non_proxy,all,100,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,non_proxy,all,100,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,non_proxy,all,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,100,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,all,100,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,non_proxy,all,100,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,non_proxy,all,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,all,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,all,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,all,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,100,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-obs,non_proxy,all,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,all,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,all,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,all,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,non_proxy,all,100,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,all,100,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-obs,non_proxy,all,100,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,non_proxy,all,100,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 216.0,data-supported
+EN-obs,non_proxy,all,100,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 6945.0,data-supported
+EN-obs,non_proxy,all,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,non_proxy,all,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,non_proxy,all,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,100,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,non_proxy,all,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,100,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,non_proxy,all,100,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,non_proxy,all,100,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,non_proxy,all,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,100,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,all,100,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 198964.0,data-supported
+EN-pred,non_proxy,all,100,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,non_proxy,all,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,all,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,all,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,all,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,100,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-pred,non_proxy,all,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,all,100,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to HOT:5290,untestable
+EN-pred,non_proxy,all,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,all,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,all,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,all,100,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,all,100,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-pred,non_proxy,all,100,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,all,100,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 7961.0,data-supported
+EN-pred,non_proxy,all,100,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,all,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,non_proxy,all,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,non_proxy,all,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,100,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,non_proxy,all,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,500,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,all,500,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 2070.0,data-supported
+S1-obs,non_proxy,all,500,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,non_proxy,all,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,all,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,all,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,all,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,500,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-obs,non_proxy,all,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,all,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,all,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,all,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,non_proxy,all,500,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,all,500,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-obs,non_proxy,all,500,MSI__WRN__pan,True,"eligible, ranked below k",rank 779.0,data-supported
+S1-obs,non_proxy,all,500,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 5180.0,data-supported
+S1-obs,non_proxy,all,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,all,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,non_proxy,all,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,non_proxy,all,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,all,500,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,non_proxy,all,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,500,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,non_proxy,all,500,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,non_proxy,all,500,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,non_proxy,all,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,500,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,all,500,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 6832.0,data-supported
+S1-pred,non_proxy,all,500,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,non_proxy,all,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,all,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,all,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,all,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,500,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-pred,non_proxy,all,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,all,500,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-pred,non_proxy,all,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,all,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,all,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,non_proxy,all,500,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,all,500,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-pred,non_proxy,all,500,MSI__WRN__pan,True,"eligible, ranked below k",rank 9434.0,data-supported
+S1-pred,non_proxy,all,500,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 706.0,data-supported
+S1-pred,non_proxy,all,500,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 2355405.0,data-supported
+S1-pred,non_proxy,all,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,all,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,non_proxy,all,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,non_proxy,all,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,all,500,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,non_proxy,all,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,500,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,non_proxy,all,500,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,non_proxy,all,500,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,non_proxy,all,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,500,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,all,500,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,non_proxy,all,500,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,non_proxy,all,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,all,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,all,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,all,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,500,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-obs,non_proxy,all,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,all,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,all,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,all,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,non_proxy,all,500,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,all,500,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-obs,non_proxy,all,500,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,non_proxy,all,500,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 6945.0,data-supported
+EN-obs,non_proxy,all,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,all,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,non_proxy,all,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,non_proxy,all,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,all,500,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,non_proxy,all,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,500,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,non_proxy,all,500,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,non_proxy,all,500,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,non_proxy,all,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,500,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,all,500,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 198964.0,data-supported
+EN-pred,non_proxy,all,500,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,non_proxy,all,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,all,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,all,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,all,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,500,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-pred,non_proxy,all,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,all,500,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to HOT:5290,untestable
+EN-pred,non_proxy,all,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,all,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,all,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,all,500,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,all,500,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-pred,non_proxy,all,500,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,all,500,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 7961.0,data-supported
+EN-pred,non_proxy,all,500,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,all,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,all,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,non_proxy,all,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,non_proxy,all,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,all,500,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,non_proxy,all,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,non_proxy,gate_disjoint,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,200,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,non_proxy,gate_disjoint,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,gate_disjoint,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,gate_disjoint,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,gate_disjoint,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,non_proxy,gate_disjoint,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,non_proxy,gate_disjoint,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,non_proxy,gate_disjoint,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,non_proxy,gate_disjoint,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,non_proxy,gate_disjoint,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,200,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,non_proxy,gate_disjoint,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,gate_disjoint,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,gate_disjoint,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,gate_disjoint,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,non_proxy,gate_disjoint,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,non_proxy,gate_disjoint,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,non_proxy,gate_disjoint,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,non_proxy,gate_disjoint,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,non_proxy,gate_disjoint,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,200,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,non_proxy,gate_disjoint,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,gate_disjoint,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,gate_disjoint,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,gate_disjoint,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,non_proxy,gate_disjoint,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,non_proxy,gate_disjoint,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,non_proxy,gate_disjoint,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,non_proxy,gate_disjoint,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,non_proxy,gate_disjoint,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,200,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,non_proxy,gate_disjoint,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,gate_disjoint,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,gate_disjoint,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,gate_disjoint,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,gate_disjoint,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,non_proxy,gate_disjoint,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,non_proxy,gate_disjoint,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,non_proxy,gate_disjoint,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,non_proxy,gate_disjoint,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,100,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,non_proxy,gate_disjoint,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,gate_disjoint,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,gate_disjoint,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,gate_disjoint,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,non_proxy,gate_disjoint,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,non_proxy,gate_disjoint,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,non_proxy,gate_disjoint,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,non_proxy,gate_disjoint,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,non_proxy,gate_disjoint,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,100,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,non_proxy,gate_disjoint,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,gate_disjoint,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,gate_disjoint,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,gate_disjoint,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,non_proxy,gate_disjoint,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,non_proxy,gate_disjoint,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,non_proxy,gate_disjoint,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,non_proxy,gate_disjoint,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,non_proxy,gate_disjoint,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,100,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,non_proxy,gate_disjoint,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,gate_disjoint,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,gate_disjoint,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,gate_disjoint,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,non_proxy,gate_disjoint,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,non_proxy,gate_disjoint,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,non_proxy,gate_disjoint,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,non_proxy,gate_disjoint,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,non_proxy,gate_disjoint,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,100,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,non_proxy,gate_disjoint,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,gate_disjoint,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,gate_disjoint,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,gate_disjoint,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,gate_disjoint,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,non_proxy,gate_disjoint,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,non_proxy,gate_disjoint,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,non_proxy,gate_disjoint,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,500,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,non_proxy,gate_disjoint,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,gate_disjoint,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,non_proxy,gate_disjoint,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,non_proxy,gate_disjoint,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,non_proxy,gate_disjoint,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,non_proxy,gate_disjoint,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,non_proxy,gate_disjoint,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,non_proxy,gate_disjoint,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,non_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,non_proxy,gate_disjoint,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,500,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,non_proxy,gate_disjoint,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,500,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,non_proxy,gate_disjoint,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,gate_disjoint,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,non_proxy,gate_disjoint,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,non_proxy,gate_disjoint,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,non_proxy,gate_disjoint,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,non_proxy,gate_disjoint,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,non_proxy,gate_disjoint,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,non_proxy,gate_disjoint,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,non_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,non_proxy,gate_disjoint,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,500,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,non_proxy,gate_disjoint,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,500,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,non_proxy,gate_disjoint,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,gate_disjoint,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,non_proxy,gate_disjoint,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,non_proxy,gate_disjoint,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,non_proxy,gate_disjoint,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,non_proxy,gate_disjoint,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,non_proxy,gate_disjoint,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,non_proxy,gate_disjoint,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,non_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,non_proxy,gate_disjoint,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,500,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,non_proxy,gate_disjoint,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,500,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,non_proxy,gate_disjoint,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,gate_disjoint,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,non_proxy,gate_disjoint,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,non_proxy,gate_disjoint,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,non_proxy,gate_disjoint,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,non_proxy,gate_disjoint,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,non_proxy,gate_disjoint,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,non_proxy,gate_disjoint,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,non_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,non_proxy,gate_disjoint,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,200,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,incl_proxy,all,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,200,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,200,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 2070.0,data-supported
+S1-obs,incl_proxy,all,200,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,incl_proxy,all,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,all,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,all,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,all,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,200,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-obs,incl_proxy,all,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,all,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,all,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,incl_proxy,all,200,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,200,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-obs,incl_proxy,all,200,MSI__WRN__pan,True,"eligible, ranked below k",rank 779.0,data-supported
+S1-obs,incl_proxy,all,200,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 5180.0,data-supported
+S1-obs,incl_proxy,all,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,incl_proxy,all,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,incl_proxy,all,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,200,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,incl_proxy,all,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,200,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,incl_proxy,all,200,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,200,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+S1-pred,incl_proxy,all,200,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,incl_proxy,all,200,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,incl_proxy,all,200,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,incl_proxy,all,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,200,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,200,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 6832.0,data-supported
+S1-pred,incl_proxy,all,200,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,incl_proxy,all,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,all,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,all,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,all,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,200,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-pred,incl_proxy,all,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,200,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-pred,incl_proxy,all,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,all,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,all,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,incl_proxy,all,200,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,200,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-pred,incl_proxy,all,200,MSI__WRN__pan,True,"eligible, ranked below k",rank 9434.0,data-supported
+S1-pred,incl_proxy,all,200,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 706.0,data-supported
+S1-pred,incl_proxy,all,200,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 2355405.0,data-supported
+S1-pred,incl_proxy,all,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,incl_proxy,all,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,incl_proxy,all,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,200,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,incl_proxy,all,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,200,BRAF_V600__BRAF__agnostic__proxyHOT,True,"eligible, ranked below k",rank 6260.0,data-supported
+S1-pred,incl_proxy,all,200,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+S1-pred,incl_proxy,all,200,BRAF_V600E__BRAF__CRC__proxyHOT,True,"eligible, ranked below k",rank 6260.0,data-supported
+S1-pred,incl_proxy,all,200,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,200,PIK3CA_ACT__PIK3CA__HRpos_BRCA__proxyHOT,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-pred,incl_proxy,all,200,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+EN-obs,incl_proxy,all,200,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,incl_proxy,all,200,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,all,200,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,incl_proxy,all,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,200,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,200,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,incl_proxy,all,200,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,incl_proxy,all,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,all,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,all,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,all,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,200,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-obs,incl_proxy,all,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,all,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,all,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,incl_proxy,all,200,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,200,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-obs,incl_proxy,all,200,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,incl_proxy,all,200,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 216.0,data-supported
+EN-obs,incl_proxy,all,200,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 6945.0,data-supported
+EN-obs,incl_proxy,all,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,incl_proxy,all,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,incl_proxy,all,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,200,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,incl_proxy,all,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,200,BRAF_V600__BRAF__agnostic__proxyHOT,True,"eligible, ranked below k",rank 229.0,data-supported
+EN-obs,incl_proxy,all,200,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,all,200,BRAF_V600E__BRAF__CRC__proxyHOT,True,"eligible, ranked below k",rank 229.0,data-supported
+EN-obs,incl_proxy,all,200,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,200,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 65164.0,data-supported
+EN-pred,incl_proxy,all,200,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,incl_proxy,all,200,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,incl_proxy,all,200,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,incl_proxy,all,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,200,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,200,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 198964.0,data-supported
+EN-pred,incl_proxy,all,200,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,incl_proxy,all,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,all,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,all,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,all,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,200,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-pred,incl_proxy,all,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,200,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to HOT:5290,untestable
+EN-pred,incl_proxy,all,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,all,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,all,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,all,200,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,200,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-pred,incl_proxy,all,200,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,all,200,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 7961.0,data-supported
+EN-pred,incl_proxy,all,200,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,all,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,incl_proxy,all,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,incl_proxy,all,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,200,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,incl_proxy,all,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,200,BRAF_V600__BRAF__agnostic__proxyHOT,True,"eligible, ranked below k",rank 481.0,data-supported
+EN-pred,incl_proxy,all,200,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+EN-pred,incl_proxy,all,200,BRAF_V600E__BRAF__CRC__proxyHOT,True,"eligible, ranked below k",rank 481.0,data-supported
+EN-pred,incl_proxy,all,200,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,200,PIK3CA_ACT__PIK3CA__HRpos_BRCA__proxyHOT,True,"eligible, ranked below k",rank 492.0,untestable
+EN-pred,incl_proxy,all,200,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 31138.0,data-supported
+S1-obs,incl_proxy,all,100,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-obs,incl_proxy,all,100,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,incl_proxy,all,100,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-obs,incl_proxy,all,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,100,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,100,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 2070.0,data-supported
+S1-obs,incl_proxy,all,100,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,incl_proxy,all,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,all,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,all,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,all,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,100,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-obs,incl_proxy,all,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,100,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-obs,incl_proxy,all,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,all,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,all,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,incl_proxy,all,100,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,100,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-obs,incl_proxy,all,100,MSI__WRN__pan,True,"eligible, ranked below k",rank 779.0,data-supported
+S1-obs,incl_proxy,all,100,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 139.0,data-supported
+S1-obs,incl_proxy,all,100,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 5180.0,data-supported
+S1-obs,incl_proxy,all,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,incl_proxy,all,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,incl_proxy,all,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,100,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,incl_proxy,all,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,100,BRAF_V600__BRAF__agnostic__proxyHOT,True,"eligible, ranked below k",rank 173.0,data-supported
+S1-obs,incl_proxy,all,100,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,incl_proxy,all,100,BRAF_V600E__BRAF__CRC__proxyHOT,True,"eligible, ranked below k",rank 173.0,data-supported
+S1-obs,incl_proxy,all,100,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,100,PIK3CA_ACT__PIK3CA__HRpos_BRCA__proxyHOT,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-obs,incl_proxy,all,100,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+S1-pred,incl_proxy,all,100,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,incl_proxy,all,100,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,incl_proxy,all,100,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,incl_proxy,all,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,100,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,100,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 6832.0,data-supported
+S1-pred,incl_proxy,all,100,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,incl_proxy,all,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,all,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,all,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,all,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,100,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-pred,incl_proxy,all,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,100,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-pred,incl_proxy,all,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,all,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,all,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,incl_proxy,all,100,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,100,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-pred,incl_proxy,all,100,MSI__WRN__pan,True,"eligible, ranked below k",rank 9434.0,data-supported
+S1-pred,incl_proxy,all,100,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 706.0,data-supported
+S1-pred,incl_proxy,all,100,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 2355405.0,data-supported
+S1-pred,incl_proxy,all,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,incl_proxy,all,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,incl_proxy,all,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,100,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,incl_proxy,all,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,100,BRAF_V600__BRAF__agnostic__proxyHOT,True,"eligible, ranked below k",rank 6260.0,data-supported
+S1-pred,incl_proxy,all,100,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+S1-pred,incl_proxy,all,100,BRAF_V600E__BRAF__CRC__proxyHOT,True,"eligible, ranked below k",rank 6260.0,data-supported
+S1-pred,incl_proxy,all,100,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,100,PIK3CA_ACT__PIK3CA__HRpos_BRCA__proxyHOT,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-pred,incl_proxy,all,100,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+EN-obs,incl_proxy,all,100,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,incl_proxy,all,100,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,all,100,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,incl_proxy,all,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,100,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,100,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,incl_proxy,all,100,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,incl_proxy,all,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,all,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,all,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,all,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,100,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-obs,incl_proxy,all,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,all,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,all,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,incl_proxy,all,100,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,100,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-obs,incl_proxy,all,100,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,incl_proxy,all,100,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 216.0,data-supported
+EN-obs,incl_proxy,all,100,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 6945.0,data-supported
+EN-obs,incl_proxy,all,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,incl_proxy,all,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,incl_proxy,all,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,100,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,incl_proxy,all,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,100,BRAF_V600__BRAF__agnostic__proxyHOT,True,"eligible, ranked below k",rank 229.0,data-supported
+EN-obs,incl_proxy,all,100,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,all,100,BRAF_V600E__BRAF__CRC__proxyHOT,True,"eligible, ranked below k",rank 229.0,data-supported
+EN-obs,incl_proxy,all,100,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,100,PIK3CA_ACT__PIK3CA__HRpos_BRCA__proxyHOT,True,lost_to_group_member,lost to ALLELE:PIK3CA_ACT,untestable
+EN-obs,incl_proxy,all,100,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 65164.0,data-supported
+EN-pred,incl_proxy,all,100,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,incl_proxy,all,100,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,incl_proxy,all,100,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,incl_proxy,all,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,100,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,100,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 198964.0,data-supported
+EN-pred,incl_proxy,all,100,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,incl_proxy,all,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,all,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,all,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,all,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,100,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-pred,incl_proxy,all,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,100,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to HOT:5290,untestable
+EN-pred,incl_proxy,all,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,all,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,all,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,all,100,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,100,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-pred,incl_proxy,all,100,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,all,100,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 7961.0,data-supported
+EN-pred,incl_proxy,all,100,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,all,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,incl_proxy,all,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,incl_proxy,all,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,100,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,incl_proxy,all,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,100,BRAF_V600__BRAF__agnostic__proxyHOT,True,"eligible, ranked below k",rank 481.0,data-supported
+EN-pred,incl_proxy,all,100,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+EN-pred,incl_proxy,all,100,BRAF_V600E__BRAF__CRC__proxyHOT,True,"eligible, ranked below k",rank 481.0,data-supported
+EN-pred,incl_proxy,all,100,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,100,PIK3CA_ACT__PIK3CA__HRpos_BRCA__proxyHOT,True,"eligible, ranked below k",rank 492.0,untestable
+EN-pred,incl_proxy,all,100,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 31138.0,data-supported
+S1-obs,incl_proxy,all,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,500,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,500,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 2070.0,data-supported
+S1-obs,incl_proxy,all,500,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,incl_proxy,all,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,all,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,all,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,all,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,500,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-obs,incl_proxy,all,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,all,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,all,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,incl_proxy,all,500,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,500,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-obs,incl_proxy,all,500,MSI__WRN__pan,True,"eligible, ranked below k",rank 779.0,data-supported
+S1-obs,incl_proxy,all,500,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 5180.0,data-supported
+S1-obs,incl_proxy,all,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,all,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,incl_proxy,all,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,incl_proxy,all,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,500,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,incl_proxy,all,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,all,500,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,all,500,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+S1-pred,incl_proxy,all,500,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,incl_proxy,all,500,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,incl_proxy,all,500,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+S1-pred,incl_proxy,all,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,500,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,500,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 6832.0,data-supported
+S1-pred,incl_proxy,all,500,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,incl_proxy,all,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,all,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,all,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,all,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,500,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to ALLELE:KRAS_MUT,data-supported
+S1-pred,incl_proxy,all,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,500,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-pred,incl_proxy,all,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,all,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,all,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,incl_proxy,all,500,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,500,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+S1-pred,incl_proxy,all,500,MSI__WRN__pan,True,"eligible, ranked below k",rank 9434.0,data-supported
+S1-pred,incl_proxy,all,500,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 706.0,data-supported
+S1-pred,incl_proxy,all,500,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 2355405.0,data-supported
+S1-pred,incl_proxy,all,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,all,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,incl_proxy,all,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,incl_proxy,all,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,500,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,incl_proxy,all,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,all,500,BRAF_V600__BRAF__agnostic__proxyHOT,True,"eligible, ranked below k",rank 6260.0,data-supported
+S1-pred,incl_proxy,all,500,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+S1-pred,incl_proxy,all,500,BRAF_V600E__BRAF__CRC__proxyHOT,True,"eligible, ranked below k",rank 6260.0,data-supported
+S1-pred,incl_proxy,all,500,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,all,500,PIK3CA_ACT__PIK3CA__HRpos_BRCA__proxyHOT,True,lost_to_group_member,lost to ALLELE:PIK3CA_CAPI,untestable
+S1-pred,incl_proxy,all,500,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+EN-obs,incl_proxy,all,500,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,incl_proxy,all,500,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,all,500,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-obs,incl_proxy,all,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,500,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,500,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,incl_proxy,all,500,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,incl_proxy,all,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,all,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,all,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,all,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,500,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-obs,incl_proxy,all,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,all,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,all,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,incl_proxy,all,500,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,500,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-obs,incl_proxy,all,500,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-obs,incl_proxy,all,500,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank 6945.0,data-supported
+EN-obs,incl_proxy,all,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,all,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,incl_proxy,all,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,incl_proxy,all,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,500,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,incl_proxy,all,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,all,500,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,all,500,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,all,500,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 65164.0,data-supported
+EN-pred,incl_proxy,all,500,BRAF_V600__BRAF__agnostic,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,incl_proxy,all,500,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,incl_proxy,all,500,BRAF_V600E__BRAF__CRC,True,lost_to_group_member,lost to HOT:673,data-supported
+EN-pred,incl_proxy,all,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,500,EGFR_ACT__EGFR__NSCLC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,500,HER2_POS__ERBB2__BRCA_GEA_CRC_BTC,True,"eligible, ranked below k",rank 198964.0,data-supported
+EN-pred,incl_proxy,all,500,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,incl_proxy,all,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,all,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,all,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,all,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,500,KRAS_G12C__KRAS__NSCLC_CRC,True,lost_to_group_member,lost to HOT:3845,data-supported
+EN-pred,incl_proxy,all,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,500,PIK3CA_ACT__PIK3CA__HRpos_BRCA,True,lost_to_group_member,lost to HOT:5290,untestable
+EN-pred,incl_proxy,all,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,all,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,all,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,all,500,CCNE1_AMP__PKMYT1__pan,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,500,SMARCA4_LOF__SMARCA2__pan,False,ineligible gene (class 1/2/3),classes 3b,data-supported
+EN-pred,incl_proxy,all,500,MSI__WRN__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,all,500,MTAP_LOSS__PRMT5__pan,True,"eligible, ranked below k",rank 7961.0,data-supported
+EN-pred,incl_proxy,all,500,MTAP_LOSS__MAT2A__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,all,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,all,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,incl_proxy,all,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,incl_proxy,all,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,500,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,incl_proxy,all,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,all,500,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+EN-pred,incl_proxy,all,500,EGFR_ACT__EGFR__NSCLC__proxyHOT,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,all,500,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 31138.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,incl_proxy,gate_disjoint,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,200,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,incl_proxy,gate_disjoint,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,gate_disjoint,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,gate_disjoint,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,gate_disjoint,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,incl_proxy,gate_disjoint,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,incl_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+S1-pred,incl_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,200,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,incl_proxy,gate_disjoint,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,gate_disjoint,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,gate_disjoint,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,gate_disjoint,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,incl_proxy,gate_disjoint,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+S1-pred,incl_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+EN-obs,incl_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,gate_disjoint,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,200,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,incl_proxy,gate_disjoint,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,gate_disjoint,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,gate_disjoint,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,gate_disjoint,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,incl_proxy,gate_disjoint,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,incl_proxy,gate_disjoint,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,incl_proxy,gate_disjoint,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,incl_proxy,gate_disjoint,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 65164.0,data-supported
+EN-pred,incl_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,incl_proxy,gate_disjoint,200,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,200,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,incl_proxy,gate_disjoint,200,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,gate_disjoint,200,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,gate_disjoint,200,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,200,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,gate_disjoint,200,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,200,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,gate_disjoint,200,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,200,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,incl_proxy,gate_disjoint,200,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,incl_proxy,gate_disjoint,200,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,incl_proxy,gate_disjoint,200,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,200,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+EN-pred,incl_proxy,gate_disjoint,200,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 31138.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,incl_proxy,gate_disjoint,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,100,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,incl_proxy,gate_disjoint,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,gate_disjoint,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,gate_disjoint,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,gate_disjoint,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,incl_proxy,gate_disjoint,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+S1-obs,incl_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+S1-pred,incl_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,100,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,incl_proxy,gate_disjoint,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,gate_disjoint,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,gate_disjoint,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,gate_disjoint,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,incl_proxy,gate_disjoint,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+S1-pred,incl_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+EN-obs,incl_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,gate_disjoint,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,100,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,incl_proxy,gate_disjoint,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,gate_disjoint,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,gate_disjoint,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,gate_disjoint,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,incl_proxy,gate_disjoint,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,incl_proxy,gate_disjoint,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,incl_proxy,gate_disjoint,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,incl_proxy,gate_disjoint,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 65164.0,data-supported
+EN-pred,incl_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,incl_proxy,gate_disjoint,100,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,100,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,incl_proxy,gate_disjoint,100,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,gate_disjoint,100,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,gate_disjoint,100,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,100,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,gate_disjoint,100,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,100,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,gate_disjoint,100,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,100,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,incl_proxy,gate_disjoint,100,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,incl_proxy,gate_disjoint,100,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,incl_proxy,gate_disjoint,100,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,100,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+EN-pred,incl_proxy,gate_disjoint,100,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 31138.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,500,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-obs,incl_proxy,gate_disjoint,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,gate_disjoint,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-obs,incl_proxy,gate_disjoint,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-obs,incl_proxy,gate_disjoint,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 581574.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-obs,incl_proxy,gate_disjoint,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-obs,incl_proxy,gate_disjoint,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 88650.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 219543.0,data-supported
+S1-obs,incl_proxy,gate_disjoint,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-obs,incl_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+S1-pred,incl_proxy,gate_disjoint,500,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 40192.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,500,ERBB2_TKD__ERBB2__NSCLC,True,lost_to_group_member,lost to CLIN:HER2_POS,untestable
+S1-pred,incl_proxy,gate_disjoint,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,gate_disjoint,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+S1-pred,incl_proxy,gate_disjoint,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+S1-pred,incl_proxy,gate_disjoint,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 3084714.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+S1-pred,incl_proxy,gate_disjoint,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+S1-pred,incl_proxy,gate_disjoint,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 406909.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL,True,"eligible, ranked below k",rank 269379.0,data-supported
+S1-pred,incl_proxy,gate_disjoint,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+S1-pred,incl_proxy,gate_disjoint,500,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+S1-pred,incl_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL__proxyHOT,True,lost_to_group_member,lost to ALLELE:EZH2_GOF,data-supported
+EN-obs,incl_proxy,gate_disjoint,500,BRAF_V600__MEK__MEL,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,gate_disjoint,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,500,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-obs,incl_proxy,gate_disjoint,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,gate_disjoint,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-obs,incl_proxy,gate_disjoint,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-obs,incl_proxy,gate_disjoint,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank 33782.0,data-supported
+EN-obs,incl_proxy,gate_disjoint,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-obs,incl_proxy,gate_disjoint,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-obs,incl_proxy,gate_disjoint,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 25793.0,data-supported
+EN-obs,incl_proxy,gate_disjoint,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-obs,incl_proxy,gate_disjoint,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-obs,incl_proxy,gate_disjoint,500,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600E,data-supported
+EN-obs,incl_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 65164.0,data-supported
+EN-pred,incl_proxy,gate_disjoint,500,BRAF_V600__MEK__MEL,True,"eligible, ranked below k",rank 36197.0,data-supported
+EN-pred,incl_proxy,gate_disjoint,500,BRAF_FUS__BRAF__LGG,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,500,ERBB2_TKD__ERBB2__NSCLC,True,"eligible, ranked below k",rank nan,untestable
+EN-pred,incl_proxy,gate_disjoint,500,MET_EX14__MET__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,ALK_FUS__ALK__NSCLC_ALCL_IMT,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,gate_disjoint,500,ROS1_FUS__ROS1__NSCLC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,RET_FUS__RET__agnostic,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,RET_MTC__RET__MTC,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,NTRK_FUS__NTRK__agnostic,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,BCR_ABL1__ABL1__CML_ALL,False,ineligible gene (class 1/2/3),classes n/a,data-null
+EN-pred,incl_proxy,gate_disjoint,500,KIT_D816V__KIT__SM,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,KIT_EX11__KIT__GIST,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,PDGFRA_D842V__PDGFRA__GIST,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,500,FLT3_MUT__FLT3__AML,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,RAS_MUT__EGFR__CRC,True,ceiling data-null,ceiling data-null,data-null
+EN-pred,incl_proxy,gate_disjoint,500,CAPI_ALT__AKT__HRpos_BRCA,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,PTEN_LOF__AKT__PRAD,False,ineligible gene (class 1/2/3),classes n/a/n/a/n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,ER_POS__CDK46__BRCA,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,500,BRCA_BI__POLQ__pan,True,"eligible, ranked below k",rank nan,data-supported
+EN-pred,incl_proxy,gate_disjoint,500,FGFR2_FUS__FGFR2__CHOL,False,ineligible gene (class 1/2/3),classes n/a,untestable
+EN-pred,incl_proxy,gate_disjoint,500,FGFR3_ALT__FGFR3__BLCA,False,ineligible gene (class 1/2/3),classes n/a,data-supported
+EN-pred,incl_proxy,gate_disjoint,500,KMT2A_R__MEN1__acute_leuk,True,"eligible, ranked below k",rank 28680.0,data-supported
+EN-pred,incl_proxy,gate_disjoint,500,NPM1_MUT__MEN1__AML,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL,True,lost_to_group_member,lost to HOT:2146,data-supported
+EN-pred,incl_proxy,gate_disjoint,500,NRG1_FUS__ERBB2_3__NSCLC_PAAD,False,no feature_D or feature not in 𝒟_g,feature not in U for an eligible target,untestable
+EN-pred,incl_proxy,gate_disjoint,500,BRAF_V600__MEK__MEL__proxyHOT,True,lost_to_group_member,lost to ALLELE:BRAF_V600,data-supported
+EN-pred,incl_proxy,gate_disjoint,500,EZH2_GOF__EZH2__BNHL__proxyHOT,True,"eligible, ranked below k",rank 31138.0,data-supported

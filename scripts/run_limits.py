@@ -65,7 +65,9 @@ def run(ws, src) -> dict:
     gi = src.gene_info()
     ctl = src.controls()
     universe = LM.universe_genes(gi, ctl)
-    pc = LM.pair_classes(fd, cat, delta, locus, amp, culture, hyper, power, rt, cgt, ceil, gene_universe=universe)
+    rpow = ws.read_csv("results/replication/r_power.csv", required=False)
+    pc = LM.pair_classes(fd, cat, delta, locus, amp, culture, hyper, power, rt, cgt, ceil, gene_universe=universe,
+                         r_power=rpow)
     gc = LM.gene_classes(universe, gi, ws.lam(), pc, attr, ctl)
     s1h = ws.arms(arms=["S1-obs"], columns=["gene", "feature"], selected_only=True)
     en_sel = ws.arms(arms=["EN-pred"], columns=["gene", "feature"], selected_only=True)

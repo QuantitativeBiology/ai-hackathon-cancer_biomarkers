@@ -1,0 +1,9 @@
+{
+ "job": "md_strict",
+ "utc": "2026-10-29T22:57:47+00:00",
+ "start_utc": "2026-10-29T22:57:20+00:00",
+ "wall_s": 27.125207,
+ "workers": 1,
+ "run_id": "run_arms-33624-20261029T225327",
+ "note": "global BH / ranks / dedup / MD lists and final parts (blocked.run_streamed)"
+}

@@ -1,10 +1,10 @@
 {
  "job": "candidate_cards",
- "utc": "2026-10-29T20:09:11+00:00",
- "start_utc": "2026-10-29T20:08:23+00:00",
- "wall_s": 47.315434,
+ "utc": "2026-10-29T23:07:22+00:00",
+ "start_utc": "2026-10-29T23:06:52+00:00",
+ "wall_s": 29.409222,
  "workers": 1,
- "run_id": "build_candidate_cards-8412-20261029T200911",
- "n_shortlist": 735,
+ "run_id": "build_candidate_cards-14508-20261029T230722",
+ "n_shortlist": 552,
  "n_known": 88
 }

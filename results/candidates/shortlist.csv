@@ -207,530 +207,347 @@ rank,gene,symbol,feature,access_class,cross_lineage_label,n_powered_lineages,lin
 206,7486,WRN,SIG:MSISCORE,proxy,cross-lineage,5,Bowel:-0.0164;Esophagus/Stomach:-0.0176;Lymphoid:0.000759;Ovary/Fallopian Tube:-0.0133;Uterus:-0.0128,,0,0.0012463944105227,,,,,0.0,True
 207,9564,BCAR1,SIL-other:58495,expression-derived,cross-lineage,3,Esophagus/Stomach:-0.195;Lung:-0.159;Ovary/Fallopian Tube:-0.191,87.0,25,0.0013276704908645,,,untested,,0.1333333333333333,True
 208,64858,DCLRE1B,LOFBI:7157,potentially-direct,cross-lineage,6,Bowel:0.345;CNS/Brain:0.247;Esophagus/Stomach:0.0331;Lung:0.203;Lymphoid:0.107;Skin:0.286,627.0,144,0.001346034745821,,,untested,,0.4666666666666667,True
-209,1499,CTNNB1,PROG:NMF21,expression-derived,cross-lineage,4,Bowel:-38.9;Esophagus/Stomach:-44;Lung:-21;Ovary/Fallopian Tube:-20.9,,0,0.001463470459744,,,,,0.2,True
-210,84919,PPP1R15B,EXPPAR:23645,direct,cross-lineage,2,Lung:0.114;Lymphoid:0.0415,,0,0.0015297379038807,,,untested,,0.0666666666666666,True
-211,5693,PSMB5,PROG:NMF18,expression-derived,cross-lineage,6,CNS/Brain:236;Esophagus/Stomach:207;Head and Neck:37.6;Lung:310;Lymphoid:366;Soft Tissue:271,,0,0.0016103054535103,,,,,0.1333333333333333,True
-212,25842,ASF1A,PROG:NMF22,expression-derived,cross-lineage,4,CNS/Brain:-5.55;Lung:-19.9;Lymphoid:-16.9;Skin:-18.9,,0,0.0017606729294483,,,,,0.0666666666666666,True
-213,23167,EFR3A,PROG:NMF07,expression-derived,cross-lineage,7,Biliary Tract:-13.9;Bowel:-7.57;Esophagus/Stomach:-10.4;Head and Neck:-12.9;Lung:-13.5;Ovary/Fallopian Tube:-8.18;Pancreas:-8.27,,0,0.0018342278535381,,,,,0.4666666666666667,True
-214,26164,MTG2,PROG:NMF33,expression-derived,cross-lineage,2,Lung:-15.3;Soft Tissue:-12,,0,0.0018553502325159,,,,,0.2666666666666666,True
-215,3609,ILF3,EXPPAR:55342,direct,cross-lineage,2,CNS/Brain:0.0428;Lymphoid:0.0284,,0,0.001907281363384,,,tested-not-replicated,,0.1333333333333333,True
-216,51430,SUCO,PROG:NMF40,expression-derived,cross-lineage,2,Esophagus/Stomach:-32.4;Lung:-29.3,,0,0.0020975866774235,,,,,0.0666666666666666,True
-217,63916,ELMO2,METH:79767,proxy,cross-lineage,6,Bladder/Urinary Tract:-0.461;Bowel:-0.4;Breast:-0.277;Esophagus/Stomach:-0.367;Lung:-0.256;Ovary/Fallopian Tube:-0.548,54.0,14,0.0021455045366792,,,tested-not-replicated,,0.4,True
-218,25937,WWTR1,PROG:NMF35,expression-derived,cross-lineage,2,Lung:-37.4;Pancreas:-19.2,,0,0.0021861345349853,,,,,0.4,True
-219,65057,ACD,COMP:TP53MUT,proxy,cross-lineage,5,Bowel:0.0945;CNS/Brain:0.164;Lung:0.0997;Lymphoid:0.0512;Skin:0.157,685.0,164,0.0023001905231693,,,,,0.4,True
-220,3169,FOXA1,PROG:NMF13,expression-derived,cross-lineage,2,Breast:-8.66;Lung:-7.91,,0,0.0023992014871924,,,,,0.0,True
-221,1398,CRK,EXPPAR:1399,direct,cross-lineage,6,Breast:0.0327;CNS/Brain:0.0976;Esophagus/Stomach:0.0966;Lung:0.111;Lymphoid:0.0189;Ovary/Fallopian Tube:0.103,,0,0.0024366383759648,,,replicated,,0.1333333333333333,True
-222,8774,NAPG,LOSS:8775,potentially-direct,cross-lineage,4,Breast:-0.202;CNS/Brain:-0.346;Lung:-0.243;Pancreas:-0.454,84.0,35,0.0026393285792467,,gene,untested,,0.1333333333333333,True
-223,6173,RPL36A,EXPPAR:6166,direct,cross-lineage,4,Breast:0.0964;CNS/Brain:0.379;Esophagus/Stomach:0.252;Pancreas:0.124,,0,0.0026659640057903,,,replicated,,0.0,True
-224,6009,RHEB,EXPPAR:121268,direct,cross-lineage,2,Lung:0.053;Lymphoid:0.102,,0,0.0027272330838895,,,tested-not-replicated,,0.3333333333333333,True
-225,51013,EXOSC1,LOFBI:7157,potentially-direct,cross-lineage,5,Bowel:0.128;CNS/Brain:0.0355;Lung:0.14;Lymphoid:0.0731;Skin:0.292,627.0,144,0.0028251376020502,,,untested,,0.5333333333333333,True
-226,3685,ITGAV,SIL-other:360,expression-derived,cross-lineage,6,Bowel:-0.197;Breast:-0.241;Esophagus/Stomach:-0.14;Lung:-0.547;Lymphoid:-0.0395;Pancreas:-0.46,98.0,20,0.0028296818932937,,,untested,,0.4666666666666667,True
-227,196,AHR,PROG:NMF26,expression-derived,cross-lineage,2,CNS/Brain:19.2;Lung:27.2,,0,0.0031325663825529,,,,,0.0666666666666666,True
-228,5870,RAB6A,PROG:NMF07,expression-derived,cross-lineage,4,Bowel:-6.58;Esophagus/Stomach:-7.17;Lung:-5.59;Pancreas:-9.64,,0,0.0034497154577257,,,,,0.7333333333333333,True
-229,9197,SLC33A1,PROG:NMF40,expression-derived,cross-lineage,2,Esophagus/Stomach:-72.1;Lung:-30.7,,0,0.0035183753850887,,,,,0.0666666666666666,True
-230,85291,KRTAP4-2,LOSS:85291,direct,cross-lineage,6,Bone:0.461;Bowel:0.407;Breast:0.248;CNS/Brain:0.168;Lung:0.366;Ovary/Fallopian Tube:0.296,76.0,16,0.0036740743956676,,gene,,,0.2666666666666666,True
-231,5134,PDCD2,COMP:TP53MUT,proxy,cross-lineage,2,CNS/Brain:0.188;Lymphoid:0.28,685.0,164,0.0040717133559029,,,,,0.4,True
-232,2237,FEN1,PROG:NMF32,expression-derived,cross-lineage,2,CNS/Brain:-30.9;Soft Tissue:-37.7,,0,0.004190893778825,,,,,0.4,True
-233,156,GRK2,PROG:NMF34,expression-derived,cross-lineage,3,Esophagus/Stomach:-9.03;Head and Neck:-30.1;Pancreas:-39.1,,0,0.0043775896066189,,,,,0.0,True
-234,85291,KRTAP4-2,LOSS:653240,potentially-direct,cross-lineage,10,Bone:0.367;Bowel:0.45;Breast:0.351;CNS/Brain:0.181;Esophagus/Stomach:0.171;Head and Neck:0.215;Lung:0.361;Ovary/Fallopian Tube:0.488;Pancreas:0.199;Skin:0.133,108.0,21,0.0044198676973588,,gene,tested-not-replicated,,0.2666666666666666,True
-235,23167,EFR3A,PROG:NMF29,expression-derived,cross-lineage,2,Head and Neck:-352;Lung:-361,,0,0.0046944983557605,,,,,0.4666666666666667,True
-236,3658,IREB2,EXPPAR:48,direct,cross-lineage,8,Bowel:0.0479;Breast:0.159;CNS/Brain:0.0371;Esophagus/Stomach:0.0772;Head and Neck:0.0475;Lung:0.0445;Lymphoid:0.157;Skin:0.0835,,0,0.0047198023983529,,,replicated,,0.0,True
-237,9564,BCAR1,PROG:NMF35,expression-derived,cross-lineage,3,Esophagus/Stomach:-8.59;Lung:-21.6;Pancreas:-21.5,,0,0.0047847998969922,,,,,0.1333333333333333,True
-238,490,ATP2B1,SIL-other:493,expression-derived,cross-lineage,3,Bowel:-0.295;Esophagus/Stomach:-0.759;Lymphoid:-0.473,25.0,7,0.0049621821808013,,,tested-not-replicated,,0.0,True
-239,10274,STAG1,EXPPAR:10735,direct,cross-lineage,3,Bone:0.14;CNS/Brain:0.189;Lymphoid:0.108,,0,0.0053266938213907,,,tested-not-replicated,,0.0,False
-240,6605,SMARCE1,PROG:NMF33,expression-derived,cross-lineage,2,Lung:28.8;Soft Tissue:25.6,,0,0.0054957894932465,,,,,0.4,True
-241,1021,CDK6,LOFBI:5925,potentially-direct,cross-lineage,2,CNS/Brain:0.537;Lung:0.308,53.0,16,0.0056589258835361,,,untested,RB1_LOF__CDK46__pan,0.2,False
-242,6201,RPS7,LOFBI:7157,potentially-direct,cross-lineage,5,Bowel:0.218;CNS/Brain:0.164;Lung:0.119;Lymphoid:0.192;Skin:0.0698,627.0,144,0.0060496043502821,,,untested,,0.5333333333333333,True
-243,1063,CENPF,LOFBI:7157,potentially-direct,cross-lineage,2,CNS/Brain:0.179;Lymphoid:0.0336,627.0,144,0.0061074251853729,,,untested,,0.3333333333333333,True
-244,10419,PRMT5,CLIN:MTAP_LOSS,proxy,cross-lineage,10,Biliary Tract:-0.209;Bladder/Urinary Tract:-0.395;Breast:-0.484;CNS/Brain:-0.365;Esophagus/Stomach:-0.483;Lung:-0.397;Lymphoid:-0.0961;Myeloid:-0.229;Ovary/Fallopian Tube:-0.402;Pancreas:-0.249,201.0,45,0.0061690913743899,,,,MTAP_LOSS__PRMT5__pan,0.0666666666666666,False
-245,1678,TIMM8A,EXPPAR:26521,direct,cross-lineage,3,CNS/Brain:0.0138;Lung:0.0175;Lymphoid:0.188,,0,0.0062657253487274,,,tested-not-replicated,,0.3333333333333333,True
-246,1163,CKS1B,COMP:RB_ALT,proxy,cross-lineage,5,Bladder/Urinary Tract:-0.303;Bone:-0.325;CNS/Brain:-0.298;Lung:0.0199;Uterus:-0.164,66.0,19,0.0064032670629159,,,,,0.0666666666666666,True
-247,6502,SKP2,CLIN:CDK46_SEL,proxy,cross-lineage,2,CNS/Brain:0.411;Lung:0.163,454.0,110,0.006746498654668,,,,,0.2666666666666666,True
-248,2232,FDXR,COMP:TP53MUT,proxy,cross-lineage,2,CNS/Brain:-0.219;Lymphoid:-0.169,685.0,164,0.0067489921110385,,,,,0.2666666666666666,True
-249,85291,KRTAP4-2,LOSS:85289,potentially-direct,cross-lineage,8,Bone:0.461;Bowel:0.398;Breast:0.243;CNS/Brain:0.216;Esophagus/Stomach:0.198;Head and Neck:0.266;Lung:0.161;Pancreas:0.264,118.0,31,0.0068045111732476,,gene,tested-not-replicated,,0.2666666666666666,True
-250,7050,TGIF1,EXPPAR:60436,direct,cross-lineage,2,CNS/Brain:0.0209;Lung:0.0738,,0,0.0075985302527809,,,tested-not-replicated,,0.0,True
-251,2885,GRB2,CLIN:RAS_MUT,proxy,cross-lineage,9,Bowel:-0.052;Esophagus/Stomach:0.402;Lung:0.657;Lymphoid:0.139;Myeloid:0.857;Ovary/Fallopian Tube:0.396;Pancreas:0.194;Skin:0.457;Uterus:0.549,220.0,46,0.0079631542281335,,,,,0.2,True
-252,54870,QRICH1,COMP:TP53MUT,proxy,cross-lineage,2,CNS/Brain:0.106;Lymphoid:0.0997,685.0,164,0.0079702028705158,,,,,0.4,True
-253,55154,MSTO1,PROG:NMF32,expression-derived,cross-lineage,2,CNS/Brain:-29.7;Soft Tissue:-16.2,,0,0.0080027392948633,,,,,0.4666666666666667,True
-254,200916,RPL22L1,SIG:MSISCORE,proxy,cross-lineage,5,Bowel:-0.00714;Esophagus/Stomach:-0.00553;Lymphoid:-0.00242;Ovary/Fallopian Tube:-0.00622;Uterus:-0.00268,,0,0.0082260374471682,,,,,0.0,True
-255,53918,PELO,SIG:MSISCORE,proxy,cross-lineage,4,Bowel:-0.013;Esophagus/Stomach:-0.00502;Lymphoid:-0.00396;Uterus:-0.0129,,0,0.0082669437869328,,,,,0.2666666666666666,True
-256,4000,LMNA,SIL-other:58495,expression-derived,cross-lineage,4,Breast:-0.207;Esophagus/Stomach:-0.0848;Lung:-0.215;Ovary/Fallopian Tube:-0.042,87.0,25,0.0083025200234647,,,untested,,0.1333333333333333,True
-257,6191,RPS4X,YABS:6192,expression-derived,cross-lineage,15,Biliary Tract:-0.331;Bladder/Urinary Tract:-0.84;Bone:-0.803;Bowel:-0.408;CNS/Brain:-0.687;Esophagus/Stomach:-0.637;Head and Neck:-0.529;Kidney:-0.216;Lung:-0.274;Lymphoid:-0.343;Myeloid:-0.673;Pancreas:-0.612;Peripheral Nervous System:-0.907;Skin:-0.767;Soft Tissue:-0.281,504.0,139,0.008339127557901,,,tested-not-replicated,,0.3333333333333333,True
-258,9197,SLC33A1,PSCORE:NRF2,expression-derived,cross-lineage,5,CNS/Brain:-0.107;Esophagus/Stomach:-0.189;Head and Neck:-0.0338;Lung:-0.163;Ovary/Fallopian Tube:-0.0874,,0,0.0086120429721368,,,,,0.0666666666666666,True
-259,55599,RNPC3,SIG:MSISCORE,proxy,cross-lineage,3,Bowel:-0.00388;Lymphoid:-0.00624;Uterus:-0.00868,,0,0.0089096424298134,,,,,0.5333333333333333,True
-260,29914,UBIAD1,PROG:NMF35,expression-derived,cross-lineage,3,Esophagus/Stomach:-39.1;Lung:-39.2;Pancreas:-22,,0,0.0089836134638392,,,,,0.4,True
-261,2553,GABPB1,EXPPAR:126626,direct,cross-lineage,2,Lung:0.125;Lymphoid:0.0915,,0,0.0091299151945147,,,tested-not-replicated,,0.4,True
-262,23167,EFR3A,SIL-other:1846,expression-derived,cross-lineage,2,CNS/Brain:0.0138;Lung:0.227,89.0,20,0.0091883164724563,,,untested,,0.4666666666666667,True
-263,10419,PRMT5,LOSS:4507,potentially-direct,cross-lineage,2,CNS/Brain:-0.177;Lung:-0.192,439.0,103,0.0092479405088209,,gene,untested,,0.0666666666666666,False
-264,10197,PSME3,COMP:TP53MUT,proxy,cross-lineage,5,Bowel:0.163;CNS/Brain:0.149;Lung:0.195;Lymphoid:-0.00589;Skin:0.248,685.0,164,0.0094222422271999,,,,,0.2666666666666666,True
-265,79644,SRD5A3,SIL-other:10553,expression-derived,cross-lineage,3,Bone:-0.162;CNS/Brain:-0.0947;Soft Tissue:-0.291,78.0,16,0.0097424339348004,,,untested,,0.3333333333333333,True
-266,9587,MAD2L1BP,COMP:TP53MUT,proxy,cross-lineage,5,Bowel:0.0641;CNS/Brain:0.167;Lung:0.182;Lymphoid:0.0572;Skin:0.285,685.0,164,0.0105105979523293,,,,,0.6666666666666666,True
-267,51026,GOLT1B,PROG:NMF32,expression-derived,cross-lineage,2,CNS/Brain:-31.8;Soft Tissue:-8.01,,0,0.0105489674198786,,,,,0.2,True
-268,9131,AIFM1,PROG:NMF40,expression-derived,cross-lineage,2,Esophagus/Stomach:-52;Lung:-29.2,,0,0.0106712779818646,,,,,0.3333333333333333,True
-269,262,AMD1,CLIN:MTAP_LOSS,proxy,cross-lineage,4,CNS/Brain:0.0445;Lung:0.156;Lymphoid:0.255;Pancreas:0.332,201.0,45,0.0111384976898147,,,,,0.0666666666666666,True
-270,1163,CKS1B,CLIN:CDK46_SEL,proxy,cross-lineage,3,CNS/Brain:0.19;Esophagus/Stomach:0.185;Lung:0.0994,445.0,108,0.0114298667514604,,,,,0.0666666666666666,True
-271,103,ADAR,PROG:NMF18,expression-derived,cross-lineage,2,CNS/Brain:-166;Lymphoid:-129,,0,0.0119068799346477,,,,,0.3333333333333333,True
-272,898,CCNE1,CLIN:CDK46_SEL,proxy,cross-lineage,4,CNS/Brain:0.132;Esophagus/Stomach:0.00179;Lung:0.135;Lymphoid:0.00591,454.0,110,0.0120547378422827,,,,,0.0666666666666666,True
-273,10573,MRPL28,PROG:NMF33,expression-derived,cross-lineage,3,Lung:-13.1;Ovary/Fallopian Tube:-17.8;Soft Tissue:-11.9,,0,0.0125411221505515,,,,,0.4,True
-274,10410,IFITM3,LOSS:10581,potentially-direct,cross-lineage,3,Breast:0.313;Esophagus/Stomach:0.141;Lung:0.123,147.0,43,0.0129056549197335,,gene,tested-not-replicated,,0.5333333333333333,True
-275,55723,ASF1B,EXPPAR:25842,direct,cross-lineage,7,Bowel:0.254;CNS/Brain:-0.00911;Esophagus/Stomach:0.0965;Head and Neck:0.0098;Lung:0.098;Lymphoid:0.0733;Pancreas:0.191,,0,0.0130121251930474,,,replicated,,0.0,True
-276,9735,KNTC1,COMP:TP53MUT,proxy,cross-lineage,2,CNS/Brain:0.205;Lymphoid:0.184,685.0,164,0.013163101469107,,,,,0.4,True
-277,85291,KRTAP4-2,LOSS:83755,potentially-direct,cross-lineage,7,Bone:0.335;Bowel:0.495;Breast:0.349;CNS/Brain:0.232;Head and Neck:0.236;Lung:0.234;Ovary/Fallopian Tube:0.451,79.0,16,0.0140856328312785,,gene,tested-not-replicated,,0.2666666666666666,True
-278,5894,RAF1,HOT:4893,potentially-direct,cross-lineage,6,Bladder/Urinary Tract:-0.37;CNS/Brain:-0.664;Lung:-0.175;Lymphoid:-0.176;Myeloid:-0.324;Skin:-0.82,52.0,10,0.0144255969853279,,,,,0.2666666666666666,True
-279,8036,SHOC2,CLIN:RAS_MUT,proxy,cross-lineage,6,Bowel:-0.138;Esophagus/Stomach:-0.113;Lung:0.0532;Lymphoid:-0.258;Myeloid:-0.278;Skin:-0.851,220.0,46,0.0147289092428506,,,,,0.4666666666666667,True
-280,6810,STX4,PROG:NMF16,expression-derived,cross-lineage,2,Bladder/Urinary Tract:-9.66;Pancreas:-17.5,,0,0.0149805207845553,,,,,0.4,True
-281,6566,SLC16A1,SIL-other:9123,expression-derived,cross-lineage,2,CNS/Brain:-0.16;Lymphoid:-0.485,64.0,13,0.0159368455048694,,,tested-not-replicated,,0.0666666666666666,True
-282,6046,BRD2,EXPPAR:8019,direct,cross-lineage,3,Esophagus/Stomach:0.145;Lung:0.0809;Lymphoid:0.154,,0,0.0160609529350562,,,tested-not-replicated,,0.4,True
-283,1655,DDX5,EXPPAR:10521,direct,cross-lineage,4,CNS/Brain:0.0847;Head and Neck:0.162;Lung:0.172;Lymphoid:0.171,,0,0.0169915542284677,,,replicated,,0.4,True
-284,865,CBFB,PROG:NMF33,expression-derived,cross-lineage,2,Lung:12.9;Soft Tissue:39.3,,0,0.0176417139915663,,,,,0.1333333333333333,True
-285,4691,NUCLEOLIN,COMP:TP53MUT,proxy,cross-lineage,7,Bowel:0.309;CNS/Brain:0.32;Lung:0.129;Lymphoid:0.00657;Ovary/Fallopian Tube:0.25;Skin:0.227;Soft Tissue:0.307,685.0,164,0.0180375280907346,,,,,0.4666666666666667,True
-286,3187,HNRNPH1,LOSS:3185,potentially-direct,cross-lineage,5,Bone:-0.266;Breast:-0.759;CNS/Brain:-0.342;Lung:-0.432;Skin:-0.343,109.0,36,0.0181035329705103,,gene,tested-not-replicated,,0.1333333333333333,True
-287,6836,SURF4,PROG:NMF32,expression-derived,cross-lineage,3,Bone:-17.5;CNS/Brain:-22.1;Soft Tissue:-50.4,,0,0.0190443371648962,,,,,0.1333333333333333,True
-288,7428,VHL,PROG:NMF33,expression-derived,cross-lineage,2,Lung:35.1;Soft Tissue:24.3,,0,0.0192930520838788,,,,,0.1333333333333333,True
-289,53918,PELO,CLIN:MTAP_LOSS,proxy,cross-lineage,6,CNS/Brain:-0.487;Esophagus/Stomach:-0.351;Lung:-0.177;Lymphoid:-0.332;Myeloid:-0.687;Pancreas:-0.379,201.0,45,0.0193337872554859,,,,,0.2666666666666666,True
-290,6541,SLC7A1,EXPPAR:6542,direct,cross-lineage,2,CNS/Brain:0.0144;Lung:0.0747,,0,0.0195162204431535,,,tested-not-replicated,,0.2,True
-291,5464,PPA1,EXPPAR:27068,direct,cross-lineage,4,CNS/Brain:0.182;Esophagus/Stomach:0.101;Lung:0.192;Lymphoid:0.172,,0,0.0227716618006649,,,tested-not-replicated,,0.2,True
-292,4627,MYH9,PROG:NMF35,expression-derived,cross-lineage,3,Esophagus/Stomach:-64;Lung:-54.2;Pancreas:-27.9,,0,0.0227837049781726,,,,,0.1333333333333333,True
-293,230,ALDOC,SIG:MSISCORE,proxy,cross-lineage,4,Bowel:-0.00122;Esophagus/Stomach:-0.00347;Lymphoid:-0.00157;Uterus:-0.00349,,0,0.023091307783473,,,,,0.0666666666666666,True
-294,1017,CDK2,CLIN:CDK46_SEL,proxy,cross-lineage,8,Breast:0.16;CNS/Brain:0.256;Esophagus/Stomach:0.192;Head and Neck:0.0908;Lung:0.16;Lymphoid:-0.0199;Pancreas:0.113;Skin:0.199,454.0,110,0.0247240266853829,,,,,0.1333333333333333,True
-295,55023,PHIP,PROG:NMF33,expression-derived,cross-lineage,3,Lung:-4.8;Ovary/Fallopian Tube:-23.9;Soft Tissue:-8.06,,0,0.0255084915047595,,,,,0.0,True
-296,112840,WDR89,COMP:TP53MUT,proxy,cross-lineage,10,Bone:0.284;Bowel:0.159;CNS/Brain:0.25;Esophagus/Stomach:0.0399;Lung:0.0584;Lymphoid:0.104;Myeloid:0.225;Ovary/Fallopian Tube:0.189;Skin:0.0246;Soft Tissue:0.11,685.0,164,0.0264579789450686,,,,,0.4,True
-297,65057,ACD,LOFBI:7157,potentially-direct,cross-lineage,5,Bowel:0.192;CNS/Brain:0.171;Lung:0.128;Lymphoid:0.0563;Skin:0.129,627.0,144,0.0275396354851698,,,untested,,0.4,True
-298,10419,PRMT5,SIL-DEL:4507,expression-derived,cross-lineage,11,Biliary Tract:-0.218;Bladder/Urinary Tract:-0.433;Bone:-0.243;Breast:-0.496;CNS/Brain:-0.268;Esophagus/Stomach:-0.513;Lung:-0.423;Lymphoid:-0.19;Myeloid:-0.26;Ovary/Fallopian Tube:-0.425;Pancreas:-0.28,154.0,35,0.0277897688430237,,,untested,,0.0666666666666666,False
-299,55706,NDC1,PROG:NMF32,expression-derived,cross-lineage,3,Bone:-32.6;CNS/Brain:-34.6;Soft Tissue:-22.4,,0,0.027909342721829,,,,,0.4,True
-300,6810,STX4,SIL-METH:4070,expression-derived,cross-lineage,5,Bowel:0.289;Breast:0.447;Esophagus/Stomach:0.579;Lung:0.138;Ovary/Fallopian Tube:0.147,46.0,13,0.028728853667085,,,untested,,0.4,True
-301,7248,TSC1,SIL-other:161291,expression-derived,cross-lineage,4,Breast:0.196;Esophagus/Stomach:0.23;Lung:0.347;Pancreas:0.0272,102.0,28,0.0292707980458057,,,untested,,0.1333333333333333,True
-302,9188,DDX21,COMP:TP53MUT,proxy,cross-lineage,2,CNS/Brain:0.137;Lymphoid:0.272,685.0,164,0.0323770853112849,,,,,0.5333333333333333,True
-303,1021,CDK6,COMP:RB_ALT,proxy,cross-lineage,2,CNS/Brain:0.433;Lung:0.308,71.0,20,0.032546381660939,,,,,0.2,True
-304,3312,HSPA8,EXPPAR:3303,direct,cross-lineage,5,Bowel:0.133;CNS/Brain:0.0199;Esophagus/Stomach:0.123;Lung:0.0288;Lymphoid:0.0609,,0,0.0325474003205415,,,replicated,,0.2666666666666666,True
-305,1478,CSTF2,EXPPAR:23283,direct,cross-lineage,10,Bone:0.117;Bowel:0.177;Breast:0.211;CNS/Brain:0.0684;Esophagus/Stomach:0.276;Head and Neck:0.0243;Lung:0.141;Lymphoid:0.151;Ovary/Fallopian Tube:0.2;Skin:0.00875,,0,0.0333996753715537,,,replicated,,0.0,True
-306,55127,HEATR1,COMP:TP53MUT,proxy,cross-lineage,3,CNS/Brain:0.106;Lymphoid:0.079;Skin:0.107,685.0,164,0.0341318465305712,,,,,0.4666666666666667,True
-307,29960,MRM2,PROG:NMF33,expression-derived,cross-lineage,3,Lung:-20.6;Ovary/Fallopian Tube:-27.2;Soft Tissue:-11.7,,0,0.0349462125769272,,,,,0.3333333333333333,True
-308,55145,THAP1,PSCORE:ISG,expression-derived,cross-lineage,5,CNS/Brain:0.315;Esophagus/Stomach:0.297;Head and Neck:-0.00604;Lung:0.437;Lymphoid:0.315,,0,0.0361498211957772,,,,,0.1333333333333333,True
-309,1499,CTNNB1,HOT:1499,potentially-direct,cross-lineage,4,Bowel:-0.58;Esophagus/Stomach:-0.922;Lung:-0.357;Uterus:-0.11,31.0,4,0.0395301606652409,,,,,0.2,False
-310,8036,SHOC2,HOT:4893,potentially-direct,cross-lineage,6,Bladder/Urinary Tract:-0.407;CNS/Brain:-0.48;Lung:-0.278;Lymphoid:-0.203;Myeloid:-0.265;Skin:-0.876,52.0,10,0.0416237993282429,,,,,0.4666666666666667,True
-311,1495,CTNNA1,PROG:NMF07,expression-derived,cross-lineage,5,Biliary Tract:-10.8;Bowel:-5.03;Esophagus/Stomach:-4.63;Lung:-2.21;Pancreas:-4.84,,0,0.0423832470884206,,,,,0.0666666666666666,True
-312,6814,STXBP3,SIL-other:91862,expression-derived,cross-lineage,5,Breast:0.149;Esophagus/Stomach:0.399;Lung:0.212;Pancreas:0.171;Uterus:0.105,83.0,26,0.0429408323656469,,,untested,,0.4,True
-313,6814,STXBP3,PROG:NMF35,expression-derived,cross-lineage,3,Esophagus/Stomach:48.1;Lung:25.1;Pancreas:28.1,,0,0.0433214949928223,,,,,0.4,True
-314,6129,RPL7,COMP:TP53MUT,proxy,cross-lineage,4,CNS/Brain:0.172;Lung:0.17;Lymphoid:0.251;Skin:0.128,586.0,140,0.0458197478716882,,,,,0.3571428571428571,True
-315,3685,ITGAV,SIL-other:112399,expression-derived,cross-lineage,2,CNS/Brain:-0.0798;Lung:-0.528,105.0,25,0.0459191005065405,,,untested,,0.4666666666666667,True
-316,26135,SERBP1,LOFBI:7157,potentially-direct,cross-lineage,2,CNS/Brain:0.16;Lymphoid:0.0163,627.0,144,0.0476308233301732,,,untested,,0.2,True
-317,23167,EFR3A,PROG:NMF34,expression-derived,lineage-restricted,0,,,0,0.0003973191431641,,,,,0.4666666666666667,True
-318,595,CCND1,EXPPAR:896,direct,lineage-restricted,1,Lymphoid:0.0273,,0,0.0004422330357203,,,tested-not-replicated,,0.1333333333333333,True
-319,7283,TUBG1,EXPPAR:27175,direct,lineage-restricted,1,Lymphoid:0.0283,,0,0.0006562975969055,,,tested-not-replicated,,0.0666666666666666,True
-320,29107,NXT1,PROG:NMF41,expression-derived,lineage-restricted,1,Soft Tissue:-81.9,,0,0.0013613232937362,,,,,0.6666666666666666,True
-321,3099,HK2,EXPPAR:3098,direct,lineage-restricted,0,,,0,0.0017662012418184,,,tested-not-replicated,,0.3333333333333333,True
-322,7296,TXNRD1,PROG:NMF40,expression-derived,lineage-restricted,1,Lung:29.9,,0,0.0018556416254788,,,,,0.2666666666666666,True
-323,6591,SNAI2,EXPPAR:6615,direct,lineage-restricted,0,,,0,0.0023070850295998,,,tested-not-replicated,,0.2,True
-324,79868,ALG13,PROG:NMF13,expression-derived,lineage-restricted,1,Breast:5.02,,0,0.0036186956018309,,,,,0.3333333333333333,True
-325,5870,RAB6A,PROG:NMF33,expression-derived,lineage-restricted,2,Lung:48.3;Soft Tissue:-6.21,,0,0.0041188297940721,,,,,0.7333333333333333,True
-326,4904,YBX1,EXPPAR:8531,direct,lineage-restricted,1,Lymphoid:0.0369,,0,0.0042923594779691,,,tested-not-replicated,,0.4,True
-327,7849,PAX8,PROG:NMF14,expression-derived,lineage-restricted,2,Ovary/Fallopian Tube:-11.1;Uterus:-10.2,,0,0.0064924866320876,,,,,0.0,True
-328,7296,TXNRD1,PSCORE:NRF2,expression-derived,lineage-restricted,1,Lung:0.189,,0,0.0086710728181569,,,,,0.2666666666666666,True
-329,151987,PPP4R2,COMP:TP53MUT,proxy,lineage-restricted,0,,685.0,164,0.0145019197360664,,,,,0.2,True
-330,5045,FURIN,PROG:NMF12,expression-derived,lineage-restricted,1,Lymphoid:-6.66,,0,0.0192663820858566,,,,,0.1333333333333333,True
-331,861,RUNX1,PROG:NMF31,expression-derived,lineage-restricted,2,Lymphoid:-17;Myeloid:-3.52,,0,0.0274886098478762,,,,,0.0,True
-332,896,CCND3,PROG:NMF40,expression-derived,lineage-restricted,2,Esophagus/Stomach:5.23;Lung:-35.3,,0,0.0391552312896371,,,,,0.0666666666666666,True
-333,80146,UXS1,PSCORE:NRF2,expression-derived,lineage-restricted,2,Esophagus/Stomach:0.073;Lung:-0.249,,0,0.0393279026335934,,,,,0.2666666666666666,True
-334,4609,MYC,EXPPAR:4613,direct,lineage-unresolvable,0,,,0,9.79113024607415e-07,,,tested-not-replicated,,0.2666666666666666,True
-335,1783,DYNC1LI2,EXPPAR:51143,direct,lineage-unresolvable,0,,,0,4.12677120502679e-06,,,replicated,,0.0666666666666666,True
-336,5290,PIK3CA,EXPPAR:5293,direct,lineage-unresolvable,1,Lymphoid:0.0878,,0,4.417577420669705e-06,,,tested-not-replicated,,0.1333333333333333,True
-337,10979,FERMT2,PROG:NMF34,expression-derived,lineage-unresolvable,0,,,0,4.948007545098832e-06,,,,,0.6,True
-338,50,ACO2,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,5.601551026603963e-06,,,,,0.0666666666666666,True
-339,1841,DTYMK,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:26.8,,0,7.268054001848565e-06,,,,,0.1333333333333333,True
-340,4627,MYH9,SIL-other:558,expression-derived,lineage-unresolvable,0,,121.0,38,7.78690026208857e-06,,,untested,,0.1333333333333333,True
-341,9968,MED12,PROG:NMF48,expression-derived,lineage-unresolvable,1,Lung:1.68,,0,1.0775931912094655e-05,,,,,0.4,True
-342,9928,KIF14,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:7.62,,0,1.2508197365396603e-05,,,,,0.0,True
-343,595,CCND1,EXPPAR:894,direct,lineage-unresolvable,1,Lymphoid:0.00442,,0,1.5102396949404443e-05,,,tested-not-replicated,,0.1333333333333333,True
-344,51091,SEPSECS,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,1.818533101067428e-05,,,,,0.7333333333333333,True
-345,1956,EGFR,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,2.2391065931488137e-05,,,,,0.3333333333333333,True
-346,128866,CHMP4B,SIL-METH:5777,expression-derived,lineage-unresolvable,0,,34.0,14,2.500956262479772e-05,,,untested,,0.3333333333333333,True
-347,5970,RELA,EXPPAR:5971,direct,lineage-unresolvable,0,,,0,2.7002897287098392e-05,,,tested-not-replicated,,0.2666666666666666,True
-348,57721,METTL14,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,3.451830108392582e-05,,,,,0.0,True
-349,79977,GRHL2,EXPPAR:29841,direct,lineage-unresolvable,1,Lung:-0.0426,,0,3.6835799540850094e-05,,,tested-not-replicated,,0.0,True
-350,3630,INS,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,3.8217575084068016e-05,,,,,0.0666666666666666,True
-351,5976,UPF1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,3.9286860267073184e-05,,,,,0.2666666666666666,True
-352,688,KLF5,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,4.245021951146566e-05,,,,,0.2666666666666666,True
-353,7803,PTP4A1,EXPPAR:8073,direct,lineage-unresolvable,0,,,0,4.3456651749110016e-05,,,replicated,,0.1333333333333333,True
-354,11116,CEP43,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,4.399582589508173e-05,,,,,0.2666666666666666,True
-355,3693,ITGB5,PROG:NMF34,expression-derived,lineage-unresolvable,0,,,0,4.5314289777687496e-05,,,,,0.5333333333333333,True
-356,156,GRK2,SIL-other:999,expression-derived,lineage-unresolvable,0,,75.0,27,5.648428574166235e-05,,,untested,,0.0,True
-357,23065,EMC1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,5.933446860713132e-05,,,,,0.1333333333333333,True
-358,6810,STX4,EXPPAR:112755,direct,lineage-unresolvable,0,,,0,6.549564619662217e-05,,,tested-not-replicated,,0.4,True
-359,57128,LYRM4,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,7.420211206369776e-05,,,,,0.2,True
-360,2182,ACSL4,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,7.758985523962813e-05,,,,,0.1333333333333333,True
-361,5230,PGK1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,8.491060980816162e-05,,,,,0.3333333333333333,True
-362,3688,ITGB1,EXPPAR:3690,direct,lineage-unresolvable,0,,,0,8.580659542346238e-05,,,tested-not-replicated,,0.4666666666666667,True
-363,64794,DDX31,CLIN:DEL17P,proxy,lineage-unresolvable,0,,268.0,71,8.876790787502533e-05,,,,,0.3333333333333333,True
-364,10423,CDIPT,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,9.707890108540872e-05,,,,,0.1333333333333333,True
-365,54205,CYCS,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,9.875672594772492e-05,,,,,0.1333333333333333,True
-366,23041,MON2,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0001053206666923,,,,,0.0666666666666666,True
-367,80204,FBXO11,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0001095023892425,,,,,0.1333333333333333,True
-368,5573,PRKAR1A,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-16.5,,0,0.0001111411009399,,,,,0.3333333333333333,True
-369,63916,ELMO2,PROG:NMF34,expression-derived,lineage-unresolvable,1,Head and Neck:15.1,,0,0.0001177592259741,,,,,0.4,True
-370,5198,PFAS,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.00012017486523,,,,,0.0,True
-371,23524,SRRM2,PROG:NMF16,expression-derived,lineage-unresolvable,0,,,0,0.0001231826928873,,,,,0.8,True
-372,8760,CDS2,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-21,,0,0.0001410897732578,,,,,0.5333333333333333,True
-373,54927,CHCHD3,EXPPAR:84303,direct,lineage-unresolvable,1,Skin:0.0167,,0,0.0001475199351074,,,tested-not-replicated,,0.0666666666666666,True
-374,283742,TSLIG3B,EXPPAR:147965,direct,lineage-unresolvable,0,,,0,0.0001559579418901,,,tested-not-replicated,,0.5333333333333333,True
-375,10653,SPINT2,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0001585691808901,,,,,0.0666666666666666,True
-376,171546,SPTSSA,EXPPAR:165679,direct,lineage-unresolvable,1,Breast:0.0023,,0,0.000166987506725,,,tested-not-replicated,,0.6,True
-377,5970,RELA,PROG:NMF29,expression-derived,lineage-unresolvable,1,Lung:-80,,0,0.0001733968900717,,,,,0.2666666666666666,True
-378,55831,EMC3,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0001917446507104,,,,,0.3333333333333333,True
-379,79693,YRDC,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:25.5,,0,0.0002025938204974,,,,,0.0666666666666666,True
-380,54820,NDE1,EXPPAR:81565,direct,lineage-unresolvable,0,,,0,0.0002049737172956,,,tested-not-replicated,,0.1333333333333333,True
-381,80155,NAA15,EXPPAR:79612,direct,lineage-unresolvable,0,,,0,0.0002104022067745,,,tested-not-replicated,,0.2666666666666666,True
-382,4605,MYBL2,PROG:NMF01,expression-derived,lineage-unresolvable,0,,,0,0.0002109555856093,,,,,0.3333333333333333,True
-383,118672,PSTK,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.000214573187213,,,,,0.6666666666666666,True
-384,64223,MLST8,CLIN:CAPI_ALT,proxy,lineage-unresolvable,1,CNS/Brain:-0.124,197.0,57,0.0002164697102434,,,,,0.2,True
-385,7094,TLN1,PROG:NMF45,expression-derived,lineage-unresolvable,1,Esophagus/Stomach:2.8,,0,0.0002263661448762,,,,,0.4,True
-386,7334,UBE2N,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.0002303378906678,,,untested,,0.0666666666666666,True
-387,11113,CIT,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.000232069710817,,,,,0.1333333333333333,True
-388,677,ZFP36L1,EXPPAR:678,direct,lineage-unresolvable,0,,,0,0.0002399627475965,,,tested-not-replicated,,0.4,True
-389,9219,MTA2,EXPPAR:9112,direct,lineage-unresolvable,0,,,0,0.0002516067480808,,,tested-not-replicated,,0.2,True
-390,8073,PTP4A2,EXPPAR:7803,direct,lineage-unresolvable,0,,,0,0.0002832820763206,,,replicated,,0.0666666666666666,True
-391,79066,METTL16,CLIN:MTAP_LOSS,proxy,lineage-unresolvable,0,,201.0,45,0.0002945372990049,,,,,0.1333333333333333,True
-392,604,BCL6,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-2.8,,0,0.0003127968386005,,,,,0.0,True
-393,6120,RPE,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0003210696181477,,,,,0.0666666666666666,True
-394,8458,TTF2,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0003638633857759,,,,,0.2,True
-395,7334,UBE2N,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:-0.264,685.0,164,0.0003691833177719,,,,,0.0666666666666666,True
-396,65125,WNK1,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0003725224876005,,,,,0.0,True
-397,4659,PPP1R12A,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0003881240261413,,,,,0.2666666666666666,True
-398,892,CCNC,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0003893542711934,,,,,0.1333333333333333,True
-399,4967,OGDH,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0003930448498236,,,,,0.4,True
-400,29956,CERS2,EXPPAR:79603,direct,lineage-unresolvable,0,,,0,0.000477289294501,,,tested-not-replicated,,0.6,True
-401,55154,MSTO1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0004790281077076,,,,,0.4666666666666667,True
-402,128866,CHMP4B,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0005152283598488,,,,,0.3333333333333333,True
-403,253260,RICTOR,CLIN:CAPI_ALT,proxy,lineage-unresolvable,0,,197.0,57,0.0005617365455578,,,,,0.4666666666666667,True
-404,51510,CHMP5,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0005846028423644,,,,,0.2,True
-405,405,ARNT,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0006267903720185,,,,,0.0,True
-406,8760,CDS2,SIL-METH:2886,expression-derived,lineage-unresolvable,1,Lung:-0.239,32.0,14,0.0006635170872923,,,untested,,0.5333333333333333,True
-407,7177,TPSAB1,LOSS:23430,potentially-direct,lineage-unresolvable,0,,139.0,38,0.0006864804396855,,gene,tested-not-replicated,,0.0,True
-408,9525,VPS4B,SIL-other:161291,expression-derived,lineage-unresolvable,0,,102.0,28,0.0006910025839988,,,untested,,0.0,True
-409,14,AAMP,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0007035144222402,,,,,0.6,True
-410,677,ZFP36L1,SIL-other:558,expression-derived,lineage-unresolvable,1,Lung:0.113,121.0,38,0.00073725478059,,,untested,,0.4,True
-411,10658,CELF1,EXPPAR:10659,direct,lineage-unresolvable,0,,,0,0.0007470540471976,,,tested-not-replicated,,0.0,True
-412,5464,PPA1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0007497349983633,,,,,0.2,True
-413,9439,MED23,SIL-other:51703,expression-derived,lineage-unresolvable,1,Esophagus/Stomach:0.191,54.0,10,0.0007736586519789,,,untested,,0.2666666666666666,True
-414,4627,MYH9,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0008092591948706,,,,,0.1333333333333333,True
-415,79912,PYROXD1,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:4.91,,0,0.0008201313054765,,,,,0.2,True
-416,1399,CRKL,EXPPAR:1398,direct,lineage-unresolvable,0,,,0,0.0008927049147544,,,replicated,,0.2,True
-417,84919,PPP1R15B,PROG:NMF26,expression-derived,lineage-unresolvable,1,CNS/Brain:37.9,,0,0.0009044809351157,,,,,0.0666666666666666,True
-418,6935,ZEB1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0009628174881228,,,,,0.0,True
-419,203068,TUBB,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-40.4,,0,0.0009715642675434,,,,,0.2,True
-420,5747,PTK2,PROG:NMF26,expression-derived,lineage-unresolvable,1,CNS/Brain:-23.3,,0,0.0009739645658089,,,,,0.3333333333333333,True
-421,57448,BIRC6,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0009763084014236,,,,,0.4,True
-422,9497,SLC4A7,EXPPAR:8671,direct,lineage-unresolvable,1,CNS/Brain:0.00927,,0,0.0009810073659911,,,tested-not-replicated,,0.2666666666666666,True
-423,60678,EEFSEC,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0009923135637753,,,,,0.4,True
-424,57215,THAP11,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.0010229096829879,,,untested,,0.3333333333333333,True
-425,5976,UPF1,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0010497055836248,,,,,0.2666666666666666,True
-426,2260,FGFR1,EXPPAR:2263,direct,lineage-unresolvable,0,,,0,0.0010666113545376,,,tested-not-replicated,,0.1333333333333333,True
-427,55697,VAC14,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0010731979760837,,,,,0.0,True
-428,220134,SKA1,PROG:NMF50,expression-derived,lineage-unresolvable,0,,,0,0.0010766146139041,,,,,0.2666666666666666,True
-429,55055,ZWILCH,HOT:7157,potentially-direct,lineage-unresolvable,0,,521.0,121,0.0010877742076257,,,,,0.3333333333333333,True
-430,25937,WWTR1,SIL-other:23034,expression-derived,lineage-unresolvable,0,,66.0,15,0.0011190267450247,,,untested,,0.4,True
-431,1063,CENPF,HOT:7157,potentially-direct,lineage-unresolvable,1,CNS/Brain:0.15,521.0,121,0.0011383836883371,,,,,0.3333333333333333,True
-432,374354,NHLRC2,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0011408935643709,,,,,0.1333333333333333,True
-433,64975,MRPL41,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0011413740083959,,,,,0.2666666666666666,True
-434,137492,VPS37A,EXPPAR:79720,direct,lineage-unresolvable,1,Lymphoid:0.0426,,0,0.0011949026559882,,,untested,,0.4,True
-435,8760,CDS2,SIL-other:2886,expression-derived,lineage-unresolvable,1,Lung:-0.18,37.0,15,0.0012378462884066,,,untested,,0.5333333333333333,True
-436,79893,GGNBP2,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0012571516678388,,,,,0.2666666666666666,True
-437,1024,CDK8,EXPPAR:23097,direct,lineage-unresolvable,0,,,0,0.0013825289678439,,,tested-not-replicated,,0.0666666666666666,True
-438,7086,TKT,PSCORE:NRF2,expression-derived,lineage-unresolvable,1,Lung:-0.106,,0,0.0013858625839051,,,,,0.2,True
-439,2971,GTF3A,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0014230184539341,,,,,0.3333333333333333,True
-440,8241,RBM10,EXPPAR:10181,direct,lineage-unresolvable,0,,,0,0.0014290454184574,,,tested-not-replicated,,0.5333333333333333,True
-441,26122,EPC2,EXPPAR:80314,direct,lineage-unresolvable,0,,,0,0.001504868069552,,,tested-not-replicated,,0.2666666666666666,True
-442,6648,SOD2,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0015087249548902,,,,,0.2,True
-443,1349,COX7B,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0015163648294248,,,,,0.0666666666666666,True
-444,6810,STX4,METH:2180,proxy,lineage-unresolvable,0,,106.0,27,0.0015725919193841,,,untested,,0.4,True
-445,56888,KCMF1,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:-0.0263,685.0,164,0.0015911590386306,,,,,0.2,True
-446,65125,WNK1,PROG:NMF40,expression-derived,lineage-unresolvable,1,Lung:-34.1,,0,0.0016253499355612,,,,,0.0,True
-447,677,ZFP36L1,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0016279114413245,,,,,0.4,True
-448,7357,UGCG,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0016429147562892,,,,,0.0666666666666666,True
-449,51009,DERL2,EXPPAR:91319,direct,lineage-unresolvable,1,Lymphoid:0.0323,,0,0.0018237336035455,,,tested-not-replicated,,0.2,True
-450,79139,DERL1,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0018283963167922,,,,,0.0666666666666666,True
-451,3842,TNPO1,EXPPAR:30000,direct,lineage-unresolvable,0,,,0,0.0018386483631903,,,replicated,,0.3333333333333333,True
-452,1349,COX7B,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0018713509605028,,,,,0.0666666666666666,True
-453,51569,UFM1,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-17.5,,0,0.0018731798364184,,,,,0.1333333333333333,True
-454,64121,RRAGC,PROG:NMF05,expression-derived,lineage-unresolvable,0,,,0,0.0018767089117292,,,,,0.6666666666666666,True
-455,51510,CHMP5,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0019660929144988,,,,,0.2,True
-456,51012,PRELID3B,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0019677929070422,,,,,0.2,True
-457,6455,SH3GL1,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-2.43,,0,0.002020697949089,,,,,0.1333333333333333,True
-458,6934,TCF7L2,EXPPAR:6932,direct,lineage-unresolvable,0,,,0,0.0020590992448209,,,tested-not-replicated,,0.0,True
-459,8458,TTF2,PROG:NMF39,expression-derived,lineage-unresolvable,0,,,0,0.002069578805306,,,,,0.2,True
-460,5861,RAB1A,EXPPAR:81876,direct,lineage-unresolvable,0,,,0,0.002090474069111,,,replicated,,0.0,True
-461,476,ATP1A1,PSCORE:NRF2,expression-derived,lineage-unresolvable,0,,,0,0.0021404972874507,,,,,0.2,True
-462,8874,ARHGEF7,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0022169234306939,,,,,0.6666666666666666,True
-463,4848,CNOT2,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:0.198,685.0,164,0.0022214601414182,,,,,0.6,True
-464,5870,RAB6A,PROG:NMF45,expression-derived,lineage-unresolvable,1,Esophagus/Stomach:-8.43,,0,0.0022632793922505,,,,,0.7333333333333333,True
-465,3667,IRS1,EXPPAR:8660,direct,lineage-unresolvable,0,,,0,0.0023194612491576,,,tested-not-replicated,,0.0,True
-466,55072,RNF31,PROG:NMF29,expression-derived,lineage-unresolvable,1,Lung:-74.3,,0,0.0023573556411206,,,,,0.0,True
-467,387,RHOA,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-2.02,,0,0.0023824760135663,,,,,0.4,True
-468,56288,PARD3,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0024016457727856,,,,,0.0666666666666666,True
-469,10487,CAP1,SIL-other:5777,expression-derived,lineage-unresolvable,0,,40.0,14,0.0024657445338063,,,untested,,0.3333333333333333,True
-470,8178,ELL,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0025048309107705,,,,,0.0666666666666666,True
-471,158,ADSL,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:14.5,,0,0.0027333677587954,,,,,0.1333333333333333,True
-472,6307,MSMO1,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0027666624473382,,,,,0.1333333333333333,True
-473,5464,PPA1,PROG:NMF13,expression-derived,lineage-unresolvable,1,Breast:3.42,,0,0.0027861268185883,,,,,0.2,True
-474,10432,RBM14,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0028018362006829,,,,,0.2,True
-475,2072,ERCC4,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0028858986612649,,,,,0.4666666666666667,True
-476,128866,CHMP4B,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0029498667856975,,,,,0.3333333333333333,True
-477,6675,UAP1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0029873865509489,,,,,0.2,True
-478,4001,LMNB1,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0030079885934984,,,,,0.0666666666666666,True
-479,25976,TIPARP,PROG:NMF26,expression-derived,lineage-unresolvable,1,CNS/Brain:-26.9,,0,0.0030917783164748,,,,,0.6,True
-480,54344,DPM3,PROG:NMF17,expression-derived,lineage-unresolvable,1,Bone:4.9,,0,0.003114688964049,,,,,0.2,True
-481,5469,MED1,CLIN:DEL17P,proxy,lineage-unresolvable,1,Lung:-0.357,268.0,71,0.0031723796813736,,,,,0.6,True
-482,63916,ELMO2,PROG:NMF07,expression-derived,lineage-unresolvable,1,Esophagus/Stomach:2.91,,0,0.0032188781803591,,,,,0.4,True
-483,29115,SAP30BP,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0032695802858464,,,,,0.3333333333333333,True
-484,57534,MIB1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0033205049330711,,,,,0.0666666666666666,True
-485,2023,ENO1,EXPPAR:2027,direct,lineage-unresolvable,0,,,0,0.0033542358762533,,,tested-not-replicated,,0.3333333333333333,True
-486,5829,PXN,EXPPAR:9404,direct,lineage-unresolvable,0,,,0,0.0033641607973565,,,tested-not-replicated,,0.2666666666666666,True
-487,54455,FBXO42,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0034296105065022,,,,,0.0,True
-488,255919,CNEP1R1,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0035467567136064,,,,,0.0,True
-489,374354,NHLRC2,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0035492264697601,,,,,0.1333333333333333,True
-490,203068,TUBB,EXPPAR:10383,direct,lineage-unresolvable,0,,,0,0.0036313932376447,,,tested-not-replicated,,0.2,True
-491,4602,MYB,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0036746081094624,,,,,0.0,True
-492,115548,FCHO2,EXPPAR:23149,direct,lineage-unresolvable,0,,,0,0.0037030139416983,,,tested-not-replicated,,0.0666666666666666,True
-493,5747,PTK2,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0037130823503761,,,,,0.3333333333333333,True
-494,55012,PPP2R3C,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0037466352608202,,,,,0.0666666666666666,True
-495,5976,UPF1,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.003811574239904,,,,,0.2666666666666666,True
-496,55705,IPO9,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:0.17,685.0,164,0.0038309664036239,,,,,0.6666666666666666,True
-497,65125,WNK1,PROG:NMF02,expression-derived,lineage-unresolvable,0,,,0,0.0038665084388321,,,,,0.0,True
-498,146909,KIF18B,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0038833200459265,,,,,0.4666666666666667,True
-499,7094,TLN1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0038866603783018,,,,,0.4,True
-500,9968,MED12,EXPPAR:116931,direct,lineage-unresolvable,0,,,0,0.0039321233950537,,,tested-not-replicated,,0.4,True
-501,115548,FCHO2,PROG:NMF05,expression-derived,lineage-unresolvable,0,,,0,0.003937233235132,,,,,0.0666666666666666,True
-502,55670,PEX26,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:8.42,,0,0.0039700759084684,,,,,0.0666666666666666,True
-503,23376,UFL1,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-19.5,,0,0.0040337082977935,,,,,0.2,True
-504,23234,DNAJC9,PROG:NMF05,expression-derived,lineage-unresolvable,0,,,0,0.0040513622090301,,,,,0.4666666666666667,True
-505,7296,TXNRD1,EXPPAR:2936,direct,lineage-unresolvable,0,,,0,0.0042073012412969,,,tested-not-replicated,,0.2666666666666666,True
-506,3685,ITGAV,PROG:NMF45,expression-derived,lineage-unresolvable,1,Esophagus/Stomach:3.95,,0,0.0043040449410415,,,,,0.4666666666666667,True
-507,8775,NAPA,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:3.3,,0,0.0044058791025482,,,,,0.0666666666666666,True
-508,148223,C19orf25,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-22.9,,0,0.0044160834743366,,,,,0.4,True
-509,3675,ITGA3,SIL-other:999,expression-derived,lineage-unresolvable,1,Lung:0.137,75.0,27,0.0044430606887431,,,untested,,0.1333333333333333,True
-510,6574,SLC20A1,EXPPAR:6575,direct,lineage-unresolvable,1,Lung:0.0391,,0,0.0044460604799914,,,tested-not-replicated,,0.0666666666666666,True
-511,7298,TYMS,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0044612463758341,,,,,0.1333333333333333,True
-512,8030,CCDC6,HOT:7157,potentially-direct,lineage-unresolvable,0,,521.0,121,0.0045423222780592,,,,,0.0666666666666666,True
-513,4670,HNRNPM,EXPPAR:50804,direct,lineage-unresolvable,0,,,0,0.0045792293141282,,,replicated,,0.1333333333333333,True
-514,5757,PTMA,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0046028034117945,,,,,0.6,True
-515,124995,MRPL10,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0047325195869336,,,,,0.2,True
-516,3480,IGF1R,CLIN:CAPI_ALT,proxy,lineage-unresolvable,0,,197.0,57,0.0048378167339361,,,,,0.2,True
-517,64132,XYLT2,EXPPAR:64131,direct,lineage-unresolvable,1,CNS/Brain:0.043,,0,0.0049202048652129,,,tested-not-replicated,,0.0666666666666666,True
-518,1349,COX7B,PROG:NMF22,expression-derived,lineage-unresolvable,0,,,0,0.0052158842427758,,,,,0.0666666666666666,True
-519,55012,PPP2R3C,SIL-other:6515,expression-derived,lineage-unresolvable,0,,145.0,37,0.0052366876821343,,,untested,,0.0666666666666666,True
-520,9913,SUPT7L,PROG:NMF45,expression-derived,lineage-unresolvable,0,,,0,0.0054339299242298,,,,,0.0666666666666666,True
-521,57721,METTL14,LOFBI:7157,potentially-direct,lineage-unresolvable,1,CNS/Brain:-0.128,627.0,144,0.0054383189150664,,,untested,,0.0,True
-522,4802,NFYC,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0054996251474488,,,,,0.0666666666666666,True
-523,55585,UBE2Q1,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0055866801793687,,,,,0.2666666666666666,True
-524,3675,ITGA3,SIL-other:5777,expression-derived,lineage-unresolvable,0,,40.0,14,0.0056451663771624,,,untested,,0.1333333333333333,True
-525,8140,SLC7A5,SIL-other:330,expression-derived,lineage-unresolvable,0,,92.0,26,0.006165376270675,,,untested,,0.2666666666666666,True
-526,6713,SQLE,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0064258103910369,,,,,0.1333333333333333,True
-527,8880,FUBP1,EXPPAR:8570,direct,lineage-unresolvable,0,,,0,0.0066421793252816,,,replicated,,0.0666666666666666,True
-528,8178,ELL,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0073416756601837,,,,,0.0666666666666666,True
-529,79087,ALG12,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-13.4,,0,0.0074650748115251,,,,,0.2,True
-530,11021,RAB35,PROG:NMF37,expression-derived,lineage-unresolvable,0,,,0,0.0075723701289652,,,,,0.1333333333333333,True
-531,54205,CYCS,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:7.4,,0,0.0075954604959121,,,,,0.1333333333333333,True
-532,10097,ACTR2,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:3.9,,0,0.0076124028694077,,,,,0.3333333333333333,True
-533,84529,CDIN1,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0076902091177653,,,,,0.4666666666666667,True
-534,5134,PDCD2,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0079074133744223,,,,,0.4,True
-535,124540,MSI2,PROG:NMF31,expression-derived,lineage-unresolvable,1,Lymphoid:-6.93,,0,0.0079350819360687,,,,,0.0666666666666666,True
-536,6541,SLC7A1,EXPPAR:84889,direct,lineage-unresolvable,1,Lymphoid:0.111,,0,0.0080026013056924,,,tested-not-replicated,,0.2,True
-537,998,CDC42,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0081116814328618,,,,,0.2,True
-538,9525,VPS4B,SIL-other:91862,expression-derived,lineage-unresolvable,0,,83.0,26,0.0081594318670671,,,untested,,0.0,True
-539,9391,CIAO1,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0081789218989464,,,,,0.1333333333333333,True
-540,1105,CHD1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.008216479720023,,,,,0.1333333333333333,True
-541,9694,EMC2,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0083334635009066,,,,,0.2,True
-542,10096,ACTR3,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0083602644734652,,,,,0.4,True
-543,8773,SNAP23,PROG:NMF23,expression-derived,lineage-unresolvable,0,,,0,0.0084413446656476,,,,,0.2,True
-544,25913,POT1,PROG:NMF22,expression-derived,lineage-unresolvable,0,,,0,0.008497783679703,,,,,0.4,True
-545,6626,SNRPA,EXPPAR:6629,direct,lineage-unresolvable,0,,,0,0.0085570145922472,,,replicated,,0.2666666666666666,True
-546,1387,CREBBP,LOFBI:2033,direct,lineage-unresolvable,1,Lung:-0.888,19.0,5,0.0087830790454722,,,tested-not-replicated,,0.1333333333333333,False
-547,57217,TTC7A,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-2.12,,0,0.0088050689338565,,,,,0.0,True
-548,1021,CDK6,EXPPAR:1019,direct,lineage-unresolvable,0,,,0,0.0088645931848962,,,replicated,,0.2,True
-549,63916,ELMO2,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0090849343756186,,,,,0.4,True
-550,56052,ALG1,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0091647460685517,,,,,0.1333333333333333,True
-551,54995,OXSM,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.009222979938724,,,,,0.3333333333333333,True
-552,29956,CERS2,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0092955262302842,,,,,0.6,True
-553,1841,DTYMK,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0093286984195349,,,,,0.1333333333333333,True
-554,3480,IGF1R,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0094623386195901,,,,,0.2,True
-555,5238,PGM3,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.009496069646947,,,,,0.0666666666666666,True
-556,112858,TP53RK,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0095083944282412,,,,,0.2666666666666666,True
-557,5094,PCBP2,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.009671307866194,,,,,0.3333333333333333,True
-558,7334,UBE2N,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0100072706531291,,,,,0.0666666666666666,True
-559,2175,FANCA,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0101753294466061,,,,,0.6,True
-560,64763,ZNF574,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0102542401874774,,,,,0.3333333333333333,True
-561,10135,NAMPT,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0102939153728548,,,,,0.4666666666666667,True
-562,56288,PARD3,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0102973085533973,,,,,0.0666666666666666,True
-563,146059,CDAN1,PROG:NMF34,expression-derived,lineage-unresolvable,0,,,0,0.0103559881634321,,,,,0.3333333333333333,True
-564,5230,PGK1,PROG:NMF13,expression-derived,lineage-unresolvable,1,Breast:3.68,,0,0.0104900430125559,,,,,0.3333333333333333,True
-565,1879,EBF1,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-1.13,,0,0.0106032355415966,,,,,0.0666666666666666,True
-566,677,ZFP36L1,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0106100864735455,,,,,0.4,True
-567,4193,MDM2,CLIN:DEL17P,proxy,lineage-unresolvable,0,,268.0,71,0.0106221537691919,,,,,0.6666666666666666,True
-568,23167,EFR3A,SIL-other:330,expression-derived,lineage-unresolvable,0,,92.0,26,0.0109048437570207,,,untested,,0.4666666666666667,True
-569,9130,FAM50A,PROG:NMF02,expression-derived,lineage-unresolvable,0,,,0,0.0113794539746394,,,,,0.4666666666666667,True
-570,10121,ACTR1A,SIL-other:161291,expression-derived,lineage-unresolvable,1,Lung:-0.29,102.0,28,0.0114095978115725,,,untested,,0.2,True
-571,7803,PTP4A1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.011425993701107,,,,,0.1333333333333333,True
-572,6597,SMARCA4,PROG:NMF31,expression-derived,lineage-unresolvable,0,,,0,0.0114646878642349,,,,,0.1333333333333333,True
-573,4841,NONO,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.011487507719558,,,untested,,0.4666666666666667,True
-574,9361,LONP1,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0116727080717008,,,,,0.2,True
-575,4627,MYH9,SIL-other:1806,expression-derived,lineage-unresolvable,0,,88.0,25,0.0118636117299941,,,untested,,0.1333333333333333,True
-576,65057,ACD,HOT:7157,potentially-direct,lineage-unresolvable,0,,521.0,121,0.0119776814798435,,,,,0.4,True
-577,116224,PABIR1,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0121195921332021,,,,,0.4,True
-578,283643,TEDC1,LOFBI:7157,potentially-direct,lineage-unresolvable,1,CNS/Brain:0.0927,627.0,144,0.0121569996983596,,,untested,,0.5333333333333333,True
-579,1163,CKS1B,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:-3.69,,0,0.0122678112706113,,,,,0.0666666666666666,True
-580,9025,RNF8,PROG:NMF22,expression-derived,lineage-unresolvable,0,,,0,0.0122812415330951,,,,,0.4666666666666667,True
-581,7414,VCL,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-14.1,,0,0.01241358141398,,,,,0.1333333333333333,True
-582,57092,PCNP,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0124421200548262,,,,,0.0666666666666666,True
-583,55705,IPO9,PROG:NMF12,expression-derived,lineage-unresolvable,1,Lymphoid:-3.86,,0,0.0124954374197738,,,,,0.6666666666666666,True
-584,51647,CIAO2B,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0124962060167027,,,,,0.2666666666666666,True
-585,8570,KHSRP,EXPPAR:8880,direct,lineage-unresolvable,0,,,0,0.0127852083247936,,,replicated,,0.2,True
-586,11021,RAB35,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-0.988,,0,0.0128685447389296,,,,,0.1333333333333333,True
-587,58490,RPRD1B,EXPPAR:55197,direct,lineage-unresolvable,0,,,0,0.0129457146236593,,,tested-not-replicated,,0.4666666666666667,True
-588,8517,IKBKG,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0131559446538812,,,,,0.0666666666666666,True
-589,51642,MRPL48,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0132400492758917,,,,,0.1333333333333333,True
-590,27332,ZNF638,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0133424094622462,,,,,0.0666666666666666,True
-591,5119,CHMP1A,EXPPAR:57132,direct,lineage-unresolvable,0,,,0,0.0137730505401389,,,replicated,,0.1333333333333333,True
-592,64795,RMND5A,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0140247378896713,,,,,0.2666666666666666,True
-593,29781,NCAPH2,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:0.0774,685.0,164,0.0140337900405413,,,,,0.3333333333333333,True
-594,7073,TIAL1,EXPPAR:7072,direct,lineage-unresolvable,0,,,0,0.014036538438762,,,replicated,,0.2666666666666666,True
-595,4170,MCL1,PROG:NMF35,expression-derived,lineage-unresolvable,0,,,0,0.014157550201696,,,,,0.1333333333333333,True
-596,2673,GFPT1,PROG:NMF34,expression-derived,lineage-unresolvable,0,,,0,0.014284553672984,,,,,0.3333333333333333,True
-597,9857,CEP350,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0146046904861546,,,,,0.0,True
-598,688,KLF5,SIL-METH:2886,expression-derived,lineage-unresolvable,1,Lung:0.221,32.0,14,0.0147401056874434,,,untested,,0.2666666666666666,True
-599,9391,CIAO1,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0150377097695764,,,,,0.1333333333333333,True
-600,10487,CAP1,SIL-METH:5777,expression-derived,lineage-unresolvable,0,,34.0,14,0.0157165622126526,,,untested,,0.3333333333333333,True
-601,51174,TUBD1,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0157593082812111,,,,,0.4,True
-602,4725,NDUFS5,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0159195557977439,,,,,0.2666666666666666,True
-603,23594,ORC6,PROG:NMF40,expression-derived,lineage-unresolvable,1,Lung:21.4,,0,0.0159342770823344,,,,,0.1333333333333333,True
-604,85365,ALG2,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-34.2,,0,0.0160535985203393,,,,,0.4,True
-605,595,CCND1,PROG:NMF38,expression-derived,lineage-unresolvable,1,Lung:-42.1,,0,0.0161686618255603,,,,,0.1333333333333333,True
-606,10914,PAPOLA,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0163673586441106,,,,,0.0666666666666666,True
-607,1871,E2F3,PROG:NMF13,expression-derived,lineage-unresolvable,1,Breast:2.88,,0,0.0165343890025308,,,,,0.5333333333333333,True
-608,4627,MYH9,PROG:NMF29,expression-derived,lineage-unresolvable,1,Lung:-267,,0,0.0166640931605031,,,,,0.1333333333333333,True
-609,65125,WNK1,PROG:NMF35,expression-derived,lineage-unresolvable,1,Pancreas:-18.5,,0,0.0179176180603147,,,,,0.0,True
-610,285237,C3orf38,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-18.4,,0,0.0179711463438639,,,,,0.6,True
-611,6389,SDHA,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0179789445146569,,,,,0.0666666666666666,True
-612,6155,RPL27,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.0179882954148856,,,untested,,0.4,True
-613,3662,IRF4,PROG:NMF12,expression-derived,lineage-unresolvable,1,Lymphoid:-5.8,,0,0.0180744211446906,,,,,0.1333333333333333,True
-614,894,CCND2,EXPPAR:896,direct,lineage-unresolvable,0,,,0,0.0182306724616375,,,tested-not-replicated,,0.1333333333333333,True
-615,991,CDC20,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0185139175109581,,,,,0.3333333333333333,True
-616,165918,RNF168,PROG:NMF22,expression-derived,lineage-unresolvable,0,,,0,0.0186107279276484,,,,,0.2,True
-617,9550,ATP6V1G1,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:7.12,,0,0.0186725343838835,,,,,0.1333333333333333,True
-618,51341,ZBTB7A,LOSS:51341,direct,lineage-unresolvable,0,,200.0,51,0.0188085780939344,,gene,,,0.3333333333333333,True
-619,79693,YRDC,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0188201206516161,,,,,0.0666666666666666,True
-620,7803,PTP4A1,SIL-other:90853,expression-derived,lineage-unresolvable,1,CNS/Brain:-0.117,38.0,8,0.018843655220741,,,untested,,0.1333333333333333,True
-621,7803,PTP4A1,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0190679443861585,,,,,0.1333333333333333,True
-622,3685,ITGAV,SIL-other:5777,expression-derived,lineage-unresolvable,1,Lung:-0.354,40.0,14,0.019187497562139,,,untested,,0.4666666666666667,True
-623,10413,YAP1,PROG:NMF35,expression-derived,lineage-unresolvable,0,,,0,0.0193867079748539,,,,,0.4,True
-624,7157,TP53,EXPPAR:7161,direct,lineage-unresolvable,0,,,0,0.0195974277822128,,,tested-not-replicated,,0.0,True
-625,10890,RAB10,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0198778979962239,,,,,0.0666666666666666,True
-626,5501,PPP1CC,EXPPAR:5499,direct,lineage-unresolvable,0,,,0,0.0200324124129964,,,tested-not-replicated,,0.2,True
-627,79794,SPRING1,SIL-other:330,expression-derived,lineage-unresolvable,0,,92.0,26,0.0203727639989286,,,untested,,0.0,True
-628,8453,CUL2,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.020995167563525,,,untested,,0.4666666666666667,True
-629,896,CCND3,PSCORE:NRF2,expression-derived,lineage-unresolvable,1,Lung:-0.16,,0,0.0211657550206909,,,,,0.0666666666666666,True
-630,7416,VDAC1,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0215134700436188,,,,,0.2666666666666666,True
-631,6193,RPS5,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0218007067335934,,,,,0.3333333333333333,True
-632,8140,SLC7A5,EXPPAR:23428,direct,lineage-unresolvable,1,Esophagus/Stomach:0.0604,,0,0.0219775718790318,,,tested-not-replicated,,0.2666666666666666,True
-633,159,ADSS2,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0220064748270852,,,,,0.1333333333333333,True
-634,55012,PPP2R3C,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0221196047976939,,,,,0.0666666666666666,True
-635,7005,TEAD3,SIL-other:6507,expression-derived,lineage-unresolvable,0,,87.0,24,0.0221681651775245,,,untested,,0.2,True
-636,347734,SLC35B2,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0228959469423508,,,,,0.1333333333333333,True
-637,382,ARF6,PROG:NMF35,expression-derived,lineage-unresolvable,0,,,0,0.0229282473587581,,,,,0.2,True
-638,8178,ELL,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:5.75,,0,0.0229720364128861,,,,,0.0666666666666666,True
-639,285237,C3orf38,SIL-other:1956,expression-derived,lineage-unresolvable,0,,65.0,15,0.0230365561353149,,,untested,,0.6,True
-640,1984,EIF5A,EXPPAR:56648,direct,lineage-unresolvable,0,,,0,0.0231291571854236,,,tested-not-replicated,,0.1428571428571428,True
-641,595,CCND1,PROG:NMF14,expression-derived,lineage-unresolvable,1,Ovary/Fallopian Tube:10.8,,0,0.023819352835392,,,,,0.1333333333333333,True
-642,2232,FDXR,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-28.7,,0,0.023866219757755,,,,,0.2666666666666666,True
-643,55860,ACTR10,PROG:NMF31,expression-derived,lineage-unresolvable,1,Lymphoid:-7.87,,0,0.0241086721923143,,,,,0.0666666666666666,True
-644,1000,CDH2,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:3.64,,0,0.0248525912374902,,,,,0.2,True
-645,8837,CFLAR,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0251822180090537,,,,,0.1333333333333333,True
-646,27132,CPNE7,LOSS:27132,direct,lineage-unresolvable,0,,162.0,41,0.0253261804577657,,gene,,,0.0666666666666666,True
-647,5226,PGD,PROG:NMF01,expression-derived,lineage-unresolvable,0,,,0,0.0256611157532878,,,,,0.1333333333333333,True
-648,7251,TSG101,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0266903276709329,,,,,0.2666666666666666,True
-649,7372,UMPS,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0269232458981708,,,,,0.2,True
-650,6814,STXBP3,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0274563135883309,,,,,0.4,True
-651,5747,PTK2,METH:79767,proxy,lineage-unresolvable,1,Lung:-0.265,54.0,14,0.0275774696010647,,,untested,,0.3333333333333333,True
-652,60493,FASTKD5,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0275835301399449,,,,,0.4,True
-653,2011,MARK2,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0279705389392482,,,,,0.2666666666666666,True
-654,2531,KDSR,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-29.9,,0,0.0285960818587354,,,,,0.3333333333333333,True
-655,5573,PRKAR1A,PROG:NMF20,expression-derived,lineage-unresolvable,0,,,0,0.0287477115645097,,,,,0.3333333333333333,True
-656,8621,CDK13,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0288990069765691,,,,,0.0,True
-657,27068,PPA2,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0293346272213463,,,,,0.4666666666666667,True
-658,3187,HNRNPH1,PROG:NMF45,expression-derived,lineage-unresolvable,0,,,0,0.0295141778747783,,,,,0.1333333333333333,True
-659,4144,MAT2A,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0298293601534365,,,,,0.1333333333333333,True
-660,5770,PTPN1,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0298562103064623,,,,,0.2666666666666666,True
-661,8242,KDM5C,PROG:NMF49,expression-derived,lineage-unresolvable,0,,,0,0.030134707078938,,,,,0.0,True
-662,10213,PSMD14,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0301681609060429,,,,,0.0666666666666666,True
-663,1503,CTPS1,EXPPAR:56474,direct,lineage-unresolvable,1,Lymphoid:0.0672,,0,0.0302221681087906,,,tested-not-replicated,,0.3333333333333333,True
-664,9662,CEP135,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0309361195072784,,,,,0.0666666666666666,True
-665,25793,FBXO7,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0310320124522032,,,,,0.0,True
-666,10370,CITED2,PROG:NMF17,expression-derived,lineage-unresolvable,1,Bone:-8.19,,0,0.0313713812922117,,,,,0.0,True
-667,6814,STXBP3,PROG:NMF05,expression-derived,lineage-unresolvable,0,,,0,0.0316348973372621,,,,,0.4,True
-668,55312,RFK,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0323276041824768,,,,,0.0666666666666666,True
-669,57018,CCNL1,EXPPAR:81669,direct,lineage-unresolvable,1,CNS/Brain:0.0699,,0,0.0327086097230255,,,replicated,,0.2,True
-670,9088,PKMYT1,EXPPAR:7465,direct,lineage-unresolvable,0,,,0,0.0328031368874479,,,tested-not-replicated,,0.0,True
-671,5728,PTEN,CLIN:PTEN_LOF,proxy,lineage-unresolvable,1,CNS/Brain:-0.329,105.0,36,0.0331208705794986,,,,,0.0,True
-672,339487,TSLIG1,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.033127181425189,,,,,0.3333333333333333,True
-673,4836,NMT1,PROG:NMF05,expression-derived,lineage-unresolvable,0,,,0,0.0331704026165675,,,,,0.0,True
-674,6391,SDHC,PROG:NMF32,expression-derived,lineage-unresolvable,0,,,0,0.0335268397153236,,,,,0.0,True
-675,29781,NCAPH2,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.0337461588965408,,,untested,,0.3333333333333333,True
-676,553115,PEF1,HOT:7157,potentially-direct,lineage-unresolvable,0,,521.0,121,0.0338848616469921,,,,,0.2,True
-677,1841,DTYMK,EXPPAR:129607,direct,lineage-unresolvable,0,,,0,0.0340038371703936,,,untested,,0.1333333333333333,True
-678,4288,MKI67,PROG:NMF45,expression-derived,lineage-unresolvable,1,Esophagus/Stomach:-3.74,,0,0.0343357218511095,,,,,0.0,True
-679,9550,ATP6V1G1,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.034645444089435,,,,,0.1333333333333333,True
-680,3843,IPO5,PROG:NMF35,expression-derived,lineage-unresolvable,0,,,0,0.0362579730623193,,,,,0.3333333333333333,True
-681,51373,MRPS17,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0364945359137014,,,,,0.2,True
-682,25976,TIPARP,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0375935668866832,,,,,0.6,True
-683,5870,RAB6A,SIL-other:5777,expression-derived,lineage-unresolvable,1,Lung:0.223,40.0,14,0.0376155741268661,,,untested,,0.7333333333333333,True
-684,57589,RIC1,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0377161673778331,,,,,0.4,True
-685,5757,PTMA,PROG:NMF37,expression-derived,lineage-unresolvable,0,,,0,0.0391381784328262,,,,,0.6,True
-686,60490,PPCDC,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0392659842473925,,,,,0.1333333333333333,True
-687,6146,RPL22,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0393046223008848,,,,,0.1333333333333333,True
-688,10735,STAG2,EXPPAR:10274,direct,lineage-unresolvable,0,,,0,0.0398504375775636,,,tested-not-replicated,,0.2,True
-689,23335,WDR7,PROG:NMF35,expression-derived,lineage-unresolvable,0,,,0,0.0400319904717735,,,,,0.1333333333333333,True
-690,7979,SEM1,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0407626747565629,,,,,0.0666666666666666,True
-691,128866,CHMP4B,PROG:NMF20,expression-derived,lineage-unresolvable,1,Lung:8.65,,0,0.0407691940443901,,,,,0.3333333333333333,True
-692,6152,RPL24,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0416382310318643,,,,,0.3333333333333333,True
-693,5093,PCBP1,PROG:NMF05,expression-derived,lineage-unresolvable,0,,,0,0.0417721676477717,,,,,0.4666666666666667,True
-694,6502,SKP2,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0419171655754773,,,,,0.2666666666666666,True
-695,22818,COPZ1,EXPPAR:51226,direct,lineage-unresolvable,0,,,0,0.042619322752411,,,tested-not-replicated,,0.2,True
-696,5198,PFAS,PROG:NMF45,expression-derived,lineage-unresolvable,1,Esophagus/Stomach:-4.8,,0,0.043255119779829,,,,,0.0,True
-697,22820,COPG1,PSCORE:NRF2,expression-derived,lineage-unresolvable,0,,,0,0.0436651099432336,,,,,0.4,True
-698,80777,CYB5B,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0447499282885425,,,,,0.3333333333333333,True
-699,763,CA5A,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.0447992176847506,,,untested,,0.2666666666666666,True
-700,50,ACO2,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0450675721183559,,,,,0.0666666666666666,True
-701,26519,TIMM10,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.046109492938195,,,,,0.1333333333333333,True
-702,83990,BRIP1,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:0.204,685.0,164,0.0463506306673837,,,,,0.5333333333333333,True
-703,27429,HTRA2,PROG:NMF31,expression-derived,lineage-unresolvable,1,Lymphoid:8.47,,0,0.0480601919414405,,,,,0.0,True
-704,80273,GRPEL1,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0484058768355998,,,,,0.0666666666666666,True
-705,4728,NDUFS8,PROG:NMF33,expression-derived,lineage-unresolvable,0,,,0,0.0486380040318493,,,,,0.4666666666666667,True
-706,1719,DHFR,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:11.1,,0,0.0494941577860524,,,,,0.0666666666666666,True
-707,10617,STAMBP,PROG:NMF40,expression-derived,lineage-unresolvable,1,Lung:15.6,,0,0.0498912988642447,,,,,0.2666666666666666,True
-708,10979,FERMT2,PROG:NMF32,expression-derived,undetermined,3,Bone:-5.21;CNS/Brain:-41.1;Soft Tissue:4.78,,0,2.101916128130618e-06,,,,,0.6,True
-709,23399,CTDNEP1,PROG:NMF32,expression-derived,undetermined,3,Bone:13.7;CNS/Brain:-30;Soft Tissue:-22.6,,0,6.546808835731827e-06,,,,,0.6666666666666666,True
-710,3685,ITGAV,PROG:NMF34,expression-derived,undetermined,3,Esophagus/Stomach:19.5;Head and Neck:-7.19;Pancreas:110,,0,7.255304013974072e-06,,,,,0.4666666666666667,True
-711,10890,RAB10,PROG:NMF45,expression-derived,undetermined,3,Bowel:-9.72;Esophagus/Stomach:-10.1;Pancreas:-8.6,,0,4.583505916470362e-05,,,,,0.0666666666666666,True
-712,1499,CTNNB1,PROG:NMF45,expression-derived,undetermined,3,Bowel:-13.8;Esophagus/Stomach:-3.47;Pancreas:-13,,0,5.535144144260488e-05,,,,,0.2,True
-713,6434,TRA2B,EXPPAR:29896,direct,undetermined,2,CNS/Brain:0.106;Skin:0.182,,0,6.15885161563686e-05,,,replicated,,0.2666666666666666,True
-714,6934,TCF7L2,PROG:NMF45,expression-derived,undetermined,3,Bowel:-10.1;Esophagus/Stomach:-8.74;Pancreas:-13.9,,0,0.0001692628519238,,,,,0.0,True
-715,10979,FERMT2,PROG:NMF07,expression-derived,undetermined,2,Bowel:-0.404;Esophagus/Stomach:5.03,,0,0.0001742361052899,,,,,0.6,True
-716,57217,TTC7A,PROG:NMF45,expression-derived,undetermined,3,Bowel:-0.653;Esophagus/Stomach:-9.07;Pancreas:-7.95,,0,0.0002608525562318,,,,,0.0,True
-717,3685,ITGAV,SIL-other:999,expression-derived,undetermined,4,Breast:-0.517;Lung:-0.401;Ovary/Fallopian Tube:0.15;Uterus:0.249,75.0,27,0.0004455579154501,,,untested,,0.4666666666666667,True
-718,10419,PRMT5,SIL-DEL:1029,expression-derived,undetermined,5,Esophagus/Stomach:-0.333;Head and Neck:-0.0877;Lung:-0.261;Lymphoid:0.0228;Skin:0.098,143.0,37,0.0015305252267583,,,untested,,0.0666666666666666,True
-719,51719,CAB39,PROG:NMF45,expression-derived,undetermined,3,Bowel:-3.39;Esophagus/Stomach:-8.68;Pancreas:-7.39,,0,0.0016364882416528,,,,,0.1333333333333333,True
-720,896,CCND3,EXPPAR:894,direct,undetermined,4,Bowel:-0.0105;CNS/Brain:0.0156;Lung:0.0274;Lymphoid:0.0886,,0,0.0019125536495061,,,tested-not-replicated,,0.0666666666666666,True
-721,65125,WNK1,EXPPAR:65268,direct,undetermined,4,Bowel:0.137;Breast:0.121;Lung:-0.0114;Lymphoid:-0.00289,,0,0.0023599654136818,,,tested-not-replicated,,0.0,True
-722,5757,PTMA,LOFBI:7157,potentially-direct,undetermined,2,CNS/Brain:0.127;Lymphoid:-0.0119,627.0,144,0.0031495604990371,,,untested,,0.6,True
-723,378,ARF4,PSCORE:NRF2,expression-derived,undetermined,2,Esophagus/Stomach:0.048;Lung:-0.145,,0,0.0034443307599171,,,,,0.2666666666666666,True
-724,5428,POLG,PROG:NMF33,expression-derived,undetermined,2,Lung:-24.4;Soft Tissue:0.849,,0,0.0035895566883937,,,,,0.1333333333333333,True
-725,688,KLF5,PROG:NMF45,expression-derived,undetermined,3,Bowel:-14.2;Esophagus/Stomach:-5.41;Pancreas:-14.3,,0,0.0038889763358263,,,,,0.2666666666666666,True
-726,3675,ITGA3,PROG:NMF34,expression-derived,undetermined,3,Esophagus/Stomach:-18.7;Head and Neck:17.6;Pancreas:-46.9,,0,0.0055030037288796,,,,,0.1333333333333333,True
-727,1163,CKS1B,LOFBI:5925,potentially-direct,undetermined,2,CNS/Brain:-0.283;Lung:0.0199,50.0,16,0.005719630173288,,,untested,,0.0666666666666666,True
-728,3845,KRAS,AMP:3845,direct,undetermined,4,Esophagus/Stomach:-0.74;Lung:-0.573;Ovary/Fallopian Tube:-0.616;Pancreas:0.0778,62.0,15,0.0061044792058651,,gene,,,0.4,False
-729,283149,BCL9L,PROG:NMF45,expression-derived,undetermined,3,Bowel:-3.98;Esophagus/Stomach:-6.06;Pancreas:-3.96,,0,0.0103895576586004,,,,,0.0,True
-730,3685,ITGAV,PROG:NMF26,expression-derived,undetermined,2,CNS/Brain:2.2;Lung:-52.4,,0,0.0111194125256945,,,,,0.4666666666666667,True
-731,3726,JUNB,PROG:NMF07,expression-derived,undetermined,3,Bowel:-1.34;Esophagus/Stomach:-3.91;Pancreas:-4.32,,0,0.0165655178105749,,,,,0.3333333333333333,True
-732,1871,E2F3,CLIN:CDK46_SEL,proxy,undetermined,3,CNS/Brain:0.244;Esophagus/Stomach:-0.0855;Lung:0.111,454.0,110,0.0191476565767992,,,,,0.5333333333333333,True
-733,56288,PARD3,PROG:NMF06,expression-derived,undetermined,2,Ovary/Fallopian Tube:-0.883;Uterus:-1.57,,0,0.0354477435456394,,,,,0.0666666666666666,True
-734,84612,PARD6B,PROG:NMF07,expression-derived,undetermined,3,Bowel:-4.66;Esophagus/Stomach:-2.73;Pancreas:-3.5,,0,0.0386014598663896,,,,,0.0,True
-735,324,APC,PROG:NMF14,expression-derived,undetermined,2,Ovary/Fallopian Tube:-3.68;Uterus:-3.66,,0,0.0428268692350575,,,,,0.4,True
+209,84919,PPP1R15B,EXPPAR:23645,direct,cross-lineage,2,Lung:0.114;Lymphoid:0.0415,,0,0.0015297379038807,,,untested,,0.0666666666666666,True
+210,5693,PSMB5,PROG:NMF18,expression-derived,cross-lineage,6,CNS/Brain:236;Esophagus/Stomach:207;Head and Neck:37.6;Lung:310;Lymphoid:366;Soft Tissue:271,,0,0.0016103054535103,,,,,0.1333333333333333,True
+211,25842,ASF1A,PROG:NMF22,expression-derived,cross-lineage,4,CNS/Brain:-5.55;Lung:-19.9;Lymphoid:-16.9;Skin:-18.9,,0,0.0017606729294483,,,,,0.0666666666666666,True
+212,23167,EFR3A,PROG:NMF07,expression-derived,cross-lineage,7,Biliary Tract:-13.9;Bowel:-7.57;Esophagus/Stomach:-10.4;Head and Neck:-12.9;Lung:-13.5;Ovary/Fallopian Tube:-8.18;Pancreas:-8.27,,0,0.0018342278535381,,,,,0.4666666666666667,True
+213,26164,MTG2,PROG:NMF33,expression-derived,cross-lineage,2,Lung:-15.3;Soft Tissue:-12,,0,0.0018553502325159,,,,,0.2666666666666666,True
+214,3609,ILF3,EXPPAR:55342,direct,cross-lineage,2,CNS/Brain:0.0428;Lymphoid:0.0284,,0,0.001907281363384,,,tested-not-replicated,,0.1333333333333333,True
+215,51430,SUCO,PROG:NMF40,expression-derived,cross-lineage,2,Esophagus/Stomach:-32.4;Lung:-29.3,,0,0.0020975866774235,,,,,0.0666666666666666,True
+216,63916,ELMO2,METH:79767,proxy,cross-lineage,6,Bladder/Urinary Tract:-0.461;Bowel:-0.4;Breast:-0.277;Esophagus/Stomach:-0.367;Lung:-0.256;Ovary/Fallopian Tube:-0.548,54.0,14,0.0021455045366792,,,tested-not-replicated,,0.4,True
+217,25937,WWTR1,PROG:NMF35,expression-derived,cross-lineage,2,Lung:-37.4;Pancreas:-19.2,,0,0.0021861345349853,,,,,0.4,True
+218,65057,ACD,COMP:TP53MUT,proxy,cross-lineage,5,Bowel:0.0945;CNS/Brain:0.164;Lung:0.0997;Lymphoid:0.0512;Skin:0.157,685.0,164,0.0023001905231693,,,,,0.4,True
+219,3169,FOXA1,PROG:NMF13,expression-derived,cross-lineage,2,Breast:-8.66;Lung:-7.91,,0,0.0023992014871924,,,,,0.0,True
+220,1398,CRK,EXPPAR:1399,direct,cross-lineage,6,Breast:0.0327;CNS/Brain:0.0976;Esophagus/Stomach:0.0966;Lung:0.111;Lymphoid:0.0189;Ovary/Fallopian Tube:0.103,,0,0.0024366383759648,,,replicated,,0.1333333333333333,True
+221,8774,NAPG,LOSS:8775,potentially-direct,cross-lineage,4,Breast:-0.202;CNS/Brain:-0.346;Lung:-0.243;Pancreas:-0.454,84.0,35,0.0026393285792467,,gene,untested,,0.1333333333333333,True
+222,6173,RPL36A,EXPPAR:6166,direct,cross-lineage,4,Breast:0.0964;CNS/Brain:0.379;Esophagus/Stomach:0.252;Pancreas:0.124,,0,0.0026659640057903,,,replicated,,0.0,True
+223,6009,RHEB,EXPPAR:121268,direct,cross-lineage,2,Lung:0.053;Lymphoid:0.102,,0,0.0027272330838895,,,tested-not-replicated,,0.3333333333333333,True
+224,51013,EXOSC1,LOFBI:7157,potentially-direct,cross-lineage,5,Bowel:0.128;CNS/Brain:0.0355;Lung:0.14;Lymphoid:0.0731;Skin:0.292,627.0,144,0.0028251376020502,,,untested,,0.5333333333333333,True
+225,3685,ITGAV,SIL-other:360,expression-derived,cross-lineage,6,Bowel:-0.197;Breast:-0.241;Esophagus/Stomach:-0.14;Lung:-0.547;Lymphoid:-0.0395;Pancreas:-0.46,98.0,20,0.0028296818932937,,,untested,,0.4666666666666667,True
+226,196,AHR,PROG:NMF26,expression-derived,cross-lineage,2,CNS/Brain:19.2;Lung:27.2,,0,0.0031325663825529,,,,,0.0666666666666666,True
+227,5870,RAB6A,PROG:NMF07,expression-derived,cross-lineage,4,Bowel:-6.58;Esophagus/Stomach:-7.17;Lung:-5.59;Pancreas:-9.64,,0,0.0034497154577257,,,,,0.7333333333333333,True
+228,9197,SLC33A1,PROG:NMF40,expression-derived,cross-lineage,2,Esophagus/Stomach:-72.1;Lung:-30.7,,0,0.0035183753850887,,,,,0.0666666666666666,True
+229,85291,KRTAP4-2,LOSS:85291,direct,cross-lineage,6,Bone:0.461;Bowel:0.407;Breast:0.248;CNS/Brain:0.168;Lung:0.366;Ovary/Fallopian Tube:0.296,76.0,16,0.0036740743956676,,gene,,,0.2666666666666666,True
+230,5134,PDCD2,COMP:TP53MUT,proxy,cross-lineage,2,CNS/Brain:0.188;Lymphoid:0.28,685.0,164,0.0040717133559029,,,,,0.4,True
+231,2237,FEN1,PROG:NMF32,expression-derived,cross-lineage,2,CNS/Brain:-30.9;Soft Tissue:-37.7,,0,0.004190893778825,,,,,0.4,True
+232,156,GRK2,PROG:NMF34,expression-derived,cross-lineage,3,Esophagus/Stomach:-9.03;Head and Neck:-30.1;Pancreas:-39.1,,0,0.0043775896066189,,,,,0.0,True
+233,85291,KRTAP4-2,LOSS:653240,potentially-direct,cross-lineage,10,Bone:0.367;Bowel:0.45;Breast:0.351;CNS/Brain:0.181;Esophagus/Stomach:0.171;Head and Neck:0.215;Lung:0.361;Ovary/Fallopian Tube:0.488;Pancreas:0.199;Skin:0.133,108.0,21,0.0044198676973588,,gene,tested-not-replicated,,0.2666666666666666,True
+234,23167,EFR3A,PROG:NMF29,expression-derived,cross-lineage,2,Head and Neck:-352;Lung:-361,,0,0.0046944983557605,,,,,0.4666666666666667,True
+235,3658,IREB2,EXPPAR:48,direct,cross-lineage,8,Bowel:0.0479;Breast:0.159;CNS/Brain:0.0371;Esophagus/Stomach:0.0772;Head and Neck:0.0475;Lung:0.0445;Lymphoid:0.157;Skin:0.0835,,0,0.0047198023983529,,,replicated,,0.0,True
+236,9564,BCAR1,PROG:NMF35,expression-derived,cross-lineage,3,Esophagus/Stomach:-8.59;Lung:-21.6;Pancreas:-21.5,,0,0.0047847998969922,,,,,0.1333333333333333,True
+237,490,ATP2B1,SIL-other:493,expression-derived,cross-lineage,3,Bowel:-0.295;Esophagus/Stomach:-0.759;Lymphoid:-0.473,25.0,7,0.0049621821808013,,,tested-not-replicated,,0.0,True
+238,10274,STAG1,EXPPAR:10735,direct,cross-lineage,3,Bone:0.14;CNS/Brain:0.189;Lymphoid:0.108,,0,0.0053266938213907,,,tested-not-replicated,,0.0,False
+239,6605,SMARCE1,PROG:NMF33,expression-derived,cross-lineage,2,Lung:28.8;Soft Tissue:25.6,,0,0.0054957894932465,,,,,0.4,True
+240,1021,CDK6,LOFBI:5925,potentially-direct,cross-lineage,2,CNS/Brain:0.537;Lung:0.308,53.0,16,0.0056589258835361,,,untested,RB1_LOF__CDK46__pan,0.2,False
+241,6201,RPS7,LOFBI:7157,potentially-direct,cross-lineage,5,Bowel:0.218;CNS/Brain:0.164;Lung:0.119;Lymphoid:0.192;Skin:0.0698,627.0,144,0.0060496043502821,,,untested,,0.5333333333333333,True
+242,1063,CENPF,LOFBI:7157,potentially-direct,cross-lineage,2,CNS/Brain:0.179;Lymphoid:0.0336,627.0,144,0.0061074251853729,,,untested,,0.3333333333333333,True
+243,10419,PRMT5,CLIN:MTAP_LOSS,proxy,cross-lineage,10,Biliary Tract:-0.209;Bladder/Urinary Tract:-0.395;Breast:-0.484;CNS/Brain:-0.365;Esophagus/Stomach:-0.483;Lung:-0.397;Lymphoid:-0.0961;Myeloid:-0.229;Ovary/Fallopian Tube:-0.402;Pancreas:-0.249,201.0,45,0.0061690913743899,,,,MTAP_LOSS__PRMT5__pan,0.0666666666666666,False
+244,1678,TIMM8A,EXPPAR:26521,direct,cross-lineage,3,CNS/Brain:0.0138;Lung:0.0175;Lymphoid:0.188,,0,0.0062657253487274,,,tested-not-replicated,,0.3333333333333333,True
+245,1163,CKS1B,COMP:RB_ALT,proxy,cross-lineage,5,Bladder/Urinary Tract:-0.303;Bone:-0.325;CNS/Brain:-0.298;Lung:0.0199;Uterus:-0.164,66.0,19,0.0064032670629159,,,,,0.0666666666666666,True
+246,6502,SKP2,CLIN:CDK46_SEL,proxy,cross-lineage,2,CNS/Brain:0.411;Lung:0.163,454.0,110,0.006746498654668,,,,,0.2666666666666666,True
+247,2232,FDXR,COMP:TP53MUT,proxy,cross-lineage,2,CNS/Brain:-0.219;Lymphoid:-0.169,685.0,164,0.0067489921110385,,,,,0.2666666666666666,True
+248,85291,KRTAP4-2,LOSS:85289,potentially-direct,cross-lineage,8,Bone:0.461;Bowel:0.398;Breast:0.243;CNS/Brain:0.216;Esophagus/Stomach:0.198;Head and Neck:0.266;Lung:0.161;Pancreas:0.264,118.0,31,0.0068045111732476,,gene,tested-not-replicated,,0.2666666666666666,True
+249,7050,TGIF1,EXPPAR:60436,direct,cross-lineage,2,CNS/Brain:0.0209;Lung:0.0738,,0,0.0075985302527809,,,tested-not-replicated,,0.0,True
+250,2885,GRB2,CLIN:RAS_MUT,proxy,cross-lineage,9,Bowel:-0.052;Esophagus/Stomach:0.402;Lung:0.657;Lymphoid:0.139;Myeloid:0.857;Ovary/Fallopian Tube:0.396;Pancreas:0.194;Skin:0.457;Uterus:0.549,220.0,46,0.0079631542281335,,,,,0.2,True
+251,54870,QRICH1,COMP:TP53MUT,proxy,cross-lineage,2,CNS/Brain:0.106;Lymphoid:0.0997,685.0,164,0.0079702028705158,,,,,0.4,True
+252,55154,MSTO1,PROG:NMF32,expression-derived,cross-lineage,2,CNS/Brain:-29.7;Soft Tissue:-16.2,,0,0.0080027392948633,,,,,0.4666666666666667,True
+253,200916,RPL22L1,SIG:MSISCORE,proxy,cross-lineage,5,Bowel:-0.00714;Esophagus/Stomach:-0.00553;Lymphoid:-0.00242;Ovary/Fallopian Tube:-0.00622;Uterus:-0.00268,,0,0.0082260374471682,,,,,0.0,True
+254,53918,PELO,SIG:MSISCORE,proxy,cross-lineage,4,Bowel:-0.013;Esophagus/Stomach:-0.00502;Lymphoid:-0.00396;Uterus:-0.0129,,0,0.0082669437869328,,,,,0.2666666666666666,True
+255,4000,LMNA,SIL-other:58495,expression-derived,cross-lineage,4,Breast:-0.207;Esophagus/Stomach:-0.0848;Lung:-0.215;Ovary/Fallopian Tube:-0.042,87.0,25,0.0083025200234647,,,untested,,0.1333333333333333,True
+256,6191,RPS4X,YABS:6192,expression-derived,cross-lineage,15,Biliary Tract:-0.331;Bladder/Urinary Tract:-0.84;Bone:-0.803;Bowel:-0.408;CNS/Brain:-0.687;Esophagus/Stomach:-0.637;Head and Neck:-0.529;Kidney:-0.216;Lung:-0.274;Lymphoid:-0.343;Myeloid:-0.673;Pancreas:-0.612;Peripheral Nervous System:-0.907;Skin:-0.767;Soft Tissue:-0.281,504.0,139,0.008339127557901,,,tested-not-replicated,,0.3333333333333333,True
+257,9197,SLC33A1,PSCORE:NRF2,expression-derived,cross-lineage,5,CNS/Brain:-0.107;Esophagus/Stomach:-0.189;Head and Neck:-0.0338;Lung:-0.163;Ovary/Fallopian Tube:-0.0874,,0,0.0086120429721368,,,,,0.0666666666666666,True
+258,55599,RNPC3,SIG:MSISCORE,proxy,cross-lineage,3,Bowel:-0.00388;Lymphoid:-0.00624;Uterus:-0.00868,,0,0.0089096424298134,,,,,0.5333333333333333,True
+259,29914,UBIAD1,PROG:NMF35,expression-derived,cross-lineage,3,Esophagus/Stomach:-39.1;Lung:-39.2;Pancreas:-22,,0,0.0089836134638392,,,,,0.4,True
+260,2553,GABPB1,EXPPAR:126626,direct,cross-lineage,2,Lung:0.125;Lymphoid:0.0915,,0,0.0091299151945147,,,tested-not-replicated,,0.4,True
+261,23167,EFR3A,SIL-other:1846,expression-derived,cross-lineage,2,CNS/Brain:0.0138;Lung:0.227,89.0,20,0.0091883164724563,,,untested,,0.4666666666666667,True
+262,10419,PRMT5,LOSS:4507,potentially-direct,cross-lineage,2,CNS/Brain:-0.177;Lung:-0.192,439.0,103,0.0092479405088209,,gene,untested,,0.0666666666666666,False
+263,10197,PSME3,COMP:TP53MUT,proxy,cross-lineage,5,Bowel:0.163;CNS/Brain:0.149;Lung:0.195;Lymphoid:-0.00589;Skin:0.248,685.0,164,0.0094222422271999,,,,,0.2666666666666666,True
+264,79644,SRD5A3,SIL-other:10553,expression-derived,cross-lineage,3,Bone:-0.162;CNS/Brain:-0.0947;Soft Tissue:-0.291,78.0,16,0.0097424339348004,,,untested,,0.3333333333333333,True
+265,9587,MAD2L1BP,COMP:TP53MUT,proxy,cross-lineage,5,Bowel:0.0641;CNS/Brain:0.167;Lung:0.182;Lymphoid:0.0572;Skin:0.285,685.0,164,0.0105105979523293,,,,,0.6666666666666666,True
+266,51026,GOLT1B,PROG:NMF32,expression-derived,cross-lineage,2,CNS/Brain:-31.8;Soft Tissue:-8.01,,0,0.0105489674198786,,,,,0.2,True
+267,9131,AIFM1,PROG:NMF40,expression-derived,cross-lineage,2,Esophagus/Stomach:-52;Lung:-29.2,,0,0.0106712779818646,,,,,0.3333333333333333,True
+268,262,AMD1,CLIN:MTAP_LOSS,proxy,cross-lineage,4,CNS/Brain:0.0445;Lung:0.156;Lymphoid:0.255;Pancreas:0.332,201.0,45,0.0111384976898147,,,,,0.0666666666666666,True
+269,1163,CKS1B,CLIN:CDK46_SEL,proxy,cross-lineage,3,CNS/Brain:0.19;Esophagus/Stomach:0.185;Lung:0.0994,445.0,108,0.0114298667514604,,,,,0.0666666666666666,True
+270,103,ADAR,PROG:NMF18,expression-derived,cross-lineage,2,CNS/Brain:-166;Lymphoid:-129,,0,0.0119068799346477,,,,,0.3333333333333333,True
+271,898,CCNE1,CLIN:CDK46_SEL,proxy,cross-lineage,4,CNS/Brain:0.132;Esophagus/Stomach:0.00179;Lung:0.135;Lymphoid:0.00591,454.0,110,0.0120547378422827,,,,,0.0666666666666666,True
+272,10573,MRPL28,PROG:NMF33,expression-derived,cross-lineage,3,Lung:-13.1;Ovary/Fallopian Tube:-17.8;Soft Tissue:-11.9,,0,0.0125411221505515,,,,,0.4,True
+273,10410,IFITM3,LOSS:10581,potentially-direct,cross-lineage,3,Breast:0.313;Esophagus/Stomach:0.141;Lung:0.123,147.0,43,0.0129056549197335,,gene,tested-not-replicated,,0.5333333333333333,True
+274,55723,ASF1B,EXPPAR:25842,direct,cross-lineage,7,Bowel:0.254;CNS/Brain:-0.00911;Esophagus/Stomach:0.0965;Head and Neck:0.0098;Lung:0.098;Lymphoid:0.0733;Pancreas:0.191,,0,0.0130121251930474,,,replicated,,0.0,True
+275,9735,KNTC1,COMP:TP53MUT,proxy,cross-lineage,2,CNS/Brain:0.205;Lymphoid:0.184,685.0,164,0.013163101469107,,,,,0.4,True
+276,85291,KRTAP4-2,LOSS:83755,potentially-direct,cross-lineage,7,Bone:0.335;Bowel:0.495;Breast:0.349;CNS/Brain:0.232;Head and Neck:0.236;Lung:0.234;Ovary/Fallopian Tube:0.451,79.0,16,0.0140856328312785,,gene,tested-not-replicated,,0.2666666666666666,True
+277,5894,RAF1,HOT:4893,potentially-direct,cross-lineage,6,Bladder/Urinary Tract:-0.37;CNS/Brain:-0.664;Lung:-0.175;Lymphoid:-0.176;Myeloid:-0.324;Skin:-0.82,52.0,10,0.0144255969853279,,,,,0.2666666666666666,True
+278,8036,SHOC2,CLIN:RAS_MUT,proxy,cross-lineage,6,Bowel:-0.138;Esophagus/Stomach:-0.113;Lung:0.0532;Lymphoid:-0.258;Myeloid:-0.278;Skin:-0.851,220.0,46,0.0147289092428506,,,,,0.4666666666666667,True
+279,6810,STX4,PROG:NMF16,expression-derived,cross-lineage,2,Bladder/Urinary Tract:-9.66;Pancreas:-17.5,,0,0.0149805207845553,,,,,0.4,True
+280,6566,SLC16A1,SIL-other:9123,expression-derived,cross-lineage,2,CNS/Brain:-0.16;Lymphoid:-0.485,64.0,13,0.0159368455048694,,,tested-not-replicated,,0.0666666666666666,True
+281,6046,BRD2,EXPPAR:8019,direct,cross-lineage,3,Esophagus/Stomach:0.145;Lung:0.0809;Lymphoid:0.154,,0,0.0160609529350562,,,tested-not-replicated,,0.4,True
+282,1655,DDX5,EXPPAR:10521,direct,cross-lineage,4,CNS/Brain:0.0847;Head and Neck:0.162;Lung:0.172;Lymphoid:0.171,,0,0.0169915542284677,,,replicated,,0.4,True
+283,865,CBFB,PROG:NMF33,expression-derived,cross-lineage,2,Lung:12.9;Soft Tissue:39.3,,0,0.0176417139915663,,,,,0.1333333333333333,True
+284,4691,NUCLEOLIN,COMP:TP53MUT,proxy,cross-lineage,7,Bowel:0.309;CNS/Brain:0.32;Lung:0.129;Lymphoid:0.00657;Ovary/Fallopian Tube:0.25;Skin:0.227;Soft Tissue:0.307,685.0,164,0.0180375280907346,,,,,0.4666666666666667,True
+285,3187,HNRNPH1,LOSS:3185,potentially-direct,cross-lineage,5,Bone:-0.266;Breast:-0.759;CNS/Brain:-0.342;Lung:-0.432;Skin:-0.343,109.0,36,0.0181035329705103,,gene,tested-not-replicated,,0.1333333333333333,True
+286,6836,SURF4,PROG:NMF32,expression-derived,cross-lineage,3,Bone:-17.5;CNS/Brain:-22.1;Soft Tissue:-50.4,,0,0.0190443371648962,,,,,0.1333333333333333,True
+287,53918,PELO,CLIN:MTAP_LOSS,proxy,cross-lineage,6,CNS/Brain:-0.487;Esophagus/Stomach:-0.351;Lung:-0.177;Lymphoid:-0.332;Myeloid:-0.687;Pancreas:-0.379,201.0,45,0.0193337872554859,,,,,0.2666666666666666,True
+288,6541,SLC7A1,EXPPAR:6542,direct,cross-lineage,2,CNS/Brain:0.0144;Lung:0.0747,,0,0.0195162204431535,,,tested-not-replicated,,0.2,True
+289,5464,PPA1,EXPPAR:27068,direct,cross-lineage,4,CNS/Brain:0.182;Esophagus/Stomach:0.101;Lung:0.192;Lymphoid:0.172,,0,0.0227716618006649,,,tested-not-replicated,,0.2,True
+290,4627,MYH9,PROG:NMF35,expression-derived,cross-lineage,3,Esophagus/Stomach:-64;Lung:-54.2;Pancreas:-27.9,,0,0.0227837049781726,,,,,0.1333333333333333,True
+291,230,ALDOC,SIG:MSISCORE,proxy,cross-lineage,4,Bowel:-0.00122;Esophagus/Stomach:-0.00347;Lymphoid:-0.00157;Uterus:-0.00349,,0,0.023091307783473,,,,,0.0666666666666666,True
+292,1017,CDK2,CLIN:CDK46_SEL,proxy,cross-lineage,8,Breast:0.16;CNS/Brain:0.256;Esophagus/Stomach:0.192;Head and Neck:0.0908;Lung:0.16;Lymphoid:-0.0199;Pancreas:0.113;Skin:0.199,454.0,110,0.0247240266853829,,,,,0.1333333333333333,True
+293,55023,PHIP,PROG:NMF33,expression-derived,cross-lineage,3,Lung:-4.8;Ovary/Fallopian Tube:-23.9;Soft Tissue:-8.06,,0,0.0255084915047595,,,,,0.0,True
+294,112840,WDR89,COMP:TP53MUT,proxy,cross-lineage,10,Bone:0.284;Bowel:0.159;CNS/Brain:0.25;Esophagus/Stomach:0.0399;Lung:0.0584;Lymphoid:0.104;Myeloid:0.225;Ovary/Fallopian Tube:0.189;Skin:0.0246;Soft Tissue:0.11,685.0,164,0.0264579789450686,,,,,0.4,True
+295,65057,ACD,LOFBI:7157,potentially-direct,cross-lineage,5,Bowel:0.192;CNS/Brain:0.171;Lung:0.128;Lymphoid:0.0563;Skin:0.129,627.0,144,0.0275396354851698,,,untested,,0.4,True
+296,10419,PRMT5,SIL-DEL:4507,expression-derived,cross-lineage,11,Biliary Tract:-0.218;Bladder/Urinary Tract:-0.433;Bone:-0.243;Breast:-0.496;CNS/Brain:-0.268;Esophagus/Stomach:-0.513;Lung:-0.423;Lymphoid:-0.19;Myeloid:-0.26;Ovary/Fallopian Tube:-0.425;Pancreas:-0.28,154.0,35,0.0277897688430237,,,untested,,0.0666666666666666,False
+297,55706,NDC1,PROG:NMF32,expression-derived,cross-lineage,3,Bone:-32.6;CNS/Brain:-34.6;Soft Tissue:-22.4,,0,0.027909342721829,,,,,0.4,True
+298,6810,STX4,SIL-METH:4070,expression-derived,cross-lineage,5,Bowel:0.289;Breast:0.447;Esophagus/Stomach:0.579;Lung:0.138;Ovary/Fallopian Tube:0.147,46.0,13,0.028728853667085,,,untested,,0.4,True
+299,7248,TSC1,SIL-other:161291,expression-derived,cross-lineage,4,Breast:0.196;Esophagus/Stomach:0.23;Lung:0.347;Pancreas:0.0272,102.0,28,0.0292707980458057,,,untested,,0.1333333333333333,True
+300,9188,DDX21,COMP:TP53MUT,proxy,cross-lineage,2,CNS/Brain:0.137;Lymphoid:0.272,685.0,164,0.0323770853112849,,,,,0.5333333333333333,True
+301,1021,CDK6,COMP:RB_ALT,proxy,cross-lineage,2,CNS/Brain:0.433;Lung:0.308,71.0,20,0.032546381660939,,,,,0.2,True
+302,3312,HSPA8,EXPPAR:3303,direct,cross-lineage,5,Bowel:0.133;CNS/Brain:0.0199;Esophagus/Stomach:0.123;Lung:0.0288;Lymphoid:0.0609,,0,0.0325474003205415,,,replicated,,0.2666666666666666,True
+303,1478,CSTF2,EXPPAR:23283,direct,cross-lineage,10,Bone:0.117;Bowel:0.177;Breast:0.211;CNS/Brain:0.0684;Esophagus/Stomach:0.276;Head and Neck:0.0243;Lung:0.141;Lymphoid:0.151;Ovary/Fallopian Tube:0.2;Skin:0.00875,,0,0.0333996753715537,,,replicated,,0.0,True
+304,55127,HEATR1,COMP:TP53MUT,proxy,cross-lineage,3,CNS/Brain:0.106;Lymphoid:0.079;Skin:0.107,685.0,164,0.0341318465305712,,,,,0.4666666666666667,True
+305,29960,MRM2,PROG:NMF33,expression-derived,cross-lineage,3,Lung:-20.6;Ovary/Fallopian Tube:-27.2;Soft Tissue:-11.7,,0,0.0349462125769272,,,,,0.3333333333333333,True
+306,55145,THAP1,PSCORE:ISG,expression-derived,cross-lineage,5,CNS/Brain:0.315;Esophagus/Stomach:0.297;Head and Neck:-0.00604;Lung:0.437;Lymphoid:0.315,,0,0.0361498211957772,,,,,0.1333333333333333,True
+307,1499,CTNNB1,HOT:1499,potentially-direct,cross-lineage,4,Bowel:-0.58;Esophagus/Stomach:-0.922;Lung:-0.357;Uterus:-0.11,31.0,4,0.0395301606652409,,,,,0.2,False
+308,8036,SHOC2,HOT:4893,potentially-direct,cross-lineage,6,Bladder/Urinary Tract:-0.407;CNS/Brain:-0.48;Lung:-0.278;Lymphoid:-0.203;Myeloid:-0.265;Skin:-0.876,52.0,10,0.0416237993282429,,,,,0.4666666666666667,True
+309,1495,CTNNA1,PROG:NMF07,expression-derived,cross-lineage,5,Biliary Tract:-10.8;Bowel:-5.03;Esophagus/Stomach:-4.63;Lung:-2.21;Pancreas:-4.84,,0,0.0423832470884206,,,,,0.0666666666666666,True
+310,6814,STXBP3,SIL-other:91862,expression-derived,cross-lineage,5,Breast:0.149;Esophagus/Stomach:0.399;Lung:0.212;Pancreas:0.171;Uterus:0.105,83.0,26,0.0429408323656469,,,untested,,0.4,True
+311,6814,STXBP3,PROG:NMF35,expression-derived,cross-lineage,3,Esophagus/Stomach:48.1;Lung:25.1;Pancreas:28.1,,0,0.0433214949928223,,,,,0.4,True
+312,6129,RPL7,COMP:TP53MUT,proxy,cross-lineage,4,CNS/Brain:0.172;Lung:0.17;Lymphoid:0.251;Skin:0.128,586.0,140,0.0458197478716882,,,,,0.3571428571428571,True
+313,3685,ITGAV,SIL-other:112399,expression-derived,cross-lineage,2,CNS/Brain:-0.0798;Lung:-0.528,105.0,25,0.0459191005065405,,,untested,,0.4666666666666667,True
+314,26135,SERBP1,LOFBI:7157,potentially-direct,cross-lineage,2,CNS/Brain:0.16;Lymphoid:0.0163,627.0,144,0.0476308233301732,,,untested,,0.2,True
+315,23167,EFR3A,PROG:NMF34,expression-derived,lineage-restricted,0,,,0,0.0003973191431641,,,,,0.4666666666666667,True
+316,595,CCND1,EXPPAR:896,direct,lineage-restricted,1,Lymphoid:0.0273,,0,0.0004422330357203,,,tested-not-replicated,,0.1333333333333333,True
+317,7283,TUBG1,EXPPAR:27175,direct,lineage-restricted,1,Lymphoid:0.0283,,0,0.0006562975969055,,,tested-not-replicated,,0.0666666666666666,True
+318,29107,NXT1,PROG:NMF41,expression-derived,lineage-restricted,1,Soft Tissue:-81.9,,0,0.0013613232937362,,,,,0.6666666666666666,True
+319,6591,SNAI2,EXPPAR:6615,direct,lineage-restricted,0,,,0,0.0023070850295998,,,tested-not-replicated,,0.2,True
+320,5870,RAB6A,PROG:NMF33,expression-derived,lineage-restricted,2,Lung:48.3;Soft Tissue:-6.21,,0,0.0041188297940721,,,,,0.7333333333333333,True
+321,4904,YBX1,EXPPAR:8531,direct,lineage-restricted,1,Lymphoid:0.0369,,0,0.0042923594779691,,,tested-not-replicated,,0.4,True
+322,7849,PAX8,PROG:NMF14,expression-derived,lineage-restricted,2,Ovary/Fallopian Tube:-11.1;Uterus:-10.2,,0,0.0064924866320876,,,,,0.0,True
+323,7296,TXNRD1,PSCORE:NRF2,expression-derived,lineage-restricted,1,Lung:0.189,,0,0.0086710728181569,,,,,0.2666666666666666,True
+324,151987,PPP4R2,COMP:TP53MUT,proxy,lineage-restricted,0,,685.0,164,0.0145019197360664,,,,,0.2,True
+325,5045,FURIN,PROG:NMF12,expression-derived,lineage-restricted,1,Lymphoid:-6.66,,0,0.0192663820858566,,,,,0.1333333333333333,True
+326,861,RUNX1,PROG:NMF31,expression-derived,lineage-restricted,2,Lymphoid:-17;Myeloid:-3.52,,0,0.0274886098478762,,,,,0.0,True
+327,896,CCND3,PROG:NMF40,expression-derived,lineage-restricted,2,Esophagus/Stomach:5.23;Lung:-35.3,,0,0.0391552312896371,,,,,0.0666666666666666,True
+328,80146,UXS1,PSCORE:NRF2,expression-derived,lineage-restricted,2,Esophagus/Stomach:0.073;Lung:-0.249,,0,0.0393279026335934,,,,,0.2666666666666666,True
+329,4609,MYC,EXPPAR:4613,direct,lineage-unresolvable,0,,,0,9.79113024607415e-07,,,tested-not-replicated,,0.2666666666666666,True
+330,1783,DYNC1LI2,EXPPAR:51143,direct,lineage-unresolvable,0,,,0,4.12677120502679e-06,,,replicated,,0.0666666666666666,True
+331,5290,PIK3CA,EXPPAR:5293,direct,lineage-unresolvable,1,Lymphoid:0.0878,,0,4.417577420669705e-06,,,tested-not-replicated,,0.1333333333333333,True
+332,10979,FERMT2,PROG:NMF34,expression-derived,lineage-unresolvable,0,,,0,4.948007545098832e-06,,,,,0.6,True
+333,50,ACO2,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,5.601551026603963e-06,,,,,0.0666666666666666,True
+334,1841,DTYMK,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:26.8,,0,7.268054001848565e-06,,,,,0.1333333333333333,True
+335,9968,MED12,PROG:NMF48,expression-derived,lineage-unresolvable,1,Lung:1.68,,0,1.0775931912094655e-05,,,,,0.4,True
+336,9928,KIF14,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:7.62,,0,1.2508197365396603e-05,,,,,0.0,True
+337,595,CCND1,EXPPAR:894,direct,lineage-unresolvable,1,Lymphoid:0.00442,,0,1.5102396949404443e-05,,,tested-not-replicated,,0.1333333333333333,True
+338,1956,EGFR,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,2.2391065931488137e-05,,,,,0.3333333333333333,True
+339,128866,CHMP4B,SIL-METH:5777,expression-derived,lineage-unresolvable,0,,34.0,14,2.500956262479772e-05,,,untested,,0.3333333333333333,True
+340,5970,RELA,EXPPAR:5971,direct,lineage-unresolvable,0,,,0,2.7002897287098392e-05,,,tested-not-replicated,,0.2666666666666666,True
+341,57721,METTL14,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,3.451830108392582e-05,,,,,0.0,True
+342,79977,GRHL2,EXPPAR:29841,direct,lineage-unresolvable,1,Lung:-0.0426,,0,3.6835799540850094e-05,,,tested-not-replicated,,0.0,True
+343,688,KLF5,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,4.245021951146566e-05,,,,,0.2666666666666666,True
+344,11116,CEP43,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,4.399582589508173e-05,,,,,0.2666666666666666,True
+345,23065,EMC1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,5.933446860713132e-05,,,,,0.1333333333333333,True
+346,6810,STX4,EXPPAR:112755,direct,lineage-unresolvable,0,,,0,6.549564619662217e-05,,,tested-not-replicated,,0.4,True
+347,2182,ACSL4,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,7.758985523962813e-05,,,,,0.1333333333333333,True
+348,5230,PGK1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,8.491060980816162e-05,,,,,0.3333333333333333,True
+349,3688,ITGB1,EXPPAR:3690,direct,lineage-unresolvable,0,,,0,8.580659542346238e-05,,,tested-not-replicated,,0.4666666666666667,True
+350,64794,DDX31,CLIN:DEL17P,proxy,lineage-unresolvable,0,,268.0,71,8.876790787502533e-05,,,,,0.3333333333333333,True
+351,10423,CDIPT,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,9.707890108540872e-05,,,,,0.1333333333333333,True
+352,80204,FBXO11,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0001095023892425,,,,,0.1333333333333333,True
+353,5573,PRKAR1A,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-16.5,,0,0.0001111411009399,,,,,0.3333333333333333,True
+354,63916,ELMO2,PROG:NMF34,expression-derived,lineage-unresolvable,1,Head and Neck:15.1,,0,0.0001177592259741,,,,,0.4,True
+355,8760,CDS2,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-21,,0,0.0001410897732578,,,,,0.5333333333333333,True
+356,54927,CHCHD3,EXPPAR:84303,direct,lineage-unresolvable,1,Skin:0.0167,,0,0.0001475199351074,,,tested-not-replicated,,0.0666666666666666,True
+357,171546,SPTSSA,EXPPAR:165679,direct,lineage-unresolvable,1,Breast:0.0023,,0,0.000166987506725,,,tested-not-replicated,,0.6,True
+358,5970,RELA,PROG:NMF29,expression-derived,lineage-unresolvable,1,Lung:-80,,0,0.0001733968900717,,,,,0.2666666666666666,True
+359,55831,EMC3,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0001917446507104,,,,,0.3333333333333333,True
+360,79693,YRDC,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:25.5,,0,0.0002025938204974,,,,,0.0666666666666666,True
+361,54820,NDE1,EXPPAR:81565,direct,lineage-unresolvable,0,,,0,0.0002049737172956,,,tested-not-replicated,,0.1333333333333333,True
+362,80155,NAA15,EXPPAR:79612,direct,lineage-unresolvable,0,,,0,0.0002104022067745,,,tested-not-replicated,,0.2666666666666666,True
+363,64223,MLST8,CLIN:CAPI_ALT,proxy,lineage-unresolvable,1,CNS/Brain:-0.124,197.0,57,0.0002164697102434,,,,,0.2,True
+364,7334,UBE2N,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.0002303378906678,,,untested,,0.0666666666666666,True
+365,677,ZFP36L1,EXPPAR:678,direct,lineage-unresolvable,0,,,0,0.0002399627475965,,,tested-not-replicated,,0.4,True
+366,8073,PTP4A2,EXPPAR:7803,direct,lineage-unresolvable,0,,,0,0.0002832820763206,,,replicated,,0.0666666666666666,True
+367,79066,METTL16,CLIN:MTAP_LOSS,proxy,lineage-unresolvable,0,,201.0,45,0.0002945372990049,,,,,0.1333333333333333,True
+368,604,BCL6,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-2.8,,0,0.0003127968386005,,,,,0.0,True
+369,8458,TTF2,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0003638633857759,,,,,0.2,True
+370,7334,UBE2N,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:-0.264,685.0,164,0.0003691833177719,,,,,0.0666666666666666,True
+371,29956,CERS2,EXPPAR:79603,direct,lineage-unresolvable,0,,,0,0.000477289294501,,,tested-not-replicated,,0.6,True
+372,55154,MSTO1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0004790281077076,,,,,0.4666666666666667,True
+373,253260,RICTOR,CLIN:CAPI_ALT,proxy,lineage-unresolvable,0,,197.0,57,0.0005617365455578,,,,,0.4666666666666667,True
+374,8760,CDS2,SIL-METH:2886,expression-derived,lineage-unresolvable,1,Lung:-0.239,32.0,14,0.0006635170872923,,,untested,,0.5333333333333333,True
+375,7177,TPSAB1,LOSS:23430,potentially-direct,lineage-unresolvable,0,,139.0,38,0.0006864804396855,,gene,tested-not-replicated,,0.0,True
+376,677,ZFP36L1,SIL-other:558,expression-derived,lineage-unresolvable,1,Lung:0.113,121.0,38,0.00073725478059,,,untested,,0.4,True
+377,5464,PPA1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0007497349983633,,,,,0.2,True
+378,4627,MYH9,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0008092591948706,,,,,0.1333333333333333,True
+379,1399,CRKL,EXPPAR:1398,direct,lineage-unresolvable,0,,,0,0.0008927049147544,,,replicated,,0.2,True
+380,84919,PPP1R15B,PROG:NMF26,expression-derived,lineage-unresolvable,1,CNS/Brain:37.9,,0,0.0009044809351157,,,,,0.0666666666666666,True
+381,6935,ZEB1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0009628174881228,,,,,0.0,True
+382,203068,TUBB,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-40.4,,0,0.0009715642675434,,,,,0.2,True
+383,5747,PTK2,PROG:NMF26,expression-derived,lineage-unresolvable,1,CNS/Brain:-23.3,,0,0.0009739645658089,,,,,0.3333333333333333,True
+384,57448,BIRC6,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0009763084014236,,,,,0.4,True
+385,9497,SLC4A7,EXPPAR:8671,direct,lineage-unresolvable,1,CNS/Brain:0.00927,,0,0.0009810073659911,,,tested-not-replicated,,0.2666666666666666,True
+386,57215,THAP11,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.0010229096829879,,,untested,,0.3333333333333333,True
+387,2260,FGFR1,EXPPAR:2263,direct,lineage-unresolvable,0,,,0,0.0010666113545376,,,tested-not-replicated,,0.1333333333333333,True
+388,55055,ZWILCH,HOT:7157,potentially-direct,lineage-unresolvable,0,,521.0,121,0.0010877742076257,,,,,0.3333333333333333,True
+389,1063,CENPF,HOT:7157,potentially-direct,lineage-unresolvable,1,CNS/Brain:0.15,521.0,121,0.0011383836883371,,,,,0.3333333333333333,True
+390,137492,VPS37A,EXPPAR:79720,direct,lineage-unresolvable,1,Lymphoid:0.0426,,0,0.0011949026559882,,,untested,,0.4,True
+391,8760,CDS2,SIL-other:2886,expression-derived,lineage-unresolvable,1,Lung:-0.18,37.0,15,0.0012378462884066,,,untested,,0.5333333333333333,True
+392,1024,CDK8,EXPPAR:23097,direct,lineage-unresolvable,0,,,0,0.0013825289678439,,,tested-not-replicated,,0.0666666666666666,True
+393,26122,EPC2,EXPPAR:80314,direct,lineage-unresolvable,0,,,0,0.001504868069552,,,tested-not-replicated,,0.2666666666666666,True
+394,6810,STX4,METH:2180,proxy,lineage-unresolvable,0,,106.0,27,0.0015725919193841,,,untested,,0.4,True
+395,56888,KCMF1,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:-0.0263,685.0,164,0.0015911590386306,,,,,0.2,True
+396,51009,DERL2,EXPPAR:91319,direct,lineage-unresolvable,1,Lymphoid:0.0323,,0,0.0018237336035455,,,tested-not-replicated,,0.2,True
+397,3842,TNPO1,EXPPAR:30000,direct,lineage-unresolvable,0,,,0,0.0018386483631903,,,replicated,,0.3333333333333333,True
+398,51569,UFM1,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-17.5,,0,0.0018731798364184,,,,,0.1333333333333333,True
+399,64121,RRAGC,PROG:NMF05,expression-derived,lineage-unresolvable,0,,,0,0.0018767089117292,,,,,0.6666666666666666,True
+400,51510,CHMP5,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0019660929144988,,,,,0.2,True
+401,6455,SH3GL1,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-2.43,,0,0.002020697949089,,,,,0.1333333333333333,True
+402,8458,TTF2,PROG:NMF39,expression-derived,lineage-unresolvable,0,,,0,0.002069578805306,,,,,0.2,True
+403,5861,RAB1A,EXPPAR:81876,direct,lineage-unresolvable,0,,,0,0.002090474069111,,,replicated,,0.0,True
+404,8874,ARHGEF7,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0022169234306939,,,,,0.6666666666666666,True
+405,4848,CNOT2,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:0.198,685.0,164,0.0022214601414182,,,,,0.6,True
+406,5870,RAB6A,PROG:NMF45,expression-derived,lineage-unresolvable,1,Esophagus/Stomach:-8.43,,0,0.0022632793922505,,,,,0.7333333333333333,True
+407,3667,IRS1,EXPPAR:8660,direct,lineage-unresolvable,0,,,0,0.0023194612491576,,,tested-not-replicated,,0.0,True
+408,55072,RNF31,PROG:NMF29,expression-derived,lineage-unresolvable,1,Lung:-74.3,,0,0.0023573556411206,,,,,0.0,True
+409,387,RHOA,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-2.02,,0,0.0023824760135663,,,,,0.4,True
+410,8178,ELL,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0025048309107705,,,,,0.0666666666666666,True
+411,158,ADSL,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:14.5,,0,0.0027333677587954,,,,,0.1333333333333333,True
+412,2072,ERCC4,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0028858986612649,,,,,0.4666666666666667,True
+413,128866,CHMP4B,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0029498667856975,,,,,0.3333333333333333,True
+414,25976,TIPARP,PROG:NMF26,expression-derived,lineage-unresolvable,1,CNS/Brain:-26.9,,0,0.0030917783164748,,,,,0.6,True
+415,54344,DPM3,PROG:NMF17,expression-derived,lineage-unresolvable,1,Bone:4.9,,0,0.003114688964049,,,,,0.2,True
+416,5469,MED1,CLIN:DEL17P,proxy,lineage-unresolvable,1,Lung:-0.357,268.0,71,0.0031723796813736,,,,,0.6,True
+417,63916,ELMO2,PROG:NMF07,expression-derived,lineage-unresolvable,1,Esophagus/Stomach:2.91,,0,0.0032188781803591,,,,,0.4,True
+418,54455,FBXO42,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0034296105065022,,,,,0.0,True
+419,374354,NHLRC2,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0035492264697601,,,,,0.1333333333333333,True
+420,203068,TUBB,EXPPAR:10383,direct,lineage-unresolvable,0,,,0,0.0036313932376447,,,tested-not-replicated,,0.2,True
+421,115548,FCHO2,EXPPAR:23149,direct,lineage-unresolvable,0,,,0,0.0037030139416983,,,tested-not-replicated,,0.0666666666666666,True
+422,55012,PPP2R3C,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0037466352608202,,,,,0.0666666666666666,True
+423,55705,IPO9,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:0.17,685.0,164,0.0038309664036239,,,,,0.6666666666666666,True
+424,146909,KIF18B,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0038833200459265,,,,,0.4666666666666667,True
+425,7094,TLN1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0038866603783018,,,,,0.4,True
+426,9968,MED12,EXPPAR:116931,direct,lineage-unresolvable,0,,,0,0.0039321233950537,,,tested-not-replicated,,0.4,True
+427,55670,PEX26,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:8.42,,0,0.0039700759084684,,,,,0.0666666666666666,True
+428,23376,UFL1,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-19.5,,0,0.0040337082977935,,,,,0.2,True
+429,7296,TXNRD1,EXPPAR:2936,direct,lineage-unresolvable,0,,,0,0.0042073012412969,,,tested-not-replicated,,0.2666666666666666,True
+430,8775,NAPA,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:3.3,,0,0.0044058791025482,,,,,0.0666666666666666,True
+431,148223,C19orf25,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-22.9,,0,0.0044160834743366,,,,,0.4,True
+432,3675,ITGA3,SIL-other:999,expression-derived,lineage-unresolvable,1,Lung:0.137,75.0,27,0.0044430606887431,,,untested,,0.1333333333333333,True
+433,6574,SLC20A1,EXPPAR:6575,direct,lineage-unresolvable,1,Lung:0.0391,,0,0.0044460604799914,,,tested-not-replicated,,0.0666666666666666,True
+434,8030,CCDC6,HOT:7157,potentially-direct,lineage-unresolvable,0,,521.0,121,0.0045423222780592,,,,,0.0666666666666666,True
+435,3480,IGF1R,CLIN:CAPI_ALT,proxy,lineage-unresolvable,0,,197.0,57,0.0048378167339361,,,,,0.2,True
+436,64132,XYLT2,EXPPAR:64131,direct,lineage-unresolvable,1,CNS/Brain:0.043,,0,0.0049202048652129,,,tested-not-replicated,,0.0666666666666666,True
+437,57721,METTL14,LOFBI:7157,potentially-direct,lineage-unresolvable,1,CNS/Brain:-0.128,627.0,144,0.0054383189150664,,,untested,,0.0,True
+438,55585,UBE2Q1,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0055866801793687,,,,,0.2666666666666666,True
+439,8140,SLC7A5,SIL-other:330,expression-derived,lineage-unresolvable,0,,92.0,26,0.006165376270675,,,untested,,0.2666666666666666,True
+440,8880,FUBP1,EXPPAR:8570,direct,lineage-unresolvable,0,,,0,0.0066421793252816,,,replicated,,0.0666666666666666,True
+441,8178,ELL,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0073416756601837,,,,,0.0666666666666666,True
+442,79087,ALG12,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-13.4,,0,0.0074650748115251,,,,,0.2,True
+443,54205,CYCS,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:7.4,,0,0.0075954604959121,,,,,0.1333333333333333,True
+444,10097,ACTR2,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:3.9,,0,0.0076124028694077,,,,,0.3333333333333333,True
+445,6541,SLC7A1,EXPPAR:84889,direct,lineage-unresolvable,1,Lymphoid:0.111,,0,0.0080026013056924,,,tested-not-replicated,,0.2,True
+446,998,CDC42,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0081116814328618,,,,,0.2,True
+447,1105,CHD1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.008216479720023,,,,,0.1333333333333333,True
+448,10096,ACTR3,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0083602644734652,,,,,0.4,True
+449,6626,SNRPA,EXPPAR:6629,direct,lineage-unresolvable,0,,,0,0.0085570145922472,,,replicated,,0.2666666666666666,True
+450,1387,CREBBP,LOFBI:2033,direct,lineage-unresolvable,1,Lung:-0.888,19.0,5,0.0087830790454722,,,tested-not-replicated,,0.1333333333333333,False
+451,57217,TTC7A,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-2.12,,0,0.0088050689338565,,,,,0.0,True
+452,1021,CDK6,EXPPAR:1019,direct,lineage-unresolvable,0,,,0,0.0088645931848962,,,replicated,,0.2,True
+453,29956,CERS2,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0092955262302842,,,,,0.6,True
+454,7334,UBE2N,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0100072706531291,,,,,0.0666666666666666,True
+455,2175,FANCA,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0101753294466061,,,,,0.6,True
+456,64763,ZNF574,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0102542401874774,,,,,0.3333333333333333,True
+457,56288,PARD3,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0102973085533973,,,,,0.0666666666666666,True
+458,146059,CDAN1,PROG:NMF34,expression-derived,lineage-unresolvable,0,,,0,0.0103559881634321,,,,,0.3333333333333333,True
+459,1879,EBF1,PROG:NMF04,expression-derived,lineage-unresolvable,1,Lymphoid:-1.13,,0,0.0106032355415966,,,,,0.0666666666666666,True
+460,4193,MDM2,CLIN:DEL17P,proxy,lineage-unresolvable,0,,268.0,71,0.0106221537691919,,,,,0.6666666666666666,True
+461,23167,EFR3A,SIL-other:330,expression-derived,lineage-unresolvable,0,,92.0,26,0.0109048437570207,,,untested,,0.4666666666666667,True
+462,10121,ACTR1A,SIL-other:161291,expression-derived,lineage-unresolvable,1,Lung:-0.29,102.0,28,0.0114095978115725,,,untested,,0.2,True
+463,7803,PTP4A1,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.011425993701107,,,,,0.1333333333333333,True
+464,4841,NONO,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.011487507719558,,,untested,,0.4666666666666667,True
+465,9361,LONP1,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0116727080717008,,,,,0.2,True
+466,4627,MYH9,SIL-other:1806,expression-derived,lineage-unresolvable,0,,88.0,25,0.0118636117299941,,,untested,,0.1333333333333333,True
+467,65057,ACD,HOT:7157,potentially-direct,lineage-unresolvable,0,,521.0,121,0.0119776814798435,,,,,0.4,True
+468,116224,PABIR1,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0121195921332021,,,,,0.4,True
+469,283643,TEDC1,LOFBI:7157,potentially-direct,lineage-unresolvable,1,CNS/Brain:0.0927,627.0,144,0.0121569996983596,,,untested,,0.5333333333333333,True
+470,1163,CKS1B,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:-3.69,,0,0.0122678112706113,,,,,0.0666666666666666,True
+471,7414,VCL,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-14.1,,0,0.01241358141398,,,,,0.1333333333333333,True
+472,57092,PCNP,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0124421200548262,,,,,0.0666666666666666,True
+473,58490,RPRD1B,EXPPAR:55197,direct,lineage-unresolvable,0,,,0,0.0129457146236593,,,tested-not-replicated,,0.4666666666666667,True
+474,8517,IKBKG,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0131559446538812,,,,,0.0666666666666666,True
+475,27332,ZNF638,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0133424094622462,,,,,0.0666666666666666,True
+476,5119,CHMP1A,EXPPAR:57132,direct,lineage-unresolvable,0,,,0,0.0137730505401389,,,replicated,,0.1333333333333333,True
+477,29781,NCAPH2,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:0.0774,685.0,164,0.0140337900405413,,,,,0.3333333333333333,True
+478,2673,GFPT1,PROG:NMF34,expression-derived,lineage-unresolvable,0,,,0,0.014284553672984,,,,,0.3333333333333333,True
+479,688,KLF5,SIL-METH:2886,expression-derived,lineage-unresolvable,1,Lung:0.221,32.0,14,0.0147401056874434,,,untested,,0.2666666666666666,True
+480,9391,CIAO1,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.0150377097695764,,,,,0.1333333333333333,True
+481,10487,CAP1,SIL-METH:5777,expression-derived,lineage-unresolvable,0,,34.0,14,0.0157165622126526,,,untested,,0.3333333333333333,True
+482,51174,TUBD1,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0157593082812111,,,,,0.4,True
+483,85365,ALG2,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-34.2,,0,0.0160535985203393,,,,,0.4,True
+484,4627,MYH9,PROG:NMF29,expression-derived,lineage-unresolvable,1,Lung:-267,,0,0.0166640931605031,,,,,0.1333333333333333,True
+485,285237,C3orf38,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-18.4,,0,0.0179711463438639,,,,,0.6,True
+486,6155,RPL27,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.0179882954148856,,,untested,,0.4,True
+487,3662,IRF4,PROG:NMF12,expression-derived,lineage-unresolvable,1,Lymphoid:-5.8,,0,0.0180744211446906,,,,,0.1333333333333333,True
+488,9550,ATP6V1G1,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:7.12,,0,0.0186725343838835,,,,,0.1333333333333333,True
+489,51341,ZBTB7A,LOSS:51341,direct,lineage-unresolvable,0,,200.0,51,0.0188085780939344,,gene,,,0.3333333333333333,True
+490,3685,ITGAV,SIL-other:5777,expression-derived,lineage-unresolvable,1,Lung:-0.354,40.0,14,0.019187497562139,,,untested,,0.4666666666666667,True
+491,5501,PPP1CC,EXPPAR:5499,direct,lineage-unresolvable,0,,,0,0.0200324124129964,,,tested-not-replicated,,0.2,True
+492,8453,CUL2,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.020995167563525,,,untested,,0.4666666666666667,True
+493,896,CCND3,PSCORE:NRF2,expression-derived,lineage-unresolvable,1,Lung:-0.16,,0,0.0211657550206909,,,,,0.0666666666666666,True
+494,7416,VDAC1,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0215134700436188,,,,,0.2666666666666666,True
+495,8140,SLC7A5,EXPPAR:23428,direct,lineage-unresolvable,1,Esophagus/Stomach:0.0604,,0,0.0219775718790318,,,tested-not-replicated,,0.2666666666666666,True
+496,8178,ELL,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:5.75,,0,0.0229720364128861,,,,,0.0666666666666666,True
+497,1984,EIF5A,EXPPAR:56648,direct,lineage-unresolvable,0,,,0,0.0231291571854236,,,tested-not-replicated,,0.1428571428571428,True
+498,2232,FDXR,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-28.7,,0,0.023866219757755,,,,,0.2666666666666666,True
+499,1000,CDH2,PROG:NMF23,expression-derived,lineage-unresolvable,1,Lung:3.64,,0,0.0248525912374902,,,,,0.2,True
+500,27132,CPNE7,LOSS:27132,direct,lineage-unresolvable,0,,162.0,41,0.0253261804577657,,gene,,,0.0666666666666666,True
+501,6814,STXBP3,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0274563135883309,,,,,0.4,True
+502,5747,PTK2,METH:79767,proxy,lineage-unresolvable,1,Lung:-0.265,54.0,14,0.0275774696010647,,,untested,,0.3333333333333333,True
+503,2531,KDSR,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:-29.9,,0,0.0285960818587354,,,,,0.3333333333333333,True
+504,5770,PTPN1,PSCORE:ISG,expression-derived,lineage-unresolvable,0,,,0,0.0298562103064623,,,,,0.2666666666666666,True
+505,1503,CTPS1,EXPPAR:56474,direct,lineage-unresolvable,1,Lymphoid:0.0672,,0,0.0302221681087906,,,tested-not-replicated,,0.3333333333333333,True
+506,57018,CCNL1,EXPPAR:81669,direct,lineage-unresolvable,1,CNS/Brain:0.0699,,0,0.0327086097230255,,,replicated,,0.2,True
+507,5728,PTEN,CLIN:PTEN_LOF,proxy,lineage-unresolvable,1,CNS/Brain:-0.329,105.0,36,0.0331208705794986,,,,,0.0,True
+508,29781,NCAPH2,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.0337461588965408,,,untested,,0.3333333333333333,True
+509,553115,PEF1,HOT:7157,potentially-direct,lineage-unresolvable,0,,521.0,121,0.0338848616469921,,,,,0.2,True
+510,1841,DTYMK,EXPPAR:129607,direct,lineage-unresolvable,0,,,0,0.0340038371703936,,,untested,,0.1333333333333333,True
+511,25976,TIPARP,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0375935668866832,,,,,0.6,True
+512,5870,RAB6A,SIL-other:5777,expression-derived,lineage-unresolvable,1,Lung:0.223,40.0,14,0.0376155741268661,,,untested,,0.7333333333333333,True
+513,57589,RIC1,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0377161673778331,,,,,0.4,True
+514,6146,RPL22,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0393046223008848,,,,,0.1333333333333333,True
+515,10735,STAG2,EXPPAR:10274,direct,lineage-unresolvable,0,,,0,0.0398504375775636,,,tested-not-replicated,,0.2,True
+516,128866,CHMP4B,PROG:NMF20,expression-derived,lineage-unresolvable,1,Lung:8.65,,0,0.0407691940443901,,,,,0.3333333333333333,True
+517,6152,RPL24,COMP:TP53MUT,proxy,lineage-unresolvable,0,,685.0,164,0.0416382310318643,,,,,0.3333333333333333,True
+518,6502,SKP2,PROG:NMF26,expression-derived,lineage-unresolvable,0,,,0,0.0419171655754773,,,,,0.2666666666666666,True
+519,763,CA5A,LOFBI:7157,potentially-direct,lineage-unresolvable,0,,627.0,144,0.0447992176847506,,,untested,,0.2666666666666666,True
+520,50,ACO2,PROG:NMF07,expression-derived,lineage-unresolvable,0,,,0,0.0450675721183559,,,,,0.0666666666666666,True
+521,26519,TIMM10,PROG:NMF48,expression-derived,lineage-unresolvable,0,,,0,0.046109492938195,,,,,0.1333333333333333,True
+522,83990,BRIP1,COMP:TP53MUT,proxy,lineage-unresolvable,1,CNS/Brain:0.204,685.0,164,0.0463506306673837,,,,,0.5333333333333333,True
+523,80273,GRPEL1,PROG:NMF29,expression-derived,lineage-unresolvable,0,,,0,0.0484058768355998,,,,,0.0666666666666666,True
+524,1719,DHFR,PROG:NMF32,expression-derived,lineage-unresolvable,1,CNS/Brain:11.1,,0,0.0494941577860524,,,,,0.0666666666666666,True
+525,10979,FERMT2,PROG:NMF32,expression-derived,undetermined,3,Bone:-5.21;CNS/Brain:-41.1;Soft Tissue:4.78,,0,2.101916128130618e-06,,,,,0.6,True
+526,23399,CTDNEP1,PROG:NMF32,expression-derived,undetermined,3,Bone:13.7;CNS/Brain:-30;Soft Tissue:-22.6,,0,6.546808835731827e-06,,,,,0.6666666666666666,True
+527,3685,ITGAV,PROG:NMF34,expression-derived,undetermined,3,Esophagus/Stomach:19.5;Head and Neck:-7.19;Pancreas:110,,0,7.255304013974072e-06,,,,,0.4666666666666667,True
+528,10890,RAB10,PROG:NMF45,expression-derived,undetermined,3,Bowel:-9.72;Esophagus/Stomach:-10.1;Pancreas:-8.6,,0,4.583505916470362e-05,,,,,0.0666666666666666,True
+529,1499,CTNNB1,PROG:NMF45,expression-derived,undetermined,3,Bowel:-13.8;Esophagus/Stomach:-3.47;Pancreas:-13,,0,5.535144144260488e-05,,,,,0.2,True
+530,6434,TRA2B,EXPPAR:29896,direct,undetermined,2,CNS/Brain:0.106;Skin:0.182,,0,6.15885161563686e-05,,,replicated,,0.2666666666666666,True
+531,6934,TCF7L2,PROG:NMF45,expression-derived,undetermined,3,Bowel:-10.1;Esophagus/Stomach:-8.74;Pancreas:-13.9,,0,0.0001692628519238,,,,,0.0,True
+532,10979,FERMT2,PROG:NMF07,expression-derived,undetermined,2,Bowel:-0.404;Esophagus/Stomach:5.03,,0,0.0001742361052899,,,,,0.6,True
+533,57217,TTC7A,PROG:NMF45,expression-derived,undetermined,3,Bowel:-0.653;Esophagus/Stomach:-9.07;Pancreas:-7.95,,0,0.0002608525562318,,,,,0.0,True
+534,3685,ITGAV,SIL-other:999,expression-derived,undetermined,4,Breast:-0.517;Lung:-0.401;Ovary/Fallopian Tube:0.15;Uterus:0.249,75.0,27,0.0004455579154501,,,untested,,0.4666666666666667,True
+535,10419,PRMT5,SIL-DEL:1029,expression-derived,undetermined,5,Esophagus/Stomach:-0.333;Head and Neck:-0.0877;Lung:-0.261;Lymphoid:0.0228;Skin:0.098,143.0,37,0.0015305252267583,,,untested,,0.0666666666666666,True
+536,51719,CAB39,PROG:NMF45,expression-derived,undetermined,3,Bowel:-3.39;Esophagus/Stomach:-8.68;Pancreas:-7.39,,0,0.0016364882416528,,,,,0.1333333333333333,True
+537,896,CCND3,EXPPAR:894,direct,undetermined,4,Bowel:-0.0105;CNS/Brain:0.0156;Lung:0.0274;Lymphoid:0.0886,,0,0.0019125536495061,,,tested-not-replicated,,0.0666666666666666,True
+538,65125,WNK1,EXPPAR:65268,direct,undetermined,4,Bowel:0.137;Breast:0.121;Lung:-0.0114;Lymphoid:-0.00289,,0,0.0023599654136818,,,tested-not-replicated,,0.0,True
+539,5757,PTMA,LOFBI:7157,potentially-direct,undetermined,2,CNS/Brain:0.127;Lymphoid:-0.0119,627.0,144,0.0031495604990371,,,untested,,0.6,True
+540,378,ARF4,PSCORE:NRF2,expression-derived,undetermined,2,Esophagus/Stomach:0.048;Lung:-0.145,,0,0.0034443307599171,,,,,0.2666666666666666,True
+541,5428,POLG,PROG:NMF33,expression-derived,undetermined,2,Lung:-24.4;Soft Tissue:0.849,,0,0.0035895566883937,,,,,0.1333333333333333,True
+542,688,KLF5,PROG:NMF45,expression-derived,undetermined,3,Bowel:-14.2;Esophagus/Stomach:-5.41;Pancreas:-14.3,,0,0.0038889763358263,,,,,0.2666666666666666,True
+543,3675,ITGA3,PROG:NMF34,expression-derived,undetermined,3,Esophagus/Stomach:-18.7;Head and Neck:17.6;Pancreas:-46.9,,0,0.0055030037288796,,,,,0.1333333333333333,True
+544,1163,CKS1B,LOFBI:5925,potentially-direct,undetermined,2,CNS/Brain:-0.283;Lung:0.0199,50.0,16,0.005719630173288,,,untested,,0.0666666666666666,True
+545,3845,KRAS,AMP:3845,direct,undetermined,4,Esophagus/Stomach:-0.74;Lung:-0.573;Ovary/Fallopian Tube:-0.616;Pancreas:0.0778,62.0,15,0.0061044792058651,,gene,,,0.4,False
+546,283149,BCL9L,PROG:NMF45,expression-derived,undetermined,3,Bowel:-3.98;Esophagus/Stomach:-6.06;Pancreas:-3.96,,0,0.0103895576586004,,,,,0.0,True
+547,3685,ITGAV,PROG:NMF26,expression-derived,undetermined,2,CNS/Brain:2.2;Lung:-52.4,,0,0.0111194125256945,,,,,0.4666666666666667,True
+548,3726,JUNB,PROG:NMF07,expression-derived,undetermined,3,Bowel:-1.34;Esophagus/Stomach:-3.91;Pancreas:-4.32,,0,0.0165655178105749,,,,,0.3333333333333333,True
+549,1871,E2F3,CLIN:CDK46_SEL,proxy,undetermined,3,CNS/Brain:0.244;Esophagus/Stomach:-0.0855;Lung:0.111,454.0,110,0.0191476565767992,,,,,0.5333333333333333,True
+550,56288,PARD3,PROG:NMF06,expression-derived,undetermined,2,Ovary/Fallopian Tube:-0.883;Uterus:-1.57,,0,0.0354477435456394,,,,,0.0666666666666666,True
+551,84612,PARD6B,PROG:NMF07,expression-derived,undetermined,3,Bowel:-4.66;Esophagus/Stomach:-2.73;Pancreas:-3.5,,0,0.0386014598663896,,,,,0.0,True
+552,324,APC,PROG:NMF14,expression-derived,undetermined,2,Ovary/Fallopian Tube:-3.68;Uterus:-3.66,,0,0.0428268692350575,,,,,0.4,True

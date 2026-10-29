@@ -1,0 +1,1 @@
+gene,feature,selection_freq,beta_en,maj_sign,stage,beta,se,df,nu,p_sc,n_obs,n_carriers,dropped_cov,collinear_with_design,se_type,df_rule,df_nu,p_sc_nu,d_stage_testable,q_sc,same_sign,pass,list

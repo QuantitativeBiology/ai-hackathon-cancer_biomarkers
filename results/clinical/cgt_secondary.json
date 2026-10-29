@@ -1,0 +1,1090 @@
+{
+ "miss_decomposition": {
+  "incl_proxy|all|k100": {
+   "EN-obs": {
+    "n_misses": 41,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 10,
+     "lost_to_group_member": 7,
+     "ceiling data-null": 4
+    }
+   },
+   "EN-pred": {
+    "n_misses": 42,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 12,
+     "lost_to_group_member": 6,
+     "ceiling data-null": 4
+    }
+   },
+   "S1-obs": {
+    "n_misses": 42,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 9,
+     "lost_to_group_member": 9,
+     "ceiling data-null": 4
+    }
+   },
+   "S1-pred": {
+    "n_misses": 42,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 10,
+     "lost_to_group_member": 8,
+     "ceiling data-null": 4
+    }
+   }
+  },
+  "incl_proxy|all|k200": {
+   "EN-obs": {
+    "n_misses": 40,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 10,
+     "lost_to_group_member": 6,
+     "ceiling data-null": 4
+    }
+   },
+   "EN-pred": {
+    "n_misses": 42,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 12,
+     "lost_to_group_member": 6,
+     "ceiling data-null": 4
+    }
+   },
+   "S1-obs": {
+    "n_misses": 35,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 6,
+     "lost_to_group_member": 5,
+     "ceiling data-null": 4
+    }
+   },
+   "S1-pred": {
+    "n_misses": 42,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 10,
+     "lost_to_group_member": 8,
+     "ceiling data-null": 4
+    }
+   }
+  },
+  "incl_proxy|all|k500": {
+   "EN-obs": {
+    "n_misses": 37,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 7,
+     "lost_to_group_member": 6,
+     "ceiling data-null": 4
+    }
+   },
+   "EN-pred": {
+    "n_misses": 39,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 9,
+     "lost_to_group_member": 6,
+     "ceiling data-null": 4
+    }
+   },
+   "S1-obs": {
+    "n_misses": 33,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 6,
+     "lost_to_group_member": 3,
+     "ceiling data-null": 4
+    }
+   },
+   "S1-pred": {
+    "n_misses": 42,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 10,
+     "lost_to_group_member": 8,
+     "ceiling data-null": 4
+    }
+   }
+  },
+  "incl_proxy|gate_disjoint|k100": {
+   "EN-obs": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 3,
+     "ceiling data-null": 1
+    }
+   },
+   "EN-pred": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 5,
+     "lost_to_group_member": 2,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-obs": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 3,
+     "lost_to_group_member": 4,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-pred": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 3,
+     "ceiling data-null": 1
+    }
+   }
+  },
+  "incl_proxy|gate_disjoint|k200": {
+   "EN-obs": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 3,
+     "ceiling data-null": 1
+    }
+   },
+   "EN-pred": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 5,
+     "lost_to_group_member": 2,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-obs": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 3,
+     "lost_to_group_member": 4,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-pred": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 3,
+     "ceiling data-null": 1
+    }
+   }
+  },
+  "incl_proxy|gate_disjoint|k500": {
+   "EN-obs": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 3,
+     "ceiling data-null": 1
+    }
+   },
+   "EN-pred": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 5,
+     "lost_to_group_member": 2,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-obs": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 3,
+     "lost_to_group_member": 2,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-pred": {
+    "n_misses": 27,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 3,
+     "ceiling data-null": 1
+    }
+   }
+  },
+  "non_proxy|all|k100": {
+   "EN-obs": {
+    "n_misses": 35,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 7,
+     "lost_to_group_member": 5,
+     "ceiling data-null": 3
+    }
+   },
+   "EN-pred": {
+    "n_misses": 36,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 8,
+     "lost_to_group_member": 5,
+     "ceiling data-null": 3
+    }
+   },
+   "S1-obs": {
+    "n_misses": 36,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 7,
+     "lost_to_group_member": 6,
+     "ceiling data-null": 3
+    }
+   },
+   "S1-pred": {
+    "n_misses": 36,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 8,
+     "lost_to_group_member": 5,
+     "ceiling data-null": 3
+    }
+   }
+  },
+  "non_proxy|all|k200": {
+   "EN-obs": {
+    "n_misses": 35,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 7,
+     "lost_to_group_member": 5,
+     "ceiling data-null": 3
+    }
+   },
+   "EN-pred": {
+    "n_misses": 36,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 8,
+     "lost_to_group_member": 5,
+     "ceiling data-null": 3
+    }
+   },
+   "S1-obs": {
+    "n_misses": 32,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 6,
+     "lost_to_group_member": 3,
+     "ceiling data-null": 3
+    }
+   },
+   "S1-pred": {
+    "n_misses": 36,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 8,
+     "lost_to_group_member": 5,
+     "ceiling data-null": 3
+    }
+   }
+  },
+  "non_proxy|all|k500": {
+   "EN-obs": {
+    "n_misses": 34,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 6,
+     "lost_to_group_member": 5,
+     "ceiling data-null": 3
+    }
+   },
+   "EN-pred": {
+    "n_misses": 36,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 8,
+     "lost_to_group_member": 5,
+     "ceiling data-null": 3
+    }
+   },
+   "S1-obs": {
+    "n_misses": 31,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 6,
+     "lost_to_group_member": 2,
+     "ceiling data-null": 3
+    }
+   },
+   "S1-pred": {
+    "n_misses": 36,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 15,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 8,
+     "lost_to_group_member": 5,
+     "ceiling data-null": 3
+    }
+   }
+  },
+  "non_proxy|gate_disjoint|k100": {
+   "EN-obs": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 3,
+     "lost_to_group_member": 2,
+     "ceiling data-null": 1
+    }
+   },
+   "EN-pred": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 1,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-obs": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 3,
+     "lost_to_group_member": 2,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-pred": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 1,
+     "ceiling data-null": 1
+    }
+   }
+  },
+  "non_proxy|gate_disjoint|k200": {
+   "EN-obs": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 3,
+     "lost_to_group_member": 2,
+     "ceiling data-null": 1
+    }
+   },
+   "EN-pred": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 1,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-obs": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 3,
+     "lost_to_group_member": 2,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-pred": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 1,
+     "ceiling data-null": 1
+    }
+   }
+  },
+  "non_proxy|gate_disjoint|k500": {
+   "EN-obs": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 3,
+     "lost_to_group_member": 2,
+     "ceiling data-null": 1
+    }
+   },
+   "EN-pred": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 1,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-obs": {
+    "n_misses": 24,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 3,
+     "lost_to_group_member": 1,
+     "ceiling data-null": 1
+    }
+   },
+   "S1-pred": {
+    "n_misses": 25,
+    "by_category": {
+     "ineligible gene (class 1/2/3)": 14,
+     "no feature_D or feature not in \ud835\udc9f_g": 5,
+     "eligible, ranked below k": 4,
+     "lost_to_group_member": 1,
+     "ceiling data-null": 1
+    }
+   }
+  }
+ },
+ "recall_data_supported": {
+  "incl_proxy|all|k100": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 15,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.218019360910534
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 15,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.218019360910534
+    ]
+   },
+   "S1-obs": {
+    "hits": 0,
+    "n": 15,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.218019360910534
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 15,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.218019360910534
+    ]
+   }
+  },
+  "incl_proxy|all|k200": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 15,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.218019360910534
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 15,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.218019360910534
+    ]
+   },
+   "S1-obs": {
+    "hits": 5,
+    "n": 15,
+    "recall": 0.3333333333333333,
+    "ci95": [
+     0.11824110336688094,
+     0.6161962674588458
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 15,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.218019360910534
+    ]
+   }
+  },
+  "incl_proxy|all|k500": {
+   "EN-obs": {
+    "hits": 3,
+    "n": 15,
+    "recall": 0.2,
+    "ci95": [
+     0.04331200510583662,
+     0.480891133806853
+    ]
+   },
+   "EN-pred": {
+    "hits": 2,
+    "n": 15,
+    "recall": 0.13333333333333333,
+    "ci95": [
+     0.016575913440083627,
+     0.40460269660337206
+    ]
+   },
+   "S1-obs": {
+    "hits": 7,
+    "n": 15,
+    "recall": 0.4666666666666667,
+    "ci95": [
+     0.21266672951930793,
+     0.7341386527226033
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 15,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.218019360910534
+    ]
+   }
+  },
+  "incl_proxy|gate_disjoint|k100": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   },
+   "S1-obs": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   }
+  },
+  "incl_proxy|gate_disjoint|k200": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   },
+   "S1-obs": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   }
+  },
+  "incl_proxy|gate_disjoint|k500": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   },
+   "S1-obs": {
+    "hits": 2,
+    "n": 6,
+    "recall": 0.3333333333333333,
+    "ci95": [
+     0.04327186829274169,
+     0.7772219044964879
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 6,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4592581264399005
+    ]
+   }
+  },
+  "non_proxy|all|k100": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 11,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.2849141529181544
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 11,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.2849141529181544
+    ]
+   },
+   "S1-obs": {
+    "hits": 0,
+    "n": 11,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.2849141529181544
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 11,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.2849141529181544
+    ]
+   }
+  },
+  "non_proxy|all|k200": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 11,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.2849141529181544
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 11,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.2849141529181544
+    ]
+   },
+   "S1-obs": {
+    "hits": 3,
+    "n": 11,
+    "recall": 0.2727272727272727,
+    "ci95": [
+     0.06021773417290667,
+     0.6097425595724211
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 11,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.2849141529181544
+    ]
+   }
+  },
+  "non_proxy|all|k500": {
+   "EN-obs": {
+    "hits": 1,
+    "n": 11,
+    "recall": 0.09090909090909091,
+    "ci95": [
+     0.002298972213814269,
+     0.4127799169883827
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 11,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.2849141529181544
+    ]
+   },
+   "S1-obs": {
+    "hits": 4,
+    "n": 11,
+    "recall": 0.36363636363636365,
+    "ci95": [
+     0.10926344381909812,
+     0.6920952849883228
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 11,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.2849141529181544
+    ]
+   }
+  },
+  "non_proxy|gate_disjoint|k100": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   },
+   "S1-obs": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   }
+  },
+  "non_proxy|gate_disjoint|k200": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   },
+   "S1-obs": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   }
+  },
+  "non_proxy|gate_disjoint|k500": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   },
+   "S1-obs": {
+    "hits": 1,
+    "n": 4,
+    "recall": 0.25,
+    "ci95": [
+     0.0063094632097098705,
+     0.8058795503167565
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 4,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.6023646356164746
+    ]
+   }
+  }
+ },
+ "k": 200,
+ "NC5": {
+  "value": 0.0,
+  "per_arm": {
+   "EN-obs": {
+    "n_ranked": 2,
+    "false_sensitivity": 0,
+    "rate": 0.0,
+    "tests": []
+   },
+   "EN-pred": {
+    "n_ranked": 2,
+    "false_sensitivity": 0,
+    "rate": 0.0,
+    "tests": []
+   },
+   "S1-obs": {
+    "n_ranked": 3,
+    "false_sensitivity": 0,
+    "rate": 0.0,
+    "tests": []
+   },
+   "S1-pred": {
+    "n_ranked": 3,
+    "false_sensitivity": 0,
+    "rate": 0.0,
+    "tests": []
+   }
+  },
+  "bound_max": 0.2,
+  "n_tests": 19,
+  "pass": true
+ },
+ "refuted_vs_approved": {
+  "k": 200,
+  "n_refuted": 3,
+  "n_approved": 10,
+  "refuted_tests": [
+   "CDK46_SEL__CDK46__refuted",
+   "EGFR_AMP__EGFR__GBM_refuted",
+   "KRAS_MUT__MEK__NSCLC_refuted"
+  ],
+  "recall_refuted": {
+   "EN-obs": {
+    "hits": 0,
+    "n": 3,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.7075982261787133
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 3,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.7075982261787133
+    ]
+   },
+   "S1-obs": {
+    "hits": 0,
+    "n": 3,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.7075982261787133
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 3,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.7075982261787133
+    ]
+   }
+  },
+  "recall_approved": {
+   "EN-obs": {
+    "hits": 1,
+    "n": 10,
+    "recall": 0.1,
+    "ci95": [
+     0.0025285785444617865,
+     0.4450161170281954
+    ]
+   },
+   "EN-pred": {
+    "hits": 0,
+    "n": 10,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.3084971078187608
+    ]
+   },
+   "S1-obs": {
+    "hits": 3,
+    "n": 10,
+    "recall": 0.3,
+    "ci95": [
+     0.0667395111777345,
+     0.6524528500599973
+    ]
+   },
+   "S1-pred": {
+    "hits": 0,
+    "n": 10,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.3084971078187608
+    ]
+   }
+  }
+ },
+ "rules": {
+  "miss_order": "ineligible > no feature > ceiling data-null/contradicted > lost_to_group_member > ranked below k (agent ordering of the design's categories)",
+  "nc5": "docs/toy_nc_bounds.md NC5 analogue on the real CGT table and D lists",
+  "lists": "D only (no R)"
+ }
+}

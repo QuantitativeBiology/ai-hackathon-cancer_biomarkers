@@ -1,0 +1,18 @@
+{
+ "job": "en_pred",
+ "utc": "2026-10-29T22:57:20+00:00",
+ "start_utc": "2026-10-29T22:56:07+00:00",
+ "wall_s": 73.173543,
+ "workers": 2,
+ "run_id": "run_arms-33624-20261029T225327",
+ "n_genes": 100,
+ "memory_guard": {
+  "kind": "en",
+  "requested": 2,
+  "effective": 2,
+  "per_worker_gb": 0.9,
+  "available_gb": 3.62,
+  "parent_rss_gb": 0.59,
+  "budget_gb": 10.0
+ }
+}

@@ -1,0 +1,135 @@
+{
+ "NC1": {
+  "S1-obs": {
+   "value": 0.02242718446601942,
+   "bound": 0.1,
+   "bound_kind": "max",
+   "pass": true,
+   "label": "FDR_emp_fixed = 0.02243"
+  },
+  "S1-pred": {
+   "value": 0.040799594615664465,
+   "bound": 0.1,
+   "bound_kind": "max",
+   "pass": true,
+   "label": "not calibrated (A6/A7)"
+  },
+  "EN-obs selected": {
+   "value": 0.19953271028037384,
+   "bound": 0.1,
+   "bound_kind": "max",
+   "pass": false,
+   "label": "NC1 failed for EN-obs selected (0.1995 > 0.10)"
+  },
+  "EN-pred selected": {
+   "value": 0.32733199598796386,
+   "bound": 0.1,
+   "bound_kind": "max",
+   "pass": false,
+   "label": "not calibrated (A6/A7)"
+  },
+  "MD-strict": {
+   "value": 0.03709582598471487,
+   "bound": 0.1,
+   "bound_kind": "max",
+   "pass": true,
+   "label": "not calibrated (A6/A7)"
+  },
+  "MD-global": {
+   "value": 0.0009389671361502348,
+   "bound": 0.1,
+   "bound_kind": "max",
+   "pass": true,
+   "label": "FDR_emp_fixed = 0.000939"
+  }
+ },
+ "NC2a": {
+  "value": 0.1041920001389571,
+  "bound": 0.0011,
+  "bound_kind": "max",
+  "pass": false,
+  "label": "NC2a failed (0.1042)",
+  "n_genes_with_fidelity": 100
+ },
+ "NC2b": {
+  "value": 0.26,
+  "bound": 1.2,
+  "bound_kind": "max",
+  "pass": true,
+  "label": "passed",
+  "md_strict_rows": 26,
+  "n_genes": 100
+ },
+ "NC2b_md_global_information": {
+  "value": 0.0,
+  "md_global_rows": 0,
+  "n_genes": 100,
+  "provisional": 0.1,
+  "label": "MD-global low-tier hits per gene v (provisional 0.1, information)"
+ },
+ "NC3": {
+  "value": 0.4239766081871345,
+  "bound": 0.1,
+  "bound_kind": "max",
+  "pass": false,
+  "label": "NC3 failed (0.424)",
+  "n_testable_pairs": 684,
+  "n_dependent": 290,
+  "n_pairs": 684
+ },
+ "NC5": {
+  "value": 0.0,
+  "bound": 0.2,
+  "bound_kind": "max",
+  "pass": true,
+  "label": "passed",
+  "per_arm": {
+   "EN-obs": {
+    "n_ranked": 2,
+    "false_sensitivity": 0,
+    "rate": 0.0,
+    "tests": []
+   },
+   "EN-pred": {
+    "n_ranked": 2,
+    "false_sensitivity": 0,
+    "rate": 0.0,
+    "tests": []
+   },
+   "S1-obs": {
+    "n_ranked": 3,
+    "false_sensitivity": 0,
+    "rate": 0.0,
+    "tests": []
+   },
+   "S1-pred": {
+    "n_ranked": 3,
+    "false_sensitivity": 0,
+    "rate": 0.0,
+    "tests": []
+   }
+  },
+  "n_tests": 19
+ },
+ "NC6": {
+  "value": 0.0,
+  "bound": 0.7,
+  "bound_kind": "min",
+  "pass": false,
+  "label": "NC6 failed (0)",
+  "n": 18
+ },
+ "NC4": {
+  "value": null,
+  "label": "fold-offset control: see A7-iii",
+  "note": "toy-only control (A7-iii)"
+ },
+ "_meta": {
+  "bounds": "configs/frozen_hashes.json bounds_values (final)",
+  "labels": "configs/outcome_actions.csv",
+  "deviation": "DEV-POST-R-COMPLETION (run after the R read on D data only)",
+  "lowtier_universe": "results/benchmark_lowtier/, results/md_lowtier/ (run_arms.py --universe lowtier)",
+  "start_utc": "2026-10-29T23:09:09+00:00",
+  "commit": "5de3c196f5119de5b3bd952f4a9bf1fde0dee249"
+ }
+}

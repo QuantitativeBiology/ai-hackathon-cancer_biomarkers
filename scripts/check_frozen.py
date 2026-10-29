@@ -32,7 +32,7 @@ HASHES = Path("configs") / "frozen_hashes.json"
 SECTION_TAG = {"design": "freeze-design", "bounds": "freeze-bounds"}
 AMEND_HEADING = b"## Amendments after freeze"
 PROTECTED = ("results/benchmark/", "results/md/", "results/gates/", "results/null/", "results/benchmark_ctrl/",
-             "results/md_ctrl/")
+             "results/md_ctrl/", "results/benchmark_lowtier/", "results/md_lowtier/")
 # DESIGN §13.4 lists (file paths as found in this repository; "culture and lineage lists" live in build_params.json,
 # toy plants in toy_answer_key.json).
 EXPECTED = {

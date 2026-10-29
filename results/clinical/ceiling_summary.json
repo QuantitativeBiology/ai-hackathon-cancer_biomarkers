@@ -1,0 +1,37 @@
+{
+ "n_tests": 64,
+ "n_ceiling_testable": 28,
+ "labels": {
+  "untestable": 36,
+  "data-supported": 19,
+  "data-null": 9
+ },
+ "labels_ceiling_testable_by_ko_class": {
+  "concordant": {
+   "data-null": 8,
+   "data-supported": 13
+  },
+  "concordant-KO/combination-required": {
+   "data-null": 0,
+   "data-supported": 2
+  },
+  "concordant-family": {
+   "data-null": 1,
+   "data-supported": 4
+  }
+ },
+ "wilcoxon_agrees": 21,
+ "collinear_with_design": [
+  "ALK_FUS__ALK__NSCLC_ALCL_IMT",
+  "BCR_ABL1__ABL1__CML_ALL"
+ ],
+ "rules": {
+  "bh_q": 0.1,
+  "family": "recovered if any member hit; ceiling uses Bonferroni x |T| within the test",
+  "robustness": "Wilcoxon rank-sum, one-sided",
+  "stratified_comparators": "no separate indication fixed effect; the \u00a75.3 lineage block is used",
+  "lines": "D lines only (guard scope dev)"
+ },
+ "wall_s": 24.097162499994738,
+ "commit": "5de3c196f5119de5b3bd952f4a9bf1fde0dee249"
+}

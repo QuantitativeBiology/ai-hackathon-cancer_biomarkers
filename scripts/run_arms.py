@@ -3,6 +3,7 @@
     python -B scripts/run_arms.py --pilot            # 50-gene timing pilot -> results/timing/surrogate_pilot.json
     python -B scripts/run_arms.py                    # full run (refused before tag freeze-bounds)
     python -B scripts/run_arms.py --universe ctrl    # U_ctrl genes (configs/u_ctrl_genes.txt; BH within U_ctrl)
+    python -B scripts/run_arms.py --universe lowtier # NC2 low-tier genes (configs/lowtier_genes.txt; DESIGN §7.3)
 
 Outputs (full run, eligible): cache/benchmark/arms/part-*.parquet (bulk; sha256 -> results/bulk_manifest.csv),
 results/benchmark/{selected.csv, lambda.csv, p_cut.json, summary.json}, results/md/{md_global, md_global_all,
@@ -40,7 +41,7 @@ def sha(path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-UNIVERSES = ("eligible", "ctrl")
+UNIVERSES = ("eligible", "ctrl", "lowtier")
 
 
 def output_paths(universe: str = "eligible") -> dict:
@@ -64,14 +65,16 @@ def universe_genes(universe: str) -> list | None:
     eligible set (DESIGN §2: arms ⊆ eligible; U_ctrl runs separately)."""
     if universe == "eligible":
         return None
-    f = P.CONFIGS / "u_ctrl_genes.txt"
+    name, builder = {"ctrl": ("u_ctrl_genes.txt", "build_u_ctrl_genes.py"),
+                     "lowtier": ("lowtier_genes.txt", "build_lowtier_genes.py")}[universe]
+    f = P.CONFIGS / name
     if not f.exists():
-        raise SystemExit(f"{f} missing: run scripts/build_u_ctrl_genes.py")
+        raise SystemExit(f"{f} missing: run scripts/{builder}")
     genes = [x.strip() for x in f.read_text(encoding="utf-8").splitlines() if x.strip()]
     el = pd.read_csv(P.CONFIGS / "eligible_genes.csv", dtype={"entrez": str})
     both = set(genes) & set(el.loc[el["eligible"].astype(bool), "entrez"])
     if both:
-        raise SystemExit(f"u_ctrl_genes.txt overlaps the eligible set: {sorted(both)}")
+        raise SystemExit(f"{name} overlaps the eligible set: {sorted(both)}")
     return genes
 
 
@@ -221,8 +224,10 @@ def write_outputs(res: dict, data, universe: str, guards: dict, ws1: int) -> dic
             "workers": guards, "config_sha256": PR.config_hashes(),
             "subsamples_sha256": sha(P.CONFIGS / "subsamples.json"),
             "dictionary_built_utc": data.extras.get("dictionary_built_utc"), "commit": gitutil.head(P.PROJECT)}
-    if universe != "eligible":
+    if universe == "ctrl":
         summ["u_ctrl_genes_sha256"] = sha(P.CONFIGS / "u_ctrl_genes.txt")
+    elif universe == "lowtier":
+        summ["lowtier_genes_sha256"] = sha(P.CONFIGS / "lowtier_genes.txt")
     (rb / "summary.json").write_text(json.dumps(summ, indent=1, default=str), encoding="utf-8")
     n = len(data.genes)
     g1, g2 = guards.get("s1"), guards.get("en")
@@ -265,7 +270,7 @@ def main(argv=None) -> int:
     ap.add_argument("--workers", type=int, default=None, help="pilot only")
     ap.add_argument("--workers-s1", type=int, default=None, help="S1 pool (default runtime_params workers_default.s1)")
     ap.add_argument("--workers-en", type=int, default=None, help="EN pools (default runtime_params workers_default.en)")
-    ap.add_argument("--universe", choices=["eligible", "ctrl"], default="eligible")
+    ap.add_argument("--universe", choices=list(UNIVERSES), default="eligible")
     ap.add_argument("--force-before-bounds", action="store_true", help="PI override of the freeze-bounds check")
     a = ap.parse_args(argv)
     return pilot(a) if a.pilot else full(a)

@@ -1,0 +1,611 @@
+{
+ "n": 100,
+ "seed_key": "lowtier_seed",
+ "seed": 20261103,
+ "rule": "reference = n eligible genes drawn with default_rng(lowtier_seed); each matched to the unused tier-low gene with the nearest D effect SD (Part 1 gene table), ties by lowest Entrez id (agent rule)",
+ "sd_median_lowtier": 0.279355,
+ "sd_median_reference": 0.27875000000000005,
+ "max_abs_sd_gap": 0.10239999999999994,
+ "pairs": [
+  {
+   "entrez": "2209",
+   "sd": 0.3133,
+   "reference_entrez": "57697",
+   "reference_sd": 0.31344
+  },
+  {
+   "entrez": "8881",
+   "sd": 0.4554,
+   "reference_entrez": "1499",
+   "reference_sd": 0.45266
+  },
+  {
+   "entrez": "93594",
+   "sd": 0.23201,
+   "reference_entrez": "9919",
+   "reference_sd": 0.23252
+  },
+  {
+   "entrez": "55742",
+   "sd": 0.254,
+   "reference_entrez": "6997",
+   "reference_sd": 0.25444
+  },
+  {
+   "entrez": "23774",
+   "sd": 0.22813,
+   "reference_entrez": "26520",
+   "reference_sd": 0.22795
+  },
+  {
+   "entrez": "64785",
+   "sd": 0.3786,
+   "reference_entrez": "51504",
+   "reference_sd": 0.3773
+  },
+  {
+   "entrez": "164633",
+   "sd": 0.18935,
+   "reference_entrez": "201595",
+   "reference_sd": 0.18928
+  },
+  {
+   "entrez": "54606",
+   "sd": 0.34591,
+   "reference_entrez": "4194",
+   "reference_sd": 0.34491
+  },
+  {
+   "entrez": "65095",
+   "sd": 0.29728,
+   "reference_entrez": "27238",
+   "reference_sd": 0.29793
+  },
+  {
+   "entrez": "84148",
+   "sd": 0.31137,
+   "reference_entrez": "490",
+   "reference_sd": 0.31105
+  },
+  {
+   "entrez": "23190",
+   "sd": 0.23088,
+   "reference_entrez": "6871",
+   "reference_sd": 0.23132
+  },
+  {
+   "entrez": "2678",
+   "sd": 0.23584,
+   "reference_entrez": "55325",
+   "reference_sd": 0.23512
+  },
+  {
+   "entrez": "10284",
+   "sd": 0.28477,
+   "reference_entrez": "8241",
+   "reference_sd": 0.28375
+  },
+  {
+   "entrez": "51077",
+   "sd": 0.36198,
+   "reference_entrez": "51025",
+   "reference_sd": 0.36177
+  },
+  {
+   "entrez": "64318",
+   "sd": 0.31553,
+   "reference_entrez": "9410",
+   "reference_sd": 0.3156
+  },
+  {
+   "entrez": "29882",
+   "sd": 0.34029,
+   "reference_entrez": "51649",
+   "reference_sd": 0.33909
+  },
+  {
+   "entrez": "25962",
+   "sd": 0.33277,
+   "reference_entrez": "79833",
+   "reference_sd": 0.33303
+  },
+  {
+   "entrez": "4899",
+   "sd": 0.30976,
+   "reference_entrez": "51073",
+   "reference_sd": 0.30896
+  },
+  {
+   "entrez": "55142",
+   "sd": 0.27699,
+   "reference_entrez": "30834",
+   "reference_sd": 0.27589
+  },
+  {
+   "entrez": "6730",
+   "sd": 0.2406,
+   "reference_entrez": "5203",
+   "reference_sd": 0.24063
+  },
+  {
+   "entrez": "5719",
+   "sd": 0.32762,
+   "reference_entrez": "55299",
+   "reference_sd": 0.32795
+  },
+  {
+   "entrez": "23528",
+   "sd": 0.2283,
+   "reference_entrez": "3978",
+   "reference_sd": 0.22786
+  },
+  {
+   "entrez": "57699",
+   "sd": 0.21036,
+   "reference_entrez": "29880",
+   "reference_sd": 0.21034
+  },
+  {
+   "entrez": "84661",
+   "sd": 0.21565,
+   "reference_entrez": "10087",
+   "reference_sd": 0.21539
+  },
+  {
+   "entrez": "6134",
+   "sd": 0.36711,
+   "reference_entrez": "890",
+   "reference_sd": 0.36673
+  },
+  {
+   "entrez": "1479",
+   "sd": 0.29595,
+   "reference_entrez": "26057",
+   "reference_sd": 0.29791
+  },
+  {
+   "entrez": "494188",
+   "sd": 0.20157,
+   "reference_entrez": "8539",
+   "reference_sd": 0.20159
+  },
+  {
+   "entrez": "84296",
+   "sd": 0.33676,
+   "reference_entrez": "55272",
+   "reference_sd": 0.3361
+  },
+  {
+   "entrez": "126003",
+   "sd": 0.23041,
+   "reference_entrez": "9801",
+   "reference_sd": 0.23096
+  },
+  {
+   "entrez": "8824",
+   "sd": 0.18728,
+   "reference_entrez": "5756",
+   "reference_sd": 0.18735
+  },
+  {
+   "entrez": "8565",
+   "sd": 0.39796,
+   "reference_entrez": "4670",
+   "reference_sd": 0.39844
+  },
+  {
+   "entrez": "1938",
+   "sd": 0.58684,
+   "reference_entrez": "7298",
+   "reference_sd": 0.68924
+  },
+  {
+   "entrez": "4174",
+   "sd": 0.35021,
+   "reference_entrez": "6901",
+   "reference_sd": 0.35043
+  },
+  {
+   "entrez": "23223",
+   "sd": 0.32871,
+   "reference_entrez": "54584",
+   "reference_sd": 0.32928
+  },
+  {
+   "entrez": "29980",
+   "sd": 0.53765,
+   "reference_entrez": "5883",
+   "reference_sd": 0.54128
+  },
+  {
+   "entrez": "6878",
+   "sd": 0.34126,
+   "reference_entrez": "7184",
+   "reference_sd": 0.3427
+  },
+  {
+   "entrez": "3213",
+   "sd": 0.24333,
+   "reference_entrez": "79892",
+   "reference_sd": 0.24341
+  },
+  {
+   "entrez": "81688",
+   "sd": 0.20481,
+   "reference_entrez": "79706",
+   "reference_sd": 0.20462
+  },
+  {
+   "entrez": "7272",
+   "sd": 0.3061,
+   "reference_entrez": "51117",
+   "reference_sd": 0.30354
+  },
+  {
+   "entrez": "283232",
+   "sd": 0.2391,
+   "reference_entrez": "2188",
+   "reference_sd": 0.23913
+  },
+  {
+   "entrez": "57763",
+   "sd": 0.23429,
+   "reference_entrez": "83461",
+   "reference_sd": 0.23406
+  },
+  {
+   "entrez": "51111",
+   "sd": 0.23355,
+   "reference_entrez": "23367",
+   "reference_sd": 0.23388
+  },
+  {
+   "entrez": "51118",
+   "sd": 0.24643,
+   "reference_entrez": "10589",
+   "reference_sd": 0.2477
+  },
+  {
+   "entrez": "8089",
+   "sd": 0.27396,
+   "reference_entrez": "11102",
+   "reference_sd": 0.27328
+  },
+  {
+   "entrez": "5891",
+   "sd": 0.22121,
+   "reference_entrez": "729515",
+   "reference_sd": 0.22118
+  },
+  {
+   "entrez": "171017",
+   "sd": 0.17632,
+   "reference_entrez": "3630",
+   "reference_sd": 0.17636
+  },
+  {
+   "entrez": "8546",
+   "sd": 0.22073,
+   "reference_entrez": "51081",
+   "reference_sd": 0.22076
+  },
+  {
+   "entrez": "153527",
+   "sd": 0.39486,
+   "reference_entrez": "23383",
+   "reference_sd": 0.39436
+  },
+  {
+   "entrez": "10381",
+   "sd": 0.27196,
+   "reference_entrez": "6879",
+   "reference_sd": 0.27163
+  },
+  {
+   "entrez": "196483",
+   "sd": 0.29304,
+   "reference_entrez": "23248",
+   "reference_sd": 0.29313
+  },
+  {
+   "entrez": "80789",
+   "sd": 0.29562,
+   "reference_entrez": "5976",
+   "reference_sd": 0.29482
+  },
+  {
+   "entrez": "84285",
+   "sd": 0.37446,
+   "reference_entrez": "146909",
+   "reference_sd": 0.37658
+  },
+  {
+   "entrez": "100287932",
+   "sd": 0.31163,
+   "reference_entrez": "8493",
+   "reference_sd": 0.31011
+  },
+  {
+   "entrez": "23521",
+   "sd": 0.49439,
+   "reference_entrez": "10121",
+   "reference_sd": 0.49742
+  },
+  {
+   "entrez": "51455",
+   "sd": 0.2713,
+   "reference_entrez": "6574",
+   "reference_sd": 0.27157
+  },
+  {
+   "entrez": "6511",
+   "sd": 0.14035,
+   "reference_entrez": "11313",
+   "reference_sd": 0.14035
+  },
+  {
+   "entrez": "166378",
+   "sd": 0.25983,
+   "reference_entrez": "55166",
+   "reference_sd": 0.25972
+  },
+  {
+   "entrez": "64852",
+   "sd": 0.41518,
+   "reference_entrez": "7428",
+   "reference_sd": 0.4176
+  },
+  {
+   "entrez": "5441",
+   "sd": 0.51317,
+   "reference_entrez": "23594",
+   "reference_sd": 0.51668
+  },
+  {
+   "entrez": "527",
+   "sd": 0.55501,
+   "reference_entrez": "253714",
+   "reference_sd": 0.53181
+  },
+  {
+   "entrez": "6130",
+   "sd": 0.47978,
+   "reference_entrez": "55154",
+   "reference_sd": 0.48541
+  },
+  {
+   "entrez": "10969",
+   "sd": 0.25234,
+   "reference_entrez": "156",
+   "reference_sd": 0.25233
+  },
+  {
+   "entrez": "663",
+   "sd": 0.25796,
+   "reference_entrez": "2230",
+   "reference_sd": 0.25819
+  },
+  {
+   "entrez": "4756",
+   "sd": 0.16592,
+   "reference_entrez": "80233",
+   "reference_sd": 0.16592
+  },
+  {
+   "entrez": "727832",
+   "sd": 0.20312,
+   "reference_entrez": "54487",
+   "reference_sd": 0.20315
+  },
+  {
+   "entrez": "7046",
+   "sd": 0.26355,
+   "reference_entrez": "9868",
+   "reference_sd": 0.26404
+  },
+  {
+   "entrez": "654254",
+   "sd": 0.21492,
+   "reference_entrez": "79717",
+   "reference_sd": 0.21492
+  },
+  {
+   "entrez": "375248",
+   "sd": 0.27233,
+   "reference_entrez": "64434",
+   "reference_sd": 0.27326
+  },
+  {
+   "entrez": "5555",
+   "sd": 0.2102,
+   "reference_entrez": "55023",
+   "reference_sd": 0.21021
+  },
+  {
+   "entrez": "9114",
+   "sd": 0.31942,
+   "reference_entrez": "4976",
+   "reference_sd": 0.31913
+  },
+  {
+   "entrez": "10987",
+   "sd": 0.42832,
+   "reference_entrez": "171568",
+   "reference_sd": 0.42894
+  },
+  {
+   "entrez": "8345",
+   "sd": 0.23193,
+   "reference_entrez": "90025",
+   "reference_sd": 0.23319
+  },
+  {
+   "entrez": "1421",
+   "sd": 0.21798,
+   "reference_entrez": "1345",
+   "reference_sd": 0.21805
+  },
+  {
+   "entrez": "8732",
+   "sd": 0.46614,
+   "reference_entrez": "9939",
+   "reference_sd": 0.46688
+  },
+  {
+   "entrez": "25973",
+   "sd": 0.29586,
+   "reference_entrez": "898",
+   "reference_sd": 0.29521
+  },
+  {
+   "entrez": "27043",
+   "sd": 0.34039,
+   "reference_entrez": "25909",
+   "reference_sd": 0.33798
+  },
+  {
+   "entrez": "22826",
+   "sd": 0.28172,
+   "reference_entrez": "10775",
+   "reference_sd": 0.28161
+  },
+  {
+   "entrez": "4905",
+   "sd": 0.47644,
+   "reference_entrez": "6122",
+   "reference_sd": 0.54923
+  },
+  {
+   "entrez": "122769",
+   "sd": 0.46154,
+   "reference_entrez": "3312",
+   "reference_sd": 0.46624
+  },
+  {
+   "entrez": "201965",
+   "sd": 0.22901,
+   "reference_entrez": "6050",
+   "reference_sd": 0.22884
+  },
+  {
+   "entrez": "51095",
+   "sd": 0.40253,
+   "reference_entrez": "23173",
+   "reference_sd": 0.39481
+  },
+  {
+   "entrez": "84365",
+   "sd": 0.31378,
+   "reference_entrez": "8861",
+   "reference_sd": 0.31543
+  },
+  {
+   "entrez": "26003",
+   "sd": 0.20022,
+   "reference_entrez": "54344",
+   "reference_sd": 0.20016
+  },
+  {
+   "entrez": "1876",
+   "sd": 0.24911,
+   "reference_entrez": "202018",
+   "reference_sd": 0.24878
+  },
+  {
+   "entrez": "2967",
+   "sd": 0.26203,
+   "reference_entrez": "10899",
+   "reference_sd": 0.26406
+  },
+  {
+   "entrez": "29097",
+   "sd": 0.24454,
+   "reference_entrez": "118472",
+   "reference_sd": 0.24354
+  },
+  {
+   "entrez": "6351",
+   "sd": 0.27421,
+   "reference_entrez": "10112",
+   "reference_sd": 0.27527
+  },
+  {
+   "entrez": "25988",
+   "sd": 0.35351,
+   "reference_entrez": "9295",
+   "reference_sd": 0.35298
+  },
+  {
+   "entrez": "55837",
+   "sd": 0.2668,
+   "reference_entrez": "3842",
+   "reference_sd": 0.2659
+  },
+  {
+   "entrez": "114049",
+   "sd": 0.30734,
+   "reference_entrez": "5929",
+   "reference_sd": 0.30716
+  },
+  {
+   "entrez": "3069",
+   "sd": 0.19333,
+   "reference_entrez": "51373",
+   "reference_sd": 0.1934
+  },
+  {
+   "entrez": "196441",
+   "sd": 0.30756,
+   "reference_entrez": "28956",
+   "reference_sd": 0.30791
+  },
+  {
+   "entrez": "23560",
+   "sd": 0.47441,
+   "reference_entrez": "5469",
+   "reference_sd": 0.55143
+  },
+  {
+   "entrez": "140739",
+   "sd": 0.25617,
+   "reference_entrez": "8344",
+   "reference_sd": 0.25633
+  },
+  {
+   "entrez": "23534",
+   "sd": 0.32606,
+   "reference_entrez": "1982",
+   "reference_sd": 0.32659
+  },
+  {
+   "entrez": "6414",
+   "sd": 0.21571,
+   "reference_entrez": "65265",
+   "reference_sd": 0.21552
+  },
+  {
+   "entrez": "84501",
+   "sd": 0.18841,
+   "reference_entrez": "1164",
+   "reference_sd": 0.18836
+  },
+  {
+   "entrez": "84191",
+   "sd": 0.24209,
+   "reference_entrez": "22828",
+   "reference_sd": 0.24341
+  },
+  {
+   "entrez": "3035",
+   "sd": 0.30738,
+   "reference_entrez": "6722",
+   "reference_sd": 0.311
+  },
+  {
+   "entrez": "4927",
+   "sd": 0.34799,
+   "reference_entrez": "55012",
+   "reference_sd": 0.34771
+  }
+ ]
+}

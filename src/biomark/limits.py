@@ -108,8 +108,19 @@ def discordance(g, f, beta, cg: dict, ceil: dict) -> str:
 
 def pair_classes(fd: FeatureData, cat: pd.DataFrame, delta: pd.DataFrame, locus: pd.DataFrame, amp: pd.DataFrame,
                  culture: pd.DataFrame | None, hyper: pd.DataFrame | None, power: dict, rt: pd.DataFrame | None,
-                 cgt: pd.DataFrame | None, ceil: pd.DataFrame | None, gene_universe=None) -> pd.DataFrame:
+                 cgt: pd.DataFrame | None, ceil: pd.DataFrame | None, gene_universe=None,
+                 r_power: pd.DataFrame | None = None) -> pd.DataFrame:
+    """``r_power``: results/replication/r_power.csv (scripts/run_r_power.py: the pool's power formula for every R test,
+    power_effective = 0 when not R-evaluable); its value is used first, then r_tests.csv, then the pre-tag request.
+    A tested, not replicated pair whose power is still unknown is never left in class 9 / 8: it gets class 7 with
+    status 'not replicated, power not computed'. A tested pair whose R fit gave no p-value follows the rule for
+    untested pairs (class unchanged, status 'no R test')."""
     PC = dict(PR.pp()["pair_classes"], **lcfg()["pair_class_codes"])
+    RP = {}
+    if r_power is not None and len(r_power):
+        col = "power_effective" if "power_effective" in r_power else "power"
+        RP = {(str(g), f): float(p) for g, f, p in zip(r_power["gene"], r_power["feature"], r_power[col])
+              if pd.notna(p)}
     pmin = float(PR.dp()["replication_s6"]["power_min"])
     pending = lcfg()["pending"]
     base = AU.pair_classes(fd, cat, delta, locus, amp)
@@ -145,7 +156,7 @@ def pair_classes(fd: FeatureData, cat: pd.DataFrame, delta: pd.DataFrame, locus:
         if cls in (PC["valid"], PC["confounded"]) and extra:
             cls = PC["confounded"]
             reasons += extra
-        pw = R[k][2] if k in R and np.isfinite(R[k][2]) else power.get(k, np.nan)
+        pw = RP[k] if k in RP else (R[k][2] if k in R and np.isfinite(R[k][2]) else power.get(k, np.nan))
         if cls in (PC["valid"], PC["confounded"]) and np.isfinite(pw) and pw < pmin:
             cls = PC["too_rare"]
             reasons.append("R power < power_min")
@@ -159,9 +170,15 @@ def pair_classes(fd: FeatureData, cat: pd.DataFrame, delta: pd.DataFrame, locus:
         if cls in (PC["valid"], PC["ko_drug_discordance"]):
             if not have_R:
                 status = pending
+            elif k in R and not np.isfinite(R[k][1]):
+                status = "no R test"                          # R fit gave no p-value: rule for untested pairs
             elif k in R and np.isfinite(pw) and pw >= pmin and not R[k][0]:
                 cls = PC["powered_not_replicated"]
                 reasons.append("powered, not replicated in R")
+            elif k in R and not np.isfinite(pw) and not R[k][0]:
+                cls = PC["powered_not_replicated"]
+                status = "not replicated, power not computed"
+                reasons.append("not replicated in R; R power not computed")
             elif k not in R:
                 status = "no R test"
         elif cls in (PC["confounded"],) and not np.isfinite(pw):

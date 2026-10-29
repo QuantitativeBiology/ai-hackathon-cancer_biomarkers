@@ -58,8 +58,16 @@ results/benchmark/selected.csv,47d32976f5dbb9870ebf3058311cf96324fafa4c2ed78225b
 results/md/md_global_all.csv,11bbf5e9c450eef17601e5842c3308aeefcee8338ca9f3e2ce79f55efe3536ab,50728.0,,2026-10-29T04:33:10+00:00,scripts/run_arms.py
 results/md/md_strict_all.csv,082633950bbc5827d30c082e89fbee65388d7aa88fe87f848b2f483ea54ea507,50728.0,,2026-10-29T04:33:10+00:00,scripts/run_arms.py
 cache/benchmark/arms_ctrl/part-00000.parquet,c6e88f137eea756272a55a5ecb35166c47ad81840eb83466a4d591e06b38f4ef,,,,scripts/run_arms.py
-results/subtypes/subtype_lines.csv,8972aeee8d7e0fbeee17a550bc4c5bcfc66e54a850a743b62a09440d44a423c6,126133,,2026-10-29T04:47:42+00:00,scripts/run_subtypes.py
-results/confounders/delta.csv,67902f0d5b3411a51d40a2c94a9a8fc03d755cb5184de9df8b324ae002241015,107576,,2026-10-29T10:37:39+00:00,scripts/run_confounder_audit.py
-results/lineage/cross_lineage_per_lineage.csv,95e351b1bd03dfa86c011568d68d7782c4120ece65e487727442dd93e94703f2,197592,,2026-10-29T12:24:30+00:00,scripts/run_cross_lineage.py
+results/subtypes/subtype_lines.csv,8972aeee8d7e0fbeee17a550bc4c5bcfc66e54a850a743b62a09440d44a423c6,126133.0,,2026-10-29T04:47:42+00:00,scripts/run_subtypes.py
+results/confounders/delta.csv,67902f0d5b3411a51d40a2c94a9a8fc03d755cb5184de9df8b324ae002241015,107576.0,,2026-10-29T10:37:39+00:00,scripts/run_confounder_audit.py
+results/lineage/cross_lineage_per_lineage.csv,95e351b1bd03dfa86c011568d68d7782c4120ece65e487727442dd93e94703f2,197592.0,,2026-10-29T12:24:30+00:00,scripts/run_cross_lineage.py
 results/dryrun/r_lines.csv,bef039d9fdef1f2ce3fe16ae3920472f5613fc71047bd1cf7581cf21a87a15c7,,,2026-10-29T19:45:48+00:00,scripts/replicate.py --pseudo-r fold0
 results/replication/r_lines.csv,943c038b15c467b5be1747e0ad8c2ea2435c8160d2c31756abff8183571f1ca7,,,2026-10-29T20:07:58+00:00,scripts/replicate.py
+cache/benchmark/arms_lowtier/part-00000.parquet,fad8e30049cc84196811ef8d97fae3ab42be178f5f2ed2285881107fe8671936,,,,scripts/run_arms.py
+cache/benchmark/arms_lowtier/part-00001.parquet,4822e1acab16f46ec6d78a9470c482b35ef28e45d15172dda1a261fa0abedf7a,,,,scripts/run_arms.py
+cache/benchmark/arms_lowtier/part-00002.parquet,c09b36f1ced9341b84c4407dd16695d9f0140c1df774c2aeccd8598256662806,,,,scripts/run_arms.py
+cache/benchmark/arms_lowtier/part-00003.parquet,f32476b9650d69b71f6cac65d83338c2f601d61742564018beb2f6fd5adcffc0,,,,scripts/run_arms.py
+cache/benchmark/arms_lowtier/part-00004.parquet,1f11ea51ca6249bae6e56fa8ace0b679fdd5be28af6b2d84341f735d3fb72684,,,,scripts/run_arms.py
+cache/benchmark/arms_lowtier/part-00005.parquet,dea5028f965c2b128b705e889981538f57b8d4c30c609b690fbecec75d59f7ca,,,,scripts/run_arms.py
+cache/benchmark/arms_lowtier/part-00006.parquet,3186aa5fc975690d10a9ce827ca42ae539415d4e6be3dfb3c99dbc141ced1c83,,,,scripts/run_arms.py
+cache/benchmark/arms_lowtier/part-00007.parquet,6d644a799bc175d218924b78739c192d6d2d4662bb5f2a533c8394b5a18cd06b,,,,scripts/run_arms.py
