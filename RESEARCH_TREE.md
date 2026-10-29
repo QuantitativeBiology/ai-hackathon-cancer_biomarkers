@@ -4,6 +4,16 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-29 ~20:40 — FINAL milestone: replication done, report written
+The single replication in the 255 held-out lines was made once (logged at ae6aa84, after tag `freeze-catalogue`, with the dry run first). It answers the primary question in the negative:
+- Reading determinants out of the Part 1 predictor (EN-pred) does not replicate better than the same elastic net on observed effects. P1 at k 100: 0.82 vs 0.89, difference −0.07 (CI −0.12 to 0.02).
+- The univariate confounder-adjusted test (S1-obs) beats both: 0.99 for S1-obs, EN-obs − S1-obs −0.10 (CI −0.17 to −0.05).
+- XLIB agrees: S1-obs 0.82 vs EN-obs 0.62.
+- On the dev set, every other signal points the same way. The gate failed twice (21/39). The predictor-derived lists recover essentially no clinical test (P2 descriptive, 6 tests). Combinatorial validation shows no advantage over S1-obs. EN-obs fails NC1 and EN-pred is not calibrated. NC6 fails.
+- The catalogue MD-global (EN-pred ∩ S1-obs) is well controlled (FDR_emp 0.0009). Its 735 replicated class-9 pairs are mostly expression-level paralog dependencies (FAM50A–FAM50B, DDX3X–DDX3Y, DNAJC19–DNAJC15), several with high non-cancerous dependency.
+
+Process: the design was frozen in stages (design, CGT, bounds, catalogue). Outcome actions were pre-committed before any real output, so the gate failure and the negative P1 needed no new rulings. Every deviation is in results/deviations.csv, including the budget overrun decided by the user and the withdrawn dry-run cut. The run lost about 5 h to an overnight interruption and memory limits on a 15.7 GB machine, which led to LESSONS rules 8 and 13. Open items, reported as not done: the data ceiling, NC2/NC3/NC5 on real data, refuted-vs-approved recall, the independent delta check against the engine, and the Tier B items (TCGA prevalence, M1-proxy attribution, selection-adaptive null).
+
 ### 2026-10-29 17:25 — SUSPEND #2 (user); resume point
 Committed through 74d0536. The tree is clean, and the 24 h budget is extended by user decision (DEV-BUDGET-OVERRUN).
 - All D-only analyses are done. REPORT.md has every non-R result and the red-team fixes.
@@ -257,7 +267,7 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
     18 P2-headline, 8 gate-disjoint; tag `freeze-cgt` (no dependency data joined); DESIGN amendments A1–A5 (append-only)
   - [x] Dictionary track committed; [~] single rebuild #4 with ALLELE/CLIN
   - [x] M3b parallel tracks (started during round 2, D4): dictionary/eligibility/controls · CGT table (no dependency data) · toy simulation (separate verification agent); tag `freeze-bounds`
-- [~] M4 Core pipeline engine (stats/HC2, two-stage stability EN, 4 arms, MD-strict, fixed-threshold null) — pipeline author agent; unit tests on synthetic data; real run after freeze-bounds
+- [x] M4 Core pipeline engine (stats/HC2, two-stage stability EN, 4 arms, MD-strict, fixed-threshold null) — pipeline author agent; unit tests on synthetic data; real run after freeze-bounds
   - [x] Engine committed (8cffc91): 19/19 unit tests; real pilot on 50 genes → K = 300, null B = 20 (≈ 96 min on 6 workers)
   - [!] Toy run 14/19 on 8cffc91: ridge-toy MD-strict FDP 0.228 (D12) → [!] catalogue = MD-global (A7, D15)
   - [x] Process checks (budget_check, leakscan + allowlist, check_frozen, §13.2 tests) → df fallback triggered, power-df and NMF fixes (D13)
@@ -266,10 +276,15 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   - [x] Tag `freeze-bounds` (frozen_hashes `bounds` + `bounds_values`)
   - [x] configs/outcome_actions.csv: pre-committed action per gate/NC/catalogue/replication outcome, hashed before any real output (LESSONS 12)
   - [-] Real run attempt 1 (00:40): crashed at worker spawn because the Windows pickle pipe limit was hit by the full-D initargs payload; no output written. Fix: memory-mapped worker files (author)
-  - [ ] Real run: 4 arms + MD lists, confounder audit, gate attempt 1, null (background), XLIB, dry run
-  - [ ] Independent reimplementation check §13.3 (separate agent, after G_pc_attempt1)
-- [ ] M5 Subtypes: per gene and per module, cross-lineage labels, co-location/cutting/culture/hypermutation audits
-- [ ] M6 Clinical and combinatorial: CGT recovery, direction, actionability, population by lineage; combinatorial-screen lookup (Esmaeili harmonised table)
-- [ ] M7 `freeze-catalogue` + r_requests.csv, then a single replication run on R (+ set A)
-- [ ] M8 Limits classes, candidate cards, REPORT.md (writer), number check, red-team review, LESSONS prune
-- [ ] Final REPORT.md
+  - [x] Real run: 4 arms + MD lists (MD-global 1,380), confounder audit (1,856/13,447 flagged), null (B 20; MD-global FDR_emp 0.0009, EN-obs 0.20 fails NC1)
+  - [!] Gate failed: attempt 1 21/39, attempt 2 21/39 after the U_ctrl fix (D19–D21)
+  - [x] XLIB: S1-obs 0.82 vs EN-obs 0.62, univariate better (discovery_only sensitivity cut)
+  - [x] Independent reimplementation check §13.3: S1/BH/gate exact, EN sets match, β tolerance FAIL (1/30)
+- [x] M5 Subtypes: per gene and per module, cross-lineage labels, co-location/cutting/culture/hypermutation audits
+- [x] M6 Clinical and combinatorial: CGT recovery, direction, actionability, population by lineage; combinatorial-screen lookup (Esmaeili harmonised table)
+  - [!] P2 descriptive (6 gate-disjoint tests, every arm 0/6); EN-pred recovers no non-proxy CGT test at k 200; combinatorial MD-global 16.9% vs 2.5% matched, equal to S1-obs
+  - [-] Data ceiling, NC5 and refuted-vs-approved recall not produced (time)
+- [x] M7 `freeze-catalogue` + r_requests.csv, then a single replication run on R (+ set A)
+  - [!] P1 (k 100): replication S1-obs 0.99, S1-pred 0.93, EN-obs 0.89, EN-pred 0.82; predictor adds no detectable value (−0.07, CI −0.12 to 0.02); univariate beats multivariate (−0.10, CI −0.17 to −0.05)
+- [x] M8 Limits classes, candidate cards, REPORT.md (writer), number check, red-team review, LESSONS prune
+- [x] Final REPORT.md
