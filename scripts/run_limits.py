@@ -45,6 +45,21 @@ def nc6_bound() -> float:
     return float(v.get("final", PR.dp()["negative_controls_s7"]["NC6_lineage_tf_class3_frac_min"]))
 
 
+def cn_suspect_summary(sus: set, pc: pd.DataFrame, gc: pd.DataFrame) -> dict:
+    """Counts for the NC3 outcome action (label only; no class is changed)."""
+    if not len(pc):
+        return {"n_suspect_genes": len(sus)}
+    on = pc["gene"].astype(str).isin(sus)
+    mg = pc["in_md_global"].astype(bool)
+    rep = pd.to_numeric(pc["R_replicated"], errors="coerce") == 1
+    short = mg & (pd.to_numeric(pc["pair_class"], errors="coerce") == 9) & rep
+    return {"rule": "outcome_actions nc3_self_null > bound: genes with >= 1 dependent testable self-null pair "
+                    "(results/controls/nc3_self_null.csv); label only, classes unchanged",
+            "n_suspect_genes": len(sus), "n_suspect_genes_in_universe": int(gc["gene"].astype(str).isin(sus).sum()),
+            "md_global_pairs_on_suspect_genes": int((mg & on).sum()), "md_global_pairs": int(mg.sum()),
+            "shortlist_rule_pairs_on_suspect_genes": int((short & on).sum()), "shortlist_rule_pairs": int(short.sum())}
+
+
 def run(ws, src) -> dict:
     t0 = AN.utc_now()
     L = M5.cfg()["limits"]
@@ -71,7 +86,9 @@ def run(ws, src) -> dict:
     gc = LM.gene_classes(universe, gi, ws.lam(), pc, attr, ctl)
     s1h = ws.arms(arms=["S1-obs"], columns=["gene", "feature"], selected_only=True)
     en_sel = ws.arms(arms=["EN-pred"], columns=["gene", "feature"], selected_only=True)
-    labels = LM.pair_labels(fd, cat, s1h, en_sel, gi, rt)
+    sus = LM.cn_cutting_suspects(ws.read_csv("results/controls/nc3_self_null.csv", required=False))
+    labels = LM.pair_labels(fd, cat, s1h, en_sel, gi, rt, suspects=sus)
+    gc["cn_cutting_suspect"] = gc["gene"].astype(str).isin(sus)
     outs = [ws.write_csv(pc, f"{OUT}/pair_classes.csv"), ws.write_csv(gc, f"{OUT}/gene_classes.csv"),
             ws.write_csv(labels, f"{OUT}/pair_labels.csv")]
     lc = ctl[ctl["scope"] == "class_check"]["gene"].unique() if len(ctl) else []
@@ -94,6 +111,7 @@ def run(ws, src) -> dict:
                                      "pass": bool(len(lc) and (c3 == "3").mean() >= nc6_bound())},
             "Q1b": LM.q1b(cl, cat, cgt, rt),
             "methylation_coverage_D_lines": src.meth_profiled(),
+            "cn_cutting_suspect": cn_suspect_summary(sus, pc, gc),
             "extra_labels": {"processing_limited": int(pd.to_numeric(labels["processing_limited"], errors="coerce")
                                                         .fillna(0).astype(bool).sum()),
                              "predictor_blind_rows": int((labels["predictor_blind"] != "").sum())}}

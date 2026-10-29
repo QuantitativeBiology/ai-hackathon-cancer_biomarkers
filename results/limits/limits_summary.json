@@ -75,6 +75,15 @@
   }
  },
  "methylation_coverage_D_lines": 456,
+ "cn_cutting_suspect": {
+  "rule": "outcome_actions nc3_self_null > bound: genes with >= 1 dependent testable self-null pair (results/controls/nc3_self_null.csv); label only, classes unchanged",
+  "n_suspect_genes": 46,
+  "n_suspect_genes_in_universe": 46,
+  "md_global_pairs_on_suspect_genes": 33,
+  "md_global_pairs": 1380,
+  "shortlist_rule_pairs_on_suspect_genes": 13,
+  "shortlist_rule_pairs": 552
+ },
  "extra_labels": {
   "processing_limited": 231,
   "predictor_blind_rows": 1761

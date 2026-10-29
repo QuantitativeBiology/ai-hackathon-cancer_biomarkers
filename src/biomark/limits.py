@@ -274,11 +274,22 @@ def universe_genes(gene_info: pd.DataFrame, controls: pd.DataFrame) -> list:
 # ------------------------------------------------------------------------------------------------
 
 
+def cn_cutting_suspects(nc3: pd.DataFrame | None) -> set:
+    """outcome_actions nc3_self_null (> bound): genes with >= 1 dependent testable self-null pair
+    (results/controls/nc3_self_null.csv) are CN / cutting-artefact suspects. A label only: no class changes."""
+    if nc3 is None or not len(nc3):
+        return set()
+    t = nc3["testable"].astype(str).str.lower().isin(["true", "1"])
+    dep = pd.to_numeric(nc3["frac_dependent"], errors="coerce") == 1
+    return set(nc3.loc[t & dep, "gene"].astype(str))
+
+
 def pair_labels(fd: FeatureData, cat: pd.DataFrame, s1_hits: pd.DataFrame, en_sel: pd.DataFrame,
-                gene_info: pd.DataFrame, rt: pd.DataFrame | None) -> pd.DataFrame:
+                gene_info: pd.DataFrame, rt: pd.DataFrame | None, suspects: set | None = None) -> pd.DataFrame:
     """processing-limited (own-gene CN family: own-arm CN / CYCLOPS), pan-lethal (DepMap common essential),
     predictor-blind (S1-obs BH, not EN-pred selected, replicated in R), predictor-only not replicated (EN-pred
-    selected, not S1-obs BH, tested and not replicated in R)."""
+    selected, not S1-obs BH, tested and not replicated in R); cn_cutting_suspect = the pair's gene is in
+    ``suspects`` (cn_cutting_suspects)."""
     pending = lcfg()["pending"]
     plf = set(lcfg()["processing_limited_families"])
     ce = gene_info["common_essential"].astype(bool).to_dict()
@@ -301,7 +312,10 @@ def pair_labels(fd: FeatureData, cat: pd.DataFrame, s1_hits: pd.DataFrame, en_se
             rows.append({"gene": g, "feature": f, "set": "EN-pred selected, not S1-obs BH", "processing_limited": "",
                          "pan_lethal": bool(ce.get(g, False)), "predictor_blind": "",
                          "predictor_only_not_replicated": not R[(g, f)][0]})
-    return pd.DataFrame(rows)
+    out = pd.DataFrame(rows)
+    sus = set(map(str, suspects or ()))
+    out["cn_cutting_suspect"] = out["gene"].astype(str).isin(sus) if len(out) else pd.Series(dtype=bool)
+    return out
 
 
 def q1b(cl: pd.DataFrame | None, cat: pd.DataFrame, cgt: pd.DataFrame | None, rt: pd.DataFrame | None) -> dict:

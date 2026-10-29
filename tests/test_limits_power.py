@@ -52,3 +52,19 @@ def test_replicated_powered_pair_stays_class_9_and_untested_rule():
     r = _cls(r_power=rp, replicated=False, p_one=np.nan)              # R fit without p: rule for untested pairs
     assert int(r["pair_class"]) == PC["valid"] and r["class_status"] == "no R test"
     assert PMIN == 0.5
+
+
+def test_nc3_cn_cutting_suspect_label_only():
+    """outcome_actions nc3_self_null: genes with >= 1 dependent testable self-null pair are labelled
+    cn_cutting_suspect on every pair; the label changes no class."""
+    nc3 = pd.DataFrame({"gene": ["g1", "g1", "g2", "g3"], "feature": ["DEL:1", "DEL:2", "DEL:3", "DEL:4"],
+                        "testable": [True, True, False, True], "frac_dependent": [0.0, 1.0, 1.0, 0.0]})
+    sus = LM.cn_cutting_suspects(nc3)
+    assert sus == {"g1"} and LM.cn_cutting_suspects(None) == set()
+    fd, cat, empty, rt = _inputs(replicated=True, p_one=1e-4)
+    gi = pd.DataFrame({"common_essential": [False]}, index=["g1"])
+    lab = LM.pair_labels(fd, cat, cat.iloc[:0], cat.iloc[:0], gi, rt, suspects=sus)
+    assert lab.set_index("gene").loc["g1", "cn_cutting_suspect"]
+    assert not LM.pair_labels(fd, cat, cat.iloc[:0], cat.iloc[:0], gi, rt)["cn_cutting_suspect"].any()
+    rp = pd.DataFrame({"gene": ["g1"], "feature": ["PROG:1"], "power": [0.9], "power_effective": [0.9]})
+    assert int(_cls(r_power=rp, replicated=True, p_one=1e-4)["pair_class"]) == PC["valid"]   # class unchanged

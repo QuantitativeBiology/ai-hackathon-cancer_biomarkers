@@ -109,6 +109,9 @@ def run(ws, src) -> dict:
     setA = dict(zip(sa["gene"], sa["frac_dependent"])) if sa is not None and "frac_dependent" in sa else {}
     sl = LM.shortlist(pc, rt, cl, per, cat, ridx.access, sym, dflags, locus, combl, cgt, setA, src.curated_pairs())
     check_shortlist(sl, pc, rt)
+    sus = LM.cn_cutting_suspects(ws.read_csv("results/controls/nc3_self_null.csv", required=False))
+    sl["cn_cutting_suspect"] = sl["gene"].astype(str).isin(sus) if len(sl) else pd.Series(dtype=bool)
+    kr["cn_cutting_suspect"] = [any(g in sus for g in str(x).split("|")) for x in kr["genes"]] if len(kr) else []
     outs = [ws.write_csv(kr, f"{OUT}/known_recovery.csv"), ws.write_csv(sl, f"{OUT}/shortlist.csv")]
     top = int(cards["report_top_rows"])
     ncs = int(cards["case_studies"])
@@ -122,6 +125,7 @@ def run(ws, src) -> dict:
                                 "recovered_md_strict": int(s["recovered_MD-strict"].sum())}
                             for u, s in kr.groupby("universe")},
             "n_shortlist": int(len(sl)), "report_top_rows": top,
+            "n_shortlist_cn_cutting_suspect": int(sl["cn_cutting_suspect"].sum()) if len(sl) else 0,
             "case_studies": [f"{g}|{f}" for g, f in zip(sl["gene"].head(ncs), sl["feature"].head(ncs))],
             "rule": "shortlist = class-9 MD-global pairs replicated in R (asserted); 'novel' is never applied to a gene"}
     outs.append(ws.write_json(summ, f"{OUT}/cards_summary.json"))
