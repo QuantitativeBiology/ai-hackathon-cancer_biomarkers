@@ -1,0 +1,26 @@
+{
+ "vif_max_observed": 6.171052827720171,
+ "vif_max_column": "library_1",
+ "vif_max_allowed": 10.0,
+ "pass": true,
+ "condition_number": 10.84410298614333,
+ "n_columns": 41,
+ "aliased_columns": [
+  [
+   "culture_4",
+   "culture_9"
+  ]
+ ],
+ "top": {
+  "library_1": 6.171052827720171,
+  "lineage_12": 5.078975554252198,
+  "lineage_11": 4.486856356426199,
+  "lineage_5": 4.437970696878697,
+  "lineage_7": 3.622004960080191,
+  "culture_0": 3.575717066740685,
+  "lineage_3": 3.4976081035748314,
+  "culture_2": 3.3489850205724303,
+  "lineage_15": 3.149894071666162,
+  "lineage_19": 3.0413480372413293
+ }
+}
