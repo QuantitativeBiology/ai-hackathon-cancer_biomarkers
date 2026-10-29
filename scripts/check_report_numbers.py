@@ -64,7 +64,10 @@ TEXT_SOURCES = ("DESIGN.md", "RESEARCH_TREE.md", "results/deviations.csv")   # n
 CITE_PATH = (r"(?:" + "|".join(re.escape(s) for s in TEXT_SOURCES) +
              r"|(?:results|configs|docs)/[\w./\-]+?\.(?:json|csv))(?![\w./\-])")
 CITE_ITEM = CITE_PATH + r"[^;,()]*"                  # a path, then an optional qualifier such as "§6.1" or "D15"
-CITE = re.compile(r"\((?P<body>\s*" + CITE_ITEM + r"(?:[;,]\s*" + CITE_ITEM + r")*)\)")
+# a citation: parentheses whose first item is a path; later items are paths or free qualifiers (e.g. "k_G = 100",
+# "non_proxy|all|k200"). Only the path items are blanked, so a number in a qualifier is still checked.
+CITE = re.compile(r"\((?P<body>\s*" + CITE_ITEM + r"(?:[;,][^;,()]*)*)\)")
+CITE_ITEM_RE = re.compile(CITE_ITEM)
 CITE_ONE = re.compile(CITE_PATH)
 LINK_TARGET = re.compile(r"\]\([^)]*\)")
 RUN_ID = re.compile(r"\b\d{8}T\d{6}_[A-Za-z0-9_]+\b")
@@ -249,6 +252,8 @@ def _blank(text: str, pattern, flags=0) -> str:
 def clean_text(text: str) -> str:
     """Code blocks, inline code, HTML comments and link targets blanked (positions and line numbers kept)."""
     t = _blank(text, r"```.*?```", re.S)
+    # inline code holding a citable path (e.g. (`results/x.json:key`)) keeps its text: only the backticks are blanked
+    t = re.sub(r"`(?=" + CITE_PATH + r")([^`\n]*)`", lambda m: " " + m.group(1) + " ", t)
     t = _blank(t, r"`[^`\n]*`")
     t = _blank(t, COMMENT)
     return _blank(t, LINK_TARGET)
@@ -393,8 +398,9 @@ def check(report: Path, root: Path = ROOT, strict: bool = False, registry: Path 
                 rows.append({"line": line_of(a), "kind": "source", "printed": "", "sources": rel, "ok": not fatal,
                              "warn": bool(warn) and not fatal, "msg": fatal or warn})
     scan = clean
-    for a, b, _ in cites:                                    # the citation text itself holds no report numbers
-        scan = scan[:a] + re.sub(r"[^\n]", " ", scan[a:b]) + scan[b:]
+    for a, b, _ in cites:                                    # the cited paths themselves hold no report numbers
+        for m in CITE_ITEM_RE.finditer(scan, a, b):
+            scan = scan[:m.start()] + re.sub(r"[^\n]", " ", m.group(0)) + scan[m.end():]
     lines = text.split("\n")
     line_start = np.cumsum([0] + [len(x) + 1 for x in lines[:-1]])
     for s0, s1, inherit in segments(clean):

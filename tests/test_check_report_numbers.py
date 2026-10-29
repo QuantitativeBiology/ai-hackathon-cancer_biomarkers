@@ -195,3 +195,26 @@ def test_text_sources_need_verbatim_numbers(world):
         assert [r["printed"] for r in bad] == [printed], (bad_body, bad)
     # json / csv sources keep numeric matching at the printed precision
     assert not _bad(_run(world, "Recall 0.5 (results/gates/g.json).", strict=True))
+
+
+def test_backticked_citation_paths_still_cite(tmp_path):
+    """Citations written as inline code, e.g. (`results/x.json`), count; other inline code stays ignored."""
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("crn", Path(__file__).resolve().parents[1] / "scripts" / "check_report_numbers.py")
+    crn = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(crn)
+    t = crn.clean_text("Rate 0.82 (`results/replication/p1_summary.json`). Code `x = 3` here.")
+    assert "results/replication/p1_summary.json" in t and "x = 3" not in t
+    assert len(t) == len("Rate 0.82 (`results/replication/p1_summary.json`). Code `x = 3` here.")
+
+
+def test_citation_qualifiers_are_checked_not_hidden(world):
+    """A citation may carry free qualifiers after its first path (e.g. "k = 21"); only the path is blanked, so a number
+    in the qualifier is still checked against the cited file, and a bare file name is a qualifier, not a source."""
+    ok = _run(world, "Gate 21/39 (`results/gates/g.json`, n = 39).", strict=True)
+    assert not _bad(ok), _bad(ok)
+    bad = _bad(_run(world, "Gate 21/39 (`results/gates/g.json`, n = 40).", strict=True))
+    assert [r["printed"] for r in bad] == ["40"]
+    bare = _bad(_run(world, "Recall 0.4167 (`results/gates/g.json`, `p2.csv`).", strict=True))
+    assert [r["printed"] for r in bare] == ["0.4167"] and "p2.csv" not in bare[0]["sources"]

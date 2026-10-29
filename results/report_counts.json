@@ -1,0 +1,442 @@
+{
+ "confounders": {
+  "n_pairs": 13447,
+  "n_pairs_by_universe": {
+   "eligible": 13438,
+   "ctrl": 9
+  },
+  "n_delta_flagged": 1856,
+  "n_subtype_confounded": 610,
+  "n_flagged_either": 2319,
+  "by_list": {
+   "MD-global": {
+    "n_pairs": 1380,
+    "n_delta_flagged": 98,
+    "n_subtype_confounded": 23
+   },
+   "MD-strict": {
+    "n_pairs": 11662,
+    "n_delta_flagged": 1571,
+    "n_subtype_confounded": 596
+   },
+   "S1-obs BH": {
+    "n_pairs": 3142,
+    "n_delta_flagged": 382,
+    "n_subtype_confounded": 37
+   },
+   "control": {
+    "n_pairs": 51,
+    "n_delta_flagged": 1,
+    "n_subtype_confounded": 0
+   }
+  },
+  "n_delta_flagged_by_blocks": {
+   "lineage": 1797,
+   "own CN": 32,
+   "lineage|own CN": 7,
+   "culture": 6,
+   "lineage|culture": 4,
+   "TP53": 4,
+   "burden": 2,
+   "lineage|burden": 1,
+   "lineage|TP53": 1,
+   "library": 1,
+   "lineage|library": 1
+  }
+ },
+ "components": {
+  "md_global_n_pairs": 1380,
+  "md_global_by_layer": {
+   "expression-mediated": 807,
+   "both": 487,
+   "genomics-layer": 68,
+   "none": 18
+  },
+  "md_global_by_access_class": {
+   "expression-derived": 771,
+   "direct": 285,
+   "proxy": 168,
+   "potentially-direct": 156
+  },
+  "md_global_expression_derived_pct": 55.869565217391305
+ },
+ "locus": {
+  "md_global_cn_sil_pairs": 154,
+  "md_global_by_level": {
+   "locus": 136,
+   "gene": 18
+  },
+  "md_global_locus_level_pct": 88.31168831168831,
+  "md_global_amplicon_pairs": 19,
+  "md_global_amplicon_by_label": {
+   "amplified-driver addiction": 12,
+   "unresolved": 7
+  }
+ },
+ "shortlist": {
+  "n_rows": 735,
+  "by_feature_family": {
+   "PROG": 317,
+   "EXPPAR": 178,
+   "COMP": 61,
+   "SIL-other": 39,
+   "LOFBI": 37,
+   "CLIN": 23,
+   "PSCORE": 22,
+   "HOT": 15,
+   "LOSS": 12,
+   "SIL-METH": 7,
+   "SIG": 5,
+   "METH": 5,
+   "ALLELE": 4,
+   "YABS": 4,
+   "SIL-DEL": 3,
+   "AMP": 3
+  }
+ },
+ "set_a": {
+  "n_genes": 2142,
+  "n_lines": [
+   1,
+   14,
+   15
+  ],
+  "median_frac_dependent": 0.2,
+  "n_genes_frac_dependent_ge_0.5": 144
+ },
+ "known_recovery": {
+  "n_rows": 88,
+  "by_kind": {
+   "control": 58,
+   "cgt": 30
+  },
+  "rows": {
+   "gate_controls": {
+    "n": 39,
+    "recovered_MD-global": 17,
+    "recovered_MD-strict": 21
+   },
+   "class_check_controls": {
+    "n": 18,
+    "recovered_MD-global": 0,
+    "recovered_MD-strict": 0
+   },
+   "cgt_tests": {
+    "n": 30,
+    "recovered_MD-global": 5,
+    "recovered_MD-strict": 7
+   }
+  }
+ },
+ "combinatorial": {
+  "MD-global": {
+   "rate_pct": 16.939890710382514,
+   "rate_ci_pct": [
+    11.809499074109926,
+    23.174659613298186
+   ],
+   "background_rate_pct": 1.0264066436502752,
+   "matched_expected_rate_pct": 2.4957706066493492,
+   "rate_over_matched_expected": 6.787438983875545
+  },
+  "MD-strict": {
+   "rate_pct": 11.67192429022082,
+   "rate_ci_pct": [
+    8.352665980818834,
+    15.727937918625976
+   ],
+   "background_rate_pct": 0.7840979434624115,
+   "matched_expected_rate_pct": 1.9445481723083795,
+   "rate_over_matched_expected": 6.002383718972125
+  },
+  "S1-obs": {
+   "rate_pct": 16.666666666666664,
+   "rate_ci_pct": [
+    11.758923051276879,
+    22.60224220737915
+   ],
+   "background_rate_pct": 1.0091571668846944,
+   "matched_expected_rate_pct": 2.371779802793671,
+   "rate_over_matched_expected": 7.027071672941703
+  }
+ },
+ "p2": {
+  "incl_proxy|all|k100": {
+   "n_testable": 22,
+   "testable_by_tier": {
+    "T1": 17,
+    "T3": 4,
+    "T2": 1
+   },
+   "hits": {
+    "EN-obs": 1,
+    "EN-pred": 0,
+    "S1-obs": 0,
+    "S1-pred": 0
+   }
+  },
+  "incl_proxy|all|k200": {
+   "n_testable": 22,
+   "testable_by_tier": {
+    "T1": 17,
+    "T3": 4,
+    "T2": 1
+   },
+   "hits": {
+    "EN-obs": 2,
+    "EN-pred": 0,
+    "S1-obs": 7,
+    "S1-pred": 0
+   }
+  },
+  "incl_proxy|all|k500": {
+   "n_testable": 22,
+   "testable_by_tier": {
+    "T1": 17,
+    "T3": 4,
+    "T2": 1
+   },
+   "hits": {
+    "EN-obs": 5,
+    "EN-pred": 3,
+    "S1-obs": 9,
+    "S1-pred": 0
+   }
+  },
+  "incl_proxy|gate_disjoint|k100": {
+   "n_testable": 8,
+   "testable_by_tier": {
+    "T1": 7,
+    "T3": 1
+   },
+   "hits": {
+    "EN-obs": 0,
+    "EN-pred": 0,
+    "S1-obs": 0,
+    "S1-pred": 0
+   }
+  },
+  "incl_proxy|gate_disjoint|k200": {
+   "n_testable": 8,
+   "testable_by_tier": {
+    "T1": 7,
+    "T3": 1
+   },
+   "hits": {
+    "EN-obs": 0,
+    "EN-pred": 0,
+    "S1-obs": 0,
+    "S1-pred": 0
+   }
+  },
+  "incl_proxy|gate_disjoint|k500": {
+   "n_testable": 8,
+   "testable_by_tier": {
+    "T1": 7,
+    "T3": 1
+   },
+   "hits": {
+    "EN-obs": 0,
+    "EN-pred": 0,
+    "S1-obs": 2,
+    "S1-pred": 0
+   }
+  },
+  "non_proxy|all|k100": {
+   "n_testable": 16,
+   "testable_by_tier": {
+    "T1": 11,
+    "T3": 4,
+    "T2": 1
+   },
+   "hits": {
+    "EN-obs": 1,
+    "EN-pred": 0,
+    "S1-obs": 0,
+    "S1-pred": 0
+   }
+  },
+  "non_proxy|all|k200": {
+   "n_testable": 16,
+   "testable_by_tier": {
+    "T1": 11,
+    "T3": 4,
+    "T2": 1
+   },
+   "hits": {
+    "EN-obs": 1,
+    "EN-pred": 0,
+    "S1-obs": 4,
+    "S1-pred": 0
+   }
+  },
+  "non_proxy|all|k500": {
+   "n_testable": 16,
+   "testable_by_tier": {
+    "T1": 11,
+    "T3": 4,
+    "T2": 1
+   },
+   "hits": {
+    "EN-obs": 2,
+    "EN-pred": 0,
+    "S1-obs": 5,
+    "S1-pred": 0
+   }
+  },
+  "non_proxy|gate_disjoint|k100": {
+   "n_testable": 6,
+   "testable_by_tier": {
+    "T1": 5,
+    "T3": 1
+   },
+   "hits": {
+    "EN-obs": 0,
+    "EN-pred": 0,
+    "S1-obs": 0,
+    "S1-pred": 0
+   }
+  },
+  "non_proxy|gate_disjoint|k200": {
+   "n_testable": 6,
+   "testable_by_tier": {
+    "T1": 5,
+    "T3": 1
+   },
+   "hits": {
+    "EN-obs": 0,
+    "EN-pred": 0,
+    "S1-obs": 0,
+    "S1-pred": 0
+   }
+  },
+  "non_proxy|gate_disjoint|k500": {
+   "n_testable": 6,
+   "testable_by_tier": {
+    "T1": 5,
+    "T3": 1
+   },
+   "hits": {
+    "EN-obs": 0,
+    "EN-pred": 0,
+    "S1-obs": 1,
+    "S1-pred": 0
+   }
+  }
+ },
+ "controls": {
+  "n_gate_eligible": 39,
+  "n_gate_families": 10,
+  "n_families_with_ge_2_rows": 8
+ },
+ "md_lists": {
+  "MD-global": {
+   "n_pairs": 1380,
+   "n_genes": 764
+  },
+  "MD-strict": {
+   "n_pairs": 11662,
+   "n_genes": 2134
+  }
+ },
+ "q4c": {
+  "n_tests": 16,
+  "by_label": {
+   "on-label": 6,
+   "beyond-label": 4,
+   "not supported": 3,
+   "off-label-only": 2,
+   "indication-untestable": 1
+  }
+ },
+ "null": {
+  "wall_draw0_s": 706.2361698999994,
+  "B_raised": 50,
+  "projected_B_raised_min": 588.5301415833328
+ },
+ "lineage": {
+  "MD-global": {
+   "n": 1380,
+   "pct_by_label": {
+    "lineage-unresolvable": 64.78260869565217,
+    "cross-lineage": 31.159420289855074,
+    "undetermined": 2.463768115942029,
+    "lineage-restricted": 1.5942028985507246
+   }
+  },
+  "MD-strict": {
+   "n": 11662,
+   "pct_by_label": {
+    "lineage-unresolvable": 94.96655805179215,
+    "cross-lineage": 4.167381238209569,
+    "lineage-restricted": 0.5144915108900703,
+    "undetermined": 0.3515691991082147
+   }
+  }
+ },
+ "eligibility": {
+  "n_genes_evaluated": 18434,
+  "n_eligible": 2193,
+  "n_eligible_by_tier": {
+   "high": 1172,
+   "medium": 1021
+  }
+ },
+ "controls_spec": {
+  "n_specified_for_gate": 40,
+  "n_gate_rows": 39,
+  "n_gate_families": 10
+ },
+ "independent": {
+  "mean_beta_max_rel": 0.0012458369238086396,
+  "en_beta_rel_tol": 0.001,
+  "mean_beta_excess_over_tol_pct": 24.58369238086395
+ },
+ "bh_family": {
+  "n_rows_arms": 26246924,
+  "n_rows_arms_millions": 26.246924,
+  "f1_n_tests": 6559561,
+  "f1_n_tests_millions": 6.559561
+ },
+ "m5_audits": {
+  "hypermut_tp53_n_failed": 5
+ },
+ "lineage_tf": {
+  "n_genes": 18,
+  "n_r_within_ge_0.10": 17,
+  "classes_r_within_ge_0.10": {
+   "3b": 12,
+   "9": 5
+  },
+  "n_class3": 0
+ },
+ "_sources": [
+  "results/confounders/delta_flags.csv",
+  "results/components/component_selection.csv",
+  "results/locus/resolution.csv",
+  "results/locus/amplicon.csv",
+  "results/candidates/shortlist.csv",
+  "results/replication/setA_lines.csv",
+  "results/candidates/known_recovery.csv",
+  "results/combinatorial/validation.json",
+  "results/clinical/p2_scores.csv",
+  "results/controls/pc_summary.json",
+  "results/md/md_global.csv",
+  "results/md/md_strict.csv",
+  "results/clinical/q4c_labels.csv",
+  "results/null/summary.json",
+  "configs/design_params.json",
+  "results/lineage/summary.json",
+  "configs/eligible_genes.csv",
+  "configs/positive_controls.csv",
+  "results/gates/G_indep.json",
+  "results/benchmark/summary.json",
+  "results/m5_audits_summary.json",
+  "results/limits/gene_classes.csv"
+ ],
+ "_rules": {
+  "by_list": "a row counts for every list named in its '|'-joined source column",
+  "pct": "100 x the fraction in the source file",
+  "md_global": "rows whose source / flag marks MD-global"
+ }
+}

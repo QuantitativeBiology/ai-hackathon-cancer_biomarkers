@@ -3,7 +3,7 @@
   "exemptions": [
     {
       "id": "section_ref",
-      "regex": "(?:§|\\bDESIGN(?:\\s+v\\d+(?:\\.\\d+)*)?|\\b[Ss]ections?)\\s*\\d+(?:\\.\\d+)*[a-z]?(?:\\s*[-–,/]\\s*\\d+(?:\\.\\d+)*)*",
+      "regex": "(?:§|\\bDESIGN(?:\\s+v\\d+(?:\\.\\d+)*)?|\\b[Ss]ections?)\\s*\\d+(?:\\.\\d+)*[a-z]?(?:\\s*(?:[-–,/]|and|or)\\s*§?\\d+(?:\\.\\d+)*[a-z]?)*",
       "reason": "section numbers of DESIGN.md / REPORT.md"
     },
     {
@@ -70,6 +70,41 @@
       "id": "top_report_rows",
       "regex": "\\btop\\s+(?:3|15)\\s+(?:shortlist\\s+)?rows?\\b|\\bthree case studies\\b",
       "reason": "report layout defined in DESIGN §12.3 (top 15 shortlist rows, three case studies)"
+    },
+    {
+      "id": "class_code",
+      "regex": "\\b[Cc]lass(?:es)?[- ]\\d+[a-z]?(?:\\s*(?:,|and|or|/)\\s*\\d+[a-z]?)*",
+      "reason": "failure-class codes defined in DESIGN §12.1–12.2 (labels such as class 9 or class-3, not quantities)"
+    },
+    {
+      "id": "licence_version",
+      "regex": "\\b(?:CC BY(?:-[A-Z]+)?|GPL|LGPL|Apache)[- ]?\\d+(?:\\.\\d+)*",
+      "reason": "licence version labels (CC BY 4.0, GPL-2.0)"
+    },
+    {
+      "id": "design_label_2x2",
+      "regex": "\\b2×2\\b",
+      "reason": "the 2×2 arm design label (DESIGN §5.1)"
+    },
+    {
+      "id": "commit_hash",
+      "regex": "\\b(?=[0-9a-f]*\\d)[0-9a-f]{7}\\b",
+      "reason": "short git commit hashes (7 hex characters); report counts of 1,000 or more always carry thousands commas, so a bare 7-character token is a hash"
+    },
+    {
+      "id": "clock_time",
+      "regex": "\\b\\d{2}:\\d{2}\\b",
+      "reason": "clock times of runs (e.g. 08:49)"
+    },
+    {
+      "id": "feature_or_gene_id",
+      "regex": "\\b[A-Z][A-Z0-9]*(?:-[A-Za-z0-9]+)*:\\d+\\b|\\bgene \\d+\\b",
+      "reason": "dictionary feature ids FAMILY:<Entrez> and Entrez gene ids (identifiers, not quantities)"
+    },
+    {
+      "id": "lessons_item",
+      "regex": "\\bLESSONS \\d+\\b",
+      "reason": "item number in LESSONS.md (a reference label)"
     }
   ]
 }
