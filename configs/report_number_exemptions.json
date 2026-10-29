@@ -1,0 +1,75 @@
+{
+  "_comment": "Structural numbers that scripts/check_report_numbers.py (DESIGN §13.5) does not require a source for. Each entry: id, regex (matched on the report line; a number lying inside a match is exempt) and reason. Results are never exempt: keep this list short and structural.",
+  "exemptions": [
+    {
+      "id": "section_ref",
+      "regex": "(?:§|\\bDESIGN(?:\\s+v\\d+(?:\\.\\d+)*)?|\\b[Ss]ections?)\\s*\\d+(?:\\.\\d+)*[a-z]?(?:\\s*[-–,/]\\s*\\d+(?:\\.\\d+)*)*",
+      "reason": "section numbers of DESIGN.md / REPORT.md"
+    },
+    {
+      "id": "year",
+      "regex": "\\b(?:19|20)\\d{2}[a-z]?\\b",
+      "reason": "publication and calendar years (citations such as Tsherniak 2017)"
+    },
+    {
+      "id": "date_time",
+      "regex": "\\b\\d{4}-\\d{2}-\\d{2}(?:[T ]\\d{2}:\\d{2}(?::\\d{2})?)?\\b",
+      "reason": "dates and timestamps"
+    },
+    {
+      "id": "list_marker",
+      "regex": "^\\s*\\d+[.)](?=\\s)",
+      "reason": "ordered-list numbering"
+    },
+    {
+      "id": "heading_number",
+      "regex": "^#{1,6}\\s+\\d+(?:\\.\\d+)*\\.?(?=\\s)",
+      "reason": "heading numbering"
+    },
+    {
+      "id": "table_row_index",
+      "regex": "^\\|\\s*\\d+[a-z]?\\s*\\|",
+      "reason": "row numbering in a table's first column"
+    },
+    {
+      "id": "bold_number_label",
+      "regex": "\\*\\*\\d+(?:\\.\\d+)*\\*\\*",
+      "reason": "bold section labels (DESIGN style **8.3**)"
+    },
+    {
+      "id": "k_list_size",
+      "regex": "\\bk\\s*=\\s*(?:100|200|500)\\b|\\btop[- ](?:100|200|500)\\b",
+      "reason": "top-k list sizes defined in DESIGN §6.1 / §10.5 (primary_endpoints.json: P2 k = 200, secondary 100 / 500)"
+    },
+    {
+      "id": "null_draws",
+      "regex": "\\bB\\s*=\\s*(?:10|20|50)\\b",
+      "reason": "null draw counts defined in DESIGN §7.1-§7.2 (B 20, raised 50; rerun 10)"
+    },
+    {
+      "id": "gate_attempt",
+      "regex": "\\battempts?\\s+\\d+(?:\\s*(?:and|,|-|–)\\s*\\d+)*\\b",
+      "reason": "gate attempt index (results/gate_iterations.csv row number)"
+    },
+    {
+      "id": "confidence_level",
+      "regex": "\\b95\\s*%\\s*(?:CI|confidence|credible|prediction)",
+      "reason": "confidence level of every interval in DESIGN (95%)"
+    },
+    {
+      "id": "rule_threshold",
+      "regex": "(?:<=|>=|<|>|≤|≥)\\s*[+\\-−]?\\d+(?:\\.\\d+)?%?",
+      "reason": "thresholds of frozen DESIGN rules stated as inequalities (q < 0.05, >= 5 carriers, share >= 0.25); observed results are written with '=' or plainly and must be cited"
+    },
+    {
+      "id": "part_label",
+      "regex": "\\bPart\\s+[12]\\b",
+      "reason": "project part label"
+    },
+    {
+      "id": "top_report_rows",
+      "regex": "\\btop\\s+(?:3|15)\\s+(?:shortlist\\s+)?rows?\\b|\\bthree case studies\\b",
+      "reason": "report layout defined in DESIGN §12.3 (top 15 shortlist rows, three case studies)"
+    }
+  ]
+}
