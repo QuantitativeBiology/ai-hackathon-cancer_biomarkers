@@ -4,6 +4,22 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-29 17:25 — SUSPEND #2 (user); resume point
+Committed through 74d0536. The tree is clean, and the 24 h budget is extended by user decision (DEV-BUDGET-OVERRUN).
+- All D-only analyses are done. REPORT.md has every non-R result and the red-team fixes.
+- Running: `scripts/build_p1_pool.py` (PID 12640, started 15:11, old exact path, single core, CPU 2 h 06 at 17:21). It is past its estimate and has written no output. Expected outputs: results/benchmark/p1_pool.json, configs/catalogue/r_requests.csv and configs/freeze_catalogue.json.
+- On resume: if the pool is still not done within about 20 min, or its process is gone, restart it with the exact fast path: `python -X utf8 -B -u scripts/build_p1_pool.py --workers 4` (about 40 min).
+- Then, in order:
+  1. Commit the pool.
+  2. Dry run: `python -X utf8 -B -u scripts/replicate.py --pseudo-r fold0 --workers 4`. Required: DESIGN §1.3, DEV-CUT-DRYRUN-WITHDRAWN.
+  3. Commit, then tag `freeze-catalogue` and push.
+  4. `PART2_UNBLIND=1 python -X utf8 -B -u scripts/replicate.py`: the single R read, on a clean tree.
+  5. XLIB: `run_xlib.py --reuse-arms --cut-discovery-only` (the manifest exists).
+  6. `run_limits.py`, then `build_candidate_cards.py`.
+  7. Fill the R placeholders in REPORT.md.
+  8. `check_report_numbers.py --strict`.
+  9. Prune LESSONS, write the final status summary, then commit and push.
+
 ### 2026-10-29 ~09:50 — SUSPEND (user suspending the machine); resume point
 Committed through 3833bd0 (REPORT.md draft with placeholders, docs/effective_rules.md, check_report_numbers.py), and
 nothing is uncommitted. The single job running is the fixed-threshold null, started at 08:49
