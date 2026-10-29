@@ -1,0 +1,11 @@
+{
+ "files": {
+  "configs/catalogue/r_requests.csv": "e8fb532dce571021bd7f5440b4234330aaf0cec6f9612869c38ee21613c8914c",
+  "results/benchmark/p1_pool.json": "b8f799367782105349b76c2e8c054b2c0f14032dd3b0d08b519d825a02612b3d",
+  "results/md/md_global.csv": "f40ee6f5057c137bc90a0271174bb6353a34e8014ed3ea1d63384690cb64462b",
+  "results/md/md_strict.csv": "42fab44a27463bedd7de04df6177de5bae2e5431ad3ce1267d74ff2ce8501157",
+  "results/md/en_obs_strict.csv": "f94ebc994679d4bd089b1e77c99f3f68382eb54f758e9347eeea954f6aa8fc2e",
+  "results/benchmark/p_cut.json": "5f266e52cb702222e16e5e9317f653911058570c52237c3c258d7ca7568245bc",
+  "results/benchmark/lambda.csv": "569fd8d3fd360cc1bac1b603a409a22d3391a5a41f1e22835fade919e19e24f4"
+ }
+}
