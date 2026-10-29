@@ -1,0 +1,978 @@
+{
+ "attempt": 2,
+ "utc": "2026-10-29T04:37:00+00:00",
+ "commit": "b4874674d9ab9be3a663116357fbb288366fac0a",
+ "reason": "U_ctrl never built/read: non-eligible gate controls read from U_ctrl (DESIGN \u00a72)",
+ "summary": {
+  "decided_on": "MD-strict",
+  "overall": {
+   "k": 21,
+   "n": 39,
+   "recall": 0.5384615384615384,
+   "ci95": [
+    0.3718107472065188,
+    0.6990521969924921
+   ]
+  },
+  "by_family": {
+   "ADD-CN": {
+    "k": 1,
+    "n": 5,
+    "recall": 0.2,
+    "ci95": [
+     0.005050763379468061,
+     0.7164179361180893
+    ]
+   },
+   "ADD-EXP": {
+    "k": 0,
+    "n": 1,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.975
+    ]
+   },
+   "ADD-HOT": {
+    "k": 5,
+    "n": 6,
+    "recall": 0.8333333333333334,
+    "ci95": [
+     0.3587654210023252,
+     0.9957892554855106
+    ]
+   },
+   "LOF-SL": {
+    "k": 1,
+    "n": 2,
+    "recall": 0.5,
+    "ci95": [
+     0.01257911709342506,
+     0.9874208829065749
+    ]
+   },
+   "P53": {
+    "k": 4,
+    "n": 4,
+    "recall": 1.0,
+    "ci95": [
+     0.3976353643835254,
+     1.0
+    ]
+   },
+   "PAR": {
+    "k": 7,
+    "n": 13,
+    "recall": 0.5384615384615384,
+    "ci95": [
+     0.2513454822703036,
+     0.8077675581987119
+    ]
+   },
+   "PROG": {
+    "k": 2,
+    "n": 2,
+    "recall": 1.0,
+    "ci95": [
+     0.15811388300841903,
+     1.0
+    ]
+   },
+   "SIG": {
+    "k": 0,
+    "n": 2,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.841886116991581
+    ]
+   },
+   "SIL": {
+    "k": 0,
+    "n": 1,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.975
+    ]
+   },
+   "W": {
+    "k": 1,
+    "n": 3,
+    "recall": 0.3333333333333333,
+    "ci95": [
+     0.008403758659612645,
+     0.9057006759497539
+    ]
+   }
+  },
+  "family_pass": {
+   "ADD-CN": false,
+   "ADD-HOT": true,
+   "LOF-SL": true,
+   "P53": true,
+   "PAR": true,
+   "PROG": true,
+   "SIG": false,
+   "W": false
+  },
+  "pass": false,
+  "by_list": {
+   "MD-strict": {
+    "k": 21,
+    "n": 39,
+    "recall": 0.5384615384615384,
+    "ci95": [
+     0.3718107472065188,
+     0.6990521969924921
+    ]
+   },
+   "MD-global": {
+    "k": 17,
+    "n": 39,
+    "recall": 0.4358974358974359,
+    "ci95": [
+     0.27810762967640934,
+     0.6037919829857288
+    ]
+   },
+   "S1-obs": {
+    "k": 21,
+    "n": 39,
+    "recall": 0.5384615384615384,
+    "ci95": [
+     0.3718107472065188,
+     0.6990521969924921
+    ]
+   },
+   "S1-pred": {
+    "k": 29,
+    "n": 39,
+    "recall": 0.7435897435897436,
+    "ci95": [
+     0.5787261156214302,
+     0.8696232007644127
+    ]
+   },
+   "EN-obs": {
+    "k": 15,
+    "n": 39,
+    "recall": 0.38461538461538464,
+    "ci95": [
+     0.2336393250658199,
+     0.5538094317780062
+    ]
+   },
+   "EN-pred": {
+    "k": 21,
+    "n": 39,
+    "recall": 0.5384615384615384,
+    "ci95": [
+     0.3718107472065188,
+     0.6990521969924921
+    ]
+   }
+  },
+  "by_access_class": {
+   "direct": {
+    "k": 4,
+    "n": 10,
+    "recall": 0.4,
+    "ci95": [
+     0.1215522581198272,
+     0.7376219233930549
+    ]
+   },
+   "expression-derived": {
+    "k": 3,
+    "n": 4,
+    "recall": 0.75,
+    "ci95": [
+     0.19412044968324346,
+     0.9936905367902902
+    ]
+   },
+   "potentially-direct": {
+    "k": 9,
+    "n": 17,
+    "recall": 0.5294117647058824,
+    "ci95": [
+     0.27811830033110657,
+     0.7701673127340096
+    ]
+   },
+   "proxy": {
+    "k": 5,
+    "n": 8,
+    "recall": 0.625,
+    "ci95": [
+     0.24486321636655167,
+     0.9147665858627465
+    ]
+   }
+  },
+  "PAR_non_direct": {
+   "k": 4,
+   "n": 8,
+   "recall": 0.5,
+   "ci95": [
+    0.15701277048705797,
+    0.842987229512942
+   ]
+  },
+  "en_unreachable": {
+   "k": 0,
+   "n": 0,
+   "recall": NaN,
+   "ci95": [
+    NaN,
+    NaN
+   ]
+  },
+  "n_denominator": 39,
+  "by_universe": {
+   "ctrl": {
+    "k": 0,
+    "n": 7,
+    "recall": 0.0,
+    "ci95": [
+     0.0,
+     0.4096163972250034
+    ]
+   },
+   "eligible": {
+    "k": 21,
+    "n": 32,
+    "recall": 0.65625,
+    "ci95": [
+     0.46806896371973133,
+     0.8142809082834338
+    ]
+   }
+  },
+  "thresholds": {
+   "overall_recall_min": 0.6,
+   "family_recall_min": 0.5,
+   "family_min_eligible_rows": 2
+  }
+ },
+ "rows": [
+  {
+   "control_id": "ADD-HOT_KRAS_KRAS",
+   "family": "ADD-HOT",
+   "gene": "3845",
+   "features": "HOT:3845",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "ADD-HOT_NRAS_NRAS",
+   "family": "ADD-HOT",
+   "gene": "4893",
+   "features": "HOT:4893",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "ADD-HOT_BRAF_BRAF_V600",
+   "family": "ADD-HOT",
+   "gene": "673",
+   "features": "ALLELE:BRAF_V600;HOT:673",
+   "expected_sign": "S",
+   "access_class": "proxy",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "ADD-HOT_PIK3CA_PIK3CA",
+   "family": "ADD-HOT",
+   "gene": "5290",
+   "features": "HOT:5290",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "ADD-HOT_CTNNB1_CTNNB1",
+   "family": "ADD-HOT",
+   "gene": "1499",
+   "features": "HOT:1499",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "ADD-HOT_EGFR_EGFR_activating",
+   "family": "ADD-HOT",
+   "gene": "1956",
+   "features": "ALLELE:EGFR_activating;HOT:1956",
+   "expected_sign": "S",
+   "access_class": "proxy",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": false,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "ADD-CN_ERBB2_ERBB2",
+   "family": "ADD-CN",
+   "gene": "2064",
+   "features": "AMP:2064",
+   "expected_sign": "S",
+   "access_class": "direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "ADD-CN_MYCN_MYCN",
+   "family": "ADD-CN",
+   "gene": "4613",
+   "features": "AMP:4613",
+   "expected_sign": "S",
+   "access_class": "direct",
+   "en_unreachable": false,
+   "universe": "ctrl",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "ADD-CN_CCND1_CCND1",
+   "family": "ADD-CN",
+   "gene": "595",
+   "features": "AMP:595",
+   "expected_sign": "S",
+   "access_class": "direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "ADD-CN_PKMYT1_CCNE1",
+   "family": "ADD-CN",
+   "gene": "9088",
+   "features": "AMP:898",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": false,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "ADD-CN_PSMC2_PSMC2",
+   "family": "ADD-CN",
+   "gene": "5701",
+   "features": "LOSS:5701",
+   "expected_sign": "S",
+   "access_class": "direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": false,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "ADD-EXP_ESR1_ESR1",
+   "family": "ADD-EXP",
+   "gene": "2099",
+   "features": "EXPDOSE:2099",
+   "expected_sign": "S",
+   "access_class": "direct",
+   "en_unreachable": false,
+   "universe": "ctrl",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": false,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "PAR_SMARCA2_SMARCA4",
+   "family": "PAR",
+   "gene": "6595",
+   "features": "LOFBI:6597",
+   "expected_sign": "S",
+   "access_class": "direct",
+   "en_unreachable": false,
+   "universe": "ctrl",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "PAR_ARID1B_ARID1A",
+   "family": "PAR",
+   "gene": "57492",
+   "features": "LOFBI:8289",
+   "expected_sign": "S",
+   "access_class": "direct",
+   "en_unreachable": false,
+   "universe": "ctrl",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "PAR_STAG1_STAG2",
+   "family": "PAR",
+   "gene": "10274",
+   "features": "LOFBI:10735",
+   "expected_sign": "S",
+   "access_class": "direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "PAR_VPS4A_VPS4B",
+   "family": "PAR",
+   "gene": "27183",
+   "features": "LOSS:9525;EXPPAR:9525",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "PAR_VPS4B_VPS4A",
+   "family": "PAR",
+   "gene": "9525",
+   "features": "LOSS:27183",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "PAR_ENO2_ENO1",
+   "family": "PAR",
+   "gene": "2026",
+   "features": "LOSS:2023;EXPPAR:2023",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "ctrl",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": false,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "PAR_PAPSS1_PAPSS2",
+   "family": "PAR",
+   "gene": "9061",
+   "features": "LOSS:9060;DEL:9060",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "ctrl",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": false,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "PAR_PRMT5_MTAP",
+   "family": "PAR",
+   "gene": "10419",
+   "features": "DEL:4507;SIL-DEL:4507;SIL-MUT:4507;SIL-METH:4507;SIL-other:4507",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "PAR_MAT2A_MTAP",
+   "family": "PAR",
+   "gene": "4144",
+   "features": "DEL:4507;SIL-DEL:4507;SIL-MUT:4507;SIL-METH:4507;SIL-other:4507",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": false,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "PAR_ME3_ME2",
+   "family": "PAR",
+   "gene": "10873",
+   "features": "LOSS:4200",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "ctrl",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": false,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "PAR_CREBBP_EP300",
+   "family": "PAR",
+   "gene": "1387",
+   "features": "LOFBI:2033",
+   "expected_sign": "S",
+   "access_class": "direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "PAR_EP300_CREBBP",
+   "family": "PAR",
+   "gene": "2033",
+   "features": "LOFBI:1387",
+   "expected_sign": "S",
+   "access_class": "direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "PAR_DDX3X_DDX3Y",
+   "family": "PAR",
+   "gene": "1654",
+   "features": "YABS:8653",
+   "expected_sign": "S",
+   "access_class": "expression-derived",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "LOF-SL_PIK3CB_PTEN",
+   "family": "LOF-SL",
+   "gene": "5291",
+   "features": "LOFBI:5728;DEL:5728",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": false,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "LOF-SL_NFE2L2_KEAP1",
+   "family": "LOF-SL",
+   "gene": "4780",
+   "features": "LOFBI:9817",
+   "expected_sign": "S",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "SIL_WRN_MLH1",
+   "family": "SIL",
+   "gene": "7486",
+   "features": "SIL-DEL:4292;SIL-MUT:4292;SIL-METH:4292;SIL-other:4292",
+   "expected_sign": "S",
+   "access_class": "expression-derived",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": false,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "SIG_WRN_MSI",
+   "family": "SIG",
+   "gene": "7486",
+   "features": "SIG:MSI",
+   "expected_sign": "S",
+   "access_class": "proxy",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "SIG_KIF18A_WGD",
+   "family": "SIG",
+   "gene": "81930",
+   "features": "SIG:WGD",
+   "expected_sign": "S",
+   "access_class": "proxy",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": false,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "PROG_ADAR_ISG",
+   "family": "PROG",
+   "gene": "103",
+   "features": "PSCORE:ISG",
+   "expected_sign": "S",
+   "access_class": "expression-derived",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "PROG_NFE2L2_NRF2",
+   "family": "PROG",
+   "gene": "4780",
+   "features": "PSCORE:NRF2",
+   "expected_sign": "S",
+   "access_class": "expression-derived",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "P53_MDM2_TP53MUT",
+   "family": "P53",
+   "gene": "4193",
+   "features": "COMP:TP53MUT",
+   "expected_sign": "W",
+   "access_class": "proxy",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "P53_MDM4_TP53MUT",
+   "family": "P53",
+   "gene": "4194",
+   "features": "COMP:TP53MUT",
+   "expected_sign": "W",
+   "access_class": "proxy",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "P53_PPM1D_TP53MUT",
+   "family": "P53",
+   "gene": "8493",
+   "features": "COMP:TP53MUT",
+   "expected_sign": "W",
+   "access_class": "proxy",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "P53_USP7_TP53MUT",
+   "family": "P53",
+   "gene": "7874",
+   "features": "COMP:TP53MUT",
+   "expected_sign": "W",
+   "access_class": "proxy",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": true,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "W_CDK4_RB1",
+   "family": "W",
+   "gene": "1019",
+   "features": "LOFBI:5925",
+   "expected_sign": "W",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  },
+  {
+   "control_id": "W_CDK6_RB1",
+   "family": "W",
+   "gene": "1021",
+   "features": "LOFBI:5925",
+   "expected_sign": "W",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": true,
+   "recovered_MD-global": true,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": true,
+   "recovered": true
+  },
+  {
+   "control_id": "W_CCND1_RB1",
+   "family": "W",
+   "gene": "595",
+   "features": "LOFBI:5925",
+   "expected_sign": "W",
+   "access_class": "potentially-direct",
+   "en_unreachable": false,
+   "universe": "eligible",
+   "recovered_MD-strict": false,
+   "recovered_MD-global": false,
+   "recovered_S1-obs": true,
+   "recovered_S1-pred": true,
+   "recovered_EN-obs": false,
+   "recovered_EN-pred": false,
+   "recovered": false
+  }
+ ],
+ "universe_genes": {
+  "eligible": [
+   "1019",
+   "1021",
+   "10274",
+   "103",
+   "10419",
+   "1387",
+   "1499",
+   "1654",
+   "1956",
+   "2033",
+   "2064",
+   "27183",
+   "3845",
+   "4144",
+   "4193",
+   "4194",
+   "4780",
+   "4893",
+   "5290",
+   "5291",
+   "5701",
+   "595",
+   "673",
+   "7486",
+   "7874",
+   "81930",
+   "8493",
+   "9088",
+   "9525"
+  ],
+  "ctrl": [
+   "10873",
+   "2026",
+   "2099",
+   "4613",
+   "57492",
+   "6595",
+   "9061"
+  ]
+ },
+ "inputs_sha256": {
+  "pc_eligibility.csv": "ca9ed3994b6454f29fa52992b06848d43ee20f2c623d2ab9c4c2a8140384e72a",
+  "positive_controls.csv": "40398aa855652f0d148217bf877585e1ac069f1150ae9d6f4d8b738ab347ab5a",
+  "eligible_genes.csv": "21cff6be4055ad7bc46d90df29fc269c4ebca03f78e129a168a0f3bb61afb241",
+  "md_strict.csv": "42fab44a27463bedd7de04df6177de5bae2e5431ad3ce1267d74ff2ce8501157",
+  "md_global.csv": "f40ee6f5057c137bc90a0271174bb6353a34e8014ed3ea1d63384690cb64462b",
+  "arms_dataset": "50f612ef7d0c898aae419fd996f221f8a85f19c3d13bcdb9c91fc2a0355873b6",
+  "u_ctrl_genes.txt": "ad70153dc0334ca044f37af933a09737b097585d242e8fa61b6ab77c63fbee8b",
+  "md_ctrl/md_strict.csv": "90b0dbb2273489a95cc7336890a7eae7100d7b2a128ed96a78bcd0171ad54a93",
+  "md_ctrl/md_global.csv": "c1e3a011bcecb1814bdab5a2879b0fa16ad018e599c923bae28b7431794b553d",
+  "arms_dataset_ctrl": "e72a9f8195563d220eab19f4815e9394f29bb210c96ae166a34757eae1abca9f"
+ }
+}

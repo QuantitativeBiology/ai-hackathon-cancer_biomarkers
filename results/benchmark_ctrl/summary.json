@@ -1,0 +1,46 @@
+{
+ "universe": "ctrl",
+ "n_genes": 41,
+ "n_rows_arms": 491260,
+ "n_parts": 1,
+ "dataset_dir": "cache/benchmark/arms_ctrl",
+ "bh_families": "within this universe (all rows of the dataset)",
+ "selected": {
+  "EN-obs": 14,
+  "EN-pred": 701,
+  "S1-obs": 2,
+  "S1-pred": 2298
+ },
+ "n_md_global": 1,
+ "n_md_strict": 32,
+ "workers": {
+  "s1": {
+   "kind": "s1",
+   "requested": 2,
+   "effective": 2,
+   "per_worker_gb": 0.5,
+   "available_gb": 4.59,
+   "parent_rss_gb": 0.62,
+   "budget_gb": 10.0
+  },
+  "en": {
+   "kind": "en",
+   "requested": 2,
+   "effective": 2,
+   "per_worker_gb": 0.9,
+   "available_gb": 4.59,
+   "parent_rss_gb": 0.62,
+   "budget_gb": 10.0
+  }
+ },
+ "config_sha256": {
+  "design_params.json": "7673ebb72f183c4f4a362ef52cca52f0b34a94028d424e7cc9e7d45bf615c919",
+  "pipeline_params.json": "4a5da9b9707bf481650f1c9cbbb316d3e2d622db88e3b450b7b9b823ca2a6a79",
+  "seeds.json": "19d1d9b47b965e9a2db943d3a1aa6689925de10ed0202085413e48893f22419e",
+  "primary_endpoints.json": "6125708282190c7b0b3a04f7c89ff5b4ff2a76179c0d11061160508c759c2d69"
+ },
+ "subsamples_sha256": "a0b1b0ff023db0f38701aae855429e13b3c61b8717b2a57c572b6f4af7e17dfe",
+ "dictionary_built_utc": "2026-10-28T22:48:29+00:00",
+ "commit": "b4874674d9ab9be3a663116357fbb288366fac0a",
+ "u_ctrl_genes_sha256": "ad70153dc0334ca044f37af933a09737b097585d242e8fa61b6ab77c63fbee8b"
+}

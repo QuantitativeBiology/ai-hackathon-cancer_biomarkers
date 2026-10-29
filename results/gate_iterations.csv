@@ -1,2 +1,3 @@
 attempt,utc,commit,reason,toy_test,gate_before,gate_after,attempt_file_sha256
 1,2026-10-29T03:36:28+00:00,f6737621037a178225fe49f4b9c5666c516d0d6e,attempt 1,,,False (21/39),ddb351c2296017e070b14aea18701cf9138a1c008476d78dabf1506d8d952af0
+2,2026-10-29T04:37:00+00:00,b4874674d9ab9be3a663116357fbb288366fac0a,U_ctrl never built/read: non-eligible gate controls read from U_ctrl (DESIGN §2),tests/test_gate_u_ctrl.py::test_gate_recovers_non_eligible_control_via_u_ctrl,False (21/39),False (21/39),9500d6179032fb5248aa83563b9969a76b6f7ed56dbcbe3202d8deb53a80e941

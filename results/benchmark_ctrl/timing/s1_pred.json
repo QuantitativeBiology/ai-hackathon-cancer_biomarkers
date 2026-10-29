@@ -1,0 +1,19 @@
+{
+ "job": "s1_pred",
+ "utc": "2026-10-29T04:35:01+00:00",
+ "start_utc": "2026-10-29T04:33:48+00:00",
+ "wall_s": 72.737016,
+ "workers": 2,
+ "run_id": "run_arms-5868-20261029T043349",
+ "note": "S1-obs and S1-pred computed in one streamed scan",
+ "n_genes": 41,
+ "memory_guard": {
+  "kind": "s1",
+  "requested": 2,
+  "effective": 2,
+  "per_worker_gb": 0.5,
+  "available_gb": 4.59,
+  "parent_rss_gb": 0.62,
+  "budget_gb": 10.0
+ }
+}

@@ -1,0 +1,2 @@
+gene,feature,selection_freq,beta_en,maj_sign,stage,beta,se,df,p,q,test_family,s1_obs_selected,n_obs,n_carriers,dropped_cov,collinear_with_design,se_type,df_rule,p_nu,same_sign,s1_f1_hit,pass,list,in_md_strict
+6595,EXPPAR:6597,1.0,0.019370181663540483,1.0,X,0.09745979815961309,0.014601933902941155,142.62946404531118,5.108742855171831e-10,3.1367425693612284e-05,F1,True,1022,,,False,CR2,nu,5.108742855171831e-10,True,True,True,MD-global,True

@@ -71,6 +71,20 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D20 (M4, 04:40): [!] **Gate attempt 2 also failed, 21/39**, after the U_ctrl bug fix (41 genes; toy test
+  test_gate_u_ctrl.py fails on 0346d69 and passes after). All 7 non-eligible gate controls are missed by every arm. These
+  are genuine misses with no further bug:
+  - SMARCA2 × SMARCA4-LOFBI: β −0.48, p 1e-5, q 0.15.
+  - ARID1B × ARID1A-LOFBI: q 0.099. Both fail on the BH family size of about 123k tests.
+  - ESR1 own-EXPDOSE: q 0.0008, but the own-EXPDOSE feature belongs to F2. The gate counts F1 lists, so this control
+    could never be recovered under the list definitions, a specification gap reported as such; it is not re-scored
+    after the fact.
+  - ENO2, PAPSS1, ME3 × LOSS: β ≈ 0. LOSS (CN < 0.75) does not capture the homozygous deletions these pairs need.
+  - MYCN AMP: p 0.01, absorbed by lineage.
+  - Eligible controls alone: 21/32 (0.66).
+  Per outcome_actions the project proceeds: the report states "gate failed at attempt 1 (21/39) and at attempt 2 after
+  the U_ctrl fix (21/39)", and the CGT headline is restricted to gate-disjoint tests. S1-pred recovers the most controls
+  (29/39), then MD-strict, S1-obs and EN-pred (21), MD-global (17) and EN-obs (15).
 - D19 (M4, 03:40, first real results):
   - **Arms.** The four arms ran on D: 2,193 genes, 26.2 M rows, 45 min with S1 at 8 and EN at 5 workers. Selected:
     S1-obs 3,142, EN-obs 738, EN-pred 50,728, S1-pred 276,557. The catalogue MD-global has 1,380 pairs; MD-strict has 11,662.

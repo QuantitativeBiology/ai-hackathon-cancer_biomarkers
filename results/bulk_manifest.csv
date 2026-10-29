@@ -54,6 +54,7 @@ cache/benchmark/arms/part-00050.parquet,586f2e2bda364c35e7a36f06827943002be2abe9
 cache/benchmark/arms/part-00051.parquet,e30e229aa26a3e5b5127a4494643a22892f76b26deb23359b8719921cfcb6c13,,,,scripts/run_arms.py
 cache/benchmark/arms/part-00052.parquet,f68b946aeaa693104d3f9029d1d790f71130941b7aa3c33b028e2f022f0a1a38,,,,scripts/run_arms.py
 cache/benchmark/arms/part-00053.parquet,79468d21cc65ef99dc03815e51e446f5343feac2ef036851e1fb5dc1ddfab6d4,,,,scripts/run_arms.py
-results/benchmark/selected.csv,47d32976f5dbb9870ebf3058311cf96324fafa4c2ed78225b1389b2f377ba86b,331165,,2026-10-29T03:35:13+00:00,scripts/run_arms.py
-results/md/md_global_all.csv,11bbf5e9c450eef17601e5842c3308aeefcee8338ca9f3e2ce79f55efe3536ab,50728,,2026-10-29T04:33:10+00:00,scripts/run_arms.py
-results/md/md_strict_all.csv,082633950bbc5827d30c082e89fbee65388d7aa88fe87f848b2f483ea54ea507,50728,,2026-10-29T04:33:10+00:00,scripts/run_arms.py
+results/benchmark/selected.csv,47d32976f5dbb9870ebf3058311cf96324fafa4c2ed78225b1389b2f377ba86b,331165.0,,2026-10-29T03:35:13+00:00,scripts/run_arms.py
+results/md/md_global_all.csv,11bbf5e9c450eef17601e5842c3308aeefcee8338ca9f3e2ce79f55efe3536ab,50728.0,,2026-10-29T04:33:10+00:00,scripts/run_arms.py
+results/md/md_strict_all.csv,082633950bbc5827d30c082e89fbee65388d7aa88fe87f848b2f483ea54ea507,50728.0,,2026-10-29T04:33:10+00:00,scripts/run_arms.py
+cache/benchmark/arms_ctrl/part-00000.parquet,c6e88f137eea756272a55a5ecb35166c47ad81840eb83466a4d591e06b38f4ef,,,,scripts/run_arms.py
