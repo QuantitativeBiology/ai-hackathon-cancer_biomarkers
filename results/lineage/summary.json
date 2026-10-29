@@ -1,0 +1,53 @@
+{
+ "n_pairs": 11757,
+ "labels": {
+  "lineage-unresolvable": 11097,
+  "cross-lineage": 559,
+  "lineage-restricted": 60,
+  "undetermined": 41
+ },
+ "by_source": {
+  "MD-global": {
+   "n": 1380,
+   "labels": {
+    "lineage-unresolvable": 894,
+    "cross-lineage": 430,
+    "undetermined": 34,
+    "lineage-restricted": 22
+   },
+   "single_lineage_driven": 139
+  },
+  "MD-strict": {
+   "n": 11662,
+   "labels": {
+    "lineage-unresolvable": 11075,
+    "cross-lineage": 486,
+    "lineage-restricted": 60,
+    "undetermined": 41
+   },
+   "single_lineage_driven": 160
+  },
+  "control": {
+   "n": 51,
+   "labels": {
+    "lineage-unresolvable": 27,
+    "cross-lineage": 24
+   },
+   "single_lineage_driven": 5
+  },
+  "S1-obs BH": {
+   "n": 200,
+   "labels": {
+    "cross-lineage": 200
+   },
+   "single_lineage_driven": 1
+  }
+ },
+ "u_ctrl_controls": {
+  "included": true,
+  "n_pairs": 9
+ },
+ "bh_families": "F4 pooled and F5 per-lineage over every pair of this run",
+ "limitation": "A7-iii: the cross-lineage rule can mislabel a one-lineage effect when the null lineages share its sign by chance; single_lineage_driven marks cross-lineage labels with <= 1 nominally significant powered lineage of the pooled sign",
+ "workers": 2
+}
