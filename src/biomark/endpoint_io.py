@@ -237,9 +237,10 @@ def _js(o):
 
 
 def make_pool(arms_tab: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, D_ids, R_ids,
-              nan_D: pd.DataFrame) -> tuple:
+              nan_D: pd.DataFrame, arms=None) -> tuple:
     """Pool_G and frozen top-k lists (DESIGN §6.1). ``s1_obs``: S1-obs rows (all U incl. F2; beta, se, sd_dtilde,
     dropped_cov, test_family) used for the EB shrinkage and the drops; ``arms_tab``: ranks of every arm on the same U.
+    ``arms``: the arms to list (default the four benchmark arms; XLIB §6.3: S1-obs and EN-obs only).
     Returns (pool DataFrame over U_G, lists dict for p1_pool.json)."""
     from . import arms as A
     from . import endpoints as EP
@@ -274,13 +275,14 @@ def make_pool(arms_tab: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, 
     P_G = pool[pool["powered"]]
     out = {"k_rule": e["k_rule"], "pool_size": int(len(P_G)), "k": EP.p1_k(len(P_G)), "lists": {}, "strata": {},
            "secondary_k": {}}
-    out["lists"]["G"] = EP.build_lists(arms_tab, P_G, A.ARMS)
+    arms = tuple(A.ARMS if arms is None else arms)
+    out["lists"]["G"] = EP.build_lists(arms_tab, P_G, arms)
     for name, m in EP.strata_of(P_G["access_class"]).items():
         sub = P_G[m.to_numpy()]
         out["strata"][name] = {"pool_size": int(len(sub)), "k": EP.p1_k(len(sub))}
-        out["lists"][name] = EP.build_lists(arms_tab, sub, A.ARMS)
+        out["lists"][name] = EP.build_lists(arms_tab, sub, arms)
     for k2 in e["secondary_k"]:
-        out["secondary_k"][str(k2)] = EP.build_lists(arms_tab, P_G, A.ARMS, k=int(k2))
+        out["secondary_k"][str(k2)] = EP.build_lists(arms_tab, P_G, arms, k=int(k2))
     return pool, out
 
 
@@ -329,7 +331,7 @@ def build_requests(pool: pd.DataFrame, lists: dict, s1_obs: pd.DataFrame, md: pd
             add(g, f, w)
     R = pd.DataFrame(rows, columns=["gene", "feature", "reason", "expected_sign"])
     U = s1_obs.assign(gene=s1_obs["gene"].astype(str)).drop_duplicates(["gene", "feature"]).set_index(["gene", "feature"])
-    R = R[[k in U.index for k in zip(R["gene"], R["feature"])]]
+    R = R[np.array([k in U.index for k in zip(R["gene"], R["feature"])], dtype=bool)]
     agg = R.groupby(["gene", "feature"], sort=False).agg(
         reasons=("reason", lambda v: "|".join(dict.fromkeys(v))),
         expected_sign=("expected_sign", lambda v: next((x for x in v if x in ("S", "W")), ""))).reset_index()

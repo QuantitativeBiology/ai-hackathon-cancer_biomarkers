@@ -487,14 +487,16 @@ def p1_k(pool_size: int) -> int:
 
 def build_lists(arms_tab: pd.DataFrame, pool: pd.DataFrame, arms, k: int | None = None) -> dict:
     """Top-k list per arm within ``pool`` (unique (g, d)), after de-duplicating (g, variant group) to the arm's
-    best-ranked member inside the pool; unrankable rows (S1 p NaN, EN frequency 0) never enter; n_tied_at_rank_k."""
+    best-ranked member inside the pool; unrankable rows (S1 p NaN, EN frequency 0) never enter; n_tied_at_rank_k.
+    An arm with no ranked rows in ``arms_tab`` gets an empty list."""
     key = set(zip(pool["gene"].astype(str), pool["feature"]))
     k = p1_k(len(key)) if k is None else k
     out = {}
     for arm in arms:
         s = arms_tab[(arms_tab["arm"] == arm) & arms_tab["rank"].notna()].copy()
         s["gene"] = s["gene"].astype(str)
-        s = s[[(g, f) in key for g, f in zip(s["gene"], s["feature"])]].sort_values("rank", kind="mergesort")
+        inpool = np.array([(g, f) in key for g, f in zip(s["gene"], s["feature"])], dtype=bool)
+        s = s[inpool].sort_values("rank", kind="mergesort")      # boolean mask (an empty list would select columns)
         vg = s["variant_group"].where(s["variant_group"].notna() & (s["variant_group"].astype(str) != ""), None)
         gk = np.where(vg.notna(), s["gene"] + "|" + vg.astype(str), s["gene"] + "|" + s["feature"])
         s = s[~pd.Index(gk).duplicated()]

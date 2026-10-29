@@ -272,8 +272,86 @@ def run_streamed(data, arms=A.ARMS, out_dir: Path | None = None, stage_dir: Path
     tm["final_s"] = time.time() - t_f
     tm["global_window"] = (t_g, time.time())
     out.update(parts=sorted(sha), sha256=sha, n_rows=n_rows, selected=sel, out_dir=str(out_dir))
+    write_manifest(out_dir, data, arms, s1_out_arms + list(en_arms), out, tm)
     log(f"final: {n_rows} rows in {len(sha)} parts; global {tm['global_s']:.0f} s, write {tm['final_s']:.0f} s")
     return out
+
+
+# ------------------------------------------------------------------------------------------------
+# Completed-dataset manifest (reuse of a finished streamed dataset, e.g. run_xlib.py --reuse-arms)
+# ------------------------------------------------------------------------------------------------
+
+MANIFEST = "_manifest.json"
+
+
+def _ids_sha(ids) -> str:
+    return hashlib.sha256("\n".join(sorted(map(str, ids))).encode()).hexdigest()
+
+
+def write_manifest(out_dir: Path, data, arms, out_arms, out: dict, tm: dict, extra: dict | None = None) -> Path:
+    """``<out_dir>/_manifest.json``, written last: the dataset is complete iff it exists and matches the parts."""
+    import datetime as dt
+    import json
+    rec = {"complete": True, "utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+           "arms": list(arms), "out_arms": list(out_arms), "parts": dict(sorted(out["sha256"].items())),
+           "n_rows": int(out["n_rows"]), "n_chunks": int(tm.get("n_chunks", 0)), "selected": out.get("selected", {}),
+           "genes_sha256": _ids_sha(data.genes), "lines_sha256": _ids_sha(data.lines), "n_genes": len(data.genes),
+           "n_lines": len(data.lines),
+           "timings": {k: tm[k] for k in ("s1_window", "global_window", "en_walls") if k in tm}, **(extra or {})}
+    f = Path(out_dir) / MANIFEST
+    f.write_text(json.dumps(rec, indent=1, default=float), encoding="utf-8")
+    return f
+
+
+def verify_dataset(out_dir: Path, arms, genes, lines=None, stage_dir: Path | None = None,
+                   expect_parts: int | None = None, expect_rows: int | None = None) -> dict:
+    """Check that ``out_dir`` holds a complete streamed dataset for ``arms`` / ``genes`` (/ ``lines``). With a
+    manifest: same part set, every part's sha256, arms, gene and line sets. Without one (datasets written before the
+    manifest existed): the stage dir must be gone (removed only after the last part), and the part count and total
+    row count must equal ``expect_parts`` / ``expect_rows`` (from the run's log), the arm values must be the output
+    arms and the genes on disk a subset of ``genes`` (genes without universe rows have none). Returns the manifest (legacy: a reconstructed one); raises ValueError."""
+    import json
+
+    import pyarrow.parquet as pq
+    out_dir = Path(out_dir)
+    parts = sorted(p.name for p in out_dir.glob("part-*.parquet"))
+    if not parts:
+        raise ValueError(f"no parts under {out_dir}")
+    if stage_dir is not None and Path(stage_dir).exists():
+        raise ValueError(f"stage dir {stage_dir} still exists: the streamed run did not finish")
+    f = out_dir / MANIFEST
+    if f.exists():
+        m = json.loads(f.read_text(encoding="utf-8"))
+        if not m.get("complete") or sorted(m["parts"]) != parts:
+            raise ValueError("parts on disk differ from the manifest")
+        bad = [p for p in parts if hashlib.sha256((out_dir / p).read_bytes()).hexdigest() != m["parts"][p]]
+        if bad:
+            raise ValueError(f"sha256 mismatch: {bad}")
+        if list(m["arms"]) != list(arms):
+            raise ValueError(f"dataset arms {m['arms']} != {list(arms)}")
+        if m["genes_sha256"] != _ids_sha(genes) or (lines is not None and m["lines_sha256"] != _ids_sha(lines)):
+            raise ValueError("dataset genes / lines differ from this run")
+        return m
+    if expect_parts is None or expect_rows is None:
+        raise ValueError(f"{out_dir} has no {MANIFEST}: pass the part and row counts of the run's log")
+    n = sum(pq.ParquetFile(out_dir / p).metadata.num_rows for p in parts)
+    if len(parts) != int(expect_parts) or n != int(expect_rows):
+        raise ValueError(f"{len(parts)} parts / {n} rows on disk, expected {expect_parts} / {expect_rows}")
+    seen_arms, seen_genes = set(), set()
+    for p in parts:
+        t = pq.read_table(out_dir / p, columns=["arm", "gene"])
+        seen_arms |= set(map(str, t.column("arm").unique().to_pylist()))
+        seen_genes |= set(map(str, t.column("gene").unique().to_pylist()))
+    want = [a for a in A.S1_ARMS if a in arms] + [a for a in A.EN_ARMS if a in arms]
+    if seen_arms != set(want):
+        raise ValueError(f"arms on disk {sorted(seen_arms)} != {want}")
+    extra_g = seen_genes - set(map(str, genes))
+    if extra_g:
+        raise ValueError(f"{len(extra_g)} genes on disk are not genes of this run")
+    sha = {p: hashlib.sha256((out_dir / p).read_bytes()).hexdigest() for p in parts}
+    return {"complete": True, "arms": list(arms), "parts": sha, "n_rows": int(n), "genes_sha256": _ids_sha(genes),
+            "lines_sha256": None if lines is None else _ids_sha(lines), "n_genes_with_rows": len(seen_genes),
+            "n_genes": len(set(map(str, genes))), "verified_from": "legacy part / row counts (lines not verifiable)"}
 
 
 def _offset(counts: list, i: int) -> int:
