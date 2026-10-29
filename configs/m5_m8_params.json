@@ -1,0 +1,183 @@
+{
+  "_comment": "Implementation constants of the M5/M6/M8 analysis scripts (scripts/run_subtypes.py, run_cross_lineage.py, run_m5_audits.py, run_combinatorial_lookup.py, run_limits.py, build_candidate_cards.py; src/biomark/m5.py, src/biomark/limits.py). NOT a design file: every DESIGN §F number is read from design_params.json / primary_endpoints.json (subtypes_s8, combinatorial_s11, limits_s12, dictionary_s3, ...). This file holds the operational choices DESIGN §8, §11 and §12 leave to the implementation (file layouts, column names, level names, per-line hit rule of the harmonised combinatorial table, binning of the matched background); each is explained in docs/impl_notes_pipeline.md (section 'M5 / M6 / M8 analysis scripts'). Created after freeze-bounds, before any M5-M8 output existed.",
+  "version": "m5m8-v1",
+  "catalogue": {
+    "lists": [
+      "MD-global",
+      "MD-strict"
+    ],
+    "primary": "MD-global",
+    "_comment": "A7: MD-global is the catalogue; MD-strict is computed alongside everywhere the design says 'catalogue'."
+  },
+  "subtypes": {
+    "share_beta": "beta_full",
+    "share_terms": "EN-pred selected features of g (both stages)",
+    "continuous_carrier_rule": "dependency side of the D median: sign(beta) * (x - median_D(x)) < 0",
+    "max_lineages_listed": 5
+  },
+  "culture": {
+    "variables": [
+      {
+        "name": "cellformat",
+        "col": "cellformat"
+      },
+      {
+        "name": "3D",
+        "col": "cellformat",
+        "level": "3D"
+      },
+      {
+        "name": "serumfree",
+        "col": "serumfree"
+      },
+      {
+        "name": "medium_family",
+        "col": "medium_family"
+      },
+      {
+        "name": "library",
+        "col": "library_group"
+      }
+    ],
+    "rescue_p_max": 0.05,
+    "rescue_stratum": "level of the flagging variable holding most subtype members; test = confounder model on those lines",
+    "_comment_rescue": "rescue_p_max mirrors design_params.subtypes_s8.culture_flag_rescue ('p < 0.05')"
+  },
+  "hypermutation": {
+    "tmb_feature": "SIG:TMB",
+    "toy_tmb_covariate": "TMB",
+    "msi_column": "MSI",
+    "msi_level": "MSI",
+    "tp53_column": "tp53_status",
+    "tp53_mut_level": "mut",
+    "persist_families": [
+      "HOT",
+      "ALLELE",
+      "LOFBI"
+    ],
+    "tp53_families": [
+      "SIG"
+    ],
+    "persist_beta_frac": 0.5,
+    "_comment": "persist_beta_frac mirrors design_params.subtypes_s8.hypermutation_persist; hypermutated = MSI or TMB in the top dictionary_s3.hypermutated_top_frac of D"
+  },
+  "cross_lineage": {
+    "single_lineage_p_max": 0.05,
+    "_comment": "A7-iii caveat: a cross-lineage label whose powered lineages contain at most one with nominal per-lineage p < single_lineage_p_max (same sign) is flagged 'single_lineage_driven'."
+  },
+  "combinatorial": {
+    "lists": [
+      "MD-global",
+      "MD-strict",
+      "S1-obs"
+    ],
+    "loss_families": {
+      "LOFBI": "neg",
+      "LOSS": "neg",
+      "DEL": "neg",
+      "SIL": "neg",
+      "SIL-DEL": "neg",
+      "SIL-MUT": "neg",
+      "SIL-METH": "neg",
+      "SIL-other": "neg",
+      "METH": "neg",
+      "YABS": "neg",
+      "EXPPAR": "pos"
+    },
+    "esmaeili": {
+      "dir": "combinatorial/esmaeili2024",
+      "per_line_file": "Supp_table1.xlsx",
+      "summary_file": "Data_for_Figure_01.xlsx",
+      "screened_sheet": "Figure1_B",
+      "study_hits_sheet": "Figure1_E",
+      "pair_sep": ":",
+      "studies": [
+        "Dede",
+        "Parrish",
+        "Thompson",
+        "Gonatopoulos",
+        "Ito"
+      ],
+      "study_labels": {
+        "Dede": "Dede 2020",
+        "Parrish": "Parrish 2021 (Esmaeili Anvar reprocessing)",
+        "Thompson": "Thompson 2021",
+        "Gonatopoulos": "CHyMErA (Gonatopoulos-Pournatzis 2020)",
+        "Ito": "Ito 2021"
+      },
+      "line_size_col": "CohenD",
+      "line_effect_col": "deltaMean",
+      "line_hit_size_min": 0.8,
+      "line_hit_effect_max": -0.5,
+      "line_hits_only_in_study_hits": true,
+      "_comment": "Screen-level hit = the pair is in the authors' per-study hit list (Figure1_E). Line-level hit = a Supp_table1 row (one sheet per study_line) with CohenD >= line_hit_size_min and deltaMean <= line_hit_effect_max (the authors' sign convention: synthetic-lethal pairs have positive CohenD and negative deltaMean), counted only in studies whose hit list contains the pair."
+    },
+    "flister": {
+      "dir": "combinatorial/klingbeil2024_biorxiv",
+      "file": "media-3.xlsx",
+      "sheet": "Sheet1",
+      "label_col": "label",
+      "pair_sep": "_",
+      "own_lines": [
+        "NCIH1299",
+        "MDAMB231"
+      ],
+      "hit_value": "Lethal",
+      "study": "Flister 2024 bioRxiv (analysis only)",
+      "_comment": "Only the preprint's own screens (own_lines) are counted; its columns re-calling other studies are ignored so no screen is counted twice. Analysis only: no row of this file is written anywhere."
+    },
+    "replicated_min_screens": 2,
+    "replicated_min_lines": 2,
+    "identity_bins": 10,
+    "family_size_edges": [
+      1,
+      2,
+      3,
+      5,
+      10
+    ],
+    "labels": [
+      "replicated",
+      "tested-not-replicated",
+      "untested"
+    ]
+  },
+  "limits": {
+    "pending": "pending R",
+    "ko_discordant_classes": [
+      "discordant-mechanism"
+    ],
+    "ceiling_discordant_labels": [
+      "data-null",
+      "data-contradicted"
+    ],
+    "processing_limited_families": [
+      "LOSS",
+      "AMP",
+      "DEL"
+    ],
+    "attribution_file": "results/attribution/m1_named_share.csv",
+    "attribution_col": "named_share",
+    "ceiling_file": "results/clinical/cgt_ceiling.csv",
+    "ceiling_label_cols": [
+      "label",
+      "ceiling_label"
+    ],
+    "pair_class_codes": {
+      "powered_not_replicated": 7,
+      "ko_drug_discordance": 8
+    }
+  },
+  "cards": {
+    "cross_lineage_precedence": [
+      "cross-lineage",
+      "lineage-restricted",
+      "lineage-unresolvable",
+      "undetermined"
+    ]
+  },
+  "memory": {
+    "eb_chunk_rows": 250000,
+    "_comment": "row chunk of the streamed EB fit over every S1-obs U row (m5.eb_fit_streamed); the arms table is never loaded whole (coordinator: <= ~2 GB per script)"
+  }
+}

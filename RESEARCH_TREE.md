@@ -71,6 +71,19 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D18 (M5/M6 code, ~01:45, before any real catalogue exists): the M5/M6/M8 Tier A scripts are built and toy-tested
+  (24/24). The implementation choices that DESIGN §8/§11/§12 leaves open are fixed in configs/m5_m8_params.json and hashed
+  under frozen_hashes `actions` before any real M5 output. Among them, the combinatorial per-line hit rule (Cohen's
+  d ≥ 0.8 and Δmean ≤ −0.5, only within studies that call the pair a hit) is an agent choice, not a design value, and
+  will be stated as such in the report. Esmaeili 2024 is the single harmonised source for Dede, Parrish, Thompson,
+  CHyMErA and Ito, so no screen is counted twice.
+- D17 (M4, ~01:15, compute; no real result exists): the machine has 15.7 GB of RAM, but the full arms table is about
+  26 M rows (≈ 25 GB as one object-dtype frame), and EN workers hold ≈ 0.8–1.7 GB each.
+  - The arms run in gene blocks with a parquet dataset and slim global steps (blocked = unblocked, tested).
+  - Workers are capped by a memory guard: S1 8, EN 6, null 6.
+  - The null runs after the arms instead of beside them.
+  - The frozen `fwl_cache_max_entries` is unchanged.
+  - Walls will exceed the tier timeboxes; this is logged by budget_check as lateness, not as a design change.
 - D16 (M3b end, 00:35): NC2b = 1.2 (MD-strict hits per low-tier gene) is applied as the mechanical result of ruling R1.
   R1 was fixed before any ridge value existed, so it is not revisited. MD-global's low-tier rate is reported next to the
   provisional 0.1 for information. NC values are recorded in frozen_hashes `bounds_values`; design_params.json is not
@@ -169,6 +182,8 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   - [x] Independent toy verifier: NC bounds (9.2 min), null_genes.txt, diagnostics; final suite on 04aa982 19/22, MD-global 3/3
   - [x] Endpoint code (author): run_gate.py, replicate.py (+ pseudo-R fold-0 dry run), P2 McNemar, branch tests; XLIB, component readout, confounder audit, Q4
   - [x] Tag `freeze-bounds` (frozen_hashes `bounds` + `bounds_values`)
+  - [x] configs/outcome_actions.csv: pre-committed action per gate/NC/catalogue/replication outcome, hashed before any real output (LESSONS 12)
+  - [-] Real run attempt 1 (00:40): crashed at worker spawn because the Windows pickle pipe limit was hit by the full-D initargs payload; no output written. Fix: memory-mapped worker files (author)
   - [ ] Real run: 4 arms + MD lists, confounder audit, gate attempt 1, null (background), XLIB, dry run
   - [ ] Independent reimplementation check §13.3 (separate agent, after G_pc_attempt1)
 - [ ] M5 Subtypes: per gene and per module, cross-lineage labels, co-location/cutting/culture/hypermutation audits

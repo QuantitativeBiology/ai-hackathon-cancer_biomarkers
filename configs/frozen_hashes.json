@@ -79,6 +79,7 @@
  },
  "actions": {
   "configs/outcome_actions.csv": "a2a51153bbf453ba27bdd1e235700c0d310b1d49a7930e0dd5d7b418a2a8825d",
-  "_note": "written before any real-run output was opened (arms run in progress, outputs unread)"
+  "_note": "outcome_actions.csv written before any real-run output was opened; m5_m8_params.json (M5/M6/M8 implementation choices incl. the combinatorial per-line hit rule) hashed before any real catalogue existed (D18)",
+  "configs/m5_m8_params.json": "b4f1e55fcd3674d1dd1c82e3e06d051b1c4dada3ff09081159a8ad7dfbb5d49a"
  }
 }

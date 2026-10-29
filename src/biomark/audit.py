@@ -210,11 +210,19 @@ def amplicon_test(data, pairs: pd.DataFrame, effects_of, expression_of) -> pd.Da
 
 
 def cross_lineage(data, pairs: pd.DataFrame, beta_shrunk: dict, sign_of: dict) -> pd.DataFrame:
+    """§8.3 labels for ``pairs`` (one call = one F4 / F5 BH family)."""
+    R, P5 = cross_lineage_stats(data, pairs, beta_shrunk, sign_of)
+    return cross_lineage_labels(R, P5)
+
+
+def cross_lineage_stats(data, pairs: pd.DataFrame, beta_shrunk: dict, sign_of: dict) -> tuple:
+    """Per-pair pooled / LOLO / interaction statistics (R) and per-testable-lineage fits (P5), before BH. Pairs are
+    independent here, so chunks of pairs can run in parallel; ``cross_lineage_labels`` then applies BH over F4 / F5
+    and the label rules to the concatenated tables."""
     s8 = PR.dp()["subtypes_s8"]["cross_lineage"]
     groups = {L: k for k, v in PR.dp()["subtypes_s8"]["lineage_groups"].items() for L in v}
     lmin = int(PR.dp()["eligibility_s2"]["lineage_min_lines"])
     rmin = int(PR.dp()["replication_s6"]["R_min_carriers"])
-    q_thr = float(s8["meta_bh_q"])
     rare = PR.dp()["eligibility_s2"]["rare_lineage_label"]
     lin_raw = data.cov_df.get("lineage_raw", data.cov_df["lineage"]).astype(str).to_numpy()
     recs, per = [], []
@@ -268,8 +276,16 @@ def cross_lineage(data, pairs: pd.DataFrame, beta_shrunk: dict, sign_of: dict) -
             rec["p_interaction"] = _interaction_p(data, g, f, mt, lin_raw) if len(testable) >= 2 else np.nan
         rec["single_lineage_carriers"] = len(lin_car) == 1
         recs.append(rec)
-    R = pd.DataFrame(recs)
-    P5 = pd.DataFrame(per)
+    return pd.DataFrame(recs), pd.DataFrame(per)
+
+
+def cross_lineage_labels(R: pd.DataFrame, P5: pd.DataFrame) -> pd.DataFrame:
+    """BH over F4 (pooled p of every pair in R) and F5 (every per-lineage p in P5), then the §8.3 labels in
+    precedence order."""
+    s8 = PR.dp()["subtypes_s8"]["cross_lineage"]
+    q_thr = float(s8["meta_bh_q"])
+    R = R.reset_index(drop=True).copy()
+    P5 = P5.reset_index(drop=True).copy()
     if R.empty:
         return pd.DataFrame(columns=["gene", "feature", "label"])
     R["q_pooled"] = ST.bh(R.get("p_pooled", pd.Series(np.nan, index=R.index)).to_numpy())
