@@ -1,0 +1,66 @@
+{
+ "catalogue": "MD-global (A7); MD-strict alongside (failure_class_md_strict, in_md_strict)",
+ "R_status": "pending R",
+ "power_source": "missing: class 5 by power pending",
+ "ceiling": "cgt_ceiling.csv missing: class 8 from KO class / sign only",
+ "m1_attribution": "not run (Tier B); class 3 uses r_within and fidelity",
+ "pair_classes_md_global": {
+  "6": 252,
+  "9": 1128
+ },
+ "pair_classes_md_strict": {
+  "4": 102,
+  "6": 2477,
+  "9": 9083
+ },
+ "pair_class_status": {
+  "pending R": 11560,
+  "final": 102
+ },
+ "gene_classes": {
+  "3b": 1416,
+  "3": 884,
+  "9": 690,
+  "2": 417,
+  "6": 73,
+  "1": 21
+ },
+ "gene_classes_md_strict": {
+  "9": 2052,
+  "3": 884,
+  "2": 417,
+  "3b": 65,
+  "6": 52,
+  "1": 21,
+  "4": 10
+ },
+ "n_universe_genes": 3501,
+ "NC6_lineage_tf_class3": {
+  "n": 18,
+  "frac_class3": 0.0,
+  "bound_min": 0.7,
+  "pass": false
+ },
+ "Q1b": {
+  "n_cross_lineage": 430,
+  "n_lineage_restricted": 22,
+  "cgt_membership": {
+   "odds_ratio": Infinity,
+   "or_ci": [
+    0.044958588873396765,
+    Infinity
+   ],
+   "fisher_p": 1.0,
+   "k_cross_lineage": 5,
+   "k_lineage_restricted": 0
+  },
+  "r_replication": {
+   "status": "pending R"
+  }
+ },
+ "methylation_coverage_D_lines": 456,
+ "extra_labels": {
+  "processing_limited": 231,
+  "predictor_blind_rows": 1761
+ }
+}

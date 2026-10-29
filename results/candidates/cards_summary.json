@@ -1,0 +1,27 @@
+{
+ "status": "pending R",
+ "n_known_recovery": 88,
+ "n_controls": 58,
+ "n_cgt_tests": 30,
+ "recovered_md_global": 22,
+ "recovered_md_strict": 28,
+ "u_ctrl_run_included": true,
+ "by_universe": {
+  "ctrl": {
+   "n": 24,
+   "n_controls": 16,
+   "recovered_md_global": 0,
+   "recovered_md_strict": 1
+  },
+  "eligible": {
+   "n": 64,
+   "n_controls": 42,
+   "recovered_md_global": 22,
+   "recovered_md_strict": 27
+  }
+ },
+ "n_shortlist": 0,
+ "report_top_rows": 15,
+ "case_studies": [],
+ "rule": "shortlist = class-9 MD-global pairs replicated in R (asserted); 'novel' is never applied to a gene"
+}
