@@ -4,7 +4,6 @@
 
 This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality predictor on DepMap 26Q3 (`../project`, read-only).
 
-- `{{...}}` placeholders mark numbers that need the replication run in R, or an analysis that is still running. No number behind a placeholder has been seen.
 - The rules in force are listed in `docs/effective_rules.md`, cited here as ER#. Each number cites its source file.
 - No claim in this draft is a replicated or "valid biomarker" claim: R has not been read.
 
@@ -634,6 +633,9 @@ None of these is named "novel". All three are paralog-buffering dependencies, th
   Execution order follows RESEARCH_TREE.md. The commit and config hashes of each run are written to `results/registry.csv`. Implementation notes are in `docs/impl_notes_*.md`.
 - **Tests.**
   - `tests/`: the fast suite passed at 83e575b.
-  - Toy suite: `BIOMARK_TOY_PIPELINE=1 python -X utf8 -m pytest tests/test_toy_answers.py -k pipeline` (wall time 3,565 s at 04aa982; `results/toy/suite_run_04aa982.json`).
+  - Toy suite: `BIOMARK_TOY_PIPELINE=1 python -X utf8 -m pytest tests/test_toy_answers.py -k pipeline` (`results/toy/suite_run_04aa982.json`, wall time 3,565 s at 04aa982).
   - R is unlocked only by `replicate.py` with `PART2_UNBLIND=1`, after the tag (DESIGN §1.3).
-- **Number check.** `scripts/check_report_numbers.py --strict`: {{number_check_status}}.
+- **Number check.** `scripts/check_report_numbers.py --strict`, final run:
+  - Every cited number matches its cited source at the printed precision. Structural numbers are exempt only through `configs/report_number_exemptions.json`, each with a reason, and no number is uncited.
+  - The strict gate still fails on **four source checks**: `results/gates/G_indep.json`, `results/cgt/summary.json`, `results/toy/suite_run_04aa982.json` and `results/toy/nc_bounds.json` have no `results/registry.csv` row. Their writers (the independent check, `build_cgt.py` at `freeze-cgt`, and the toy runs) predate the run registry, and rows were not back-filled after the fact.
+  - The non-strict check passes, with only those four warnings.
