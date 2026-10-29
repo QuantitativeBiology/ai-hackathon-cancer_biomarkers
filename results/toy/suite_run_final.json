@@ -1,0 +1,35 @@
+{
+ "started_utc": "2026-10-29T13:56",
+ "engine_commit_at_start": "b125298 (engine files identical to HEAD at start)",
+ "command": "BIOMARK_TOY_PIPELINE=1 pytest tests/test_toy_answers.py tests/test_toy_md_global.py -k pipeline",
+ "wall_s": 3506.13,
+ "summary": "19 passed, 3 failed",
+ "tests": {
+  "tests/test_toy_answers.py::test_pipeline_interface": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_pan_lineage_recall": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_own_locus_cn": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_msi_signature_and_drop_rule": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_co_location": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_culture_confounded": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_lineage_only_and_lineage_dummy": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_genomic_with_expression_proxy_stage_G": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_six_carrier_strong": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_self_null": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_wrong_sign_cgt_is_sign_error": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_cross_lineage_labels": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_cutting_and_addiction": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_predictor_blind_and_p53": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_gate": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_error_rates_smooth_toy": "PASSED",
+  "tests/test_toy_md_global.py::test_pipeline_md_global_fdp_smooth_toy": "PASSED",
+  "tests/test_toy_md_global.py::test_pipeline_md_global_fdp_ridge_toy": "PASSED",
+  "tests/test_toy_md_global.py::test_pipeline_md_global_pure_null": "PASSED",
+  "tests/test_toy_answers.py::test_pipeline_fold_offset_artefact": "FAILED",
+  "tests/test_toy_answers.py::test_pipeline_error_rates_ridge_toy": "FAILED",
+  "tests/test_toy_answers.py::test_pipeline_pure_null": "FAILED"
+ },
+ "printed": [
+  "FDP_true per list: {'S1-obs': 0.08181818181818182, 'S1-pred': 0.07476635514018691, 'EN-obs selected': 0.0, 'EN-pred selected': 0.0, 'MD-strict': 0.0}"
+ ],
+ "same_failures_as_04aa982": true
+}
