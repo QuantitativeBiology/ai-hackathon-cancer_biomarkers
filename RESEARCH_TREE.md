@@ -4,6 +4,30 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-29 ~09:50 — SUSPEND (user suspending the machine); resume point
+Committed through 3833bd0 (REPORT.md draft with placeholders, docs/effective_rules.md, check_report_numbers.py), and
+nothing is uncommitted. The single job running is the fixed-threshold null, started at about 09:30
+(`scripts/run_null.py`, 3 workers, log cache/run_null3.log). It has no checkpoint. If VS Code stays open, sleep pauses it
+and it continues on wake. If its process is gone on resume, re-run it (about 3.2 h at 3 workers; free RAM first).
+Interrupted earlier and not yet re-run: the confounder audit and cross-lineage, neither of which has output.
+
+Unverified drafts: REPORT.md and docs/effective_rules.md, which still need the strict number check and the citation fixes.
+
+Next on resume:
+1. Check the null process and its log.
+2. Run the confounder audit with 1–2 workers, then cross-lineage, run_m5_audits, run_q4 and run_component_readout.
+3. Run run_limits and build_candidate_cards.
+4. Re-run the toy suite (src changed after 04aa982).
+5. After the null: run_xlib.
+6. build_p1_pool, the pseudo-R dry run, then tag `freeze-catalogue`.
+7. replicate.py, a single R run.
+8. Re-run limits and cards, then fill REPORT.md, run the strict number check and the red-team review, prune LESSONS,
+   and do the final commit.
+
+Agents: the author (ab46581f) and the writer (ab7cb7af) are idle and can be resumed via SendMessage. Two open requests
+for the author: registry rows from every results script, and making the number checker accept DESIGN.md and
+RESEARCH_TREE.md as text sources for effective_rules.md.
+
 ### 2026-10-29 08:40 — INTERRUPTION (VS Code closed overnight); resumed
 Everything up to 19e4b31 is committed and intact. Five running jobs were lost, and none of them had written any output:
 - the fixed-threshold null, which had been running since 03:38 and has no per-draw checkpoint;
