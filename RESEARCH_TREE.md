@@ -6,7 +6,7 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ### 2026-10-29 ~09:50 — SUSPEND (user suspending the machine); resume point
 Committed through 3833bd0 (REPORT.md draft with placeholders, docs/effective_rules.md, check_report_numbers.py), and
-nothing is uncommitted. The single job running is the fixed-threshold null, started at about 09:30
+nothing is uncommitted. The single job running is the fixed-threshold null, started at 08:49
 (`scripts/run_null.py`, 3 workers, log cache/run_null3.log). It has no checkpoint. If VS Code stays open, sleep pauses it
 and it continues on wake. If its process is gone on resume, re-run it (about 3.2 h at 3 workers; free RAM first).
 Interrupted earlier and not yet re-run: the confounder audit and cross-lineage, neither of which has output.
