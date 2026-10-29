@@ -1,0 +1,9 @@
+{
+ "job": "combinatorial_lookup",
+ "utc": "2026-10-29T04:47:07+00:00",
+ "start_utc": "2026-10-29T04:46:48+00:00",
+ "wall_s": 19.783912,
+ "workers": 1,
+ "run_id": "run_combinatorial_lookup-3776-20261029T044707",
+ "n_candidates": 5694
+}

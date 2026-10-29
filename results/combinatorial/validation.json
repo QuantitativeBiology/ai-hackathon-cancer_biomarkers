@@ -1,0 +1,112 @@
+{
+ "MD-global": {
+  "n_candidates": 191,
+  "n_tested": 183,
+  "n_replicated": 31,
+  "rate": 0.16939890710382513,
+  "rate_ci": [
+   0.11809499074109926,
+   0.23174659613298185
+  ],
+  "n_background": 10717,
+  "n_background_replicated": 110,
+  "background_rate": 0.010264066436502753,
+  "matched_expected_rate": 0.024957706066493494,
+  "n_candidates_in_strata": 183,
+  "vs_background_odds_ratio": 19.642848687999756,
+  "vs_background_or_ci": [
+   12.342070723571352,
+   30.57520354527047
+  ],
+  "vs_background_fisher_p": 2.1470134068464644e-26
+ },
+ "MD-strict": {
+  "n_candidates": 363,
+  "n_tested": 317,
+  "n_replicated": 37,
+  "rate": 0.1167192429022082,
+  "rate_ci": [
+   0.08352665980818834,
+   0.15727937918625975
+  ],
+  "n_background": 14539,
+  "n_background_replicated": 114,
+  "background_rate": 0.007840979434624114,
+  "matched_expected_rate": 0.019445481723083795,
+  "n_candidates_in_strata": 317,
+  "vs_background_odds_ratio": 16.708223083209315,
+  "vs_background_or_ci": [
+   10.995914680807543,
+   24.92021186526258
+  ],
+  "vs_background_fisher_p": 5.227632210595976e-29
+ },
+ "S1-obs": {
+  "n_candidates": 210,
+  "n_tested": 198,
+  "n_replicated": 33,
+  "rate": 0.16666666666666666,
+  "rate_ci": [
+   0.11758923051276879,
+   0.22602242207379147
+  ],
+  "n_background": 10702,
+  "n_background_replicated": 108,
+  "background_rate": 0.010091571668846944,
+  "matched_expected_rate": 0.023717798027936714,
+  "n_candidates_in_strata": 198,
+  "vs_background_odds_ratio": 19.595672351310075,
+  "vs_background_or_ci": [
+   12.468682512570613,
+   30.179983347464063
+  ],
+  "vs_background_fisher_p": 7.3619139934043525e-28
+ },
+ "MD-global_vs_S1-obs": {
+  "odds_ratio": 1.0196845197051734,
+  "or_ci": [
+   0.5735786787523227,
+   1.8093257288254914
+  ],
+  "fisher_p": 1.0
+ },
+ "MD-strict_vs_S1-obs": {
+  "odds_ratio": 0.6612628858526115,
+  "or_ci": [
+   0.38581085054424463,
+   1.136764119477767
+  ],
+  "fisher_p": 0.11417917134722672
+ },
+ "_n_background_pairs": 15717,
+ "_sources": {
+  "Dede 2020": {
+   "n_pairs_tested": 403,
+   "n_pairs_hit": 39
+  },
+  "Parrish 2021 (Esmaeili Anvar reprocessing)": {
+   "n_pairs_tested": 1030,
+   "n_pairs_hit": 30
+  },
+  "Thompson 2021": {
+   "n_pairs_tested": 1162,
+   "n_pairs_hit": 120
+  },
+  "CHyMErA (Gonatopoulos-Pournatzis 2020)": {
+   "n_pairs_tested": 688,
+   "n_pairs_hit": 25
+  },
+  "Ito 2021": {
+   "n_pairs_tested": 5063,
+   "n_pairs_hit": 206
+  },
+  "Flister 2024 bioRxiv (analysis only)": {
+   "n_pairs_tested": 35082,
+   "n_pairs_hit": 146
+  }
+ },
+ "_n_cell_lines": 23,
+ "_status": "ok",
+ "_labels_rule": "replicated = hit in >= replicated_min_screens screens or >= replicated_min_lines cell lines",
+ "_licence_note": "Flister 2024 bioRxiv file used for analysis only; no external row or value is written"
+}

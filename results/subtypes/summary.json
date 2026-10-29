@@ -1,0 +1,25 @@
+{
+ "catalogue": "MD-global (A7); MD-strict alongside",
+ "n_pairs": 11662,
+ "n_pairs_with_members": 8299,
+ "by_list": {
+  "MD-global": {
+   "n_pairs": 1380,
+   "n_with_members": 1014,
+   "n_modules": 558,
+   "n_multi_gene_modules": 112
+  },
+  "MD-strict": {
+   "n_pairs": 11662,
+   "n_with_members": 8299,
+   "n_modules": 2221,
+   "n_multi_gene_modules": 694
+  }
+ },
+ "beta_full_zero": 2,
+ "genes": {
+  "n": 2134,
+  "unexplained_lines": 279074,
+  "accurate_unassigned_lines": 109919
+ }
+}
