@@ -1,7 +1,8 @@
 # LESSONS — process rules for running this project
 
-One rule per line, with evidence in brackets. (P1) = inherited from Part 1 (../project/LESSONS.md). Pruned at M2 and at
-M3b (2026-10-29) after fresh-agent "stop doing / worked well" reviews (reviews/lessons_review_m2.md, lessons_review_m3b.md).
+One rule per line, with evidence in brackets. (P1) = inherited from Part 1 (../project/LESSONS.md). Pruned at M2, M3b and
+the final milestone (2026-10-29) after fresh-agent "stop doing / worked well" reviews (reviews/lessons_review_m2.md,
+lessons_review_m3b.md, lessons_review_final.md).
 A rule that is one incident long stays in the review file until it recurs.
 
 1. (P1) Check data access (APIs, bot walls, licences) before planning around a source; give every "if obtainable" input a deadline and a recorded fate. [Part 1: DepMap bot wall; here: RRBS registered by D7 before the first dictionary build]
