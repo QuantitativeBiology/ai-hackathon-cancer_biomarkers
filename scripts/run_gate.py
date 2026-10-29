@@ -42,6 +42,14 @@ def next_attempt() -> int:
     return max(have, default=0) + 1
 
 
+def arms_dataset_sha() -> str:
+    """sha256 over the sorted (name, sha256) of the blocked arms parts (or the legacy single file)."""
+    parts = sorted((P.CACHE / "benchmark" / "arms").glob("part-*.parquet"))
+    if not parts:
+        return sha(P.CACHE / "benchmark" / "arms.parquet")
+    return hashlib.sha256("\n".join(f"{p.name} {sha(p)}" for p in parts).encode()).hexdigest()
+
+
 def run(reason: str | None, toy_test: str | None, check=None) -> dict:
     from biomark import analyses as AN
     EP.require_descends(TAG, check=check)
@@ -63,7 +71,7 @@ def run(reason: str | None, toy_test: str | None, check=None) -> dict:
            "inputs_sha256": {"pc_eligibility.csv": sha(P.RESULTS / "controls" / "pc_eligibility.csv"),
                              "positive_controls.csv": sha(P.CONFIGS / "positive_controls.csv"),
                              "md_strict.csv": sha(P.RESULTS / "md" / "md_strict.csv"),
-                             "arms.parquet": sha(P.CACHE / "benchmark" / "arms.parquet")}}
+                             "arms_dataset": arms_dataset_sha()}}
     f = GATES / f"G_pc_attempt{n}.json"
     if f.exists():
         raise EP.EndpointRefusal(f"{f.name} exists and is never overwritten")
