@@ -1,20 +1,20 @@
 # LESSONS — process rules for running this project
 
-One rule per line, with evidence in brackets. (P1) = inherited from Part 1 (../project/LESSONS.md). Pruned at M2 (2026-10-28)
-after a fresh-agent "stop doing / worked well" review (reviews/lessons_review_m2.md).
+One rule per line, with evidence in brackets. (P1) = inherited from Part 1 (../project/LESSONS.md). Pruned at M2 and at
+M3b (2026-10-29) after fresh-agent "stop doing / worked well" reviews (reviews/lessons_review_m2.md, lessons_review_m3b.md).
+A rule that is one incident long stays in the review file until it recurs.
 
-1. (P1) Check data access (APIs, bot walls, licences) before planning around a source; give every "if obtainable" input a deadline and a recorded fate. [Part 1: DepMap bot wall; here: R2-IM3 data deadline = first dictionary build, RRBS file present without checksum until D7 registered it]
-2. (P1) Lock held-out data before any modelling and commit the lock. [Part 1: split locked day 1; here: replication set R never read, opened once, R2-IM2 `r_requests.csv`]
-3. (P1) A process promise is a check a script enforces, or it is cut. [Part 1; here: every round-response row has a Check column, e.g. `gate.py params`, `budget_check.py`]
-4. (P1) Before freezing a decision rule, dry-run it on non-blinded inputs so every verdict branch is reachable. [Part 1: unreachable "fails"; here: R3-4/R3-5 added reachability tests `test_endpoint_branches.py`, R2-ST7 `test_cross_lineage_labels.py`]
-5. (P1) Set a control's expected bound by simulating it under the null before the run. [Part 1: permutation bands missed; here: R3-6 NC2-NC6 bounds = max over 5 toy replicates]
-6. (P1) Parallel tracks get their own files and ID ranges, and each track gets design changes as a written diff list. [Part 1: registry corruption; here: D4 parallel start needed per-agent "Impl impact" in round2/3 responses]
+1. (P1) Check data access (APIs, bot walls, licences) before planning around a source; give every "if obtainable" input a deadline and a recorded fate. [Part 1: DepMap bot wall; here: RRBS registered by D7 before the first dictionary build]
+2. (P1) Lock held-out data before any modelling and commit the lock. [Part 1: split locked day 1; here: R sealed by the tag guard; no access log exists before freeze-catalogue]
+3. (P1) A process promise is a check a script enforces, and the checker lands in the same commit as the stage it checks. [here: budget_check retrofitted after the engine, 9 non-conforming timing writers, M3b wall time unknown (D13-viii)]
+4. (P1) Before freezing a rule or a bound, run it on toy or non-blinded inputs: every verdict branch reachable, and every control bound set from its null simulation and able to fail. [Part 1: unreachable fails; here: test_endpoint_branches; NC2b = 1.2 and provisional NC3/5/6 (D14, D16)]
+5. No design tag until the real engine has run on the toy and `check_frozen --strict-coverage` is clean; later changes are amendments that list their effect on every frozen bound. [MD-strict frozen as the catalogue, then FDP 0.16–0.26 on ridge toys → A7; six §13.4 files missing at freeze-design (D13-vii)]
+6. (P1) Parallel tracks get their own files and ID ranges, and each track gets design changes as a written diff list. [Part 1: registry corruption; here: D4]
 7. Cap review at the point of diminishing returns (stop when a round yields <= 1 critical item), and take new scope only as a logged amendment with a named re-check of the touched configs. [84/23/6 items, critical 18/6/1; D7 caused R3-1]
 8. Commit only finished work; before a suspend write the resume point and the list of unverified drafts into the tree, then resume stalled agents with SendMessage. [SUSPEND note; all 4 agents resumed with no rework]
-9. Keep the author of a pipeline and its verifier as different agents, recorded by an `Agent:` commit trailer. [toy simulation agent; R2-IM6]
-10. Split curation work over many clinical sources into a curated-mapping step and a mechanical-build step, one narrow query per source, with a handover file for any halted agent. [D5; cgt_handover.md]
+9. Author and verifier are different agents (`Agent:` commit trailer); verifiers of curated truth open the cited records; a brief barring a data scope names the tests that read it. [toy verifier found the double dip; CGT audit AUD-1..18; guard agent read dev effects via test_guard.py]
+10. Test the deployed rule through the real entry point, not a function's defaults. [calibration test called cr2_core without carrier counts and kept measuring the old ν rule]
 11. Have a technical-brief agent map the upstream codebase before design. [M1: part1_brief found exact attribution, cached OOF/test predictions and 5 write hazards into Part 1]
-12. Tell every web-facing agent never to send the user's email or other identifiers to external services. [M1: methods-survey agent passed the email to NCBI once; D5 PubMed check explicitly "no email or identifiers sent"]
-13. Audit curated ground truth with an independent agent before freezing it, opening the cited records. [M3b: the CGT audit found a refuted row citing a wrong-direction record, read-through KMT2A "fusions" and an ER+ cut at 1.84 log2TPM, none caught by the builder's 19 passing tests.]
-14. When a brief bars an agent from a data scope, name the existing tests that read it, so the agent can deselect them. [M4: a guard agent barred from effects ran test_guard.py and read dev effects via the test suite; R stayed sealed by the tag guard]
-15. Test the rule that is deployed, not the one in the function signature. [M4: the calibration test called cr2_core without carrier counts, so after the triggered df fallback it kept measuring the old ν rule]
+12. Pre-commit the action for every control and gate outcome before the first real result, and quote rules only from the current amendments. [M3b review risk; configs/outcome_actions.csv written before any real output was opened]
+
+Standing brief clause for web-facing agents (formerly a rule): never send the user's email or other identifiers to external services. [M1: NCBI incident]

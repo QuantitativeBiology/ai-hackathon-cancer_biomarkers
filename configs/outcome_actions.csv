@@ -1,0 +1,22 @@
+check,outcome,action,report_wording,source
+gate_md_strict,pass (>= 60% overall and >= 50% per family with >= 2 rows),proceed,"gate passed at attempt 1 (x/y)",DESIGN 9.3
+gate_md_strict,fail,"look for bugs only; each fix needs a failing-then-passing toy test, a gate_iterations row and a rerun of all arms; if no bug, proceed","gate failed at attempt 1 (x/y)[; passed at attempt n after Z]; CGT headline restricted to gate-disjoint tests",DESIGN 9.3
+gate_md_global,any,report only (A7: the gate is decided on MD-strict),"MD-global gate recall x/y (information)",A7-i
+nc1_fdr_emp_fixed,"<= 0.10 for S1-obs, EN-obs, MD-global",proceed,"FDR_emp_fixed = v",DESIGN 7.3
+nc1_fdr_emp_fixed,"> 0.10 for S1-obs, EN-obs or MD-global",report as a failed control; no threshold change; the list is labelled 'FDR not controlled'; R replication is the arbiter,"NC1 failed for <list> (v > 0.10)",DESIGN 7.3
+nc1_fdr_emp_fixed,"any value for S1-pred, EN-pred or MD-strict",report with the label 'not calibrated for ridge-type predictors',"not calibrated (A6/A7)",A6-i; A7-i
+nc2a_lowtier_fidelity,> 0.0011,"report a failed control, then check for a bug (toy test needed for any fix)","NC2a failed (v)",bounds_values
+nc2b_lowtier_md_strict,> 1.2,"report a failed control, then check for a bug","NC2b failed (v)",bounds_values
+nc2b_lowtier_md_global,any,report only next to provisional 0.1,"MD-global low-tier hits per gene v (provisional 0.1, information)",D16
+nc3_self_null,> 0.1,report a failed control; the affected genes go to limits as CN/cutting artefact suspects,"NC3 failed (v)",bounds_values
+nc4_fold_artefact,any,"report (positive control already fails on the toy, A7-iii); fold centring stays","fold-offset control: see A7-iii",A7-iii
+nc5_false_sensitivity,> 0.2,report a failed control; CGT direction claims carry the caveat,"NC5 failed (v)",bounds_values
+nc6_lineage_tf_class3,< 0.7,report a failed control; class-3 (lineage) labels are flagged unreliable,"NC6 failed (v)",bounds_values
+calibration,4 conservative cells (DEV-CAL-CONSERVATIVE),report as a power limit for 3-5-carrier binary features,"few-carrier features under-powered",D16
+catalogue_md_global,empty or very small,"proceed; no switch to MD-strict or any other variant; M5/M6 report 'no catalogue pairs'; P1/P2 unaffected","MD-global has n pairs",A7-i
+any_list,NaN or degenerate statistic,report as not estimable; no substitute statistic,"not estimable (reason)",this table
+engine_bug_after_real_results,found,"fix with a failing-then-passing toy test, rerun every affected stage, log in deviations.csv (and gate_iterations.csv if the gate is affected), report both versions","results before/after fix <commit>",DESIGN 9.3; 13.4
+null_B,B_raised infeasible,keep B = 20 (pilot rule),"B = 20",DESIGN 7.1
+replication_P1,any verdict,"report as computed; a single run only, reproduced only with the same commit and config; no rerun on another variant","per primary_endpoints verdict",DESIGN 6; primary_endpoints
+replication_P2,any verdict,report as computed (exact McNemar; min_testable 15),"per primary_endpoints verdict",primary_endpoints
+integrity,"R effects read before freeze-catalogue, Part 1 modified, or an input checksum mismatch",stop all runs and tell the user,"(stop)",PROMPT; DESIGN 1.3

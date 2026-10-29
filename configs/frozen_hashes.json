@@ -76,5 +76,9 @@
    "source": "provisional (R2 degeneracy; DEV-TOY-NC6-04aa982)"
   },
   "engine_commit": "04aa982"
+ },
+ "actions": {
+  "configs/outcome_actions.csv": "a2a51153bbf453ba27bdd1e235700c0d310b1d49a7930e0dd5d7b418a2a8825d",
+  "_note": "written before any real-run output was opened (arms run in progress, outputs unread)"
  }
 }
