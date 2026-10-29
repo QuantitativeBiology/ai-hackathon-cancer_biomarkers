@@ -557,7 +557,11 @@ def _real_loaders(data):
     ids = list(data.lines)
 
     def effects_of(gs):
-        return guard.load_effects(ids, scope="dev", genes=list(gs))
+        # genes never screened (absent from the effect matrix, e.g. amplicon neighbours) come back as NaN columns
+        gs = [str(g) for g in gs]
+        have = [g for g in gs if g in guard.effect_columns()]
+        E = guard.load_effects(ids, scope="dev", genes=have) if have else pd.DataFrame(index=ids)
+        return E.reindex(columns=gs)
 
     def expression_of(gs):
         return P1.raw_matrix("expression", columns=list(gs), ids=ids, strict=False).reindex(index=ids, columns=list(gs))

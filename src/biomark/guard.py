@@ -211,6 +211,18 @@ def screened_ids() -> pd.Index:
     return pd.Index(pd.read_parquet(CRISPR_PARQUET, columns=[]).index.astype(str), name="ModelID")
 
 
+_EFFECT_COLUMNS: frozenset | None = None
+
+
+def effect_columns() -> frozenset:
+    """Gene columns of the CRISPR matrix, read from the parquet schema only (no values)."""
+    global _EFFECT_COLUMNS
+    if _EFFECT_COLUMNS is None:
+        import pyarrow.parquet as pq
+        _EFFECT_COLUMNS = frozenset(str(c) for c in pq.read_schema(CRISPR_PARQUET).names)
+    return _EFFECT_COLUMNS
+
+
 def p1_test_metrics(relpath: str = "", purpose: str | None = None):
     """Read a file (or list a directory) under ``P1/results/test/`` - refused unless the replication
     conditions hold (tag, PART2_UNBLIND=1, clean tree, purpose). Granted reads are logged.
