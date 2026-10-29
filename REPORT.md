@@ -1,6 +1,6 @@
 # Predictor-derived dependency subtypes and their molecular biomarkers (DRAFT)
 
-**Status: draft.** Written on 2026-10-29. All D-only analyses are complete; the replication in R is pending. A red-team review's corrections are applied.
+**Status: final.** Written on 2026-10-29. The single replication in R (255 lines, one logged read, after tag `freeze-catalogue`) is done. A red-team review's corrections are applied. The budget was extended by the user (DEV-BUDGET-OVERRUN).
 
 This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality predictor on DepMap 26Q3 (`../project`, read-only).
 
@@ -20,7 +20,9 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
 
 3. **Benchmark against single-feature tests (Q2).**
    - Selected pairs: S1-obs 3,142; EN-obs 738; EN-pred 50,728; S1-pred 276,557 (`results/benchmark/summary.json`).
-   - Whether the predictor adds replicated candidates beyond observed data, and whether the elastic net adds beyond S1: P1 contrasts {{P1_EN-pred_minus_EN-obs}} and {{P1_EN-obs_minus_S1-obs}}, at k_G = {{P1_k_G}}.
+   - **P1, the primary endpoint, answers no on both questions** (`results/replication/p1_summary.json`, k_G = 100).
+   - Does the predictor add value? EN-pred − EN-obs = −0.07 (bootstrap 95% CI −0.12 to 0.02): no detectable difference.
+   - Does the multivariate model add value? EN-obs − S1-obs = −0.10 (−0.17 to −0.05): the univariate test replicates better.
 
 4. **Combinatorial screens.**
    - 31 of 183 tested MD-global paralog candidates replicate: 16.9% (CI 11.8–23.2%), against an expected 2.5% for paralog pairs matched on sequence identity and family size, about 6.8× (`results/combinatorial/validation.json`). The unmatched background rate is 1.0% (OR 19.6).
@@ -42,13 +44,16 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
    - Of the 1,380 MD-global pairs, 430 are cross-lineage, 22 lineage-restricted, 894 lineage-unresolvable and 34 undetermined (`results/lineage/summary.json`).
    - 139 of the 430 cross-lineage labels are "single-lineage driven": at most one nominally significant powered lineage shares the pooled sign (A7-iii).
    - The CGT-membership odds ratio is uninformative: 5 cross-lineage vs 0 lineage-restricted CGT pairs; OR infinite (CI 0.045 to infinity), p = 1.0 (`results/limits/limits_summary.json:Q1b`).
-   - Replication odds ratio: {{Q1b_OR_R}}.
+   - R replication, cross-lineage vs lineage-restricted: 387 vs 17 replicated pairs, OR 2.64 (CI 0.72–7.95), Fisher p = 0.072. No detectable difference (`results/limits/limits_summary.json:Q1b`).
 
-8. **Replication in R (P1, 255 lines).** Same-sign replication at one-sided p < 0.05 of each arm's top k_G candidates: {{P1_rates_by_arm}}. By access stratum: {{P1_by_access}}. XLIB: {{XLIB_rates}}.
+8. **Replication in R (P1, 255 lines).** Same-sign replication at one-sided p < 0.05 of each arm's top 100 genomic candidates (`results/replication/p1_summary.json`):
+   - S1-obs 0.99, S1-pred 0.93, EN-obs 0.89, EN-pred 0.82.
+   - In no access stratum does EN-pred replicate detectably better than EN-obs (`results/replication/p1_by_access.csv`). Direct pairs: 0.59 vs 0.77 (k = 22). Non-direct: 0.88 vs 0.86. Proxy: 0.84 vs 0.79 (k = 94).
+   - XLIB: {{XLIB_rates}}.
 
-9. **Limits (Q5).** Gene and pair failure classes, before R:
-   - genes (3,501): 3b 1,416; 3 884; 9 690; 2 417; 6 73; 1 21;
-   - MD-global pairs: class 9 = 1,128; class 6 = 252 (`results/limits/limits_summary.json`).
+9. **Limits (Q5).** Gene and pair failure classes after R (`results/limits/limits_summary.json`):
+   - genes (3,501): 3b 1,416; 3 884; 9 632; 2 417; 6 60; 5 41; 7 30; 1 21;
+   - MD-global pairs: 9 (valid, replicated) = 1,031; 6 (confounded) = 211; 5 (rare or under-powered) = 90; 7 (powered, not replicated) = 48.
 
    Class codes (DESIGN §12.1–12.2):
    - Gene classes: 1 no between-line contrast; 2 not predictable; 3 accurate only via lineage or library, or unnameable; 3b predictable and nameable but with no MD-strict determinant. Otherwise a gene takes 9 if any of its pairs is class 9, else its furthest pair class.
@@ -63,7 +68,11 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
    - the df fallback leaves few-carrier binary features under-powered (ER11);
    - the own-expression control ESR1 could not be recovered under the list definitions (Section 6.2).
 
-10. **Candidates.** The shortlist (class 9, replicated in R) and three case studies: {{shortlist_top15}}, {{case_studies}}.
+10. **Candidates** (`results/candidates/shortlist.csv`, `cards_summary.json`).
+    - The shortlist holds 735 class-9 MD-global pairs replicated in R.
+    - It is dominated by expression-level determinants: 317 expression-programme and 178 paralog-expression features. Only 15 are hotspot and 37 loss-of-function features.
+    - The top hits are known paralog dependencies: FAM50A–FAM50B, DDX3X–DDX3Y, DNAJC19–DNAJC15, EIF1AX, RPP25L, INTS6, RAB6A, ATP6V0E1 and EFR3A. MDM2 dependency in TP53 wild-type lines also appears.
+    - Several top hits are frequently dependent in the 15 non-cancerous lines: RAB6A 0.73, MDM2 0.67, FAM50A 0.47 (`shortlist.csv:setA_dependent_frac`). That argues against a selective therapeutic window.
 
 ## 2. Question and approach
 
@@ -286,7 +295,7 @@ The run covered 2,193 genes and 26.2 million (g, d) rows, all four arms in 45 mi
 | MD-global | 1,380 |
 | MD-strict | 11,662 |
 
-The prediction arms select far more than the observed arms. With a ridge-type predictor their error rates are not controlled and cannot be read from the null (A6-i), so list size is not a performance claim. Replication of these lists: P1 {{P1}}.
+The prediction arms select far more than the observed arms. With a ridge-type predictor their error rates are not controlled and cannot be read from the null (A6-i), so list size is not a performance claim. Replication of these lists in R: Section 7.7.
 
 ### 6.2 Positive-control gate: failed at attempt 1 and at attempt 2
 
@@ -388,7 +397,7 @@ Labels follow DESIGN §8.3, over 11,757 pairs (`results/lineage/summary.json`):
 - 894 of the 1,380 MD-global pairs (65%, derived) are lineage-unresolvable, because fewer than 2 lineages are powered.
 - Single-lineage-driven cross-lineage labels: 139 (MD-global), 160 (MD-strict), 5 (controls), 1 (S1-obs BH).
 - Q1b, CGT membership, cross-lineage vs lineage-restricted: 5 vs 0 pairs; OR infinite (CI 0.045 to infinity); Fisher p = 1.0. Uninformative (`results/limits/limits_summary.json:Q1b`).
-- R replication odds ratio: {{Q1b_OR_R}}.
+- R replication, cross-lineage vs lineage-restricted: 387 vs 17 replicated; OR 2.64 (0.72–7.95), p = 0.072 (`results/limits/limits_summary.json:Q1b`).
 - Known weakness of the rule: a one-lineage effect can be labelled cross-lineage when the null lineages happen to share its sign (1 of 5 toy seeds, D13-vi).
 
 ### 7.3 Co-location, cutting artefact, culture, hypermutation
@@ -484,23 +493,63 @@ Rates {{XLIB_rates}}; contrast {{XLIB_contrast}}. The discovery_only sensitivity
 
 ### 7.7 P1 and P2 replication in R
 A single run after `freeze-catalogue`.
-- P1 pool size: {{P1_pool}}; k_G: {{P1_k_G}}.
-- Replication by arm: {{P1_rates_by_arm}}.
-- Contrasts with bootstrap 95% CI: {{P1_contrasts}}.
-- By access stratum (`direct`, `non_direct`, `proxy`): {{P1_by_access}}.
-- Verdict branch: {{P1_verdict}}.
-- Set A normal-line dependency flags: {{setA}}.
+The run read R once (`results/replication_access_log.csv`: one replication read of 255 lines and one set-A read of 15 lines, both at commit ae6aa84). The pool was frozen before the tag: 1,020 powered U_G candidates, so k_G = 100 (`results/benchmark/p1_pool.json`). B = 1,000 paired, patient-grouped bootstrap draws.
+
+| Stratum (k) | S1-obs | S1-pred | EN-obs | EN-pred | EN-pred − EN-obs (95% CI) | EN-obs − S1-obs (95% CI) |
+|---|---|---|---|---|---|---|
+| G, headline (100) | 0.99 | 0.93 | 0.89 | 0.82 | −0.07 (−0.12, 0.02): no detectable difference | −0.10 (−0.17, −0.05): univariate better |
+| direct (22) | 0.955 | 0.727 | 0.773 | 0.591 | −0.18 (−0.32, 0.00): no detectable difference | −0.18 (−0.23, 0.09): no detectable difference |
+| non-direct (100) | 0.99 | 0.97 | 0.86 | 0.88 | 0.02 (−0.08, 0.06): no detectable difference | −0.13 (−0.20, −0.07): univariate better |
+| proxy (94) | 0.904 | 0.819 | 0.787 | 0.84 | 0.05 (−0.05, 0.10): no detectable difference | −0.12 (−0.14, 0.00): no detectable difference |
+
+(`results/replication/p1_summary.json`, `p1_by_access.csv`.)
+
+**Verdicts.**
+- "Predictor adds value": not supported in any stratum.
+- "Multivariate adds value": the reverse holds in the headline and non-direct strata, where the univariate test is better.
+- The high absolute rates (0.82–0.99) reflect lists of powered, strong D associations re-tested in lines that share the Chronos processing with D (DESIGN §1.2). They measure generalisation across lines, not across processing.
+
+**Set A** (15 non-cancerous lines; `results/replication/setA_lines.csv`). Across the 2,142 requested genes, the median dependent fraction is 0.20, and 144 genes are dependent in at least half of the set-A lines.
 
 ### 7.8 Limits classes
-Pre-R state (`results/limits/limits_summary.json`). Class-9 pairs are "pending R"; power, the data ceiling and the Tier B attribution are missing.
-- Genes (3,501): 3b 1,416; 3 884; 9 690; 2 417; 6 73; 1 21.
-- MD-global pairs: class 9 = 1,128; class 6 = 252.
-- MD-strict pairs: class 9 = 9,083; class 6 = 2,477; class 4 = 102.
+Final state, after R (`results/limits/limits_summary.json`, R_status available). The data ceiling and the Tier B attribution are missing, so class 8 uses KO class and sign only.
+- Genes (3,501): 3b 1,416; 3 884; 9 632; 2 417; 6 60; 5 41; 7 30; 1 21.
+- MD-global pairs: class 9 = 1,031; class 6 = 211; class 5 = 90; class 7 = 48.
+- MD-strict pairs: class 9 = 8,208; class 6 = 1,971; class 5 = 1,326; class 4 = 102; class 7 = 55.
 - Labels: 231 processing-limited pairs and 1,761 predictor-blind rows.
 - NC6 fails (Section 7.5).
 
 ### 7.9 Candidate cards
-`known_recovery.csv` has 88 rows (Section 7.4); `shortlist.csv` top 15 {{shortlist_top15}}; three case studies {{case_studies}}. The word "novel" is not applied to any gene.
+`known_recovery.csv` has 88 rows (Section 7.4). With R: MD-global recovers 22 and MD-strict 28 (`results/candidates/cards_summary.json`).
+
+`shortlist.csv` (735 rows, top 15 below) holds class-9 MD-global pairs that replicated in R. Its features are PROG 317, EXPPAR 178, COMP 61, SIL-other 39, LOFBI 37, CLIN 23, PSCORE 22, HOT 15 (counted from the file).
+
+| Rank | Dependency | Determinant | Access | Powered lineages | R one-sided p | Combinatorial | Set-A dependent fraction |
+|---|---|---|---|---|---|---|---|
+| 1 | FAM50A | low FAM50B expression (EXPPAR:26240) | direct | 21 | 1.6e-26 | replicated | 0.47 |
+| 2 | DDX3X | low DDX3Y expression (EXPPAR:8653) | direct | 16 | 1.7e-21 | tested, not replicated | 0.07 |
+| 3 | DNAJC19 | low DNAJC15 expression (EXPPAR:29103) | direct | 21 | 1.2e-19 | tested, not replicated | 0.53 |
+| 4 | DDX3X | expression programme NMF49 | expression-derived | 16 | 2.8e-19 | — | 0.07 |
+| 5 | MYBL2 | EXPPAR:4603 | direct | 14 | 1.8e-17 | tested, not replicated | 0.33 |
+| 6 | MDM2 | TP53 mutation composite | proxy | 19 | 2.9e-17 | — | 0.67 |
+| 7 | EIF1AX | EXPPAR:9086 | direct | 17 | 1.3e-16 | tested, not replicated | 0.33 |
+| 8 | TP53 | TP53 mutation composite | proxy | 19 | 4.1e-16 | — | 0.00 |
+| 9 | MDM2 | TP53 loss of function (LOFBI:7157) | potentially-direct | 20 | 3.4e-15 | tested, not replicated | 0.67 |
+| 10 | RPP25L | EXPPAR:54913 | direct | 20 | 7.5e-15 | tested, not replicated | 0.47 |
+| 11 | INTS6 | EXPPAR:203522 | direct | 19 | 9.1e-15 | tested, not replicated | 0.20 |
+| 12 | RAB6A | EXPPAR:51560 | direct | 17 | 6.0e-14 | tested, not replicated | 0.73 |
+| 13 | ATP6V0E1 | EXPPAR:155066 | direct | 13 | 1.0e-13 | tested, not replicated | 0.07 |
+| 14 | DDX3X | Y-chromosome loss (YABS:8653) | expression-derived | 16 | 3.1e-13 | tested, not replicated | 0.07 |
+| 15 | EFR3A | EXPPAR:22979 | direct | 10 | 1.1e-12 | tested, not replicated | 0.47 |
+
+(`results/candidates/shortlist.csv`.)
+
+**Case studies** (chosen by `build_candidate_cards.py`):
+1. **FAM50A, dependent when the paralog FAM50B is low.** Cross-lineage across 21 lineages, replicated in R and in the combinatorial screens. But set-A dependency is 0.47.
+2. **DDX3X, dependent when DDX3Y is low or the Y chromosome is lost.** This is the same biology captured three times: paralog expression, an NMF programme, and Y loss. The determinant largely tracks sex and Y-chromosome status of the line, not a lineage-specific tumour alteration. Set-A dependency is low (0.07).
+3. **DNAJC19, dependent when DNAJC15 is low.** Whether low DNAJC15 reflects promoter silencing was not tested here, because the determinant is the expression feature. It was tested in combinatorial screens but not replicated there, and set-A dependency is 0.53.
+
+None of these is named "novel". All three are paralog-buffering dependencies, the class the predictor's M2 stage encodes directly. The word "novel" is not applied to any gene.
 
 ## 8. Deviations and amendments
 
@@ -550,7 +599,7 @@ Pre-R state (`results/limits/limits_summary.json`). Class-9 pairs are "pending R
 
 ## 10. Reproducibility
 
-- **Tags.** `freeze-design` (4a079e8, DESIGN v3.2), `freeze-cgt` (681bf39), `freeze-bounds` (4235153). `freeze-catalogue`: {{freeze_catalogue_commit}}.
+- **Tags.** `freeze-design` (4a079e8, DESIGN v3.2), `freeze-cgt` (681bf39), `freeze-bounds` (4235153). `freeze-catalogue` (ae6aa84; the R read was logged at this commit).
 - **Key commits.**
   - engine: 04aa982 (toy suite);
   - arms: f673762, with code at 8220ab1 (`results/benchmark/summary.json:commit`);
