@@ -50,7 +50,9 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
    - genes (3,501): 3b 1,416; 3 884; 9 690; 2 417; 6 73; 1 21;
    - MD-global pairs: class 9 = 1,128; class 6 = 252 (`results/limits/limits_summary.json`).
 
-   Class codes (DESIGN §12): 1 no contrast; 2 not predictable; 3 accurate only via lineage or library; 3b accurate but no nameable determinant; 6 confounded; 9 valid candidate. Classes 5, 7 and 8, and the class-9 status, wait for R and the data ceiling.
+   Class codes (DESIGN §12.1–12.2):
+   - Gene classes: 1 no between-line contrast; 2 not predictable; 3 accurate only via lineage or library, or unnameable; 3b predictable and nameable but with no MD-strict determinant. Otherwise a gene takes 9 if any of its pairs is class 9, else its furthest pair class.
+   - Pair classes: 4 expression gating only; 5 too rare or under-powered; 6 confounded; 7 not replicated; 8 KO–drug discordant; 9 valid candidate. Classes 5, 7 and 8, and the class-9 status, wait for R and the data ceiling.
 
    Limits already visible:
    - 109,919 accurate-but-unassigned dependent lines in the MD-strict gene set (`results/subtypes/summary.json`) contradict the brief's premise that every accurate prediction implies a nameable determinant.
