@@ -1,0 +1,5482 @@
+{
+ "commit": "8cffc9157556b6cc65219be78d02a7ebc305893d",
+ "config_sha256": {
+  "design_params.json": "7673ebb72f183c4f4a362ef52cca52f0b34a94028d424e7cc9e7d45bf615c919",
+  "pipeline_params.json": "21e6af199581adfa487e7fd3895134d97d5133324d79fae8309e2b75adbecea6",
+  "seeds.json": "19d1d9b47b965e9a2db943d3a1aa6689925de10ed0202085413e48893f22419e",
+  "primary_endpoints.json": "6125708282190c7b0b3a04f7c89ff5b4ff2a76179c0d11061160508c759c2d69"
+ },
+ "toy_answer_key_sha256": "3b5e376d2dc985f0dc4d30b3371ec22ea38b5d35ff2a6a26582a021e8124e85d",
+ "status": "reported diagnostics, not pass rules",
+ "b_pure_null": {
+  "engine": {
+   "S1-obs": {
+    "p_any_nonneutral_hit": 0.0,
+    "n_toys_with_hit": 0,
+    "mean_nonneutral_hits": 0.0,
+    "mean_raw_hits": 0.95,
+    "per_toy": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "S1-pred": {
+    "p_any_nonneutral_hit": 0.25,
+    "n_toys_with_hit": 5,
+    "mean_nonneutral_hits": 0.3,
+    "mean_raw_hits": 1.25,
+    "per_toy": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     2,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "EN-obs selected": {
+    "p_any_nonneutral_hit": 0.65,
+    "n_toys_with_hit": 13,
+    "mean_nonneutral_hits": 2.35,
+    "mean_raw_hits": 4.25,
+    "per_toy": [
+     7,
+     1,
+     0,
+     7,
+     0,
+     3,
+     0,
+     1,
+     0,
+     0,
+     2,
+     5,
+     1,
+     0,
+     0,
+     5,
+     2,
+     5,
+     1,
+     7
+    ]
+   },
+   "EN-pred selected": {
+    "p_any_nonneutral_hit": 0.55,
+    "n_toys_with_hit": 11,
+    "mean_nonneutral_hits": 1.05,
+    "mean_raw_hits": 3.0,
+    "per_toy": [
+     1,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     1,
+     3,
+     1,
+     2,
+     0,
+     0,
+     1,
+     0,
+     1,
+     6,
+     0,
+     1,
+     2
+    ]
+   },
+   "MD-strict": {
+    "p_any_nonneutral_hit": 0.3,
+    "n_toys_with_hit": 6,
+    "mean_nonneutral_hits": 0.3,
+    "mean_raw_hits": 1.35,
+    "per_toy": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     1,
+     0
+    ]
+   },
+   "MD-global": {
+    "p_any_nonneutral_hit": 0.0,
+    "n_toys_with_hit": 0,
+    "mean_nonneutral_hits": 0.0,
+    "mean_raw_hits": 0.95,
+    "per_toy": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "S1-obs F2": {
+    "p_any_nonneutral_hit": 0.0,
+    "n_toys_with_hit": 0,
+    "mean_nonneutral_hits": 0.0,
+    "mean_raw_hits": 0.0,
+    "per_toy": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "S1-pred F2": {
+    "p_any_nonneutral_hit": 0.0,
+    "n_toys_with_hit": 0,
+    "mean_nonneutral_hits": 0.0,
+    "mean_raw_hits": 0.0,
+    "per_toy": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "oracle": {
+   "S1-obs": {
+    "p_any_nonneutral_hit": 0.05,
+    "per_toy": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   "S1-pred": {
+    "p_any_nonneutral_hit": 0.1,
+    "per_toy": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "MD-strict (oracle analogue)": {
+    "p_any_nonneutral_hit": 0.05,
+    "per_toy": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "n_toys": 20
+ },
+ "e_ridge_md_strict": [
+  {
+   "i": 0,
+   "seed": 20261101,
+   "MD-strict": {
+    "n_hits_nonneutral": 101,
+    "n_false": 23,
+    "fdp_true": 0.22772277227722773,
+    "false_hit_classes": {
+     "base_structure": 13,
+     "noise": 10
+    },
+    "false_in_planted_genes": 6
+   },
+   "S1-obs": {
+    "n_hits_nonneutral": 100,
+    "n_false": 7,
+    "fdp_true": 0.07
+   },
+   "EN-pred selected": {
+    "n_hits_nonneutral": 158,
+    "n_false": 80,
+    "fdp_true": 0.5063291139240507
+   }
+  },
+  {
+   "i": 1,
+   "seed": 20261102,
+   "MD-strict": {
+    "n_hits_nonneutral": 106,
+    "n_false": 27,
+    "fdp_true": 0.25471698113207547,
+    "false_hit_classes": {
+     "noise": 15,
+     "base_structure": 9,
+     "proxy_of_planted": 3
+    },
+    "false_in_planted_genes": 13
+   },
+   "S1-obs": {
+    "n_hits_nonneutral": 101,
+    "n_false": 4,
+    "fdp_true": 0.039603960396039604
+   },
+   "EN-pred selected": {
+    "n_hits_nonneutral": 140,
+    "n_false": 61,
+    "fdp_true": 0.4357142857142857
+   }
+  },
+  {
+   "i": 2,
+   "seed": 20261103,
+   "MD-strict": {
+    "n_hits_nonneutral": 97,
+    "n_false": 23,
+    "fdp_true": 0.23711340206185566,
+    "false_hit_classes": {
+     "noise": 12,
+     "base_structure": 10,
+     "proxy_of_planted": 1
+    },
+    "false_in_planted_genes": 11
+   },
+   "S1-obs": {
+    "n_hits_nonneutral": 101,
+    "n_false": 7,
+    "fdp_true": 0.06930693069306931
+   },
+   "EN-pred selected": {
+    "n_hits_nonneutral": 142,
+    "n_false": 68,
+    "fdp_true": 0.4788732394366197
+   }
+  },
+  {
+   "i": 3,
+   "seed": 20261104,
+   "MD-strict": {
+    "n_hits_nonneutral": 90,
+    "n_false": 18,
+    "fdp_true": 0.2,
+    "false_hit_classes": {
+     "noise": 12,
+     "base_structure": 5,
+     "proxy_of_planted": 1
+    },
+    "false_in_planted_genes": 8
+   },
+   "S1-obs": {
+    "n_hits_nonneutral": 104,
+    "n_false": 5,
+    "fdp_true": 0.04807692307692308
+   },
+   "EN-pred selected": {
+    "n_hits_nonneutral": 126,
+    "n_false": 54,
+    "fdp_true": 0.42857142857142855
+   }
+  },
+  {
+   "i": 4,
+   "seed": 20261105,
+   "MD-strict": {
+    "n_hits_nonneutral": 94,
+    "n_false": 15,
+    "fdp_true": 0.1595744680851064,
+    "false_hit_classes": {
+     "noise": 8,
+     "base_structure": 6,
+     "proxy_of_planted": 1
+    },
+    "false_in_planted_genes": 9
+   },
+   "S1-obs": {
+    "n_hits_nonneutral": 104,
+    "n_false": 8,
+    "fdp_true": 0.07692307692307693
+   },
+   "EN-pred selected": {
+    "n_hits_nonneutral": 126,
+    "n_false": 47,
+    "fdp_true": 0.373015873015873
+   }
+  }
+ ],
+ "c_fold_artefact_without_centring": [
+  {
+   "r": 0,
+   "seed": 20261101,
+   "artefacts": [
+    "9000115|HOT:9000247",
+    "9000297|HOT:9000116",
+    "9000179|HOT:9000288",
+    "9000118|HOT:9000122",
+    "9000172|HOT:9000208"
+   ],
+   "eligible": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "S1-pred BH": {
+    "centred": 0,
+    "without": 5
+   },
+   "EN-pred selected": {
+    "centred": 0,
+    "without": 0
+   },
+   "MD-strict": {
+    "centred": 0,
+    "without": 0
+   },
+   "S1-obs BH (centring irrelevant)": 0,
+   "en_freq_centred": [
+    0.0,
+    0.02,
+    0.0,
+    0.0,
+    0.06
+   ],
+   "en_freq_without": [
+    0.42,
+    0.42,
+    0.44,
+    0.42,
+    0.5
+   ],
+   "en_sign_cons_without": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "s1_pred_p_without": [
+    7.26801821599171e-05,
+    4.743985384018427e-05,
+    2.9690474646942256e-05,
+    2.5662536578497297e-06,
+    1.108827612471837e-06
+   ],
+   "s1_pred_q_without": [
+    0.041208083280712994,
+    0.027495085066796578,
+    0.017466705321809797,
+    0.0016324502841555805,
+    0.0007111311383822454
+   ],
+   "s1_obs_p": [
+    0.4944799098906698,
+    0.8552685335964147,
+    0.2996524893952919,
+    0.9301111885106461,
+    0.10908521176203952
+   ],
+   "md_q_sc_without": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lam_G_without": [
+    0.09073516704418041,
+    0.08249491232412832,
+    0.09831275939941406,
+    0.10373030768500434,
+    0.11791684186017072
+   ],
+   "lam_G_centred": [
+    0.02577251151756004,
+    0.030524882563838254,
+    0.030888377295600043,
+    0.025950922789397063,
+    0.023580975002712674
+   ],
+   "en_freq_without_random_cv_folds": [
+    0.42,
+    0.42,
+    0.44,
+    0.42,
+    0.5
+   ],
+   "en_selected_without_random_cv_folds": 0,
+   "lam_G_without_random_cv_folds": [
+    0.09073516704418041,
+    0.08249491232412832,
+    0.09831275939941406,
+    0.10373030768500434,
+    0.11791684186017072
+   ],
+   "en_freq_without_centred_lambda": [
+    0.96,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "en_selected_without_centred_lambda": 5
+  },
+  {
+   "r": 1,
+   "seed": 20261102,
+   "artefacts": [
+    "9000193|HOT:9000051",
+    "9000294|HOT:9000293",
+    "9000147|HOT:9000068",
+    "9000154|HOT:9000259",
+    "9000067|HOT:9000048"
+   ],
+   "eligible": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "S1-pred BH": {
+    "centred": 0,
+    "without": 4
+   },
+   "EN-pred selected": {
+    "centred": 0,
+    "without": 0
+   },
+   "MD-strict": {
+    "centred": 0,
+    "without": 0
+   },
+   "S1-obs BH (centring irrelevant)": 0,
+   "en_freq_centred": [
+    0.0,
+    0.06,
+    0.02,
+    0.0,
+    0.0
+   ],
+   "en_freq_without": [
+    0.42,
+    0.36,
+    0.48,
+    0.4,
+    0.42
+   ],
+   "en_sign_cons_without": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "s1_pred_p_without": [
+    2.1095976677915287e-07,
+    5.015302182652623e-06,
+    0.00011779718879238615,
+    7.028338476148333e-06,
+    5.440805759393947e-06
+   ],
+   "s1_pred_q_without": [
+    0.0001404176572020432,
+    0.003256164387570074,
+    0.0671257534522829,
+    0.0044895212420867515,
+    0.003503701972277039
+   ],
+   "s1_obs_p": [
+    0.47666220846598173,
+    0.08216050593809539,
+    0.7474308889734471,
+    0.5727318447499371,
+    0.7146822084263565
+   ],
+   "md_q_sc_without": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lam_G_without": [
+    0.1166662922611943,
+    0.1031278822157118,
+    0.09099352094862197,
+    0.0949563980102539,
+    0.1024153815375434
+   ],
+   "lam_G_centred": [
+    0.026369859554149486,
+    0.034222786514847364,
+    0.032192855411105684,
+    0.027711751725938587,
+    0.030535786240189162
+   ],
+   "en_freq_without_random_cv_folds": [
+    0.42,
+    0.36,
+    0.48,
+    0.4,
+    0.42
+   ],
+   "en_selected_without_random_cv_folds": 0,
+   "lam_G_without_random_cv_folds": [
+    0.1166662922611943,
+    0.1031278822157118,
+    0.09099352094862197,
+    0.0949563980102539,
+    0.1024153815375434
+   ],
+   "en_freq_without_centred_lambda": [
+    1.0,
+    0.98,
+    0.98,
+    1.0,
+    1.0
+   ],
+   "en_selected_without_centred_lambda": 5
+  },
+  {
+   "r": 2,
+   "seed": 20261103,
+   "artefacts": [
+    "9000254|HOT:9000099",
+    "9000237|HOT:9000165",
+    "9000261|HOT:9000101",
+    "9000079|HOT:9000019",
+    "9000145|HOT:9000067"
+   ],
+   "eligible": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "S1-pred BH": {
+    "centred": 0,
+    "without": 3
+   },
+   "EN-pred selected": {
+    "centred": 0,
+    "without": 0
+   },
+   "MD-strict": {
+    "centred": 0,
+    "without": 0
+   },
+   "S1-obs BH (centring irrelevant)": 0,
+   "en_freq_centred": [
+    0.0,
+    0.18,
+    0.04,
+    0.0,
+    0.0
+   ],
+   "en_freq_without": [
+    0.46,
+    0.4,
+    0.46,
+    0.46,
+    0.42
+   ],
+   "en_sign_cons_without": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "s1_pred_p_without": [
+    8.036003390860955e-06,
+    6.631549548178947e-06,
+    0.00043064680923418885,
+    0.00021225055717309524,
+    2.1732220056950602e-05
+   ],
+   "s1_pred_q_without": [
+    0.004970577174300996,
+    0.0041336658850315445,
+    0.1990132754627651,
+    0.10854817940755392,
+    0.013238544051359075
+   ],
+   "s1_obs_p": [
+    0.860355065773738,
+    0.05809974807117144,
+    0.8052818273003085,
+    0.40200876029386146,
+    0.5507863636885038
+   ],
+   "md_q_sc_without": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lam_G_without": [
+    0.089264565927011,
+    0.11533650998716001,
+    0.08859871758355034,
+    0.09079775633635344,
+    0.09324547802960431
+   ],
+   "lam_G_centred": [
+    0.026364501317342123,
+    0.028759440669307003,
+    0.03421128944114402,
+    0.025775563275372542,
+    0.03342408074273003
+   ],
+   "en_freq_without_random_cv_folds": [
+    0.46,
+    0.4,
+    0.46,
+    0.46,
+    0.88
+   ],
+   "en_selected_without_random_cv_folds": 1,
+   "lam_G_without_random_cv_folds": [
+    0.089264565927011,
+    0.11533650998716001,
+    0.08859871758355034,
+    0.09079775633635344,
+    0.05243578568317528
+   ],
+   "en_freq_without_centred_lambda": [
+    1.0,
+    1.0,
+    0.96,
+    1.0,
+    0.96
+   ],
+   "en_selected_without_centred_lambda": 5
+  },
+  {
+   "r": 3,
+   "seed": 20261104,
+   "artefacts": [
+    "9000241|HOT:9000130",
+    "9000041|HOT:9000244",
+    "9000204|HOT:9000110",
+    "9000032|HOT:9000143",
+    "9000194|HOT:9000108"
+   ],
+   "eligible": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "S1-pred BH": {
+    "centred": 0,
+    "without": 4
+   },
+   "EN-pred selected": {
+    "centred": 0,
+    "without": 0
+   },
+   "MD-strict": {
+    "centred": 0,
+    "without": 0
+   },
+   "S1-obs BH (centring irrelevant)": 0,
+   "en_freq_centred": [
+    0.04,
+    0.02,
+    0.02,
+    0.0,
+    0.0
+   ],
+   "en_freq_without": [
+    0.4,
+    0.42,
+    0.4,
+    0.4,
+    0.4
+   ],
+   "en_sign_cons_without": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "s1_pred_p_without": [
+    0.000773888799616615,
+    1.3276469295783188e-06,
+    7.282350946763934e-06,
+    1.2119867020297156e-05,
+    6.372770821036673e-07
+   ],
+   "s1_pred_q_without": [
+    0.30021293052957093,
+    0.0008226271684948499,
+    0.004405650298754067,
+    0.007218555216305977,
+    0.000401338301411385
+   ],
+   "s1_obs_p": [
+    0.2831230299492614,
+    0.4425898429783224,
+    0.6521946120526975,
+    0.6023352781962545,
+    0.46866470237090485
+   ],
+   "md_q_sc_without": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lam_G_without": [
+    0.07693972410979094,
+    0.10810779995388455,
+    0.10044285809552228,
+    0.09544333705195675,
+    0.09708059805410879
+   ],
+   "lam_G_centred": [
+    0.03428837458292643,
+    0.026465011526037144,
+    0.02436427187036585,
+    0.026239511701795788,
+    0.027214767314769604
+   ],
+   "en_freq_without_random_cv_folds": [
+    0.4,
+    0.42,
+    0.4,
+    0.4,
+    0.4
+   ],
+   "en_selected_without_random_cv_folds": 0,
+   "lam_G_without_random_cv_folds": [
+    0.07693972410979094,
+    0.10810779995388455,
+    0.10044285809552228,
+    0.09544333705195675,
+    0.09708059805410879
+   ],
+   "en_freq_without_centred_lambda": [
+    0.88,
+    1.0,
+    1.0,
+    0.98,
+    1.0
+   ],
+   "en_selected_without_centred_lambda": 5
+  },
+  {
+   "r": 4,
+   "seed": 20261105,
+   "artefacts": [
+    "9000165|HOT:9000082",
+    "9000253|HOT:9000032",
+    "9000246|HOT:9000172",
+    "9000231|HOT:9000024",
+    "9000157|HOT:9000257"
+   ],
+   "eligible": [
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "S1-pred BH": {
+    "centred": 0,
+    "without": 4
+   },
+   "EN-pred selected": {
+    "centred": 0,
+    "without": 0
+   },
+   "MD-strict": {
+    "centred": 0,
+    "without": 0
+   },
+   "S1-obs BH (centring irrelevant)": 0,
+   "en_freq_centred": [
+    0.0,
+    0.38,
+    0.0,
+    0.02,
+    0.02
+   ],
+   "en_freq_without": [
+    0.44,
+    0.5,
+    0.46,
+    0.46,
+    0.36
+   ],
+   "en_sign_cons_without": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "s1_pred_p_without": [
+    6.94699791122542e-06,
+    0.0030756334484639465,
+    6.37392380076857e-05,
+    2.0700184957363506e-07,
+    7.129974485685213e-07
+   ],
+   "s1_pred_q_without": [
+    0.00433373268133867,
+    0.5725893429268878,
+    0.03609629897101917,
+    0.00013548440728241605,
+    0.00045913585700158407
+   ],
+   "s1_obs_p": [
+    0.22127421125736077,
+    0.03856714244544242,
+    0.036622444169099364,
+    0.23310105278825616,
+    0.17530920093988797
+   ],
+   "md_q_sc_without": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "lam_G_without": [
+    0.09797295464409722,
+    0.06630969577365452,
+    0.08936146630181206,
+    0.101021201522262,
+    0.11811592667191118
+   ],
+   "lam_G_centred": [
+    0.0273455125314218,
+    0.03271635550039786,
+    0.02829942879853425,
+    0.018064924522682473,
+    0.035519999044912834
+   ],
+   "en_freq_without_random_cv_folds": [
+    0.44,
+    0.5,
+    0.46,
+    0.84,
+    0.36
+   ],
+   "en_selected_without_random_cv_folds": 1,
+   "lam_G_without_random_cv_folds": [
+    0.09797295464409722,
+    0.06630969577365452,
+    0.08936146630181206,
+    0.06882494340382316,
+    0.11811592667191118
+   ],
+   "en_freq_without_centred_lambda": [
+    0.98,
+    0.88,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "en_selected_without_centred_lambda": 5
+  }
+ ],
+ "a_s1_obs_null_calibration": [
+  {
+   "r": 0,
+   "seed": 20261101,
+   "S1-obs": {
+    "n_hits_nonneutral": 111,
+    "n_false": 10,
+    "fdp_true": 0.09009009009009009,
+    "n_hits_raw": 133,
+    "null_B": 100,
+    "null_mean_hits": 5.53,
+    "null_sd_hits": 2.397199544586486,
+    "fdr_emp_fixed": 0.041578947368421056,
+    "hits_obs_null_subset": 133,
+    "p_null_ge_realised_false": 0.07,
+    "null_draw_wall_s": 12.271132706999998,
+    "gap_fdr_minus_fdp": -0.04851114272166903,
+    "false_hit_classes": {
+     "noise": 8,
+     "base_structure": 2
+    }
+   },
+   "S1-pred": {
+    "n_hits_nonneutral": 107,
+    "n_false": 8,
+    "fdp_true": 0.07476635514018691,
+    "n_hits_raw": 129,
+    "null_B": 100,
+    "null_mean_hits": 5.29,
+    "null_sd_hits": 2.239656358922191,
+    "fdr_emp_fixed": 0.0410077519379845,
+    "hits_obs_null_subset": 129,
+    "p_null_ge_realised_false": 0.15,
+    "null_draw_wall_s": 12.271132706999998,
+    "gap_fdr_minus_fdp": -0.03375860320220241
+   },
+   "oracle_S1-obs": {
+    "n_hits_nonneutral": 105,
+    "n_false": 4,
+    "fdp_true": 0.0380952380952381,
+    "p_cut": 3.722674685816636e-05,
+    "false_hit_classes": {
+     "base_structure": 2,
+     "noise": 2
+    },
+    "false_overlap_with_engine": 4,
+    "null_B": 20,
+    "null_mean_hits": 2.8,
+    "fdr_emp_fixed": 0.02204724409448819,
+    "hits_obs_raw": 127
+   }
+  },
+  {
+   "r": 1,
+   "seed": 20261102,
+   "S1-obs": {
+    "n_hits_nonneutral": 106,
+    "n_false": 4,
+    "fdp_true": 0.03773584905660377,
+    "n_hits_raw": 126,
+    "null_B": 100,
+    "null_mean_hits": 5.63,
+    "null_sd_hits": 2.290317784840251,
+    "fdr_emp_fixed": 0.044682539682539685,
+    "hits_obs_null_subset": 126,
+    "p_null_ge_realised_false": 0.84,
+    "null_draw_wall_s": 8.059529774999973,
+    "gap_fdr_minus_fdp": 0.006946690625935913,
+    "false_hit_classes": {
+     "noise": 2,
+     "base_structure": 1,
+     "proxy_of_planted": 1
+    }
+   },
+   "S1-pred": {
+    "n_hits_nonneutral": 104,
+    "n_false": 5,
+    "fdp_true": 0.04807692307692308,
+    "n_hits_raw": 125,
+    "null_B": 100,
+    "null_mean_hits": 6.81,
+    "null_sd_hits": 2.665511113266928,
+    "fdr_emp_fixed": 0.054479999999999994,
+    "hits_obs_null_subset": 125,
+    "p_null_ge_realised_false": 0.79,
+    "null_draw_wall_s": 8.059529774999973,
+    "gap_fdr_minus_fdp": 0.006403076923076914
+   },
+   "oracle_S1-obs": {
+    "n_hits_nonneutral": 115,
+    "n_false": 13,
+    "fdp_true": 0.11304347826086956,
+    "p_cut": 8.806819680683753e-05,
+    "false_hit_classes": {
+     "noise": 9,
+     "proxy_of_planted": 2,
+     "base_structure": 2
+    },
+    "false_overlap_with_engine": 2,
+    "null_B": 20,
+    "null_mean_hits": 5.95,
+    "fdr_emp_fixed": 0.043750000000000004,
+    "hits_obs_raw": 136
+   }
+  },
+  {
+   "r": 2,
+   "seed": 20261103,
+   "S1-obs": {
+    "n_hits_nonneutral": 110,
+    "n_false": 8,
+    "fdp_true": 0.07272727272727272,
+    "n_hits_raw": 133,
+    "null_B": 100,
+    "null_mean_hits": 5.88,
+    "null_sd_hits": 2.8115203119747267,
+    "fdr_emp_fixed": 0.04421052631578947,
+    "hits_obs_null_subset": 133,
+    "p_null_ge_realised_false": 0.23,
+    "null_draw_wall_s": 9.04801254500002,
+    "gap_fdr_minus_fdp": -0.028516746411483253,
+    "false_hit_classes": {
+     "noise": 6,
+     "proxy_of_planted": 2
+    }
+   },
+   "S1-pred": {
+    "n_hits_nonneutral": 109,
+    "n_false": 10,
+    "fdp_true": 0.09174311926605505,
+    "n_hits_raw": 132,
+    "null_B": 100,
+    "null_mean_hits": 8.09,
+    "null_sd_hits": 3.4963039647807252,
+    "fdr_emp_fixed": 0.06128787878787879,
+    "hits_obs_null_subset": 132,
+    "p_null_ge_realised_false": 0.26,
+    "null_draw_wall_s": 9.04801254500002,
+    "gap_fdr_minus_fdp": -0.030455240478176264
+   },
+   "oracle_S1-obs": {
+    "n_hits_nonneutral": 111,
+    "n_false": 9,
+    "fdp_true": 0.08108108108108109,
+    "p_cut": 7.61709229836103e-05,
+    "false_hit_classes": {
+     "noise": 5,
+     "proxy_of_planted": 3,
+     "base_structure": 1
+    },
+    "false_overlap_with_engine": 4,
+    "null_B": 20,
+    "null_mean_hits": 7.35,
+    "fdr_emp_fixed": 0.054850746268656714,
+    "hits_obs_raw": 134
+   }
+  },
+  {
+   "r": 3,
+   "seed": 20261104,
+   "S1-obs": {
+    "n_hits_nonneutral": 106,
+    "n_false": 3,
+    "fdp_true": 0.02830188679245283,
+    "n_hits_raw": 127,
+    "null_B": 100,
+    "null_mean_hits": 5.69,
+    "null_sd_hits": 2.580795429805518,
+    "fdr_emp_fixed": 0.04480314960629921,
+    "hits_obs_null_subset": 127,
+    "p_null_ge_realised_false": 0.89,
+    "null_draw_wall_s": 7.159574947000001,
+    "gap_fdr_minus_fdp": 0.016501262813846382,
+    "false_hit_classes": {
+     "noise": 3
+    }
+   },
+   "S1-pred": {
+    "n_hits_nonneutral": 109,
+    "n_false": 9,
+    "fdp_true": 0.08256880733944955,
+    "n_hits_raw": 131,
+    "null_B": 100,
+    "null_mean_hits": 7.34,
+    "null_sd_hits": 3.1308823424753993,
+    "fdr_emp_fixed": 0.05603053435114504,
+    "hits_obs_null_subset": 131,
+    "p_null_ge_realised_false": 0.36,
+    "null_draw_wall_s": 7.159574947000001,
+    "gap_fdr_minus_fdp": -0.02653827298830451
+   },
+   "oracle_S1-obs": {
+    "n_hits_nonneutral": 108,
+    "n_false": 5,
+    "fdp_true": 0.046296296296296294,
+    "p_cut": 6.854479979887108e-05,
+    "false_hit_classes": {
+     "noise": 5
+    },
+    "false_overlap_with_engine": 2,
+    "null_B": 20,
+    "null_mean_hits": 5.85,
+    "fdr_emp_fixed": 0.04534883720930232,
+    "hits_obs_raw": 129
+   }
+  },
+  {
+   "r": 4,
+   "seed": 20261105,
+   "S1-obs": {
+    "n_hits_nonneutral": 111,
+    "n_false": 9,
+    "fdp_true": 0.08108108108108109,
+    "n_hits_raw": 131,
+    "null_B": 100,
+    "null_mean_hits": 6.45,
+    "null_sd_hits": 2.8333333333333335,
+    "fdr_emp_fixed": 0.04923664122137405,
+    "hits_obs_null_subset": 131,
+    "p_null_ge_realised_false": 0.26,
+    "null_draw_wall_s": 5.9606032210000555,
+    "gap_fdr_minus_fdp": -0.03184443985970704,
+    "false_hit_classes": {
+     "noise": 6,
+     "base_structure": 2,
+     "proxy_of_planted": 1
+    }
+   },
+   "S1-pred": {
+    "n_hits_nonneutral": 112,
+    "n_false": 14,
+    "fdp_true": 0.125,
+    "n_hits_raw": 132,
+    "null_B": 100,
+    "null_mean_hits": 8.16,
+    "null_sd_hits": 3.174137916844747,
+    "fdr_emp_fixed": 0.06181818181818182,
+    "hits_obs_null_subset": 132,
+    "p_null_ge_realised_false": 0.06,
+    "null_draw_wall_s": 5.9606032210000555,
+    "gap_fdr_minus_fdp": -0.06318181818181817
+   },
+   "oracle_S1-obs": {
+    "n_hits_nonneutral": 109,
+    "n_false": 7,
+    "fdp_true": 0.06422018348623854,
+    "p_cut": 6.82057401553078e-05,
+    "false_hit_classes": {
+     "noise": 5,
+     "proxy_of_planted": 1,
+     "base_structure": 1
+    },
+    "false_overlap_with_engine": 4,
+    "null_B": 20,
+    "null_mean_hits": 5.25,
+    "fdr_emp_fixed": 0.040697674418604654,
+    "hits_obs_raw": 129
+   }
+  }
+ ],
+ "engine_commit": "8cffc9157556b6cc65219be78d02a7ebc305893d",
+ "engine_note": "All runs used engine files byte-identical to 8cffc91: smooth replicates, pure nulls and ridge 0-2 ran in the main tree before the first post-8cffc91 engine edit (22:40:11Z); the HEAD changes up to then were a comment in stats.py. Ridge 3-4, the r3-r4 S1 nulls and all analyses ran in a git worktree pinned at 8cffc91.",
+ "a_suite_reproduction": {
+  "r0_null_draws_0_19_mean": 4.85,
+  "r0_fdr_emp_fixed_B20": 0.036466165413533834,
+  "r0_null_draws_0_99_mean": 5.53,
+  "r0_fdr_emp_fixed_B100": 0.041578947368421056
+ },
+ "notes": {
+  "a": "Failure 3 = variability, not an engine bug. Realised false S1-obs hits 10/4/8/3/9 vs null mean 5.5-6.5 per draw (P(null >= realised) 0.07/0.84/0.23/0.89/0.26; totals 34 vs 29.2). The suite's 0.036 is reproduced exactly by draws 0-19 (mean 4.85/133); B=100 gives 0.042. The test also compares FDR_emp_fixed with |hits_obs| including neutral pairs (~20 per toy) against FDP_true over non-neutral hits; on the same denominator, FDR_emp is 0.050-0.058. False hits: 25/34 noise-driven, 5 lineage/latent structure, 4 proxies of planted determinants (e.g. LOSS arm mates not labelled proxy_ok). Observed and null use the same code path (strata, NA permutation, CR2 df, F1/F2). The oracle shows the same spread (FDP 0.038-0.113).",
+  "b": "Failure 5: S1-pred 6 hits in 5/20 toys. The oracle gives 3 hits in 2/20, with only 2 pairs shared. For 4/6 engine hits (binary, 23-80 carriers, nu 31-109) the oracle p is 10-100x larger: per-test CR2 t dispersion relative to OLS (1st-99th percentile of |t_engine/t_oracle| 0.24-4.2). Four of the toys have a single rejection at the BH cutoff; the DESIGN 5.3 carrier-df fallback raises their p 1.5-4.5x. Consistent with the far-tail CR2+nu anticonservatism that triggered the fallback; re-check post-fix. P(any non-neutral hit): S1-obs 0.00, S1-pred 0.25, MD-strict 0.30, MD-global 0.00, EN-pred 0.55, EN-obs 0.65, F2 lists 0.00. Some EN hits are an answer-key gap: in null toy 0, LOSS locus-group mates of the self-null gene's neutral LOSS_g.",
+  "c": "Failure 1 = design property. Without centring, S1-pred BH has 5/4/3/4/4 artefacts (0 centred), EN-pred 0/5 (freq 0.36-0.50), MD-strict 0 either way. With the centred run's lambda held fixed, EN-pred selects 5/5 in every replicate, so the cause is the 1-SE lambda, which is ~3.5x larger on the uncentred target (0.07-0.12 vs 0.02-0.035). CV over random folds instead of cv_fold gives the same lambda (<= 1/5 selected), so the author's 'CV over cv_fold' mechanism is not confirmed. The likelier cause is unexplained fold-offset variance inflating the CV-MSE and its SE. The NC4/fold bound is checked on EN-pred, but its oracle derivation used raw S1-pred BH (live 4.95/5): a list mismatch.",
+  "d": "MD-global = EN-pred selected \u2229 S1-obs F1 BH, same sign. Smooth r0-4: FDP 0 (5/5), recall 0.867-0.883 (= MD-strict). Ridge r0-4: FDP 0/0/0.013/0/0.025 vs MD-strict 0.228/0.255/0.237/0.200/0.160, identical recall 0.865/0.926/0.849/0.815/0.828. Pure null P(any) 0.00. EN-obs selected on ridge: 0/0.136/0.035/0.017/0.162.",
+  "e": "Failure 4 = design property (double dip), confirmed: ridge r0 MD-strict FDP 0.228 (23/101). Of 106 false hits over 5 ridge toys, 6 are proxies of planted determinants, 43 are in-sample lineage/latent structure and 57 are D-noise associations. |t| is 1.9-3.9 (p_sc 0.001-0.03); they pass the within-selection BH and fail full-family BH."
+ },
+ "d_md_global": {
+  "definition": "EN-pred selected \u2229 S1-obs F1 BH hits, same sign (MD-global_ignoring_sign alongside)",
+  "smooth": [
+   {
+    "r": 0,
+    "seed": 20261101,
+    "MD-global": {
+     "n_hits_nonneutral": 60,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "MD-global_ignoring_sign": {
+     "n_hits_nonneutral": 60,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-obs": {
+     "n_hits_nonneutral": 111,
+     "n_false": 10,
+     "fdp_true": 0.09009009009009009,
+     "recall_all_plants": 0.9333333333333333,
+     "recall_eligible_plants": 0.9333333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       3,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-pred": {
+     "n_hits_nonneutral": 107,
+     "n_false": 8,
+     "fdp_true": 0.07476635514018691,
+     "recall_all_plants": 0.9,
+     "recall_eligible_plants": 0.9,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       2,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-obs selected": {
+     "n_hits_nonneutral": 60,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.9333333333333333,
+     "recall_eligible_plants": 0.9333333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       3,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-pred selected": {
+     "n_hits_nonneutral": 61,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.8833333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "MD-strict": {
+     "n_hits_nonneutral": 61,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.8833333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    }
+   },
+   {
+    "r": 1,
+    "seed": 20261102,
+    "MD-global": {
+     "n_hits_nonneutral": 57,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.8833333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "MD-global_ignoring_sign": {
+     "n_hits_nonneutral": 57,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.8833333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-obs": {
+     "n_hits_nonneutral": 106,
+     "n_false": 4,
+     "fdp_true": 0.03773584905660377,
+     "recall_all_plants": 0.9666666666666667,
+     "recall_eligible_plants": 0.9666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       3,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       3,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-pred": {
+     "n_hits_nonneutral": 104,
+     "n_false": 5,
+     "fdp_true": 0.04807692307692308,
+     "recall_all_plants": 0.9166666666666666,
+     "recall_eligible_plants": 0.9166666666666666,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       3,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-obs selected": {
+     "n_hits_nonneutral": 70,
+     "n_false": 9,
+     "fdp_true": 0.12857142857142856,
+     "recall_all_plants": 0.9333333333333333,
+     "recall_eligible_plants": 0.9333333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       3,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-pred selected": {
+     "n_hits_nonneutral": 58,
+     "n_false": 1,
+     "fdp_true": 0.017241379310344827,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.8833333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "MD-strict": {
+     "n_hits_nonneutral": 57,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.8833333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    }
+   },
+   {
+    "r": 2,
+    "seed": 20261103,
+    "MD-global": {
+     "n_hits_nonneutral": 59,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       2,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "MD-global_ignoring_sign": {
+     "n_hits_nonneutral": 59,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       2,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-obs": {
+     "n_hits_nonneutral": 110,
+     "n_false": 8,
+     "fdp_true": 0.07272727272727272,
+     "recall_all_plants": 0.95,
+     "recall_eligible_plants": 0.95,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       2,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       3,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-pred": {
+     "n_hits_nonneutral": 109,
+     "n_false": 10,
+     "fdp_true": 0.09174311926605505,
+     "recall_all_plants": 0.9,
+     "recall_eligible_plants": 0.9,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       2,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-obs selected": {
+     "n_hits_nonneutral": 62,
+     "n_false": 3,
+     "fdp_true": 0.04838709677419355,
+     "recall_all_plants": 0.9,
+     "recall_eligible_plants": 0.9,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       2,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       3,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-pred selected": {
+     "n_hits_nonneutral": 61,
+     "n_false": 2,
+     "fdp_true": 0.03278688524590164,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       2,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "MD-strict": {
+     "n_hits_nonneutral": 59,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       2,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    }
+   },
+   {
+    "r": 3,
+    "seed": 20261104,
+    "MD-global": {
+     "n_hits_nonneutral": 59,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "MD-global_ignoring_sign": {
+     "n_hits_nonneutral": 59,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-obs": {
+     "n_hits_nonneutral": 106,
+     "n_false": 3,
+     "fdp_true": 0.02830188679245283,
+     "recall_all_plants": 0.9333333333333333,
+     "recall_eligible_plants": 0.9333333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       3,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-pred": {
+     "n_hits_nonneutral": 109,
+     "n_false": 9,
+     "fdp_true": 0.08256880733944955,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.8833333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-obs selected": {
+     "n_hits_nonneutral": 64,
+     "n_false": 1,
+     "fdp_true": 0.015625,
+     "recall_all_plants": 0.9333333333333333,
+     "recall_eligible_plants": 0.9333333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       3,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-pred selected": {
+     "n_hits_nonneutral": 60,
+     "n_false": 1,
+     "fdp_true": 0.016666666666666666,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "MD-strict": {
+     "n_hits_nonneutral": 59,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    }
+   },
+   {
+    "r": 4,
+    "seed": 20261105,
+    "MD-global": {
+     "n_hits_nonneutral": 62,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "MD-global_ignoring_sign": {
+     "n_hits_nonneutral": 62,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-obs": {
+     "n_hits_nonneutral": 111,
+     "n_false": 9,
+     "fdp_true": 0.08108108108108109,
+     "recall_all_plants": 0.95,
+     "recall_eligible_plants": 0.95,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       2,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       3,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-pred": {
+     "n_hits_nonneutral": 112,
+     "n_false": 14,
+     "fdp_true": 0.125,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.8833333333333333,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-obs selected": {
+     "n_hits_nonneutral": 70,
+     "n_false": 11,
+     "fdp_true": 0.15714285714285714,
+     "recall_all_plants": 0.9166666666666666,
+     "recall_eligible_plants": 0.9166666666666666,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       3,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-pred selected": {
+     "n_hits_nonneutral": 66,
+     "n_false": 4,
+     "fdp_true": 0.06060606060606061,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "MD-strict": {
+     "n_hits_nonneutral": 65,
+     "n_false": 3,
+     "fdp_true": 0.046153846153846156,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.8666666666666667,
+     "n_plants": 60,
+     "n_plants_eligible": 60,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       3
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    }
+   }
+  ],
+  "ridge": [
+   {
+    "i": 0,
+    "seed": 20261101,
+    "MD-global": {
+     "n_hits_nonneutral": 78,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.75,
+     "recall_eligible_plants": 0.8653846153846154,
+     "n_plants": 60,
+     "n_plants_eligible": 52,
+     "per_kind": {
+      "pan_lineage": [
+       15,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       0
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "MD-global_ignoring_sign": {
+     "n_hits_nonneutral": 78,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.75,
+     "recall_eligible_plants": 0.8653846153846154,
+     "n_plants": 60,
+     "n_plants_eligible": 52,
+     "per_kind": {
+      "pan_lineage": [
+       15,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       0
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "S1-obs": {
+     "n_hits_nonneutral": 100,
+     "n_false": 7,
+     "fdp_true": 0.07,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 1.0,
+     "n_plants": 60,
+     "n_plants_eligible": 52,
+     "per_kind": {
+      "pan_lineage": [
+       19,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       0
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       1,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-pred": {
+     "n_hits_nonneutral": 439,
+     "n_false": 348,
+     "fdp_true": 0.7927107061503417,
+     "recall_all_plants": 0.8333333333333334,
+     "recall_eligible_plants": 0.9615384615384616,
+     "n_plants": 60,
+     "n_plants_eligible": 52,
+     "per_kind": {
+      "pan_lineage": [
+       19,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       0
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "EN-obs selected": {
+     "n_hits_nonneutral": 56,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 1.0,
+     "n_plants": 60,
+     "n_plants_eligible": 52,
+     "per_kind": {
+      "pan_lineage": [
+       19,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       0
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       1,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-pred selected": {
+     "n_hits_nonneutral": 158,
+     "n_false": 80,
+     "fdp_true": 0.5063291139240507,
+     "recall_all_plants": 0.75,
+     "recall_eligible_plants": 0.8653846153846154,
+     "n_plants": 60,
+     "n_plants_eligible": 52,
+     "per_kind": {
+      "pan_lineage": [
+       15,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       0
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "MD-strict": {
+     "n_hits_nonneutral": 101,
+     "n_false": 23,
+     "fdp_true": 0.22772277227722773,
+     "recall_all_plants": 0.75,
+     "recall_eligible_plants": 0.8653846153846154,
+     "n_plants": 60,
+     "n_plants_eligible": 52,
+     "per_kind": {
+      "pan_lineage": [
+       15,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       0
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    }
+   },
+   {
+    "i": 1,
+    "seed": 20261102,
+    "MD-global": {
+     "n_hits_nonneutral": 79,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8333333333333334,
+     "recall_eligible_plants": 0.9259259259259259,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       19,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "MD-global_ignoring_sign": {
+     "n_hits_nonneutral": 79,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.8333333333333334,
+     "recall_eligible_plants": 0.9259259259259259,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       19,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "S1-obs": {
+     "n_hits_nonneutral": 101,
+     "n_false": 4,
+     "fdp_true": 0.039603960396039604,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.9814814814814815,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       19,
+       19
+      ],
+      "lineage_restricted": [
+       1,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       1,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-pred": {
+     "n_hits_nonneutral": 481,
+     "n_false": 386,
+     "fdp_true": 0.8024948024948025,
+     "recall_all_plants": 0.85,
+     "recall_eligible_plants": 0.9444444444444444,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       19,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-obs selected": {
+     "n_hits_nonneutral": 66,
+     "n_false": 9,
+     "fdp_true": 0.13636363636363635,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.9629629629629629,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       19,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       1,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-pred selected": {
+     "n_hits_nonneutral": 140,
+     "n_false": 61,
+     "fdp_true": 0.4357142857142857,
+     "recall_all_plants": 0.8333333333333334,
+     "recall_eligible_plants": 0.9259259259259259,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       19,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "MD-strict": {
+     "n_hits_nonneutral": 106,
+     "n_false": 27,
+     "fdp_true": 0.25471698113207547,
+     "recall_all_plants": 0.8333333333333334,
+     "recall_eligible_plants": 0.9259259259259259,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       19,
+       19
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    }
+   },
+   {
+    "i": 2,
+    "seed": 20261103,
+    "MD-global": {
+     "n_hits_nonneutral": 75,
+     "n_false": 1,
+     "fdp_true": 0.013333333333333334,
+     "recall_all_plants": 0.75,
+     "recall_eligible_plants": 0.8490566037735849,
+     "n_plants": 60,
+     "n_plants_eligible": 53,
+     "per_kind": {
+      "pan_lineage": [
+       14,
+       17
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       2
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "MD-global_ignoring_sign": {
+     "n_hits_nonneutral": 75,
+     "n_false": 1,
+     "fdp_true": 0.013333333333333334,
+     "recall_all_plants": 0.75,
+     "recall_eligible_plants": 0.8490566037735849,
+     "n_plants": 60,
+     "n_plants_eligible": 53,
+     "per_kind": {
+      "pan_lineage": [
+       14,
+       17
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       2
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "S1-obs": {
+     "n_hits_nonneutral": 101,
+     "n_false": 7,
+     "fdp_true": 0.06930693069306931,
+     "recall_all_plants": 0.85,
+     "recall_eligible_plants": 0.9622641509433962,
+     "n_plants": 60,
+     "n_plants_eligible": 53,
+     "per_kind": {
+      "pan_lineage": [
+       17,
+       17
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       2,
+       2
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-pred": {
+     "n_hits_nonneutral": 416,
+     "n_false": 325,
+     "fdp_true": 0.78125,
+     "recall_all_plants": 0.8,
+     "recall_eligible_plants": 0.9056603773584906,
+     "n_plants": 60,
+     "n_plants_eligible": 53,
+     "per_kind": {
+      "pan_lineage": [
+       17,
+       17
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       2
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "EN-obs selected": {
+     "n_hits_nonneutral": 57,
+     "n_false": 2,
+     "fdp_true": 0.03508771929824561,
+     "recall_all_plants": 0.8333333333333334,
+     "recall_eligible_plants": 0.9433962264150944,
+     "n_plants": 60,
+     "n_plants_eligible": 53,
+     "per_kind": {
+      "pan_lineage": [
+       17,
+       17
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       2,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       2,
+       2
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-pred selected": {
+     "n_hits_nonneutral": 142,
+     "n_false": 68,
+     "fdp_true": 0.4788732394366197,
+     "recall_all_plants": 0.75,
+     "recall_eligible_plants": 0.8490566037735849,
+     "n_plants": 60,
+     "n_plants_eligible": 53,
+     "per_kind": {
+      "pan_lineage": [
+       14,
+       17
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       2
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "MD-strict": {
+     "n_hits_nonneutral": 97,
+     "n_false": 23,
+     "fdp_true": 0.23711340206185566,
+     "recall_all_plants": 0.75,
+     "recall_eligible_plants": 0.8490566037735849,
+     "n_plants": 60,
+     "n_plants_eligible": 53,
+     "per_kind": {
+      "pan_lineage": [
+       14,
+       17
+      ],
+      "lineage_restricted": [
+       0,
+       2
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       2
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    }
+   },
+   {
+    "i": 3,
+    "seed": 20261104,
+    "MD-global": {
+     "n_hits_nonneutral": 72,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.7333333333333333,
+     "recall_eligible_plants": 0.8148148148148148,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       16,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       3
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       4
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       1,
+       1
+      ],
+      "predictor_blind": [
+       0,
+       2
+      ],
+      "wrong_sign_cgt": [
+       0,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       0
+      ]
+     }
+    },
+    "MD-global_ignoring_sign": {
+     "n_hits_nonneutral": 72,
+     "n_false": 0,
+     "fdp_true": 0.0,
+     "recall_all_plants": 0.7333333333333333,
+     "recall_eligible_plants": 0.8148148148148148,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       16,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       3
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       4
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       1,
+       1
+      ],
+      "predictor_blind": [
+       0,
+       2
+      ],
+      "wrong_sign_cgt": [
+       0,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       0
+      ]
+     }
+    },
+    "S1-obs": {
+     "n_hits_nonneutral": 104,
+     "n_false": 5,
+     "fdp_true": 0.04807692307692308,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.9629629629629629,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       3
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       4
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       1,
+       1
+      ],
+      "predictor_blind": [
+       2,
+       2
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       0
+      ]
+     }
+    },
+    "S1-pred": {
+     "n_hits_nonneutral": 470,
+     "n_false": 374,
+     "fdp_true": 0.7957446808510639,
+     "recall_all_plants": 0.8166666666666667,
+     "recall_eligible_plants": 0.9074074074074074,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       3
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       4
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       1,
+       1
+      ],
+      "predictor_blind": [
+       0,
+       2
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       0
+      ]
+     }
+    },
+    "EN-obs selected": {
+     "n_hits_nonneutral": 60,
+     "n_false": 1,
+     "fdp_true": 0.016666666666666666,
+     "recall_all_plants": 0.8666666666666667,
+     "recall_eligible_plants": 0.9629629629629629,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       1,
+       3
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       4
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       1,
+       1
+      ],
+      "predictor_blind": [
+       2,
+       2
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       0
+      ]
+     }
+    },
+    "EN-pred selected": {
+     "n_hits_nonneutral": 126,
+     "n_false": 54,
+     "fdp_true": 0.42857142857142855,
+     "recall_all_plants": 0.7333333333333333,
+     "recall_eligible_plants": 0.8148148148148148,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       16,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       3
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       4
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       1,
+       1
+      ],
+      "predictor_blind": [
+       0,
+       2
+      ],
+      "wrong_sign_cgt": [
+       0,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       0
+      ]
+     }
+    },
+    "MD-strict": {
+     "n_hits_nonneutral": 90,
+     "n_false": 18,
+     "fdp_true": 0.2,
+     "recall_all_plants": 0.7333333333333333,
+     "recall_eligible_plants": 0.8148148148148148,
+     "n_plants": 60,
+     "n_plants_eligible": 54,
+     "per_kind": {
+      "pan_lineage": [
+       16,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       3
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       4,
+       4
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       1,
+       1
+      ],
+      "predictor_blind": [
+       0,
+       2
+      ],
+      "wrong_sign_cgt": [
+       0,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       0
+      ]
+     }
+    }
+   },
+   {
+    "i": 4,
+    "seed": 20261105,
+    "MD-global": {
+     "n_hits_nonneutral": 81,
+     "n_false": 2,
+     "fdp_true": 0.024691358024691357,
+     "recall_all_plants": 0.8,
+     "recall_eligible_plants": 0.8275862068965517,
+     "n_plants": 60,
+     "n_plants_eligible": 58,
+     "per_kind": {
+      "pan_lineage": [
+       17,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "MD-global_ignoring_sign": {
+     "n_hits_nonneutral": 81,
+     "n_false": 2,
+     "fdp_true": 0.024691358024691357,
+     "recall_all_plants": 0.8,
+     "recall_eligible_plants": 0.8275862068965517,
+     "n_plants": 60,
+     "n_plants_eligible": 58,
+     "per_kind": {
+      "pan_lineage": [
+       17,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "S1-obs": {
+     "n_hits_nonneutral": 104,
+     "n_false": 8,
+     "fdp_true": 0.07692307692307693,
+     "recall_all_plants": 0.9166666666666666,
+     "recall_eligible_plants": 0.9482758620689655,
+     "n_plants": 60,
+     "n_plants_eligible": 58,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       2,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       1,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "S1-pred": {
+     "n_hits_nonneutral": 374,
+     "n_false": 280,
+     "fdp_true": 0.7486631016042781,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.9137931034482759,
+     "n_plants": 60,
+     "n_plants_eligible": 58,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       2,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "EN-obs selected": {
+     "n_hits_nonneutral": 68,
+     "n_false": 11,
+     "fdp_true": 0.16176470588235295,
+     "recall_all_plants": 0.8833333333333333,
+     "recall_eligible_plants": 0.9137931034482759,
+     "n_plants": 60,
+     "n_plants_eligible": 58,
+     "per_kind": {
+      "pan_lineage": [
+       20,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       1,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       1,
+       1
+      ]
+     }
+    },
+    "EN-pred selected": {
+     "n_hits_nonneutral": 126,
+     "n_false": 47,
+     "fdp_true": 0.373015873015873,
+     "recall_all_plants": 0.8,
+     "recall_eligible_plants": 0.8275862068965517,
+     "n_plants": 60,
+     "n_plants_eligible": 58,
+     "per_kind": {
+      "pan_lineage": [
+       17,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    },
+    "MD-strict": {
+     "n_hits_nonneutral": 94,
+     "n_false": 15,
+     "fdp_true": 0.1595744680851064,
+     "recall_all_plants": 0.8,
+     "recall_eligible_plants": 0.8275862068965517,
+     "n_plants": 60,
+     "n_plants_eligible": 58,
+     "per_kind": {
+      "pan_lineage": [
+       17,
+       20
+      ],
+      "lineage_restricted": [
+       0,
+       5
+      ],
+      "own_locus_cn": [
+       5,
+       5
+      ],
+      "msi_like": [
+       5,
+       5
+      ],
+      "co_located": [
+       5,
+       5
+      ],
+      "co_located_tight": [
+       3,
+       3
+      ],
+      "genomic_with_expression_proxy": [
+       5,
+       5
+      ],
+      "prog_driven": [
+       5,
+       5
+      ],
+      "p53_w": [
+       2,
+       2
+      ],
+      "predictor_blind": [
+       0,
+       1
+      ],
+      "wrong_sign_cgt": [
+       1,
+       1
+      ],
+      "six_carrier_strong": [
+       0,
+       1
+      ]
+     }
+    }
+   }
+  ]
+ }
+}

@@ -1521,6 +1521,7 @@ def list_hits(out: dict, name: str) -> pd.DataFrame:
     """Hit list ``name`` (one of LISTS) from pipeline outputs."""
     if name == "MD-strict":
         return out["md_strict"]
+    if name == "MD-global": return out["md_global"]  # noqa: E701 - amendment A7 (one-line verifier edit)
     arm = name.replace(" selected", "")
     a = out["arms"]
     return a[(a["arm"] == arm) & a["selected"].astype(bool)]

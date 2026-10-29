@@ -1,0 +1,1391 @@
+{
+ "description": "NC2-NC6 toy bounds (DESIGN v3.2 \u00a77.3); definitions: docs/toy_nc_bounds.md",
+ "definitions_doc": "docs/toy_nc_bounds.md",
+ "definitions_doc_sha256": "3dd96258422bdcd070499958386be0faf96d4362517d34d437e4ef717a85e391",
+ "seeds": [
+  20261101,
+  20261102,
+  20261103,
+  20261104,
+  20261105
+ ],
+ "scenario": "truth",
+ "predictor": "smooth",
+ "launched_utc": "2026-10-28T23:04:01+00:00",
+ "workers": {
+  "replicates_concurrent": 5,
+  "engine_workers_each": 2
+ },
+ "commit": "8cffc9157556b6cc65219be78d02a7ebc305893d",
+ "config_sha256": {
+  "design_params.json": "7673ebb72f183c4f4a362ef52cca52f0b34a94028d424e7cc9e7d45bf615c919",
+  "pipeline_params.json": "21e6af199581adfa487e7fd3895134d97d5133324d79fae8309e2b75adbecea6",
+  "seeds.json": "19d1d9b47b965e9a2db943d3a1aa6689925de10ed0202085413e48893f22419e",
+  "primary_endpoints.json": "6125708282190c7b0b3a04f7c89ff5b4ff2a76179c0d11061160508c759c2d69"
+ },
+ "toy_answer_key_sha256": "3b5e376d2dc985f0dc4d30b3371ec22ea38b5d35ff2a6a26582a021e8124e85d",
+ "nc": {
+  "NC2a": {
+   "design_key": "NC2_lowtier_median_fidelity_max",
+   "definition": "median EN-pred r2_oof_beyond_design over the toy low-tier plant genes (R2)",
+   "bound_kind": "max",
+   "per_replicate": [
+    {
+     "r": 0,
+     "seed": 20261101,
+     "value": -0.0009694482151605399,
+     "n": 10
+    },
+    {
+     "r": 1,
+     "seed": 20261102,
+     "value": 0.001085673807020071,
+     "n": 10
+    },
+    {
+     "r": 2,
+     "seed": 20261103,
+     "value": 0.0009116503040284551,
+     "n": 10
+    },
+    {
+     "r": 3,
+     "seed": 20261104,
+     "value": 0.0009736088025390499,
+     "n": 10
+    },
+    {
+     "r": 4,
+     "seed": 20261105,
+     "value": 0.0004025749814075552,
+     "n": 10
+    }
+   ],
+   "underlying_counts": [
+    0,
+    22,
+    3,
+    2,
+    13
+   ],
+   "toy": "ridge (ruling R1)",
+   "toy_bound": 0.001085673807020071,
+   "provisional": 0.02,
+   "faithful": {
+    "F1": true,
+    "F2": true,
+    "F2_failing_replicates": [],
+    "R2_degenerate": false
+   },
+   "final_value": 0.001085673807020071,
+   "final_source": "toy",
+   "reason": "",
+   "smooth_values_reported": [
+    {
+     "r": 0,
+     "value": -0.0006299379615484768,
+     "count": null
+    },
+    {
+     "r": 1,
+     "value": -0.00587214265315239,
+     "count": null
+    },
+    {
+     "r": 2,
+     "value": -0.0017746128455230492,
+     "count": null
+    },
+    {
+     "r": 3,
+     "value": -0.002662341743249974,
+     "count": null
+    },
+    {
+     "r": 4,
+     "value": -0.004273730724563718,
+     "count": null
+    }
+   ]
+  },
+  "NC2b": {
+   "design_key": "NC2_lowtier_md_strict_per_gene_max",
+   "definition": "MD-strict rows (R2, BH within the low-tier universe) / number of low-tier genes",
+   "bound_kind": "max",
+   "per_replicate": [
+    {
+     "r": 0,
+     "seed": 20261101,
+     "value": 0.0,
+     "n": 10
+    },
+    {
+     "r": 1,
+     "seed": 20261102,
+     "value": 0.2,
+     "n": 10
+    },
+    {
+     "r": 2,
+     "seed": 20261103,
+     "value": 0.2,
+     "n": 10
+    },
+    {
+     "r": 3,
+     "seed": 20261104,
+     "value": 0.2,
+     "n": 10
+    },
+    {
+     "r": 4,
+     "seed": 20261105,
+     "value": 1.2,
+     "n": 10
+    }
+   ],
+   "underlying_counts": [
+    0,
+    2,
+    2,
+    2,
+    12
+   ],
+   "toy": "ridge (ruling R1)",
+   "toy_bound": 1.2,
+   "provisional": 0.1,
+   "faithful": {
+    "F1": true,
+    "F2": true,
+    "F2_failing_replicates": [],
+    "R2_degenerate": false
+   },
+   "final_value": 1.2,
+   "final_source": "toy",
+   "reason": "",
+   "smooth_values_reported": [
+    {
+     "r": 0,
+     "value": 0.0,
+     "count": null
+    },
+    {
+     "r": 1,
+     "value": 0.0,
+     "count": null
+    },
+    {
+     "r": 2,
+     "value": 0.0,
+     "count": null
+    },
+    {
+     "r": 3,
+     "value": 0.0,
+     "count": null
+    },
+    {
+     "r": 4,
+     "value": 0.0,
+     "count": null
+    }
+   ]
+  },
+  "NC3": {
+   "design_key": "NC3_self_null_dependent_frac_max",
+   "definition": "mean frac_dependent (carrier median < -0.5) over testable pairs of the answer-key self-null set (planted self-null gene: DEL_g and DEL locus mates), engine self_null (R1)",
+   "bound_kind": "max",
+   "per_replicate": [
+    {
+     "r": 0,
+     "seed": 20261101,
+     "value": 0.0,
+     "n": 3
+    },
+    {
+     "r": 1,
+     "seed": 20261102,
+     "value": 0.0,
+     "n": 3
+    },
+    {
+     "r": 2,
+     "seed": 20261103,
+     "value": 0.0,
+     "n": 3
+    },
+    {
+     "r": 3,
+     "seed": 20261104,
+     "value": 0.0,
+     "n": 3
+    },
+    {
+     "r": 4,
+     "seed": 20261105,
+     "value": 0.0,
+     "n": 3
+    }
+   ],
+   "underlying_counts": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "toy": "smooth",
+   "toy_bound": 0.0,
+   "provisional": 0.1,
+   "faithful": {
+    "F1": true,
+    "F2": false,
+    "F2_failing_replicates": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "R2_degenerate": true
+   },
+   "final_value": 0.1,
+   "final_source": "provisional",
+   "reason": "F2 resolution: per-replicate denominator n = [3, 3, 3, 3, 3], 1/n > 0.1"
+  },
+  "NC5": {
+   "design_key": "NC5_false_sensitivity_rate_max",
+   "definition": "max over the four arms of (#bypass-resistance/N toy CGT tests hit at rank_of_feature_D <= 200 with beta < 0) / (#such tests ranked in the arm), engine cgt_scores (R1)",
+   "bound_kind": "max",
+   "per_replicate": [
+    {
+     "r": 0,
+     "seed": 20261101,
+     "value": 0.0,
+     "n": 2
+    },
+    {
+     "r": 1,
+     "seed": 20261102,
+     "value": 0.0,
+     "n": 1
+    },
+    {
+     "r": 2,
+     "seed": 20261103,
+     "value": 0.0,
+     "n": 1
+    },
+    {
+     "r": 3,
+     "seed": 20261104,
+     "value": 0.0,
+     "n": 1
+    },
+    {
+     "r": 4,
+     "seed": 20261105,
+     "value": 0.0,
+     "n": 1
+    }
+   ],
+   "underlying_counts": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "toy": "smooth",
+   "toy_bound": 0.0,
+   "provisional": 0.2,
+   "faithful": {
+    "F1": true,
+    "F2": false,
+    "F2_failing_replicates": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "R2_degenerate": true
+   },
+   "final_value": 0.2,
+   "final_source": "provisional",
+   "reason": "F2 resolution: per-replicate denominator n = [2, 1, 1, 1, 1], 1/n > 0.2"
+  },
+  "NC6": {
+   "design_key": "NC6_lineage_tf_class3_frac_min",
+   "definition": "fraction of toy lineage_only plant genes with engine gene_classes failure_class 3 (R1)",
+   "bound_kind": "min",
+   "per_replicate": [
+    {
+     "r": 0,
+     "seed": 20261101,
+     "value": 1.0,
+     "n": 10
+    },
+    {
+     "r": 1,
+     "seed": 20261102,
+     "value": 1.0,
+     "n": 10
+    },
+    {
+     "r": 2,
+     "seed": 20261103,
+     "value": 1.0,
+     "n": 10
+    },
+    {
+     "r": 3,
+     "seed": 20261104,
+     "value": 1.0,
+     "n": 10
+    },
+    {
+     "r": 4,
+     "seed": 20261105,
+     "value": 1.0,
+     "n": 10
+    }
+   ],
+   "underlying_counts": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "toy": "smooth",
+   "toy_bound": 1.0,
+   "provisional": 0.7,
+   "faithful": {
+    "F1": true,
+    "F2": true,
+    "F2_failing_replicates": [],
+    "R2_degenerate": true
+   },
+   "final_value": 0.7,
+   "final_source": "provisional",
+   "reason": "R2 degeneracy: values [1.0, 1.0, 1.0, 1.0, 1.0], underlying counts [None, None, None, None, None]"
+  },
+  "NC4": {
+   "design_key": "NC4_rule",
+   "definition": "fold-artefact features EN-pred-selected after centring (R1) / without centring (R3); bounds = toy_s13.pass fold_offset_*",
+   "per_replicate": [
+    {
+     "r": 0,
+     "seed": 20261101,
+     "after_centring": 0,
+     "without_centring": 0,
+     "n": 5,
+     "pass_after": true,
+     "pass_without": false,
+     "freq_after": [
+      0.0,
+      0.02,
+      0.0,
+      0.0,
+      0.06
+     ],
+     "freq_without": [
+      0.42,
+      0.42,
+      0.44,
+      0.42,
+      0.5
+     ]
+    },
+    {
+     "r": 1,
+     "seed": 20261102,
+     "after_centring": 0,
+     "without_centring": 0,
+     "n": 5,
+     "pass_after": true,
+     "pass_without": false,
+     "freq_after": [
+      0.0,
+      0.06,
+      0.02,
+      0.0,
+      0.0
+     ],
+     "freq_without": [
+      0.42,
+      0.36,
+      0.48,
+      0.4,
+      0.42
+     ]
+    },
+    {
+     "r": 2,
+     "seed": 20261103,
+     "after_centring": 0,
+     "without_centring": 0,
+     "n": 5,
+     "pass_after": true,
+     "pass_without": false,
+     "freq_after": [
+      0.0,
+      0.18,
+      0.04,
+      0.0,
+      0.0
+     ],
+     "freq_without": [
+      0.46,
+      0.4,
+      0.46,
+      0.46,
+      0.42
+     ]
+    },
+    {
+     "r": 3,
+     "seed": 20261104,
+     "after_centring": 0,
+     "without_centring": 0,
+     "n": 5,
+     "pass_after": true,
+     "pass_without": false,
+     "freq_after": [
+      0.04,
+      0.02,
+      0.02,
+      0.0,
+      0.0
+     ],
+     "freq_without": [
+      0.4,
+      0.42,
+      0.4,
+      0.4,
+      0.4
+     ]
+    },
+    {
+     "r": 4,
+     "seed": 20261105,
+     "after_centring": 0,
+     "without_centring": 0,
+     "n": 5,
+     "pass_after": true,
+     "pass_without": false,
+     "freq_after": [
+      0.0,
+      0.38,
+      0.0,
+      0.02,
+      0.02
+     ],
+     "freq_without": [
+      0.44,
+      0.5,
+      0.46,
+      0.46,
+      0.36
+     ]
+    }
+   ],
+   "toy_bound": {
+    "after_centring_max_observed": 0,
+    "without_centring_min_observed": 0
+   },
+   "provisional": {
+    "after_centring_max": 1,
+    "without_centring_min": 3
+   },
+   "final_value": {
+    "after_centring_max": 1,
+    "without_centring_min": 3
+   },
+   "final_source": "toy pass bounds (not re-derived)",
+   "replicates_passing": {
+    "after": 5,
+    "without": 0
+   }
+  }
+ },
+ "replicate_details": {
+  "r0": {
+   "NC2b": {
+    "n": 10,
+    "count": 0,
+    "md_strict_rows": 0,
+    "en_pred_selected": 0,
+    "md_strict_pairs": []
+   },
+   "NC2a_per_gene": {
+    "9000271": 0.0010334659792249346,
+    "9000252": 0.002499507361799491,
+    "9000061": -0.00447071741060201,
+    "9000074": 0.0008374481481983054,
+    "9000205": -0.0018959286954380872,
+    "9000072": -0.0014597556571034342,
+    "9000085": 0.0014550495835304877,
+    "9000032": -0.0004791407732176456,
+    "9000239": -0.004482823726958074,
+    "9000188": -0.00160304588000737
+   },
+   "NC3": {
+    "n": 3,
+    "planted_rows": [
+     {
+      "gene": "9000226",
+      "feature": "DEL:9000226",
+      "n_carriers": 35,
+      "testable": true,
+      "carrier_median": 0.08187097658057703,
+      "frac_dependent": 0.0
+     },
+     {
+      "gene": "9000226",
+      "feature": "DEL:9000225",
+      "n_carriers": 34,
+      "testable": true,
+      "carrier_median": -0.08880669039796948,
+      "frac_dependent": 0.0
+     },
+     {
+      "gene": "9000226",
+      "feature": "DEL:9000227",
+      "n_carriers": 35,
+      "testable": true,
+      "carrier_median": -0.09198070405800483,
+      "frac_dependent": 0.0
+     }
+    ],
+    "secondary_all_genes": {
+     "value": 0.03461538461538462,
+     "n": 260
+    },
+    "secondary_eligible_genes": {
+     "value": 0.049079754601226995,
+     "n": 163
+    }
+   },
+   "NC5": {
+    "S1-obs": {
+     "rate": 0.0,
+     "n": 2,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 4.0,
+       "hit": true,
+       "beta": 0.5577398698749827
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": 37270.0,
+       "hit": false,
+       "beta": 0.029977903750821475
+      }
+     ]
+    },
+    "S1-pred": {
+     "rate": 0.0,
+     "n": 2,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 1.0,
+       "hit": true,
+       "beta": 0.47979709148337185
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": 37500.0,
+       "hit": false,
+       "beta": 0.021686159413054646
+      }
+     ]
+    },
+    "EN-obs": {
+     "rate": 0.0,
+     "n": 2,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 7.0,
+       "hit": true,
+       "beta": 0.20379152770491804
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": 15901.0,
+       "hit": false,
+       "beta": 0.00020114171655540375
+      }
+     ]
+    },
+    "EN-pred": {
+     "rate": 0.0,
+     "n": 2,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 2.0,
+       "hit": true,
+       "beta": 0.21250501454635093
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": 21905.0,
+       "hit": false,
+       "beta": 8.911619882054348e-06
+      }
+     ]
+    }
+   },
+   "NC6_classes": {
+    "9000034": "3",
+    "9000039": "3",
+    "9000053": "3",
+    "9000056": "3",
+    "9000070": "3",
+    "9000099": "3",
+    "9000128": "3",
+    "9000136": "3",
+    "9000221": "3",
+    "9000290": "3"
+   },
+   "timing": {
+    "R1_s": 375.30952780000007,
+    "R2_s": 12.343465800000558,
+    "R3_s": 177.11855900000228,
+    "total_s": 565.5188803000019
+   }
+  },
+  "r1": {
+   "NC2b": {
+    "n": 10,
+    "count": 2,
+    "md_strict_rows": 2,
+    "en_pred_selected": 22,
+    "md_strict_pairs": [
+     "9000222|LOFBI:9000016",
+     "9000222|PROG:26"
+    ]
+   },
+   "NC2a_per_gene": {
+    "9000106": -0.003306972206172265,
+    "9000263": 0.0035706878721655233,
+    "9000248": -0.0023610426347304703,
+    "9000212": 0.0006020752893833858,
+    "9000230": 0.0015692723246567564,
+    "9000222": 0.08686922496834193,
+    "9000043": 0.012658942422932196,
+    "9000086": -0.0005190604146860789,
+    "9000074": 0.0015810811364850297,
+    "9000118": -0.0023914128831128423
+   },
+   "NC3": {
+    "n": 3,
+    "planted_rows": [
+     {
+      "gene": "9000172",
+      "feature": "DEL:9000172",
+      "n_carriers": 62,
+      "testable": true,
+      "carrier_median": 0.031163559832127916,
+      "frac_dependent": 0.0
+     },
+     {
+      "gene": "9000172",
+      "feature": "DEL:9000171",
+      "n_carriers": 55,
+      "testable": true,
+      "carrier_median": -0.014715319115645158,
+      "frac_dependent": 0.0
+     },
+     {
+      "gene": "9000172",
+      "feature": "DEL:9000173",
+      "n_carriers": 64,
+      "testable": true,
+      "carrier_median": -0.024841516361276884,
+      "frac_dependent": 0.0
+     }
+    ],
+    "secondary_all_genes": {
+     "value": 0.04887218045112782,
+     "n": 266
+    },
+    "secondary_eligible_genes": {
+     "value": 0.0625,
+     "n": 176
+    }
+   },
+   "NC5": {
+    "S1-obs": {
+     "rate": 0.0,
+     "n": 2,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 1.0,
+       "hit": true,
+       "beta": 0.641810050945499
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": 53453.0,
+       "hit": false,
+       "beta": 0.024911474216014036
+      }
+     ]
+    },
+    "S1-pred": {
+     "rate": 0.0,
+     "n": 2,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 1.0,
+       "hit": true,
+       "beta": 0.5060472659284914
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": 8968.0,
+       "hit": false,
+       "beta": 0.06889109260020108
+      }
+     ]
+    },
+    "EN-obs": {
+     "rate": 0.0,
+     "n": 1,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 2.0,
+       "hit": true,
+       "beta": 0.2709785793556675
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": null,
+       "hit": false,
+       "beta": 0.0
+      }
+     ]
+    },
+    "EN-pred": {
+     "rate": 0.0,
+     "n": 2,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 3.0,
+       "hit": true,
+       "beta": 0.21442500254709773
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": 22695.0,
+       "hit": false,
+       "beta": 9.326344525210117e-06
+      }
+     ]
+    }
+   },
+   "NC6_classes": {
+    "9000007": "3",
+    "9000038": "3",
+    "9000054": "3",
+    "9000087": "3",
+    "9000092": "3",
+    "9000101": "3",
+    "9000121": "3",
+    "9000140": "3",
+    "9000170": "3",
+    "9000215": "3"
+   },
+   "timing": {
+    "R1_s": 373.2524611000008,
+    "R2_s": 12.912670899997465,
+    "R3_s": 177.32851120000123,
+    "total_s": 564.2878274999966
+   }
+  },
+  "r2": {
+   "NC2b": {
+    "n": 10,
+    "count": 2,
+    "md_strict_rows": 2,
+    "en_pred_selected": 3,
+    "md_strict_pairs": [
+     "9000179|LOFBI:9000043",
+     "9000179|LOSS:9000179"
+    ]
+   },
+   "NC2a_per_gene": {
+    "9000078": 0.0009917559220483652,
+    "9000179": 0.021949815484688884,
+    "9000184": 0.0011885895757742793,
+    "9000209": 0.0008315446860085451,
+    "9000190": 0.0023046539753198703,
+    "9000268": -0.00028867133882637397,
+    "9000030": -0.0011871938525853665,
+    "9000100": -0.001337398675196777,
+    "9000054": -0.003168967129465683,
+    "9000042": 0.0018875748806096437
+   },
+   "NC3": {
+    "n": 3,
+    "planted_rows": [
+     {
+      "gene": "9000244",
+      "feature": "DEL:9000244",
+      "n_carriers": 38,
+      "testable": true,
+      "carrier_median": -0.0517058640320118,
+      "frac_dependent": 0.0
+     },
+     {
+      "gene": "9000244",
+      "feature": "DEL:9000243",
+      "n_carriers": 40,
+      "testable": true,
+      "carrier_median": -0.12784459509122748,
+      "frac_dependent": 0.0
+     },
+     {
+      "gene": "9000244",
+      "feature": "DEL:9000245",
+      "n_carriers": 45,
+      "testable": true,
+      "carrier_median": -0.18115429805303337,
+      "frac_dependent": 0.0
+     }
+    ],
+    "secondary_all_genes": {
+     "value": 0.05204460966542751,
+     "n": 269
+    },
+    "secondary_eligible_genes": {
+     "value": 0.06077348066298342,
+     "n": 181
+    }
+   },
+   "NC5": {
+    "S1-obs": {
+     "rate": 0.0,
+     "n": 1,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 2.0,
+       "hit": true,
+       "beta": 0.582620797522339
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": null,
+       "hit": false,
+       "beta": null
+      }
+     ]
+    },
+    "S1-pred": {
+     "rate": 0.0,
+     "n": 1,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 1.0,
+       "hit": true,
+       "beta": 0.4995139997277698
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": null,
+       "hit": false,
+       "beta": null
+      }
+     ]
+    },
+    "EN-obs": {
+     "rate": 0.0,
+     "n": 1,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 6.0,
+       "hit": true,
+       "beta": 0.23456774342634923
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": null,
+       "hit": false,
+       "beta": null
+      }
+     ]
+    },
+    "EN-pred": {
+     "rate": 0.0,
+     "n": 1,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 2.0,
+       "hit": true,
+       "beta": 0.20925352601435976
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": null,
+       "hit": false,
+       "beta": null
+      }
+     ]
+    }
+   },
+   "NC6_classes": {
+    "9000050": "3",
+    "9000052": "3",
+    "9000149": "3",
+    "9000193": "3",
+    "9000224": "3",
+    "9000226": "3",
+    "9000229": "3",
+    "9000241": "3",
+    "9000248": "3",
+    "9000300": "3"
+   },
+   "timing": {
+    "R1_s": 403.18827910000255,
+    "R2_s": 24.365698900001007,
+    "R3_s": 182.53273130000161,
+    "total_s": 610.9366814999994
+   }
+  },
+  "r3": {
+   "NC2b": {
+    "n": 10,
+    "count": 2,
+    "md_strict_rows": 2,
+    "en_pred_selected": 2,
+    "md_strict_pairs": [
+     "9000299|LOSS:9000279",
+     "9000299|LOSS:9000299"
+    ]
+   },
+   "NC2a_per_gene": {
+    "9000228": 0.0016294741832491022,
+    "9000123": -0.003268448392015788,
+    "9000203": 0.0015009886027417263,
+    "9000170": 0.0009598696068220391,
+    "9000178": 0.0009873479982560607,
+    "9000299": 0.030126505396164016,
+    "9000298": -0.004702541499647772,
+    "9000185": 0.0007377514248798622,
+    "9000291": -0.00037840530842103703,
+    "9000044": 0.003267744316695298
+   },
+   "NC3": {
+    "n": 3,
+    "planted_rows": [
+     {
+      "gene": "9000076",
+      "feature": "DEL:9000076",
+      "n_carriers": 44,
+      "testable": true,
+      "carrier_median": -0.06684839037857448,
+      "frac_dependent": 0.0
+     },
+     {
+      "gene": "9000076",
+      "feature": "DEL:9000075",
+      "n_carriers": 46,
+      "testable": true,
+      "carrier_median": -0.19940419774429313,
+      "frac_dependent": 0.0
+     },
+     {
+      "gene": "9000076",
+      "feature": "DEL:9000077",
+      "n_carriers": 51,
+      "testable": true,
+      "carrier_median": -0.15372596008488237,
+      "frac_dependent": 0.0
+     }
+    ],
+    "secondary_all_genes": {
+     "value": 0.038314176245210725,
+     "n": 261
+    },
+    "secondary_eligible_genes": {
+     "value": 0.06535947712418301,
+     "n": 153
+    }
+   },
+   "NC5": {
+    "S1-obs": {
+     "rate": 0.0,
+     "n": 1,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 1.0,
+       "hit": true,
+       "beta": 0.677180898407967
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": null,
+       "hit": false,
+       "beta": null
+      }
+     ]
+    },
+    "S1-pred": {
+     "rate": 0.0,
+     "n": 1,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 1.0,
+       "hit": true,
+       "beta": 0.5750740900920218
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": null,
+       "hit": false,
+       "beta": null
+      }
+     ]
+    },
+    "EN-obs": {
+     "rate": 0.0,
+     "n": 1,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 1.0,
+       "hit": true,
+       "beta": 0.28312279020189574
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": null,
+       "hit": false,
+       "beta": null
+      }
+     ]
+    },
+    "EN-pred": {
+     "rate": 0.0,
+     "n": 1,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 1.0,
+       "hit": true,
+       "beta": 0.2502988753053875
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": null,
+       "hit": false,
+       "beta": null
+      }
+     ]
+    }
+   },
+   "NC6_classes": {
+    "9000030": "3",
+    "9000078": "3",
+    "9000133": "3",
+    "9000153": "3",
+    "9000160": "3",
+    "9000161": "3",
+    "9000212": "3",
+    "9000216": "3",
+    "9000229": "3",
+    "9000271": "3"
+   },
+   "timing": {
+    "R1_s": 366.8497916999986,
+    "R2_s": 12.705109000002267,
+    "R3_s": 166.51967330000116,
+    "total_s": 546.8987235999994
+   }
+  },
+  "r4": {
+   "NC2b": {
+    "n": 10,
+    "count": 12,
+    "md_strict_rows": 12,
+    "en_pred_selected": 13,
+    "md_strict_pairs": [
+     "9000058|LOFBI:9000185",
+     "9000058|LOFBI:9000015",
+     "9000058|AMP:9000087",
+     "9000058|DEL:9000039",
+     "9000058|DEL:9000159",
+     "9000058|DEL:9000021",
+     "9000058|DEL:9000022",
+     "9000058|DEL:9000023",
+     "9000025|DEL:9000027",
+     "9000298|AMP:9000077",
+     "9000298|AMP:9000209",
+     "9000298|DEL:9000027"
+    ]
+   },
+   "NC2a_per_gene": {
+    "9000058": 0.06902155599964754,
+    "9000011": -0.0009174473041009268,
+    "9000108": 0.00011855708774732854,
+    "9000102": 0.0020557007668395855,
+    "9000025": 0.009995824166061151,
+    "9000298": 0.05261279081028947,
+    "9000147": -0.0005250225243864648,
+    "9000035": 0.0006865928750677819,
+    "9000101": -0.003307761016055011,
+    "9000078": -0.0019953035931379315
+   },
+   "NC3": {
+    "n": 3,
+    "planted_rows": [
+     {
+      "gene": "9000196",
+      "feature": "DEL:9000196",
+      "n_carriers": 56,
+      "testable": true,
+      "carrier_median": 0.05643431830758665,
+      "frac_dependent": 0.0
+     },
+     {
+      "gene": "9000196",
+      "feature": "DEL:9000195",
+      "n_carriers": 51,
+      "testable": true,
+      "carrier_median": 0.03347033667698898,
+      "frac_dependent": 0.0
+     },
+     {
+      "gene": "9000196",
+      "feature": "DEL:9000197",
+      "n_carriers": 53,
+      "testable": true,
+      "carrier_median": -0.02716268540506117,
+      "frac_dependent": 0.0
+     }
+    ],
+    "secondary_all_genes": {
+     "value": 0.03816793893129771,
+     "n": 262
+    },
+    "secondary_eligible_genes": {
+     "value": 0.05917159763313609,
+     "n": 169
+    }
+   },
+   "NC5": {
+    "S1-obs": {
+     "rate": 0.0,
+     "n": 2,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 5.0,
+       "hit": true,
+       "beta": 0.6504966717212008
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": 55470.0,
+       "hit": false,
+       "beta": 0.039616454646754104
+      }
+     ]
+    },
+    "S1-pred": {
+     "rate": 0.0,
+     "n": 2,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 16.0,
+       "hit": true,
+       "beta": 0.4940900374155955
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": 61533.0,
+       "hit": false,
+       "beta": 0.020947653887201264
+      }
+     ]
+    },
+    "EN-obs": {
+     "rate": 0.0,
+     "n": 1,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 4.0,
+       "hit": true,
+       "beta": 0.2137440898989683
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": null,
+       "hit": false,
+       "beta": 0.0
+      }
+     ]
+    },
+    "EN-pred": {
+     "rate": 0.0,
+     "n": 2,
+     "false_sens": 0,
+     "tests": [
+      {
+       "test_id": "TOYCGT06",
+       "sign": "W",
+       "partition": "bypass-resistance",
+       "rank_of_feature_D": 12.0,
+       "hit": true,
+       "beta": 0.16187251183257648
+      },
+      {
+       "test_id": "TOYCGT08",
+       "sign": "N",
+       "partition": "expected-null",
+       "rank_of_feature_D": 17353.0,
+       "hit": false,
+       "beta": 9.934380616419077e-05
+      }
+     ]
+    }
+   },
+   "NC6_classes": {
+    "9000096": "3",
+    "9000098": "3",
+    "9000150": "3",
+    "9000152": "3",
+    "9000170": "3",
+    "9000192": "3",
+    "9000204": "3",
+    "9000219": "3",
+    "9000249": "3",
+    "9000261": "3"
+   },
+   "timing": {
+    "R1_s": 377.8985868999989,
+    "R2_s": 13.257644999997865,
+    "R3_s": 177.78748269999778,
+    "total_s": 569.6902354000013
+   }
+  }
+ },
+ "deviation_rows_written": [],
+ "timebox_min": 45.0,
+ "wall_clock_min": 10.283999999999999,
+ "timebox_exceeded": false
+}

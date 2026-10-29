@@ -1,0 +1,186 @@
+{
+ "commit": "04aa982ba9cc47ad7de26037cf34cd9ed0e47469",
+ "command": "BIOMARK_TOY_PIPELINE=1 python -X utf8 -m pytest tests/test_toy_answers.py -k pipeline -rA",
+ "wall_s": 3565.31,
+ "summary": {
+  "passed": 19,
+  "failed": 3,
+  "error": 0,
+  "skipped": 0
+ },
+ "pytest_tail": [
+  "===== 3 failed, 19 passed, 23 deselected, 1 warning in 3565.31s (0:59:25) ====="
+ ],
+ "fdp_report_lines": [
+  "FDP_true per list: {'S1-obs': 0.08181818181818182, 'S1-pred': 0.07476635514018691, 'EN-obs selected': 0.0, 'EN-pred selected': 0.0, 'MD-strict': 0.0}",
+  "MD-global pure null: P(any non-neutral hit) = 0.0, hits per toy = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]",
+  "MD-global ridge toy: {'n_hits': 78, 'n_false': 0, 'fdp': 0.0, 'n_neutral': 10}",
+  "MD-global smooth toy: {'n_hits': 60, 'n_false': 0, 'fdp': 0.0, 'n_neutral': 7}"
+ ],
+ "tests": [
+  {
+   "name": "test_pipeline_interface",
+   "status": "passed",
+   "time_s": 869.118,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_pan_lineage_recall",
+   "status": "passed",
+   "time_s": 0.151,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_own_locus_cn",
+   "status": "passed",
+   "time_s": 0.012,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_msi_signature_and_drop_rule",
+   "status": "passed",
+   "time_s": 0.037,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_co_location",
+   "status": "passed",
+   "time_s": 0.016,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_culture_confounded",
+   "status": "passed",
+   "time_s": 0.022,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_lineage_only_and_lineage_dummy",
+   "status": "passed",
+   "time_s": 0.014,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_fold_offset_artefact",
+   "status": "failed",
+   "time_s": 83.131,
+   "message": "AssertionError: positive control of the artefact failed\nassert np.int64(0) >= 3",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_genomic_with_expression_proxy_stage_G",
+   "status": "passed",
+   "time_s": 0.055,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_six_carrier_strong",
+   "status": "passed",
+   "time_s": 0.063,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_self_null",
+   "status": "passed",
+   "time_s": 3.679,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_wrong_sign_cgt_is_sign_error",
+   "status": "passed",
+   "time_s": 0.004,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_cross_lineage_labels",
+   "status": "passed",
+   "time_s": 0.011,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_cutting_and_addiction",
+   "status": "passed",
+   "time_s": 0.013,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_predictor_blind_and_p53",
+   "status": "passed",
+   "time_s": 0.076,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_gate",
+   "status": "passed",
+   "time_s": 0.007,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_error_rates_smooth_toy",
+   "status": "passed",
+   "time_s": 0.14,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_error_rates_ridge_toy",
+   "status": "failed",
+   "time_s": 641.547,
+   "message": "AssertionError: ('MD-strict', {'n_hits': 101, 'n_false': 23, 'fdp': 0.22772277227722773, 'n_neutral': 10})\nassert 0.22772277227722773 <= 0.15",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_pure_null",
+   "status": "failed",
+   "time_s": 1944.784,
+   "message": "AssertionError: ('S1-pred', np.float64(0.2))\nassert np.float64(0.2) <= 0.1",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_md_global_fdp_smooth_toy",
+   "status": "passed",
+   "time_s": 0.514,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_md_global_fdp_ridge_toy",
+   "status": "passed",
+   "time_s": 1.333,
+   "message": "",
+   "stdout": ""
+  },
+  {
+   "name": "test_pipeline_md_global_pure_null",
+   "status": "passed",
+   "time_s": 9.906,
+   "message": "",
+   "stdout": ""
+  }
+ ],
+ "failure_assertions": [
+  "E       AssertionError: positive control of the artefact failed",
+  "E       assert np.int64(0) >= 3",
+  "E               AssertionError: ('MD-strict', {'n_hits': 101, 'n_false': 23, 'fdp': 0.22772277227722773, 'n_neutral': 10})",
+  "E               assert 0.22772277227722773 <= 0.15",
+  "E           AssertionError: ('S1-pred', np.float64(0.2))",
+  "E           assert np.float64(0.2) <= 0.1"
+ ],
+ "engine_note": "run in a git worktree pinned at 04aa982 plus the one-line toysim.list_hits MD-global branch; tests/test_toy_md_global.py shares the suite's pipeline runs via a memo on test_toy_answers.PIPE",
+ "workers": "run_pipeline defaults (6 foreground / 6 null, sequential); 4 more workers ran the post-fix pure-null diagnostics concurrently"
+}
