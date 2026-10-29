@@ -101,3 +101,22 @@ The full statements are in the module docstrings. The points where the design te
   - Sample: 10 MD-strict pairs drawn with `seeds[2]`.
   - My full-model β equals the engine's D-stage β within 2e-15.
   - One pair is flagged: 79897 × SIL-other:1289 on the lineage block (β 0.200 full vs 0.056 without lineage).
+
+### Task 4 follow-up: engine comparison (`python -X utf8 -m tests.independent.delta_compare`)
+
+- **Engine file.** `results/confounders/delta.csv` has the same sha256 as its row in `bulk_manifest.csv`.
+  `delta_flags.csv` has no manifest row.
+- **Pairs.** All 10 seeded pairs and all 80 (pair, block) rows are present in the engine's file.
+- **Flags: PASS.** Flags agree for all 80 block rows and all 10 pairs. Both sides flag 79897 × SIL-other:1289 on
+  lineage, and neither marks any pair subtype-confounded.
+- **Numbers, 7 of 8 blocks: PASS.** For lineage, culture, growth, burden, TP53, own CN and primary disease,
+  β_full, β_minus, SE_minus and Δβ agree within 1.7e-12 relative (70/70 rows).
+- **Library block: FAIL (10/10 rows).** Relative β_minus differs by up to 0.029 and Δβ by up to 0.91 (where Δβ is
+  small).
+  - Cause: the engine drops only library_group, while I also drop screen days, following the §5.3 block
+    definition (reading 6 in the readings list above).
+  - Re-running the engine's reading as a diagnostic (not adopted) matches it to 8e-15.
+  - This is a choice of reading, not a numerical error on either side.
+  - The design text supports my reading. pipeline_params supports the engine's: it lists screen days as droppable
+    and keeps the library block to library_group.
+  - It changes no flag in this sample.
