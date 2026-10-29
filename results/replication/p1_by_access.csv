@@ -1,0 +1,9 @@
+stratum,contrast,diff,estimate,ci_lo,ci_hi,k,verdict
+G,predictor_adds_value,EN-pred - EN-obs,-0.07000000000000006,-0.12,0.020000000000000018,100,no detectable difference
+G,multivariate_adds_value,EN-obs - S1-obs,-0.09999999999999998,-0.17000000000000004,-0.04999999999999993,100,univariate better
+direct,predictor_adds_value,EN-pred - EN-obs,-0.18181818181818177,-0.3181818181818182,0.0,22,no detectable difference
+direct,multivariate_adds_value,EN-obs - S1-obs,-0.18181818181818188,-0.2272727272727273,0.09090909090909094,22,no detectable difference
+non_direct,predictor_adds_value,EN-pred - EN-obs,0.020000000000000018,-0.08000000000000007,0.05999999999999994,100,no detectable difference
+non_direct,multivariate_adds_value,EN-obs - S1-obs,-0.13,-0.20000000000000007,-0.07000000000000006,100,univariate better
+proxy,predictor_adds_value,EN-pred - EN-obs,0.05319148936170215,-0.05319148936170215,0.0957446808510638,94,no detectable difference
+proxy,multivariate_adds_value,EN-obs - S1-obs,-0.11702127659574468,-0.13829787234042556,0.0,94,no detectable difference

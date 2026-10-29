@@ -1,0 +1,146 @@
+{
+ "mode": "replication",
+ "B": 1000,
+ "strata": {
+  "G": {
+   "k": 100,
+   "rates": {
+    "S1-obs": 0.99,
+    "S1-pred": 0.93,
+    "EN-obs": 0.89,
+    "EN-pred": 0.82
+   },
+   "frac_degenerate": {
+    "S1-obs": 0.0006400000000000002,
+    "S1-pred": 0.0006400000000000002,
+    "EN-obs": 0.0046300000000000004,
+    "EN-pred": 0.0023200000000000004
+   },
+   "contrasts": [
+    {
+     "contrast": "predictor_adds_value",
+     "diff": "EN-pred - EN-obs",
+     "estimate": -0.07000000000000006,
+     "ci_lo": -0.12,
+     "ci_hi": 0.020000000000000018,
+     "k": 100,
+     "verdict": "no detectable difference"
+    },
+    {
+     "contrast": "multivariate_adds_value",
+     "diff": "EN-obs - S1-obs",
+     "estimate": -0.09999999999999998,
+     "ci_lo": -0.17000000000000004,
+     "ci_hi": -0.04999999999999993,
+     "k": 100,
+     "verdict": "univariate better"
+    }
+   ]
+  },
+  "direct": {
+   "k": 22,
+   "rates": {
+    "S1-obs": 0.9545454545454546,
+    "S1-pred": 0.7272727272727273,
+    "EN-obs": 0.7727272727272727,
+    "EN-pred": 0.5909090909090909
+   },
+   "frac_degenerate": {
+    "S1-obs": 9.090909090909092e-05,
+    "S1-pred": 0.0,
+    "EN-obs": 0.011,
+    "EN-pred": 0.0042727272727272735
+   },
+   "contrasts": [
+    {
+     "contrast": "predictor_adds_value",
+     "diff": "EN-pred - EN-obs",
+     "estimate": -0.18181818181818177,
+     "ci_lo": -0.3181818181818182,
+     "ci_hi": 0.0,
+     "k": 22,
+     "verdict": "no detectable difference"
+    },
+    {
+     "contrast": "multivariate_adds_value",
+     "diff": "EN-obs - S1-obs",
+     "estimate": -0.18181818181818188,
+     "ci_lo": -0.2272727272727273,
+     "ci_hi": 0.09090909090909094,
+     "k": 22,
+     "verdict": "no detectable difference"
+    }
+   ]
+  },
+  "non_direct": {
+   "k": 100,
+   "rates": {
+    "S1-obs": 0.99,
+    "S1-pred": 0.97,
+    "EN-obs": 0.86,
+    "EN-pred": 0.88
+   },
+   "frac_degenerate": {
+    "S1-obs": 0.0006400000000000002,
+    "S1-pred": 0.0006400000000000002,
+    "EN-obs": 0.0039299999999999995,
+    "EN-pred": 0.0014
+   },
+   "contrasts": [
+    {
+     "contrast": "predictor_adds_value",
+     "diff": "EN-pred - EN-obs",
+     "estimate": 0.020000000000000018,
+     "ci_lo": -0.08000000000000007,
+     "ci_hi": 0.05999999999999994,
+     "k": 100,
+     "verdict": "no detectable difference"
+    },
+    {
+     "contrast": "multivariate_adds_value",
+     "diff": "EN-obs - S1-obs",
+     "estimate": -0.13,
+     "ci_lo": -0.20000000000000007,
+     "ci_hi": -0.07000000000000006,
+     "k": 100,
+     "verdict": "univariate better"
+    }
+   ]
+  },
+  "proxy": {
+   "k": 94,
+   "rates": {
+    "S1-obs": 0.9042553191489362,
+    "S1-pred": 0.8191489361702128,
+    "EN-obs": 0.7872340425531915,
+    "EN-pred": 0.8404255319148937
+   },
+   "frac_degenerate": {
+    "S1-obs": 8.510638297872341e-05,
+    "S1-pred": 5.319148936170212e-05,
+    "EN-obs": 0.0006489361702127659,
+    "EN-pred": 0.0
+   },
+   "contrasts": [
+    {
+     "contrast": "predictor_adds_value",
+     "diff": "EN-pred - EN-obs",
+     "estimate": 0.05319148936170215,
+     "ci_lo": -0.05319148936170215,
+     "ci_hi": 0.0957446808510638,
+     "k": 94,
+     "verdict": "no detectable difference"
+    },
+    {
+     "contrast": "multivariate_adds_value",
+     "diff": "EN-obs - S1-obs",
+     "estimate": -0.11702127659574468,
+     "ci_lo": -0.13829787234042556,
+     "ci_hi": 0.0,
+     "k": 94,
+     "verdict": "no detectable difference"
+    }
+   ]
+  }
+ }
+}

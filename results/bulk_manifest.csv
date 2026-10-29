@@ -62,3 +62,4 @@ results/subtypes/subtype_lines.csv,8972aeee8d7e0fbeee17a550bc4c5bcfc66e54a850a74
 results/confounders/delta.csv,67902f0d5b3411a51d40a2c94a9a8fc03d755cb5184de9df8b324ae002241015,107576,,2026-10-29T10:37:39+00:00,scripts/run_confounder_audit.py
 results/lineage/cross_lineage_per_lineage.csv,95e351b1bd03dfa86c011568d68d7782c4120ece65e487727442dd93e94703f2,197592,,2026-10-29T12:24:30+00:00,scripts/run_cross_lineage.py
 results/dryrun/r_lines.csv,bef039d9fdef1f2ce3fe16ae3920472f5613fc71047bd1cf7581cf21a87a15c7,,,2026-10-29T19:45:48+00:00,scripts/replicate.py --pseudo-r fold0
+results/replication/r_lines.csv,943c038b15c467b5be1747e0ad8c2ea2435c8160d2c31756abff8183571f1ca7,,,2026-10-29T20:07:58+00:00,scripts/replicate.py
