@@ -26,5 +26,7 @@ New downloads go to `external/` (git-ignored); their checksums are recorded in `
 | DepMap OmicsSomaticMutations, OmicsGlobalSignatures, OmicsProfiles, CRISPRConfounders, OmicsCNSegmentsWGS | DepMap portal (manual download by the user, 2026-10-28; portal blocks scripts) | Public 26Q3 (as requested; files not self-versioned) | configs/depmap_extra_sha256.txt | CC BY 4.0 | present in external/depmap_extra/ |
 | CCLE RRBS promoter methylation (CCLE_RRBS_TSS1kb_20181022.txt.gz; 21,338 TSS±1kb loci × ~843 lines, CCLE names) | DepMap portal, CCLE 2019 legacy release (manual download by the user, 2026-10-28) | 2018-10-22 (Ghandi 2019) | configs/depmap_extra_sha256.txt | CC BY 4.0 | present; registered before the first dictionary build |
 | PRISM Repurposing | DepMap portal | — | — | CC BY 4.0 | not obtained: not used |
+| OncoTree hierarchy | oncotree.mskcc.org | — | — | — | not obtained: indication matching used MOAlmanac OncoTree term names plus DepMap Model.csv names (partial); 6 unmapped codes listed in results/clinical/q4_summary.json |
+| TCGA prevalence (cBioPortal) | cbioportal.org | — | — | — | not used: Tier B item cut under tiers.json cut_order (DEV-BUDGET-M3B-M4) |
 
 All of the above except the DepMap rows are fetched by `scripts/fetch_external.py` (manifest: configs/external_manifest.json).
