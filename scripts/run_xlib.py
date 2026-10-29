@@ -74,6 +74,8 @@ def main(argv=None) -> int:
                     help="--reuse-arms on a dataset without _manifest.json: part count from the run's log")
     ap.add_argument("--expect-rows", type=int, default=None,
                     help="--reuse-arms on a dataset without _manifest.json: row count from the run's log")
+    ap.add_argument("--cut-discovery-only", action="store_true",
+                    help="skip the u_rule discovery_only sensitivity (tiers.json cut_order, logged deviation)")
     a = ap.parse_args(argv)
     EP.require_descends("freeze-bounds")
     from biomark import blocked as BL
@@ -105,21 +107,23 @@ def main(argv=None) -> int:
     Yd = dD.target("obs")
     sig = IO.sigma_resid_genes(Yd, dD.rows_ok, ST.CovDesign(dD.cov_df), genes)
     pool, pj = IO.make_pool(arms_tab, s1o, sig, disc_ids, repl_ids, nan_D, arms=XARMS)   # §6.3: XLIB arms only
-    # u_rule discovery_only
-    el = pd.read_csv(P.CONFIGS / "eligible_genes.csv", dtype={"entrez": str})
-    strata = (dD.cov_df["lineage"].astype(str) + "|" + dD.cov_df["library_group"].astype(str)).to_numpy()
-    ok_disc = AN.discovery_eligibility(el, dD.pred, np.where(dD.rows_ok, Yd, np.nan), strata, genes)
-    keep = set(ok_disc.index[ok_disc.to_numpy()])
-    Pd = pool[pool["powered"] & pool["gene"].isin(keep)]
-    pj_disc = {"pool_size": int(len(Pd)), "k": EP.p1_k(len(Pd)), "lists": {"G": EP.build_lists(arms_tab, Pd, XARMS)},
-               "strata": {}}
-    for name, m in EP.strata_of(Pd["access_class"]).items():
-        sub = Pd[m.to_numpy()]
-        pj_disc["strata"][name] = {"pool_size": int(len(sub)), "k": EP.p1_k(len(sub))}
-        pj_disc["lists"][name] = EP.build_lists(arms_tab, sub, XARMS)
+    # u_rule discovery_only (cut_order item when budget lateness > lateness_trigger_h: --cut-discovery-only)
+    pj_disc = None
+    if not a.cut_discovery_only:
+     el = pd.read_csv(P.CONFIGS / "eligible_genes.csv", dtype={"entrez": str})
+     strata = (dD.cov_df["lineage"].astype(str) + "|" + dD.cov_df["library_group"].astype(str)).to_numpy()
+     ok_disc = AN.discovery_eligibility(el, dD.pred, np.where(dD.rows_ok, Yd, np.nan), strata, genes)
+     keep = set(ok_disc.index[ok_disc.to_numpy()])
+     Pd = pool[pool["powered"] & pool["gene"].isin(keep)]
+     pj_disc = {"pool_size": int(len(Pd)), "k": EP.p1_k(len(Pd)), "lists": {"G": EP.build_lists(arms_tab, Pd, XARMS)},
+                "strata": {}}
+     for name, m in EP.strata_of(Pd["access_class"]).items():
+         sub = Pd[m.to_numpy()]
+         pj_disc["strata"][name] = {"pool_size": int(len(sub)), "k": EP.p1_k(len(sub))}
+         pj_disc["lists"][name] = EP.build_lists(arms_tab, sub, XARMS)
     # replication on non-Avana D lines (observed D effects, scope dev)
     Y_all = pd.DataFrame(data.target("obs"), index=data.lines, columns=genes)
-    feats = sorted({f for pjx in (pj, pj_disc) for L in pjx["lists"].values() for arm in XARMS
+    feats = sorted({f for pjx in (pj, pj_disc) if pjx is not None for L in pjx["lists"].values() for arm in XARMS
                     for _, f, _ in L.get(arm, {}).get("rows", [])})
     fl = IO.feature_meta()
     binary = (fl["d_type"] == "binary").to_dict()
@@ -127,6 +131,9 @@ def main(argv=None) -> int:
     fitter = IO.fitter_for(repl_ids, genes, feats, Y_all.loc[repl_ids])
     rows, summ = [], {"discovery_lines": int(disc.sum()), "replication_lines": len(repl_ids), "u_rules": {}}
     for u_rule, pjx in (("all_D", pj), ("discovery_only", pj_disc)):
+        if pjx is None:
+            summ["u_rules"][u_rule] = "cut (tiers.json cut_order; budget lateness; DEV-CUT-XLIB-DISC)"
+            continue
         lists, k_of = {}, {}
         for stratum, L in pjx["lists"].items():
             for arm in XARMS:
