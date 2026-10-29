@@ -1,0 +1,31 @@
+{
+ "locus_resolution": {
+  "n": 1114,
+  "levels": {
+   "locus": 1050,
+   "gene": 64
+  }
+ },
+ "amplicon": {
+  "n": 190,
+  "labels": {
+   "unresolved": 133,
+   "amplified-driver addiction": 57
+  }
+ },
+ "culture": {
+  "n_subtypes": 11662,
+  "flagged": 60,
+  "rescued": 51,
+  "confounded": 9,
+  "module_overlap_flags": 14
+ },
+ "hypermut_tp53": {
+  "n": 466,
+  "failed": {
+   "TP53-mutant": 4,
+   "hypermutation": 1
+  }
+ },
+ "symbols_known": 21269
+}

@@ -1,0 +1,10 @@
+{
+ "job": "culture_audit",
+ "utc": "2026-10-29T13:24:26+00:00",
+ "start_utc": "2026-10-29T13:20:47+00:00",
+ "wall_s": 219.399218,
+ "workers": 1,
+ "run_id": "run_m5_audits-24900-20261029T130925",
+ "n_subtypes": 11662,
+ "n_overlap_tests": 11116
+}
