@@ -27,3 +27,6 @@ __pycache__/
 
 # bulk derived CSV over the GitHub size limit (sha256 in results/bulk_manifest.csv)
 results/benchmark/selected.csv
+results/md/md_global_all.csv
+results/md/md_strict_all.csv
+results/md_ctrl/md_*_all.csv

@@ -8,7 +8,8 @@
    and the text above ``## Amendments after freeze`` must equal DESIGN.md at ``freeze-design`` (trailing
    whitespace ignored).
 2. If tag ``freeze-bounds`` exists it must be an ancestor of the first commit (in HEAD's history) touching
-   ``results/benchmark/``, ``results/md/``, ``results/gates/`` or ``results/null/``; if it does not exist, no such
+   ``results/benchmark/``, ``results/md/``, ``results/gates/``, ``results/null/`` or the ctrl-universe
+   ``results/benchmark_ctrl/`` / ``results/md_ctrl/``; if it does not exist, no such
    commit may exist yet.
 3. Coverage (reported, ``--strict-coverage`` makes it fail): files DESIGN §13.4 names for each freeze tag that are not
    in the hash record, with whether they existed at the tag and changed since.
@@ -30,7 +31,8 @@ ROOT = Path(__file__).resolve().parents[1]
 HASHES = Path("configs") / "frozen_hashes.json"
 SECTION_TAG = {"design": "freeze-design", "bounds": "freeze-bounds"}
 AMEND_HEADING = b"## Amendments after freeze"
-PROTECTED = ("results/benchmark/", "results/md/", "results/gates/", "results/null/")
+PROTECTED = ("results/benchmark/", "results/md/", "results/gates/", "results/null/", "results/benchmark_ctrl/",
+             "results/md_ctrl/")
 # DESIGN §13.4 lists (file paths as found in this repository; "culture and lineage lists" live in build_params.json,
 # toy plants in toy_answer_key.json).
 EXPECTED = {

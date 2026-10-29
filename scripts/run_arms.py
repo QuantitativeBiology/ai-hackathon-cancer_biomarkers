@@ -2,11 +2,13 @@
 
     python -B scripts/run_arms.py --pilot            # 50-gene timing pilot -> results/timing/surrogate_pilot.json
     python -B scripts/run_arms.py                    # full run (refused before tag freeze-bounds)
-    python -B scripts/run_arms.py --universe ctrl    # U_ctrl genes (non-eligible controls / CGT targets)
+    python -B scripts/run_arms.py --universe ctrl    # U_ctrl genes (configs/u_ctrl_genes.txt; BH within U_ctrl)
 
-Outputs (full run): cache/benchmark/{arms,s1,en}.parquet (bulk; sha256 -> results/bulk_manifest.csv),
-results/benchmark/{selected.csv, lambda.csv, p_cut.json, summary.json}, results/md/{md_strict.csv,
-md_strict_all.csv, en_obs_strict.csv}, results/timing/{s1_obs,s1_pred,en_obs,en_pred,md_strict}.json.
+Outputs (full run, eligible): cache/benchmark/arms/part-*.parquet (bulk; sha256 -> results/bulk_manifest.csv),
+results/benchmark/{selected.csv, lambda.csv, p_cut.json, summary.json}, results/md/{md_global, md_global_all,
+md_strict, md_strict_all, en_obs_strict}.csv, results/timing/{s1_obs,s1_pred,en_obs,en_pred,md_strict}.json.
+``--universe ctrl`` writes the same files under ctrl-only roots (output_paths): cache/benchmark/arms_ctrl/,
+results/benchmark_ctrl/ (timing in results/benchmark_ctrl/timing/, never budgeted) and results/md_ctrl/.
 EN-pred never reads observed effects (it receives predictions and the NaN mask only).
 """
 from __future__ import annotations
@@ -38,12 +40,46 @@ def sha(path) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def write_timing(stem: str, rec: dict, tag: str = "", **kw) -> None:
-    """results/timing/<stem>.json (schema of analyses.write_timing) for the eligible universe; other universes write
-    to results/benchmark/timing<tag>/ so budget_check.py never sees an unmapped stem."""
+UNIVERSES = ("eligible", "ctrl")
+
+
+def output_paths(universe: str = "eligible") -> dict:
+    """Every location a full run writes, per universe. The ctrl universe (U_ctrl, configs/u_ctrl_genes.txt) writes
+    only under ctrl-specific roots, so it never overwrites an eligible output: cache/benchmark/arms_ctrl/ (+ its stage
+    dir), results/benchmark_ctrl/ (selected, lambda, p_cut, summary, timing/) and results/md_ctrl/. The one shared
+    file is results/bulk_manifest.csv, keyed by path (ctrl rows have ctrl-specific paths)."""
+    if universe not in UNIVERSES:
+        raise ValueError(f"universe must be one of {UNIVERSES}")
+    rt = PR.runtime()["blocked"]
+    sfx = "" if universe == "eligible" else f"_{universe}"
+    rb = P.RESULTS / f"benchmark{sfx}"
+    return {"dataset": P.PROJECT / (rt["dataset_dir"] + sfx), "stage": P.PROJECT / (rt["stage_dir"] + sfx),
+            "benchmark": rb, "md": P.RESULTS / f"md{sfx}",
+            "timing": None if universe == "eligible" else rb / "timing",
+            "bulk_manifest": P.RESULTS / "bulk_manifest.csv"}
+
+
+def universe_genes(universe: str) -> list | None:
+    """None = the eligible genes (Data.from_real default); ctrl = configs/u_ctrl_genes.txt, asserted disjoint from the
+    eligible set (DESIGN §2: arms ⊆ eligible; U_ctrl runs separately)."""
+    if universe == "eligible":
+        return None
+    f = P.CONFIGS / "u_ctrl_genes.txt"
+    if not f.exists():
+        raise SystemExit(f"{f} missing: run scripts/build_u_ctrl_genes.py")
+    genes = [x.strip() for x in f.read_text(encoding="utf-8").splitlines() if x.strip()]
+    el = pd.read_csv(P.CONFIGS / "eligible_genes.csv", dtype={"entrez": str})
+    both = set(genes) & set(el.loc[el["eligible"].astype(bool), "entrez"])
+    if both:
+        raise SystemExit(f"u_ctrl_genes.txt overlaps the eligible set: {sorted(both)}")
+    return genes
+
+
+def write_timing(stem: str, rec: dict, timing_dir=None, **kw) -> None:
+    """results/timing/<stem>.json (schema of analyses.write_timing) for the eligible universe (``timing_dir`` None);
+    the ctrl universe writes to results/benchmark_ctrl/timing/ so budget_check.py never budgets it."""
     from biomark import analyses as AN
-    d = None if not tag else P.RESULTS / "benchmark" / f"timing{tag}"
-    AN.write_timing(stem, rec, timing_dir=d, **kw)
+    AN.write_timing(stem, rec, timing_dir=timing_dir, **kw)
 
 
 def _epoch(t: float) -> dt.datetime:
@@ -147,55 +183,61 @@ def full(args) -> int:
     from biomark import blocked as BL
     if not gitutil.tag_exists(P.PROJECT, FREEZE_BOUNDS) and not args.force_before_bounds:
         raise SystemExit(f"tag {FREEZE_BOUNDS} missing: full arms are launched by the PI after freeze-bounds")
-    genes = None
-    if args.universe == "ctrl":
-        f = P.CONFIGS / "u_ctrl_genes.txt"
-        genes = [x.strip() for x in f.read_text(encoding="utf-8").splitlines() if x.strip()]
-    tag = "" if args.universe == "eligible" else f"_{args.universe}"
+    genes = universe_genes(args.universe)
+    out = output_paths(args.universe)
     data = PL.Data.from_real(genes=genes)
     ws1, g1 = AN.guard_workers(args.workers_s1, "s1", log=print)
     wen, g2 = AN.guard_workers(args.workers_en, "en", log=print)
-    rt = PR.runtime()["blocked"]
-    out_dir = P.PROJECT / (rt["dataset_dir"] + tag)
-    res = BL.run_streamed(data, A.ARMS, out_dir=out_dir, stage_dir=P.PROJECT / (rt["stage_dir"] + tag),
+    res = BL.run_streamed(data, A.ARMS, out_dir=out["dataset"], stage_dir=out["stage"],
                           workers_s1=ws1, workers_en=wen, log=print)
-    tim = res["timings"]
+    summ = write_outputs(res, data, args.universe, {"s1": g1, "en": g2}, ws1)
+    print(json.dumps(summ, indent=1, default=str))
+    return 0
+
+
+def write_outputs(res: dict, data, universe: str, guards: dict, ws1: int) -> dict:
+    """Write the results of blocked.run_streamed for ``universe`` to output_paths(universe) only."""
     from biomark import endpoint_io as IO
-    rb, rm = P.RESULTS / "benchmark", P.RESULTS / "md"
+    out = output_paths(universe)
+    out_dir, rb, rm, td = out["dataset"], out["benchmark"], out["md"], out["timing"]
+    tim = res["timings"]
     rb.mkdir(parents=True, exist_ok=True)
     rm.mkdir(parents=True, exist_ok=True)
     bulk_manifest([out_dir / p for p in res["parts"]])
-    IO.read_arms(selected_only=True, dataset_dir=out_dir).to_csv(rb / f"selected{tag}.csv", index=False)
-    res["lam"].to_csv(rb / f"lambda{tag}.csv", index=False)
+    IO.read_arms(selected_only=True, dataset_dir=out_dir).to_csv(rb / "selected.csv", index=False)
+    res["lam"].to_csv(rb / "lambda.csv", index=False)
     pc = dict(res["p_cut"], **({"MD-strict": res["p_cut_sc"]} if "p_cut_sc" in res else {}))
-    (rb / f"p_cut{tag}.json").write_text(json.dumps(pc, indent=1), encoding="utf-8")
-    res["md_global"].to_csv(rm / f"md_global{tag}.csv", index=False)          # A7: the catalogue
-    res["md_global_all"].to_csv(rm / f"md_global_all{tag}.csv", index=False)
-    res["md_strict"].to_csv(rm / f"md_strict{tag}.csv", index=False)          # frozen secondary
-    res["md_strict_all"].to_csv(rm / f"md_strict_all{tag}.csv", index=False)
+    (rb / "p_cut.json").write_text(json.dumps(pc, indent=1), encoding="utf-8")
+    res["md_global"].to_csv(rm / "md_global.csv", index=False)          # A7: the catalogue
+    res["md_global_all"].to_csv(rm / "md_global_all.csv", index=False)
+    res["md_strict"].to_csv(rm / "md_strict.csv", index=False)          # frozen secondary
+    res["md_strict_all"].to_csv(rm / "md_strict_all.csv", index=False)
     if "en_obs_strict" in res:
-        res["en_obs_strict"].to_csv(rm / f"en_obs_strict{tag}.csv", index=False)
-    summ = {"universe": args.universe, "n_genes": len(data.genes), "n_rows_arms": int(res["n_rows"]),
+        res["en_obs_strict"].to_csv(rm / "en_obs_strict.csv", index=False)
+    summ = {"universe": universe, "n_genes": len(data.genes), "n_rows_arms": int(res["n_rows"]),
             "n_parts": len(res["parts"]), "dataset_dir": str(out_dir.relative_to(P.PROJECT).as_posix()),
+            "bh_families": "within this universe (all rows of the dataset)",
             "selected": res["selected"], "n_md_global": int(len(res["md_global"])), "n_md_strict": int(len(res["md_strict"])),
-            "workers": {"s1": g1, "en": g2}, "config_sha256": PR.config_hashes(),
+            "workers": guards, "config_sha256": PR.config_hashes(),
             "subsamples_sha256": sha(P.CONFIGS / "subsamples.json"),
             "dictionary_built_utc": data.extras.get("dictionary_built_utc"), "commit": gitutil.head(P.PROJECT)}
-    (rb / f"summary{tag}.json").write_text(json.dumps(summ, indent=1, default=str), encoding="utf-8")
+    if universe != "eligible":
+        summ["u_ctrl_genes_sha256"] = sha(P.CONFIGS / "u_ctrl_genes.txt")
+    (rb / "summary.json").write_text(json.dumps(summ, indent=1, default=str), encoding="utf-8")
     n = len(data.genes)
+    g1, g2 = guards.get("s1"), guards.get("en")
     s0, s1e = tim["s1_window"]
     for stem in ("s1_obs", "s1_pred"):          # one scan, two stems: same window and run_id (counted once)
         write_timing(stem, {"note": "S1-obs and S1-pred computed in one streamed scan", "n_genes": n, "memory_guard": g1},
-                     tag, workers=ws1, start_utc=_epoch(s0), end_utc=_epoch(s1e))
+                     td, workers=ws1, start_utc=_epoch(s0), end_utc=_epoch(s1e))
     for arm, stem in (("EN-obs", "en_obs"), ("EN-pred", "en_pred")):
         win = [d for d in tim["en_walls"] if d["arm"] == arm][0]
-        write_timing(stem, {"n_genes": n, "memory_guard": g2}, tag, workers=int(win["workers"]),
+        write_timing(stem, {"n_genes": n, "memory_guard": g2}, td, workers=int(win["workers"]),
                      start_utc=_epoch(win["start_epoch"]), end_utc=_epoch(win["end_epoch"]))
     g0, g1e = tim["global_window"]
     write_timing("md_strict", {"note": "global BH / ranks / dedup / MD lists and final parts (blocked.run_streamed)"},
-                 tag, workers=1, start_utc=_epoch(g0), end_utc=_epoch(g1e))
-    print(json.dumps(summ, indent=1, default=str))
-    return 0
+                 td, workers=1, start_utc=_epoch(g0), end_utc=_epoch(g1e))
+    return summ
 
 
 def main(argv=None) -> int:

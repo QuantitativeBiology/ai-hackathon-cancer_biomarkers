@@ -81,13 +81,57 @@ def s1_table() -> pd.DataFrame:
     return s
 
 
-def md_strict() -> pd.DataFrame:
-    return pd.read_csv(P.RESULTS / "md" / "md_strict.csv", dtype={"gene": str})
+UNIVERSES = ("eligible", "ctrl")
 
 
-def md_global() -> pd.DataFrame:
-    """The catalogue (amendment A7): results/md/md_global.csv."""
-    return pd.read_csv(P.RESULTS / "md" / "md_global.csv", dtype={"gene": str})
+def _sfx(universe: str) -> str:
+    if universe not in UNIVERSES:
+        raise ValueError(f"universe must be one of {UNIVERSES}")
+    return "" if universe == "eligible" else f"_{universe}"
+
+
+def arms_dir(universe: str = "eligible") -> Path:
+    """Arms dataset of a universe (resolved at call time): cache/benchmark/arms (eligible) or .../arms_ctrl (U_ctrl,
+    scripts/run_arms.py --universe ctrl)."""
+    return P.CACHE / "benchmark" / f"arms{_sfx(universe)}"
+
+
+def md_dir(universe: str = "eligible") -> Path:
+    """results/md (eligible) or results/md_ctrl (U_ctrl; BH families within U_ctrl)."""
+    return P.RESULTS / f"md{_sfx(universe)}"
+
+
+def benchmark_dir(universe: str = "eligible") -> Path:
+    return P.RESULTS / f"benchmark{_sfx(universe)}"
+
+
+def universe_genes() -> dict:
+    """{'eligible': set, 'ctrl': set} of Entrez strings from configs/eligible_genes.csv and configs/u_ctrl_genes.txt
+    (empty if that file is absent). The two sets are disjoint (asserted)."""
+    el = pd.read_csv(P.CONFIGS / "eligible_genes.csv", dtype={"entrez": str})
+    elig = set(el.loc[el["eligible"].astype(str).str.lower().isin(["true", "1"]), "entrez"])
+    f = P.CONFIGS / "u_ctrl_genes.txt"
+    ctrl = {x.strip() for x in f.read_text(encoding="utf-8").splitlines() if x.strip()} if f.exists() else set()
+    both = elig & ctrl
+    if both:
+        raise ValueError(f"u_ctrl_genes.txt overlaps the eligible set: {sorted(both)}")
+    return {"eligible": elig, "ctrl": ctrl}
+
+
+def universe_of(genes, ug: dict | None = None) -> dict:
+    """gene -> 'eligible' | 'ctrl' | 'none'."""
+    ug = universe_genes() if ug is None else ug
+    return {str(g): ("eligible" if str(g) in ug["eligible"] else "ctrl" if str(g) in ug["ctrl"] else "none")
+            for g in genes}
+
+
+def md_strict(universe: str = "eligible") -> pd.DataFrame:
+    return pd.read_csv(md_dir(universe) / "md_strict.csv", dtype={"gene": str})
+
+
+def md_global(universe: str = "eligible") -> pd.DataFrame:
+    """The catalogue (amendment A7): results/md/md_global.csv (U_ctrl: results/md_ctrl/md_global.csv)."""
+    return pd.read_csv(md_dir(universe) / "md_global.csv", dtype={"gene": str})
 
 
 def catalogue() -> pd.DataFrame:

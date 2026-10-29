@@ -12,6 +12,8 @@ the labels in precedence order: cross-lineage > lineage-restricted > lineage-unr
 Known limitation (A7-iii): a one-lineage effect can be labelled cross-lineage when the null lineages share its sign
 by chance; ``single_lineage_driven`` flags cross-lineage labels with at most one powered lineage that is nominally
 significant (p < cross_lineage.single_lineage_p_max) with the pooled sign.
+Controls whose gene is in U_ctrl (configs/u_ctrl_genes.txt; DESIGN §2) are included from the U_ctrl run
+(cache/benchmark/arms_ctrl/) when it exists, marked universe = ctrl.
 Writes results/lineage/{cross_lineage.csv, cross_lineage_per_lineage.csv, summary.json}; timing stem cross_lineage.
 Refuses unless HEAD descends from freeze-bounds.
 """
@@ -36,10 +38,15 @@ LIMITATION = ("A7-iii: the cross-lineage rule can mislabel a one-lineage effect 
 
 def run(ws, src, workers: int) -> dict:
     t0 = AN.utc_now()
-    cat, _, pairs = M5.analysis_pairs(ws, src, top_s1=int(PR.pp()["audit"]["cross_lineage_top_s1"]))
+    ctrl = ws.has_ctrl()                 # DESIGN §2/§8.3: controls whose gene is in U_ctrl are read from U_ctrl
+    cat, _, pairs = M5.analysis_pairs(ws, src, top_s1=int(PR.pp()["audit"]["cross_lineage_top_s1"]),
+                                      u_ctrl_controls=ctrl)
     bsh = M5.shrunk_beta_ws(ws, keep=set(zip(pairs["gene"], pairs["feature"])))
     data = src.data(pairs["gene"].unique())
     lab, per = M5.cross_lineage(data, pairs, bsh, M5.sign_map(cat), workers=workers)
+    if "universe" in pairs:
+        uni = dict(zip(zip(pairs["gene"], pairs["feature"]), pairs["universe"]))
+        lab["universe"] = [uni.get(k, "eligible") for k in zip(lab["gene"], lab["feature"])]
     outs = [ws.write_csv(lab, f"{OUT}/cross_lineage.csv"), ws.write_csv(per, f"{OUT}/cross_lineage_per_lineage.csv")]
     base = lab["label"].astype(str).str.split(" \\(").str[0]
     by = {}
@@ -48,6 +55,8 @@ def run(ws, src, workers: int) -> dict:
         by[src_name] = {"n": int(m.sum()), "labels": base[m].value_counts().to_dict(),
                         "single_lineage_driven": int((lab["single_lineage_driven"] & m).sum())}
     summ = {"n_pairs": int(len(lab)), "labels": base.value_counts().to_dict(), "by_source": by,
+            "u_ctrl_controls": {"included": bool(ctrl),
+                                "n_pairs": int((lab["universe"] == "ctrl").sum()) if "universe" in lab else 0},
             "bh_families": "F4 pooled and F5 per-lineage over every pair of this run", "limitation": LIMITATION,
             "workers": workers}
     outs.append(ws.write_json(summ, f"{OUT}/summary.json"))

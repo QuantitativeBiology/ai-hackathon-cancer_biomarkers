@@ -74,14 +74,23 @@ class Workspace:
         return Path(path).resolve().relative_to(self.root.resolve()).as_posix()
 
     # ---- frozen M4 inputs ------------------------------------------------------------------------
-    def arms(self, arms=None, columns=None, genes=None, selected_only: bool = False) -> pd.DataFrame:
+    def arms(self, arms=None, columns=None, genes=None, selected_only: bool = False,
+             universe: str = "eligible") -> pd.DataFrame:
         """Rows of the arms table, never the whole table (real: ~26 M rows): only ``columns`` and the rows matching
         the filters are materialised. Real workspace: ``endpoint_io.read_arms(columns=, filters=)`` when the blocked
         dataset exists (cache/benchmark/arms/part-*.parquet; the toy workspace writes the same layout under its own
-        cache/), else a pyarrow read of a legacy arms.parquet with the same column / row pushdown."""
+        cache/), else a pyarrow read of a legacy arms.parquet with the same column / row pushdown.
+        ``universe='ctrl'``: the U_ctrl dataset cache/benchmark/arms_ctrl/ (DESIGN §2; empty when it does not exist);
+        its rows never enter a top-k list, the null, P1 or P2."""
         from . import endpoint_io as IO
         bench = self.cache / "benchmark"
-        if hasattr(IO, "read_arms") and any((bench / "arms").glob("part-*.parquet")):
+        if universe != "eligible":
+            d = bench / f"arms_{universe}"
+            if not any(d.glob("part-*.parquet")):
+                return pd.DataFrame(columns=list(columns or ["gene", "feature"]))
+            a = IO.read_arms(columns=columns, arms=arms, genes=None if genes is None else [str(g) for g in genes],
+                             selected_only=selected_only, dataset_dir=d)
+        elif hasattr(IO, "read_arms") and any((bench / "arms").glob("part-*.parquet")):
             a = IO.read_arms(columns=columns, arms=arms, genes=None if genes is None else [str(g) for g in genes],
                              selected_only=selected_only, dataset_dir=bench / "arms")
         else:                                   # legacy single file / reader absent: same pushdown via pyarrow
@@ -97,16 +106,27 @@ class Workspace:
             a["gene"] = a["gene"].astype(str)
         return a.reset_index(drop=True)
 
-    def in_universe(self, pairs: pd.DataFrame) -> set:
-        """(gene, feature) keys of ``pairs`` that are rows of U (S1-obs rows of the arms table), read for the pairs'
-        genes only."""
+    def in_universe(self, pairs: pd.DataFrame, universe: str = "eligible") -> set:
+        """(gene, feature) keys of ``pairs`` that are rows of U (S1-obs rows of the arms table; ``universe='ctrl'``:
+        of U_ctrl), read for the pairs' genes only."""
         if not len(pairs):
             return set()
-        a = self.arms(arms=["S1-obs"], columns=["gene", "feature"], genes=pairs["gene"].unique())
-        return set(zip(a["gene"], a["feature"])) & set(zip(pairs["gene"].astype(str), pairs["feature"]))
+        a = self.arms(arms=["S1-obs"], columns=["gene", "feature"], genes=pairs["gene"].unique(), universe=universe)
+        return set(zip(a["gene"].astype(str), a["feature"])) & set(zip(pairs["gene"].astype(str), pairs["feature"]))
 
-    def md(self, name: str) -> pd.DataFrame:
-        f = self.results / "md" / ("md_global.csv" if name == PRIMARY else "md_strict.csv")
+    def ctrl_genes(self) -> set:
+        """U_ctrl genes (configs/u_ctrl_genes.txt of this workspace; empty if absent)."""
+        f = self.configs / "u_ctrl_genes.txt"
+        return {x.strip() for x in f.read_text(encoding="utf-8").splitlines() if x.strip()} if f.exists() else set()
+
+    def has_ctrl(self) -> bool:
+        """True when the U_ctrl run's outputs exist (cache/benchmark/arms_ctrl parts and results/md_ctrl lists)."""
+        return (bool(self.ctrl_genes()) and any((self.cache / "benchmark" / "arms_ctrl").glob("part-*.parquet"))
+                and all((self.results / "md_ctrl" / f).exists() for f in ("md_global.csv", "md_strict.csv")))
+
+    def md(self, name: str, universe: str = "eligible") -> pd.DataFrame:
+        d = self.results / ("md" if universe == "eligible" else f"md_{universe}")
+        f = d / ("md_global.csv" if name == PRIMARY else "md_strict.csv")
         return pd.read_csv(f, dtype={"gene": str})
 
     def lam(self) -> pd.DataFrame:
@@ -292,8 +312,16 @@ class ToySource:
         self.toy = TS.make_toy(seed=int(meta["seed"]), predictor=meta["predictor"])
 
     def data(self, genes=None):
+        """The toy's eligible genes; requested genes outside them (U_ctrl controls) are added in toy gene order."""
         from . import pipeline as PL
-        return PL.Data.from_toy(self.toy)
+        if genes is None:
+            return PL.Data.from_toy(self.toy)
+        el = PL.toy_eligibility(self.toy)["eligible"]
+        extra = set(map(str, genes)) - set(el.index[el].astype(str))
+        if not extra:
+            return PL.Data.from_toy(self.toy)
+        keep = [g for g in self.toy.genes.index if bool(el.get(g, False)) or str(g) in extra]
+        return PL.Data.from_toy(self.toy, genes=keep)
 
     def loaders(self, data):
         t = self.toy
@@ -406,12 +434,12 @@ CAT_COLS = ["gene", "feature", "beta", "se", "p", "n_obs", "n_carriers", "collin
             "stage", "selection_freq"]
 
 
-def catalogue(ws: Workspace) -> pd.DataFrame:
+def catalogue(ws: Workspace, universe: str = "eligible") -> pd.DataFrame:
     """MD-global ∪ MD-strict pairs with membership flags; values from MD-global where present (β = S1-obs β, the
-    D-stage test of both lists)."""
+    D-stage test of both lists). ``universe='ctrl'``: the U_ctrl lists (results/md_ctrl/), used only for controls."""
     parts = []
     for name in lists():
-        m = ws.md(name)
+        m = ws.md(name, universe)
         m = m[[c for c in CAT_COLS if c in m]].copy()
         m["list"] = name
         parts.append(m)
@@ -510,8 +538,15 @@ def shrunk_beta_ws(ws: Workspace, keep: set) -> dict:
                               int(cfg()["memory"]["eb_chunk_rows"]))
     del a
     genes = sorted({g for g, _ in keep})
-    r = ws.arms(arms=["S1-obs"], columns=["gene", "feature", "beta", "se", "sd_dtilde"], genes=genes)
-    r = r[[k in keep for k in zip(r["gene"], r["feature"])]]
+    cols = ["gene", "feature", "beta", "se", "sd_dtilde"]
+    ctrl = ws.ctrl_genes() & set(genes)                 # U_ctrl controls: their rows come from the U_ctrl dataset
+    ge = [g for g in genes if g not in ctrl]
+    parts = [ws.arms(arms=["S1-obs"], columns=cols, genes=ge)] if ge or not ctrl else []
+    if ctrl:
+        parts.append(ws.arms(arms=["S1-obs"], columns=cols, genes=sorted(ctrl), universe="ctrl"))
+    parts = [x for x in parts if len(x)] or parts[:1]
+    r = parts[0] if len(parts) == 1 else pd.concat(parts, ignore_index=True)
+    r = r[[k in keep for k in zip(r["gene"].astype(str), r["feature"])]]
     sd = r["sd_dtilde"].to_numpy(dtype=np.float64)
     with np.errstate(divide="ignore", invalid="ignore"):
         post = eb_posterior(r["beta"].to_numpy(dtype=np.float64) * sd, r["se"].to_numpy(dtype=np.float64) * sd,
@@ -519,29 +554,46 @@ def shrunk_beta_ws(ws: Workspace, keep: set) -> dict:
     return dict(zip(zip(r["gene"], r["feature"]), post))
 
 
-def analysis_pairs(ws: Workspace, src, top_s1: int | None = None, gate_only: bool = False) -> tuple:
+def analysis_pairs(ws: Workspace, src, top_s1: int | None = None, gate_only: bool = False,
+                   u_ctrl_controls: bool = False) -> tuple:
     """(catalogue, S1-obs BH hits, pair set): MD-global ∪ MD-strict ∪ S1-obs BH (top ``top_s1``) ∪ positive
-    controls in U, read without loading U (only S1-obs selected rows and the control genes' rows)."""
+    controls in U, read without loading U (only S1-obs selected rows and the control genes' rows).
+    ``u_ctrl_controls``: also the controls whose gene is in U_ctrl (DESIGN §2), taken where they are rows of U_ctrl
+    (§8.3 uses every control); the pair set then has a ``universe`` column ('eligible' / 'ctrl')."""
     cat = catalogue(ws)
     s1h = ws.arms(arms=["S1-obs"], columns=["gene", "feature", "beta", "rank"], selected_only=True)
     ctl = src.controls()
     if gate_only:
         ctl = ctl[ctl["scope"] == "gate"]
-    U = set(zip(cat["gene"], cat["feature"])) | set(zip(s1h["gene"], s1h["feature"])) | ws.in_universe(ctl)
-    return cat, s1h, pair_set(cat, s1h, ctl, U, top_s1=top_s1)
+    cg = ws.ctrl_genes() if u_ctrl_controls else set()
+    ctl_e = ctl[~ctl["gene"].astype(str).isin(cg)]
+    U = set(zip(cat["gene"], cat["feature"])) | set(zip(s1h["gene"], s1h["feature"])) | ws.in_universe(ctl_e)
+    pairs = pair_set(cat, s1h, ctl_e, U, top_s1=top_s1)
+    if not u_ctrl_controls:
+        return cat, s1h, pairs
+    pairs = pairs.assign(universe="eligible")
+    if cg:
+        ctl_c = ctl[ctl["gene"].astype(str).isin(cg)]
+        Uc = ws.in_universe(ctl_c, "ctrl")
+        if Uc:
+            pc = pair_set(cat.iloc[:0], s1h.iloc[:0], ctl_c, Uc).assign(universe="ctrl")
+            pairs = pd.concat([pairs, pc], ignore_index=True)
+    return cat, s1h, pairs
 
 
 class RankLookup:
     """``endpoints.RankIndex.rank_of`` semantics (§10.5 rank_of_feature_D) without the whole arms table: per arm the
     sorted ranks of the de-duplicated rows (two float columns) plus the rows of the queried genes."""
 
-    def __init__(self, ws: Workspace, arms_list, genes):
+    def __init__(self, ws: Workspace, arms_list, genes, universe: str = "eligible"):
+        """``universe='ctrl'``: ranks within U_ctrl (its own de-duplicated rows), for U_ctrl controls / CGT targets."""
         self.dr, self.by = {}, {}
         for arm in arms_list:
-            r = ws.arms(arms=[arm], columns=["rank", "rank_dedup"])
+            r = ws.arms(arms=[arm], columns=["rank", "rank_dedup"], universe=universe)
             self.dr[arm] = np.sort(r.loc[r["rank_dedup"].notna(), "rank"].to_numpy(dtype=float))
         t = ws.arms(arms=list(arms_list), columns=["arm", "gene", "feature", "rank", "rank_dedup", "variant_group",
-                                                   "beta", "access_class"], genes=genes)
+                                                   "beta", "access_class"], genes=genes, universe=universe)
+        t["gene"] = t["gene"].astype(str)
         for arm, s in t.groupby("arm"):
             self.by[arm] = {g: x for g, x in s.groupby("gene")}
         s1 = t[t["arm"] == "S1-obs"]

@@ -121,7 +121,7 @@ EN-pred fidelity is 0.29 (consistent with amendment A6: prediction arms are dens
 |---|---|
 | `src/biomark/endpoints.py` | pure functions: `descends_from` / `require_descends` (tag is an ancestor of HEAD), `require_single_r_read`, `catalogue_manifest` / `catalogue_mismatches`, `clopper_pearson`, `mcnemar_exact`, `p1_verdict`, `p2_verdict`, `gate_attempt`, `RankIndex` (fast `rank_of_feature_D`, equality with `arms.rank_of_feature` tested), `p2_test_set`, `p2_score`, `p2_summary` (recall + CI, direction accuracy, sign errors, McNemar, verdict), `actionability`, `population_by_lineage`, `expected_nonnan`, `pool_power`, `p1_k`, `build_lists`, `strata_of`, `RFitter` (§5.3 model with fixed drops on any line set, CR2 + ν), `replicated`, `bootstrap_rates`, `p1_contrasts` |
 | `src/biomark/endpoint_io.py` | real-data loaders for any line set (values, covariates, own CN, EXPGATE, library strings), σ̂_resid,D(g), `subset_data`, `make_pool`, `build_requests` |
-| `scripts/run_gate.py` | §9.3 attempt n -> `results/gates/G_pc_attempt{n}.json` (never overwritten) + row in `results/gate_iterations.csv` (commit, reason, toy test, gate before/after, file sha256); attempt > 1 needs `--reason` and `--toy-test`; refuses unless HEAD descends from `freeze-bounds` |
+| `scripts/run_gate.py` | §9.3 attempt n -> `results/gates/G_pc_attempt{n}.json` (never overwritten) + row in `results/gate_iterations.csv` (commit, reason, toy test, gate before/after, file sha256); attempt > 1 needs `--reason` and `--toy-test`; refuses unless HEAD descends from `freeze-bounds`. Each control is read from the universe of its gene (eligible lists, or U_ctrl: `results/md_ctrl/`, `cache/benchmark/arms_ctrl/`) for every arm and both MD lists; `universe` per row, `summary.by_universe`, input hashes of both datasets; refuses if a control gene is in neither universe or U_ctrl outputs are missing / stale |
 | `scripts/build_p1_pool.py` | pre-tag: Pool_G, k_G, k_s, frozen lists (k_G, strata, secondary k) -> `results/benchmark/p1_pool.json` (+ bulk pool parquet), `configs/catalogue/r_requests.csv`, `configs/freeze_catalogue.json`; R contributes molecular data only; refuses before `freeze-bounds` or after `freeze-catalogue` |
 | `scripts/replicate.py` | the single R run and `--pseudo-r fold0` (writes only `results/dryrun/`) |
 | `tests/test_endpoint_branches.py` | 16 tests: every P1 branch (both contrasts, three branches + descriptive), end-to-end bootstrap reaching "predictor adds value", every P2 branch + descriptive, headline set (A4), gate pass/fail branches, refusals (pre-tag replicate / gate / pool build, second R open after the tag before any effect read, reproduction rules, catalogue hash mismatch), expected-NaN rule, pool/power/list builder |
@@ -165,7 +165,8 @@ Ambiguities resolved:
 | `scripts/run_confounder_audit.py` | §5.5 deltas for MD-strict ∪ S1-obs BH ∪ gate controls (parallel chunks of `audit.confounding_delta`) -> `results/confounders/delta.csv`, `delta_flags.csv`; §5.3 VIF / condition number -> `results/covariates/vif_check.json` | confounder_delta, vif |
 | `scripts/run_q4.py` | §10.5 Q4a/P2 (all sets / subsets / k), direction, Q4b actionability, Q4c population labels + precision + carriers-only OR -> `results/clinical/{q4_summary.json, p2_scores.csv, actionability.csv, q4c_population.csv, q4c_labels.csv}` | q4_summary |
 | `scripts/replicate.py` | now appends a registry row (status ok, or dryrun for `--pseudo-r`) and writes stem `replicate` (the dry run writes its timing into `results/dryrun/`, never an unmapped stem) | replicate |
-| `scripts/run_arms.py` | `--universe ctrl` timings go to `results/benchmark/timing_ctrl/` (no unmapped stems) | unchanged |
+| `scripts/run_arms.py` | `--universe ctrl` (genes = `configs/u_ctrl_genes.txt`, asserted disjoint from the eligible set; BH within U_ctrl) writes only ctrl-specific paths (`output_paths`): `cache/benchmark/arms_ctrl/` (+ `_stage_arms_ctrl/`), `results/benchmark_ctrl/` (selected, lambda, p_cut, summary incl. `u_ctrl_genes_sha256`; timings in `results/benchmark_ctrl/timing/`, never budgeted) and `results/md_ctrl/`; `results/bulk_manifest.csv` rows are keyed by the ctrl part paths | unchanged |
+| `scripts/build_u_ctrl_genes.py` | U_ctrl = (positive-control dependency genes ∪ CGT target genes) minus eligible, from frozen configs only (CGT symbols mapped through `eligible_genes.csv`) -> `configs/u_ctrl_genes.txt`; `--check` compares | — |
 | `tests/test_tier_a_analyses.py` | 13 tests (XLIB split, discovery eligibility, component labels, component target with the unchanged engine, VIF + alias detection, precision / OR vs scipy, parent-code mapping, registry / timing writers, every scripted stem is in `stage_job_map`, all four scripts refuse before freeze-bounds) | — |
 
 Ambiguities resolved:
@@ -396,8 +397,11 @@ IO.read_arms(columns=[...], arms=None | [arm, ...], genes=None | [entrez, ...], 
              selected_only=False, dataset_dir=None, categorical=False)       # -> pandas DataFrame
 IO.pool_inputs(dataset_dir=None, genes=None)    # (ranks of every arm: RANK_COLS, S1-obs rows: S1O_COLS)
 ```
-- Datasets: `IO.ARMS_DIR` = `cache/benchmark/arms` (eligible universe), `cache/benchmark/arms_ctrl`, and
-  `IO.XLIB_ARMS_DIR` = `cache/benchmark/xlib_arms`.
+- Datasets: `IO.ARMS_DIR` = `cache/benchmark/arms` (eligible universe; the default), `IO.arms_dir("ctrl")` =
+  `cache/benchmark/arms_ctrl` (U_ctrl; read only by `run_gate.py`, `run_cross_lineage.py` and
+  `build_candidate_cards.py`, for controls / CGT targets — never by top-k lists, the null, P1 or P2), and
+  `IO.XLIB_ARMS_DIR` = `cache/benchmark/xlib_arms`. `IO.md_dir(u)`, `IO.benchmark_dir(u)`, `IO.universe_genes()`,
+  `IO.universe_of(genes)` resolve the per-universe locations at call time.
 - Reads go part by part with pyarrow row filters. Categoricals come back as plain strings (shared objects) unless
   `categorical=True`.
 - Columns of a part: the `assemble` columns of the former table (arm, gene, feature, S1 statistics incl. df_rule /

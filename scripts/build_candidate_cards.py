@@ -5,7 +5,9 @@
 
 - results/candidates/known_recovery.csv: one row per positive control and per testable CGT test (headline-eligible
   set incl. proxy copies): best rank_of_feature_D and sign per arm, recovery in MD-global / MD-strict with the
-  expected sign, R result (pending until results/replication/r_tests.csv exists), ceiling label, access class.
+  expected sign, R result (pending until results/replication/r_tests.csv exists), ceiling label, access class,
+  universe. Controls whose gene is in U_ctrl (configs/u_ctrl_genes.txt) and CGT tests testable in U_ctrl are read from
+  the U_ctrl run (cache/benchmark/arms_ctrl/, results/md_ctrl/; ranks within U_ctrl) when it exists (universe = ctrl).
 - results/candidates/shortlist.csv: class-9 MD-global pairs replicated in R, ranked by cross-lineage label
   precedence, R one-sided p, number of powered lineages; columns g, d, access class, powered lineages with
   per-lineage β, carriers D / R, delta flags, locus resolution, combinatorial label, CGT tests, set-A dependent
@@ -21,6 +23,8 @@ from pathlib import Path
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+import pandas as pd  # noqa: E402
 
 from biomark import analyses as AN  # noqa: E402
 from biomark import arms as A  # noqa: E402
@@ -61,10 +65,30 @@ def run(ws, src) -> dict:
     cg = cgt.assign(target_set=[";".join(ts) for ts in cgt["targets"]])
     T = EP.p2_test_set(cg, Ut, "incl_proxy")
     T = T[T["testable"]]
-    genes = set(ctl["gene"]) | {g for ts in T["targets"] for g in ts}
     arms_list = [a for a in A.ARMS]
+    has_ctrl = ws.has_ctrl()
+    cgenes = ws.ctrl_genes()
+    ctl_e = ctl[~ctl["gene"].astype(str).isin(cgenes)] if has_ctrl else ctl
+    genes = set(ctl_e["gene"]) | {g for ts in T["targets"] for g in ts}
     ridx = M5.RankLookup(ws, arms_list, sorted(genes | set(cat["gene"])))
-    kr = LM.known_recovery(ridx, arms_list, ctl, T, cat, rt, ceil, ridx.access, sym)
+    kr = LM.known_recovery(ridx, arms_list, ctl_e, T, cat, rt, ceil, ridx.access, sym)
+    kr["universe"] = ["ctrl" if (k == "control" and g in cgenes) else "eligible" for k, g in zip(kr["kind"], kr["genes"])]
+    if has_ctrl:
+        # DESIGN §2 / §12.3: controls and CGT tests whose genes are in U_ctrl, read from the U_ctrl run (ranks and
+        # MD lists within U_ctrl; never part of any top-k list, the null, P1 or P2)
+        ctl_c = ctl[ctl["gene"].astype(str).isin(cgenes)]
+        cgc = cgt.assign(targets=[[g for g in ts if g in cgenes] for ts in cgt["targets"]])
+        cgc = cgc[cgc["targets"].map(len) > 0]
+        Utc = ws.arms(arms=["S1-obs"], columns=["gene", "feature", "n_carriers"],
+                      genes=sorted({g for ts in cgc["targets"] for g in ts}), universe="ctrl")
+        Tc = EP.p2_test_set(cgc.assign(target_set=[";".join(ts) for ts in cgc["targets"]]), Utc, "incl_proxy")
+        Tc = Tc[Tc["testable"]]
+        gc = set(ctl_c["gene"]) | {g for ts in Tc["targets"] for g in ts}
+        ridc = M5.RankLookup(ws, arms_list, sorted(gc), universe="ctrl")
+        krc = LM.known_recovery(ridc, arms_list, ctl_c, Tc, M5.catalogue(ws, "ctrl"), rt, ceil, ridc.access, sym)
+        krc["universe"] = "ctrl"
+        kr = pd.concat([kr, krc], ignore_index=True)
+        kr = kr.iloc[kr["kind"].map({"control": 0, "cgt": 1}).argsort(kind="stable")].reset_index(drop=True)
     pc = ws.read_csv("results/limits/pair_classes.csv")
     for c in ("in_md_global", "in_md_strict"):
         pc[c] = pc[c].astype(str).str.lower().isin(["true", "1"])
@@ -92,6 +116,11 @@ def run(ws, src) -> dict:
             "n_known_recovery": int(len(kr)), "n_controls": int((kr["kind"] == "control").sum()),
             "n_cgt_tests": int((kr["kind"] == "cgt").sum()),
             "recovered_md_global": int(kr["recovered_MD-global"].sum()), "recovered_md_strict": int(kr["recovered_MD-strict"].sum()),
+            "u_ctrl_run_included": bool(has_ctrl),
+            "by_universe": {u: {"n": int(len(s)), "n_controls": int((s["kind"] == "control").sum()),
+                                "recovered_md_global": int(s["recovered_MD-global"].sum()),
+                                "recovered_md_strict": int(s["recovered_MD-strict"].sum())}
+                            for u, s in kr.groupby("universe")},
             "n_shortlist": int(len(sl)), "report_top_rows": top,
             "case_studies": [f"{g}|{f}" for g, f in zip(sl["gene"].head(ncs), sl["feature"].head(ncs))],
             "rule": "shortlist = class-9 MD-global pairs replicated in R (asserted); 'novel' is never applied to a gene"}

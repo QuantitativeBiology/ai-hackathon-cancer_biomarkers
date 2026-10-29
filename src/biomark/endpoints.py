@@ -164,9 +164,11 @@ def _recovered(lst: pd.DataFrame, gene: str, feats: list, sign: str) -> bool:
     return bool(len(m))
 
 
-def gate_attempt(pc_elig: pd.DataFrame, controls: pd.DataFrame, lists: dict) -> dict:
+def gate_attempt(pc_elig: pd.DataFrame, controls: pd.DataFrame, lists: dict, universe_of: dict | None = None) -> dict:
     """Gate on ``lists`` ({name: DataFrame(gene, feature, beta)}, must contain 'MD-strict'). Denominator = gate-eligible
-    rows of pc_eligibility.csv. Returns {'rows': per-control table, 'summary': dict}."""
+    rows of pc_eligibility.csv. ``universe_of`` (gene -> 'eligible' / 'ctrl'), when given, is recorded per row: the
+    caller reads each control's rows from the universe of its gene (U_ctrl for non-eligible control genes, DESIGN §2).
+    Returns {'rows': per-control table, 'summary': dict}."""
     g9 = PR.dp()["gate_s9"]
     unreach = PR.en_params()["unreachable_lt"]
     e = pc_elig[pc_elig["gate_eligible"].astype(str).str.lower().isin(["true", "1"])].copy()
@@ -178,6 +180,8 @@ def gate_attempt(pc_elig: pd.DataFrame, controls: pd.DataFrame, lists: dict) -> 
         rec = {"control_id": r["control_id"], "family": r["family"], "gene": str(cr["dependency_entrez"]),
                "features": ";".join(feats), "expected_sign": cr["expected_sign"],
                "access_class": r.get("access_class", ""), "en_unreachable": float(r.get("en_max_attainable_freq", 1.0)) < unreach}
+        if universe_of is not None:
+            rec["universe"] = universe_of.get(rec["gene"], "none")
         for name, L in lists.items():
             rec[f"recovered_{name}"] = _recovered(L, cr["dependency_entrez"], feats, cr["expected_sign"])
         rec["recovered"] = rec["recovered_MD-strict"]
@@ -198,6 +202,7 @@ def gate_attempt(pc_elig: pd.DataFrame, controls: pd.DataFrame, lists: dict) -> 
             "by_access_class": {a: rate(s) for a, s in T.groupby("access_class")},
             "PAR_non_direct": rate(T[(T["family"] == "PAR") & (T["access_class"] != "direct")]),
             "en_unreachable": rate(T[T["en_unreachable"]]), "n_denominator": int(len(T)),
+            **({"by_universe": {u: rate(s) for u, s in T.groupby("universe")}} if "universe" in T else {}),
             "thresholds": {"overall_recall_min": g9["overall_recall_min"], "family_recall_min": g9["family_recall_min"],
                            "family_min_eligible_rows": g9["family_min_eligible_rows"]}}
     return {"rows": T, "summary": summ}

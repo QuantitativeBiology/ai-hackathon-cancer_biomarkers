@@ -214,6 +214,22 @@ def test_only_top_level_timing_is_budgeted_ctrl_and_dryrun_listed(tmp_path):
     assert "not budgeted" in BC.render(res)
 
 
+def test_ctrl_universe_layout_never_budgeted(tmp_path):
+    """run_arms.py --universe ctrl writes results/benchmark_ctrl/timing/ (and summary/p_cut JSON beside it): only the
+    timing files are listed, none is budgeted, and the default exclusions cover the layout."""
+    d = tmp_path / "results" / "timing"
+    _write(d, "s1_obs", 0, 10, workers=12)
+    _write(tmp_path / "results" / "benchmark_ctrl" / "timing", "s1_obs", 0, 500, workers=12)
+    for name in ("summary.json", "p_cut.json"):
+        (tmp_path / "results" / "benchmark_ctrl" / name).write_text("{}", encoding="utf-8")
+    excl = (tmp_path / "results" / "benchmark", tmp_path / "results" / "benchmark_ctrl", tmp_path / "results" / "dryrun")
+    res = BC.evaluate(d, milestone="M4", deviations=tmp_path / "dev.csv", excluded_dirs=excl)
+    assert res["errors"] == [] and res["n_records"] == 1
+    nb = {Path(k).name: v for k, v in res["not_budgeted"].items()}
+    assert nb == {"benchmark_ctrl": [str(Path("timing") / "s1_obs.json")]}
+    assert any(Path(x).name == "benchmark_ctrl" for x in BC.NOT_BUDGETED)
+
+
 def test_new_m4_stems_are_mapped():
     """Stems written by the M4 analysis scripts (commit 82c3240) are in stage_job_map."""
     job_stage = {j for js in BC.load_tiers()["stage_job_map"].values() for j in js}

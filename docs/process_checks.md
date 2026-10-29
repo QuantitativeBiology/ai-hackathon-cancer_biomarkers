@@ -18,7 +18,7 @@ listed in §4. None of these modifies the engine, DESIGN.md or a frozen config.
   `lateness_trigger_h` (1 h), the next `cut_order` entry not yet logged by budget_check is applied, once per milestone
   run; an entry whose stage is already done is skipped (cutting it recovers nothing). The cut is appended to
   `results/deviations.csv` as `DEV-BUDGET-<n>` (existing header kept; `stage` = milestone, `item` = the entry).
-- **Not budgeted** (listed for visibility only): `results/benchmark/timing*/` (ctrl-universe arms) and
+- **Not budgeted** (listed for visibility only): `results/benchmark_ctrl/timing/` (ctrl-universe arms; older layout `results/benchmark/timing*/`) and
   `results/dryrun/` (pseudo-R dry run), as the pipeline author decided in 82c3240.
 
 ### 1.1 Minimal timing schema

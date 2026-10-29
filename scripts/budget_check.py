@@ -37,8 +37,9 @@ TIERS = ROOT / "configs" / "tiers.json"
 TIMING = ROOT / "results" / "timing"
 DEVIATIONS = ROOT / "results" / "deviations.csv"
 # Timing written outside results/timing on purpose (never budgeted, only counted for visibility): ctrl-universe arms
-# (scripts/run_arms.py --universe ctrl -> results/benchmark/timing_ctrl/) and dry runs (replicate.py -> results/dryrun/).
-NOT_BUDGETED = (ROOT / "results" / "benchmark", ROOT / "results" / "dryrun")
+# (scripts/run_arms.py --universe ctrl -> results/benchmark_ctrl/timing/; older layout results/benchmark/timing_ctrl/)
+# and dry runs (replicate.py -> results/dryrun/).
+NOT_BUDGETED = (ROOT / "results" / "benchmark", ROOT / "results" / "benchmark_ctrl", ROOT / "results" / "dryrun")
 DEV_COLS = ["id", "utc", "stage", "item", "provisional", "toy_value", "final_value", "reason", "source", "agent"]
 SOURCE = "scripts/budget_check.py"
 AGENT = "budget_check"
@@ -242,13 +243,13 @@ def peak_concurrency(recs: list) -> tuple[int, str]:
 
 
 def not_budgeted(dirs=NOT_BUDGETED) -> dict:
-    """{dir: [json files]} under the excluded timing locations (results/benchmark/timing*/, results/dryrun/)."""
+    """{dir: [json files]} under the excluded timing locations (results/benchmark*/timing*/, results/dryrun/)."""
     out = {}
     for d in dirs:
         d = Path(d)
         if not d.exists():
             continue
-        files = [p for p in d.rglob("*.json") if d.name != "benchmark" or p.parent.name.startswith("timing")]
+        files = [p for p in d.rglob("*.json") if not d.name.startswith("benchmark") or p.parent.name.startswith("timing")]
         if files:
             out[str(d)] = sorted(str(p.relative_to(d)) for p in files)
     return out
