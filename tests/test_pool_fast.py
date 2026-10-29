@@ -51,3 +51,43 @@ def test_make_pool_fast_equals_slow_xlib_dataset(toy_io):
     xarms = ("S1-obs", "EN-obs")
     args = _pool_args(w)
     _same(IO.make_pool(tab, s1o, *args, arms=xarms, fast=False), IO.make_pool(tab, s1o, *args, arms=xarms))
+
+
+@pytest.fixture(scope="module")
+def power_inputs():
+    """pool_power inputs on the toy: 40 eligible genes, every second line as the 'R' molecular set, RDesign with own CN
+    and EXPGATE, expected-NaN rows from the toy effects' NaN pattern, the S1-obs drops."""
+    from biomark import endpoints as EP
+    from biomark import params as PR
+    from biomark import pipeline as PL
+    from biomark import toysim as TS
+    toy = TS.make_toy()
+    el = PL.toy_eligibility(toy)
+    genes = [g for g in toy.genes.index if el.loc[g, "eligible"]][:40]
+    d = PL.Data.from_toy(toy, genes=genes)
+    s1 = A.finish_s1(d, A.run_s1(d, ("S1-obs",)))
+    fm = toy.feature_meta
+    UG = s1[(fm["stage"].reindex(s1["feature"]).to_numpy() == "G") & (s1["test_family"] == "F1")][
+        ["gene", "feature"]].drop_duplicates()
+    R = list(d.lines)[::2]
+    feats = list(dict.fromkeys(UG["feature"]))
+    thr = PR.dp()["dictionary_s3"]["expressed_log2tpm"]
+    covR = EP.RDesign(d.cov_df.loc[R], toy.cn_log2.reindex(index=R, columns=genes),
+                      (toy.expression.reindex(index=R, columns=genes) >= thr).astype(float))
+    key = pd.MultiIndex.from_arrays([UG["gene"], UG["feature"]])
+    rng = np.random.default_rng(0)
+    return dict(U_rows=UG, beta_shrunk=pd.Series(rng.normal(0, 0.3, len(UG)), index=key),
+                sigma_g=pd.Series(0.3, index=genes), XR=toy.features.reindex(index=R, columns=feats).to_numpy(float),
+                fpos=pd.Series(np.arange(len(feats)), index=feats), binary=fm["d_type"].reindex(feats) == "binary",
+                covR=covR, patientsR=d.cov_df.loc[R, "PatientID"].astype(str).to_numpy(),
+                expR=toy.effects.reindex(index=R, columns=genes).notna(),
+                drops=s1.set_index(["gene", "feature"])["dropped_cov"])
+
+
+@pytest.mark.parametrize("workers", [1, 2])
+def test_pool_power_fast_equals_slow(power_inputs, workers):
+    from biomark import endpoints as EP
+    slow = EP.pool_power(**power_inputs, fast=False)
+    fast = EP.pool_power(**power_inputs, workers=workers)
+    pd.testing.assert_frame_equal(slow, fast, check_exact=True)
+    assert slow["powered"].any() and (slow["df_rule"] != "").any() and slow["n_R"].nunique() > 1

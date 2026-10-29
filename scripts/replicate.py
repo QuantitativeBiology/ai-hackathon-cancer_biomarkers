@@ -173,7 +173,7 @@ def main(argv=None) -> int:
             s1o = s1.copy()                                  # finish_s1 already set test_family F1 / F2
             acc = s1o_full.drop_duplicates(["gene", "feature"]).set_index(["gene", "feature"])["access_class"]
             s1o["access_class"] = acc.reindex(pd.MultiIndex.from_arrays([s1o["gene"], s1o["feature"]])).to_numpy()
-            pool, pj = IO.make_pool(arms_tab, s1o, sig, D2, R_ids, nan_D)
+            pool, pj = IO.make_pool(arms_tab, s1o, sig, D2, R_ids, nan_D, workers=a.workers)
             out.mkdir(parents=True, exist_ok=True)
             pool.to_parquet(out / "p1_pool.parquet")
             pj["note"] = "dry run: D' = folds 1-4, pseudo-R = fold 0; lists frozen from full-D ranks (in-sample)"

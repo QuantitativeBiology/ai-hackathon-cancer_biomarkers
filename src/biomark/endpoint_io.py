@@ -295,12 +295,13 @@ def shrunk_beta_lowmem(beta, se, sd_dtilde, chunk: int = EB_CHUNK_ROWS) -> np.nd
 
 
 def make_pool(arms_tab: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, D_ids, R_ids,
-              nan_D: pd.DataFrame, arms=None, fast: bool = True) -> tuple:
+              nan_D: pd.DataFrame, arms=None, fast: bool = True, workers: int = 1) -> tuple:
     """Pool_G and frozen top-k lists (DESIGN §6.1). ``s1_obs``: S1-obs rows (all U incl. F2; beta, se, sd_dtilde,
     dropped_cov, test_family) used for the EB shrinkage and the drops; ``arms_tab``: ranks of every arm on the same U.
     ``arms``: the arms to list (default the four benchmark arms; XLIB §6.3: S1-obs and EN-obs only).
-    ``fast`` (default): low-memory EB (shrunk_beta_lowmem) and the arms rows restricted to P_G once before the lists;
-    results are identical to ``fast=False`` (tests/test_pool_fast.py).
+    ``fast`` (default): low-memory EB (shrunk_beta_lowmem), cached design blocks / clusters in pool_power over
+    ``workers`` processes, and the arms rows restricted to P_G once before the lists; results are identical to
+    ``fast=False`` (tests/test_pool_fast.py).
     Returns (pool DataFrame over U_G, lists dict for p1_pool.json)."""
     from . import arms as A
     from . import endpoints as EP
@@ -328,7 +329,8 @@ def make_pool(arms_tab: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, 
                               library_strings(R_ids))
     drops = s.set_index(["gene", "feature"])["dropped_cov"]
     binary = fl["d_type"].reindex(feats) == "binary"
-    pool = EP.pool_power(UG, bsh, sigma_g, XR.to_numpy(dtype=np.float64), fpos, binary, covR, patR, expR, drops)
+    pool = EP.pool_power(UG, bsh, sigma_g, XR.to_numpy(dtype=np.float64), fpos, binary, covR, patR, expR, drops,
+                         workers=workers, fast=fast)
     src = s1_obs if "access_class" in s1_obs else arms_tab[arms_tab["arm"] == "S1-obs"]
     acc = src.drop_duplicates(["gene", "feature"]).set_index(["gene", "feature"])["access_class"]
     pool["access_class"] = acc.reindex(pd.MultiIndex.from_arrays([pool["gene"], pool["feature"]])).to_numpy()

@@ -33,18 +33,22 @@ CATALOGUE_FILES = ["configs/catalogue/r_requests.csv", "results/benchmark/p1_poo
                    "results/md/en_obs_strict.csv", "results/benchmark/p_cut.json", "results/benchmark/lambda.csv"]
 
 
-def main() -> int:
+def main(argv=None) -> int:
     EP.require_descends("freeze-bounds")
     if gitutil.tag_exists(P.PROJECT, "freeze-catalogue"):
         raise EP.EndpointRefusal("freeze-catalogue exists: the pool and r_requests are frozen")
-    a, s1o = IO.pool_inputs()                        # slim ranks of every arm + S1-obs rows (not the whole table)
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--workers", type=int, default=1, help="pool_power processes (identical results for any value)")
+    a = ap.parse_args(argv)
+    arms_tab, s1o = IO.pool_inputs()                        # slim ranks of every arm + S1-obs rows (not the whole table)
     dev, test = list(p1.dev_ids()), list(p1.test_ids())
     genes = sorted(s1o["gene"].unique())
     nan_D = pd.read_parquet(P.CACHE / "effect_nan_mask.parquet").reindex(index=dev, columns=genes)
     Y = guard.load_effects(dev, scope="dev", genes=genes).to_numpy()
     covD = ST.CovDesign(IO.line_covariates(dev))
     sig = IO.sigma_resid_genes(Y, ~nan_D.to_numpy(dtype=bool), covD, genes)
-    pool, lists = IO.make_pool(a, s1o, sig, dev, test, nan_D)
+    pool, lists = IO.make_pool(arms_tab, s1o, sig, dev, test, nan_D, workers=a.workers)
     (P.CACHE / "benchmark").mkdir(parents=True, exist_ok=True)
     pool.to_parquet(P.CACHE / "benchmark" / "p1_pool.parquet")
     lists["pool_file_sha256"] = __import__("hashlib").sha256((P.CACHE / "benchmark" / "p1_pool.parquet").read_bytes()).hexdigest()

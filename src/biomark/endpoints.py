@@ -414,32 +414,31 @@ def expected_nonnan(nan_D: pd.DataFrame, lib_D: pd.Series, lib_R: pd.Series) -> 
     return pd.DataFrame(np.array(rows), index=lib_R.index, columns=nan_D.columns)
 
 
-def pool_power(U_rows: pd.DataFrame, beta_shrunk: pd.Series, sigma_g: pd.Series, XR: np.ndarray, fpos: pd.Series,
-               binary: pd.Series, covR, patientsR: np.ndarray, expR: pd.DataFrame, drops: pd.Series) -> pd.DataFrame:
-    """R-evaluability and power of every (g, d) of ``U_rows`` from R molecular data only (no R effect).
+POWER_COLS = ("n_R", "n1_R", "n0_R", "sd_R", "nu_R", "df_nu_R")
+POWER_CHUNKS_PER_WORKER = 4                 # literal-ok: load balancing of the parallel power groups (no effect on values)
+POWER_CACHE_MAX = 1024                      # literal-ok: LRU size of cached shared design blocks (memory only)
+_PW = {}
 
-    The df is the R test's own df (DESIGN §6.1 "the test and its power share one df rule"): the same §5.3 design as
-    ``RFitter.fit`` (``covR.model_Z``: design blocks, droppable covariates and, when ``covR`` is an ``RDesign``, the
-    gene covariates of g, all with the D drops), the same cap and the same binary fallback (``stats.shared_df``), on
-    the R lines expected non-NaN for g and non-NaN for d. SD_R(d̃_R) for SE_R_pred uses that residual too."""
-    r6 = PR.dp()["replication_s6"]
-    nmin1, nmin0 = int(r6["R_min_carriers"]), int(r6["R_min_noncarriers"])
-    cmin = int(PR.dp()["dictionary_s3"]["continuous_min_nonnan"])
-    pm = float(r6["power_min"])
-    U = U_rows[["gene", "feature"]].copy().reset_index(drop=True)
-    U["gene"] = U["gene"].astype(str)
-    key = pd.MultiIndex.from_arrays([U["gene"], U["feature"]])
-    dr = drops.reindex(key).to_numpy()
-    U["dkey"] = ["|".join(sorted(set(str(x).split("|")) - {""})) if isinstance(x, str) else "" for x in dr]
-    fp = fpos.reindex(U["feature"]).to_numpy().astype(np.int64)
-    bin_f = binary.reindex(U["feature"]).fillna(True).to_numpy().astype(bool)
+
+def _power_init(path):
+    from . import workerstore as WS
+    _PW["ctx"] = WS.load(path)
+
+
+def _power_chunk(groups):
+    return _power_groups(_PW["ctx"], groups)
+
+
+def _power_groups(ctx: dict, groups) -> list:
+    """The per-(gene, drops) fits of pool_power for ``groups`` [(g, dkey, row indices)]: [(indices, values, rule)]."""
+    from collections import OrderedDict
+    XR, fp, bin_f, covR, pats, expR = (ctx[k] for k in ("XR", "fp", "bin_f", "covR", "pats", "expR"))
+    fast = ctx.get("fast", True)
     finite = np.isfinite(XR)
-    pats = np.asarray(patientsR).astype(str)
     model_Z = getattr(covR, "model_Z", None)
-    res = {k: np.full(len(U), np.nan) for k in ("n_R", "n1_R", "n0_R", "sd_R", "nu_R", "df_nu_R")}
-    rule = np.full(len(U), "", dtype=object)
-    for (g, dk), idx in U.groupby(["gene", "dkey"], sort=False).groups.items():
-        idx = np.asarray(idx)
+    zc, cc = OrderedDict(), {}
+    out = []
+    for g, dk, idx in groups:
         rows_g = expR[g].to_numpy().astype(bool)
         S = set(dk.split("|")) if dk else set()
         pat = {}
@@ -451,20 +450,89 @@ def pool_power(U_rows: pd.DataFrame, beta_shrunk: pd.Series, sigma_g: pd.Series,
             ii = np.asarray(ii)
             Xr = XR[rows][:, fp[ii]]
             n1 = (Xr == 1).sum(0)
-            res["n_R"][ii], res["n1_R"][ii], res["n0_R"][ii] = nr, n1, nr - n1
+            vals = {k: np.full(len(ii), np.nan) for k in POWER_COLS}
+            vals["n_R"][:], vals["n1_R"][:], vals["n0_R"][:] = nr, n1, nr - n1
+            rl = np.full(len(ii), "", dtype=object)
             if nr < 2:
+                out.append((ii, vals, rl))
                 continue
-            Z = model_Z(g, rows, S) if model_Z is not None else covR.Z(
-                rows, covR.design_names + [nm for nm in covR.droppable_names if nm not in S])
+            names = covR.design_names + [nm for nm in covR.droppable_names if nm not in S]
+            if fast and (model_Z is None or isinstance(covR, RDesign)):
+                zk = (pk, dk)
+                Zs = zc.get(zk)
+                if Zs is None:
+                    Zs = covR.Z(rows, names)
+                    zc[zk] = Zs
+                    if len(zc) > POWER_CACHE_MAX:
+                        zc.popitem(last=False)
+                else:
+                    zc.move_to_end(zk)
+                extra = covR.gene_cols(str(g), rows, S) if isinstance(covR, RDesign) else []
+                Z = np.hstack([Zs, np.column_stack(extra)]) if extra else Zs        # == RDesign.model_Z
+                cl = cc.get(pk)
+                if cl is None:
+                    cl = cc[pk] = ST.Clusters.of(pats[rows])
+            else:
+                Z = model_Z(g, rows, S) if model_Z is not None else covR.Z(rows, names)
+                cl = ST.Clusters.of(pats[rows])
             Q = ST.orth(Z)
             Dt = ST.resid(Q, Xr)
-            cl = ST.Clusters.of(pats[rows])
-            cc = ST.carrier_clusters(Xr, bin_f[ii], cl)
-            dd = ST.shared_df(Dt, cl, nr, Q.shape[1], car_clusters=cc)
-            res["sd_R"][ii] = np.sqrt((Dt ** 2).mean(0))
-            res["nu_R"][ii] = dd["df"]
-            res["df_nu_R"][ii] = dd["df_nu"]
-            rule[ii] = dd["df_rule"]
+            ccl = ST.carrier_clusters(Xr, bin_f[ii], cl)
+            dd = ST.shared_df(Dt, cl, nr, Q.shape[1], car_clusters=ccl)
+            vals["sd_R"][:] = np.sqrt((Dt ** 2).mean(0))
+            vals["nu_R"][:] = dd["df"]
+            vals["df_nu_R"][:] = dd["df_nu"]
+            rl[:] = dd["df_rule"]
+            out.append((ii, vals, rl))
+    return out
+
+
+def pool_power(U_rows: pd.DataFrame, beta_shrunk: pd.Series, sigma_g: pd.Series, XR: np.ndarray, fpos: pd.Series,
+               binary: pd.Series, covR, patientsR: np.ndarray, expR: pd.DataFrame, drops: pd.Series,
+               workers: int = 1, fast: bool = True) -> pd.DataFrame:
+    """R-evaluability and power of every (g, d) of ``U_rows`` from R molecular data only (no R effect).
+
+    The df is the R test's own df (DESIGN §6.1 "the test and its power share one df rule"): the same §5.3 design as
+    ``RFitter.fit`` (``covR.model_Z``: design blocks, droppable covariates and, when ``covR`` is an ``RDesign``, the
+    gene covariates of g, all with the D drops), the same cap and the same binary fallback (``stats.shared_df``), on
+    the R lines expected non-NaN for g and non-NaN for d. SD_R(d̃_R) for SE_R_pred uses that residual too.
+
+    ``fast`` (default): the shared design block (rows, drops) and the patient clusters (rows) are cached across genes
+    (the same arrays, so identical arithmetic), and the (gene, drops) groups are split over ``workers`` processes
+    (workerstore payload); every group is computed independently and written to its own rows, so the result is
+    identical to ``fast=False`` (tests/test_pool_fast.py)."""
+    r6 = PR.dp()["replication_s6"]
+    nmin1, nmin0 = int(r6["R_min_carriers"]), int(r6["R_min_noncarriers"])
+    cmin = int(PR.dp()["dictionary_s3"]["continuous_min_nonnan"])
+    pm = float(r6["power_min"])
+    U = U_rows[["gene", "feature"]].copy().reset_index(drop=True)
+    U["gene"] = U["gene"].astype(str)
+    key = pd.MultiIndex.from_arrays([U["gene"], U["feature"]])
+    dr = drops.reindex(key).to_numpy()
+    U["dkey"] = ["|".join(sorted(set(str(x).split("|")) - {""})) if isinstance(x, str) else "" for x in dr]
+    fp = fpos.reindex(U["feature"]).to_numpy().astype(np.int64)
+    bin_f = binary.reindex(U["feature"]).fillna(True).to_numpy().astype(bool)
+    groups = [(g, dk, np.asarray(idx)) for (g, dk), idx in U.groupby(["gene", "dkey"], sort=False).groups.items()]
+    ctx = {"XR": np.asarray(XR, dtype=np.float64), "fp": fp, "bin_f": bin_f, "covR": covR,
+           "pats": np.asarray(patientsR).astype(str), "expR": expR, "fast": fast}
+    w = max(1, int(workers or 1)) if fast else 1
+    if w <= 1 or len(groups) < 2:
+        parts = [_power_groups(ctx, groups)]
+    else:
+        from concurrent.futures import ProcessPoolExecutor
+
+        from . import workerstore as WS
+        cuts = np.array_split(np.arange(len(groups)), w * POWER_CHUNKS_PER_WORKER)
+        with WS.staged(ctx, "pool_power") as path, \
+                ProcessPoolExecutor(max_workers=w, initializer=_power_init, initargs=(path,)) as ex:
+            parts = list(ex.map(_power_chunk, [[groups[i] for i in c] for c in cuts if len(c)]))
+    res = {k: np.full(len(U), np.nan) for k in POWER_COLS}
+    rule = np.full(len(U), "", dtype=object)
+    for p in parts:
+        for ii, vals, rl in p:
+            for k in POWER_COLS:
+                res[k][ii] = vals[k]
+            rule[ii] = rl
     for k, v in res.items():
         U[k] = v
     U["df_rule"] = rule
