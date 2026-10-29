@@ -30,3 +30,4 @@ results/benchmark/selected.csv
 results/md/md_global_all.csv
 results/md/md_strict_all.csv
 results/md_ctrl/md_*_all.csv
+results/subtypes/subtype_lines.csv

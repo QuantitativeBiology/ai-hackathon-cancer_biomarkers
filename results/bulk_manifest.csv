@@ -58,3 +58,4 @@ results/benchmark/selected.csv,47d32976f5dbb9870ebf3058311cf96324fafa4c2ed78225b
 results/md/md_global_all.csv,11bbf5e9c450eef17601e5842c3308aeefcee8338ca9f3e2ce79f55efe3536ab,50728.0,,2026-10-29T04:33:10+00:00,scripts/run_arms.py
 results/md/md_strict_all.csv,082633950bbc5827d30c082e89fbee65388d7aa88fe87f848b2f483ea54ea507,50728.0,,2026-10-29T04:33:10+00:00,scripts/run_arms.py
 cache/benchmark/arms_ctrl/part-00000.parquet,c6e88f137eea756272a55a5ecb35166c47ad81840eb83466a4d591e06b38f4ef,,,,scripts/run_arms.py
+results/subtypes/subtype_lines.csv,8972aeee8d7e0fbeee17a550bc4c5bcfc66e54a850a743b62a09440d44a423c6,126133,,2026-10-29T04:47:42+00:00,scripts/run_subtypes.py
