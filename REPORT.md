@@ -28,16 +28,28 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
 
 5. **Clinical ground truth (Q4).**
    - The positive-control gate **failed twice: 21/39 (54%) at attempt 1, and 21/39 at attempt 2** (`results/gates/G_pc_attempt1.json`, `G_pc_attempt2.json`).
-   - Still pending: CGT recall at k = 200, direction, actionability and population. P2 recall {{P2_recall_EN-pred}} vs {{P2_recall_S1-obs}}; McNemar {{P2_p}}.
-   - The gate-disjoint headline set has 8 scored tests (`results/cgt/summary.json`), so P2 is expected to be "descriptive (underpowered: 8)" (ER27).
+   - **P2 primary (non-proxy, gate-disjoint, k = 200):** 6 testable tests, and **all four arms recover 0 of 6** (95% CI 0–0.459). So P2 is "descriptive (underpowered: 6)", with no McNemar test (`results/clinical/q4_summary.json`, non_proxy|gate_disjoint|k200).
+   - **Secondary (16 non-proxy tests, gate controls included):** S1-obs recovers 4, EN-obs 1, EN-pred 0 and S1-pred 0. Exact McNemar EN-pred vs S1-obs p = 0.125, "no detectable difference" (same file, non_proxy|all|k200).
+   - EN-pred recovers no test at k = 200 in any non-proxy subset.
 
-6. **Confounders (Q3).** Drop-one-block deltas and the co-location, cutting-artefact, culture and hypermutation audits: {{confounder_audit_summary}}. Fixed-threshold null FDR_emp: {{null_FDR_emp_per_list}}.
+6. **Confounders (Q3).**
+   - The drop-one-block audit flags 1,856 of 13,447 tested pairs, 98 of them among the 1,380 MD-global pairs (`results/confounders/delta_flags.csv`).
+   - The fixed-threshold null gives FDR_emp 0.0009 for MD-global and 0.022 for S1-obs. **NC1 fails for EN-obs (0.200) and EN-pred (0.327)** (`results/null/summary.json`).
+   - NC6 also fails: 0 of 18 lineage-TF genes are in class 3 (`results/limits/limits_summary.json`).
 
-7. **Cross-lineage (Q1b).** Cross-lineage vs lineage-restricted MD-global determinants: {{n_cross_lineage}} / {{n_lineage_restricted}}. Replication odds ratio: {{Q1b_OR}}.
+7. **Cross-lineage (Q1b).**
+   - Of the 1,380 MD-global pairs, 430 are cross-lineage, 22 lineage-restricted, 894 lineage-unresolvable and 34 undetermined (`results/lineage/summary.json`).
+   - 139 of the 430 cross-lineage labels are "single-lineage driven": at most one nominally significant powered lineage shares the pooled sign (A7-iii).
+   - The CGT-membership odds ratio is uninformative: 5 cross-lineage vs 0 lineage-restricted CGT pairs; OR infinite (CI 0.045 to infinity), p = 1.0 (`results/limits/limits_summary.json:Q1b`).
+   - Replication odds ratio: {{Q1b_OR_R}}.
 
 8. **Replication in R (P1, 255 lines).** Same-sign replication at one-sided p < 0.05 of each arm's top k_G candidates: {{P1_rates_by_arm}}. By access stratum: {{P1_by_access}}. XLIB: {{XLIB_rates}}.
 
-9. **Limits (Q5).** Gene and pair failure classes: {{limits_class_counts}}. Limits already visible:
+9. **Limits (Q5).** Gene and pair failure classes, before R:
+   - genes (3,501): 3b 1,416; 3 884; 9 690; 2 417; 6 73; 1 21;
+   - MD-global pairs: class 9 = 1,128; class 6 = 252 (`results/limits/limits_summary.json`).
+
+   Classes 5, 7 and 8 and the class-9 status wait for R and the data ceiling. Limits already visible:
    - the gate failed;
    - every non-eligible control was missed (0/7);
    - the df fallback leaves few-carrier binary features under-powered (ER11);
@@ -71,7 +83,7 @@ None of the three is supported yet.
 The full table of sources, versions, checksums and licences is in DATA.md.
 
 - **DepMap Public 26Q3.** CRISPRGeneEffect, Model, ModelCondition, expression, CN, the damaging and hotspot mutation matrices, fusions, CRISPRScreenMap and ScreenSequenceMap. Read in place from Part 1; checksums in `../project/configs/depmap_local_sha256.txt`; CC BY 4.0 (DATA.md, "Inherited").
-- **DepMap extras supplied by the user.** OmicsSomaticMutations, OmicsGlobalSignatures, OmicsProfiles, CRISPRConfounders, OmicsCNSegmentsWGS and CCLE RRBS promoter methylation (2018-10-22), all registered before the first dictionary build (D7; DATA.md, "New"). RRBS covers 453 of the 1,022 D lines (D10), so methylation features are not assayed for the rest.
+- **DepMap extras supplied by the user.** OmicsSomaticMutations, OmicsGlobalSignatures, OmicsProfiles, CRISPRConfounders, OmicsCNSegmentsWGS and CCLE RRBS promoter methylation (2018-10-22), all registered before the first dictionary build (D7; DATA.md, "New"). RRBS covers 456 of the 1,022 D lines (`results/limits/limits_summary.json:methylation_coverage_D_lines`; D10 says 453, not reconciled), so methylation features are not assayed for the rest.
 - **Clinical ground truth.**
   - CIViC nightly 2026-10-28 (CC0).
   - MOAlmanac v.2026-08-02. Its repository states GPL-2.0; the reuse licence for the data is unconfirmed in DATA.md.
@@ -199,7 +211,7 @@ MD-global passes its three error checks on the same runs (same file):
 
 The fixed-threshold null cannot see the ridge-predictor FDP of the prediction-based lists (D11). EN-pred and S1-pred FDR_emp will therefore be labelled "not calibrated for ridge-type predictors", and R replication arbitrates (A6-i).
 
-The suite ran on 04aa982 and `src/` has changed since, so a re-run is planned (RESEARCH_TREE.md, 08:40 note): {{toy_suite_rerun_result}}.
+The suite was re-run on the final engine (b125298) with the same outcome: 19 passed, 3 failed, the same three failures, and MD-global 3/3 passing (`results/toy/suite_run_final.json`).
 
 ### 5.3 The MD-global switch
 - The switch was decided before any real association result existed (A7 header; D15), on the toy numbers in Section 4.3.
@@ -250,7 +262,7 @@ A separate agent that did not read the engine code reimplemented S1-obs, the BH 
 - **The β-tolerance check failed.** The checker attributes it to the subsample fits for gene 5045, where the active set differed (solver tolerance 1e-3 and the screening boundary). The full-D β of that pair agrees to 6e-10 (`G_indep.json:notes`). No tolerance was changed.
 - The file records tasks 1 and 2 as pass and task 3 as fail (`overall`).
 - **Pair universe.** The checker's universe is larger than the engine's: 6,574,471 vs 6,561,731 pairs, i.e. 12,740 pairs in 75 genes that only the checker has. All of them are untested, because they have fewer than 5 carriers on the gene's rows. The checker carries such pairs as untested rows; the engine leaves them out of its table. The S1 p-values and the BH counts match exactly.
-- Independent confounder-delta check against the engine file: {{indep_delta_check}}.
+- The engine's `results/confounders/delta.csv` now exists, but the independent delta check was not re-run against it (not done: time).
 
 ## 6. Results so far (dev set D only; R has not been read)
 
@@ -315,9 +327,9 @@ Eligible-only recall (21/32) is above 60%, but it is not the gate's denominator,
 | Modules | 558 | 2,221 |
 | Multi-gene modules | 112 | 694 |
 
-- The same file also has gene-level totals: 2,134 genes, 279,074 unexplained lines and 109,919 accurate-but-unassigned lines. These totals are not labelled by list in the file.
+- The file's gene-level block (2,134 genes; 279,074 unexplained lines; 109,919 accurate-but-unassigned lines) describes the MD-strict gene set: `results/subtypes/subtype_genes.csv` has 2,134 rows, while only 764 genes carry an MD-global pair. There is no per-list split of these line counts. The top-level `n_pairs` (11,662) and `n_pairs_with_members` (8,299) are MD-strict as well.
 - Subtype membership uses the share rule (DESIGN §8.1). An "unexplained" line is dependent but mispredicted.
-- Cross-lineage labels, co-location and culture checks are pending (Section 7).
+- Cross-lineage labels and the co-location, amplicon, culture and hypermutation audits are in Sections 7.2 and 7.3.
 
 ### 6.4 Combinatorial validation (`results/combinatorial/validation.json`)
 The test covers paralog candidates (loss of A → dependency on B), screened in 23 cell lines across six sources.
@@ -333,7 +345,7 @@ The test covers paralog candidates (loss of A → dependency on B), screened in 
 - The hit rule is an agent choice (Section 4.5).
 - **Conclusion.** Catalogue paralog candidates are experimentally supported combinatorial dependencies, but the test shows no advantage over the univariate S1-obs list.
 
-## 7. Pending sections
+## 7. Further results (R-dependent items pending)
 
 ### 7.1 Confounder audit
 Drop-one-block deltas on MD-global ∪ S1-obs hits ∪ controls, including the U_ctrl gate controls.
@@ -341,45 +353,126 @@ Drop-one-block deltas on MD-global ∪ S1-obs hits ∪ controls, including the U
 - A pair is flagged if abs(Δβ) > 0.5·abs(β_minus) and > SE_minus.
 - Also VIF and subtype-confounding.
 
-Result: {{confounder_audit}}. The job is re-running after the overnight interruption (RESEARCH_TREE.md).
+The audit covered 13,447 pairs: 13,438 eligible plus 9 U_ctrl gate-control pairs. **1,856 are delta-flagged, 610 subtype-confounded and 2,319 flagged by either** (`results/confounders/delta_flags.csv`).
+
+| Source list | Pairs | Delta-flagged | Subtype-confounded |
+|---|---|---|---|
+| MD-global | 1,380 | 98 | 23 |
+| MD-strict | 11,662 | 1,571 | 596 |
+| S1-obs BH hits | 3,142 | 382 | 37 |
+| Controls | 51 | 1 | 0 |
+
+(Same file. The lists overlap, so the rows do not sum.)
+
+- Of the 1,856 flagged pairs, 1,797 are flagged on the lineage block alone and 32 on own CN alone (same file, `blocks_flagged`).
+- VIF: max 6.17 (library_1) against a limit of 10; condition number 10.84; 41 columns; culture_4 and culture_9 aliased (`results/covariates/vif_check.json`).
 
 ### 7.2 Cross-lineage labels (Q1b)
-- Labels follow DESIGN §8.3: counts {{cross_lineage_counts}}.
-- Fisher OR of R replication and of CGT membership, cross-lineage vs lineage-restricted: {{Q1b_OR}}.
+Labels follow DESIGN §8.3, over 11,757 pairs (`results/lineage/summary.json`):
+
+| List (pairs) | Cross-lineage | Lineage-restricted | Lineage-unresolvable | Undetermined |
+|---|---|---|---|---|
+| MD-global (1,380) | 430 | 22 | 894 | 34 |
+| MD-strict (11,662) | 486 | 60 | 11,075 | 41 |
+| Controls (51) | 24 | — | 27 | — |
+| Top 200 S1-obs BH hits | 200 | — | — | — |
+
+- 894 of the 1,380 MD-global pairs (65%, derived) are lineage-unresolvable, because fewer than 2 lineages are powered.
+- Single-lineage-driven cross-lineage labels: 139 (MD-global), 160 (MD-strict), 5 (controls), 1 (S1-obs BH).
+- Q1b, CGT membership, cross-lineage vs lineage-restricted: 5 vs 0 pairs; OR infinite (CI 0.045 to infinity); Fisher p = 1.0. Uninformative (`results/limits/limits_summary.json:Q1b`).
+- R replication odds ratio: {{Q1b_OR_R}}.
 - Known weakness of the rule: a one-lineage effect can be labelled cross-lineage when the null lineages happen to share its sign (1 of 5 toy seeds, D13-vi).
 
 ### 7.3 Co-location, cutting artefact, culture, hypermutation
 DESIGN §8.4–8.7:
-- co-location resolution: {{colocation_resolution}}
-- cutting-artefact calls: {{cutting_artefact_calls}}
-- culture flags: {{culture_flags}}
-- hypermutation/TP53 failures: {{hypermutation_tp53_failures}}
+- **Co-location** (`results/m5_audits_summary.json`, `results/locus/resolution.csv`): of 1,114 CN/SIL determinants in locus groups, 64 resolve to a gene and 1,050 stay at locus level. For MD-global pairs, 18 of 154 resolve to a gene and 136 stay at locus level (counted from `resolution.csv`).
+- **CN-cutting artefact** (`results/locus/amplicon.csv`): of 190 amplicon determinants, 57 are amplified-driver addiction, 133 unresolved and **0 cutting artefacts**. For MD-global: 12 addiction and 7 unresolved, of 19.
+- **Culture** (`results/m5_audits_summary.json`): of 11,662 subtypes, 60 are flagged (Cramér's V ≥ 0.3), 51 rescued by the within-stratum test and 9 confounded; 14 module-overlap flags.
+- **Hypermutation and TP53** (same file): 466 determinants tested, 5 failed (4 TP53-mutant, 1 hypermutation).
+- **Component readout** (`results/components/component_selection.csv`).
+  - MD-global pairs by layer: expression-mediated 807, both 487, genomics layer 68, none 18 (of 1,380).
+  - By access class: expression-derived 771, direct 285, proxy 168, potentially-direct 156.
+  - Tier B direct attribution was not run.
 
 ### 7.4 Clinical ground truth: recovery, direction, actionability, population
 The headline set is gate-disjoint (ER14, ER26).
-- Recall at k = 200 per arm: {{P2_recall_by_arm}}, with exact McNemar {{P2_mcnemar}}, or "descriptive (underpowered: n)": {{p2_status}}.
-- Miss decomposition: {{miss_decomposition}}.
-- Ceiling labels: {{ceiling_labels}}.
-- Direction accuracy and sign-error rate: {{direction_accuracy}}.
-- NC5 false-sensitivity rate: {{nc5_value}}.
-- Recall on refuted vs approved tests: {{recall_refuted_vs_approved}}.
-- Actionability: {{actionability}}.
-- Population (on-label, beyond-label, off-label-only, indication-untestable): {{q4c_population}}.
-- TCGA prevalence (Tier B): {{tcga_prevalence}}.
+**P2 primary (non-proxy, gate-disjoint, k = 200).** 6 testable tests (5 T1, 1 T3) (`results/clinical/q4_summary.json`).
+- Every arm recovers 0 of 6: recall 0 (95% CI 0–0.459).
+- Verdict "descriptive (underpowered: 6)": no McNemar, and the trend test was not run.
+- At k = 100 every arm is also 0/6. At k = 500, only S1-obs recovers one test (1/6 = 0.167, CI 0.004–0.641).
+
+**Secondary sets** (not gate-disjoint, unadjusted, gate controls included):
+
+| Set, k | Tests | S1-obs | EN-obs | EN-pred | S1-pred | McNemar EN-pred vs S1-obs |
+|---|---|---|---|---|---|---|
+| non-proxy all, 200 | 16 | 4 (0.25) | 1 (0.063) | 0 | 0 | p = 0.125, no detectable difference |
+| non-proxy all, 500 | 16 | 5 (0.313) | 2 (0.125) | 0 | 0 | p = 0.0625 |
+| incl-proxy all, 200 | 22 | 7 (0.318) | 2 (0.091) | 0 | 0 | p = 0.0156, univariate recovers more |
+| incl-proxy all, 500 | 22 | 9 (0.409) | 5 (0.227) | 3 (0.136) | 0 | p = 0.031, univariate recovers more |
+
+(Same file.)
+- The significant McNemar results are secondary and include gate controls, so they do not enter the P2 claim. They point away from the predictor-derived arm.
+- EN-pred and S1-pred recover no test at k = 200 in any non-proxy subset.
+
+**Direction.** Every recovered test has the expected sign: direction accuracy 1.0 and 0 sign errors for S1-obs, EN-obs, and EN-pred at k = 500 incl-proxy. Direction is not estimable for arms with no hits (`q4_summary.json`).
+
+**Not produced (not done: time).** The data ceiling (`cgt_ceiling.csv`), so there are no ceiling labels and no miss decomposition, and class 8 uses KO class and sign only (`results/limits/limits_summary.json`). Also missing: the NC5 false-sensitivity rate on real data and refuted-vs-approved recall. The TCGA prevalence (Tier B) was cut.
+
+**Known-recovery rows** (`results/candidates/known_recovery.csv`, `cards_summary.json`): 88 rows, 58 controls and 30 CGT tests.
+- Gate controls: MD-global 17/39, MD-strict 21/39.
+- Lineage-TF class-check rows: 0 of 18 recovered.
+- CGT rows: MD-global 5/30, MD-strict 7/30.
+
+**Actionability** (`results/clinical/actionability.csv`; 200 within-list gene-label permutations):
+
+| List | n | Pair-level | Permutation mean | Permutation p | Feature-level |
+|---|---|---|---|---|---|
+| MD-global | 754 | 0.0080 | 0.00030 | 0.005 | 0.069 |
+| S1-obs | 2,464 | 0.0057 | 0.00017 | 0.005 | 0.051 |
+| MD-strict | 5,044 | 0.0014 | 0.000048 | 0.005 | 0.054 |
+
+A permutation p of 0.005 is the floor for 200 permutations. No test of MD-global vs S1-obs was run.
+
+**Population** (`results/clinical/q4c_labels.csv`, `q4c_population.csv`). Of 16 tests: 6 on-label, 4 beyond-label, 3 not supported, 2 off-label only, 1 indication-untestable.
+- Six indication codes could not be mapped (BALL, BNHL, BTC, DLBCL, EGC, FL), because there is no full OncoTree file.
+- BRAF V600, pan-cancer: β = −0.870, one-sided p = 2.9e-16, 61 carriers, on-label.
+- EGFR-activating in NSCLC is "not supported" (indicated-lineage precision 0.0), as are CCNE1 amplification → PKMYT1 and KMT2A-r → MEN1.
 
 Tier counts available now, among the 64 tests: 41 T1, 7 T2, 5 T3, 1 preclinical, 3 refuted (`results/cgt/summary.json`).
 
 ### 7.5 Null calibration (FDR_emp)
-- FDR_emp_fixed per list: {{null_FDR_emp_per_list}}.
-- P(any hit): {{null_p_any}}.
-- Selection-adaptive re-run: {{null_FDR_emp_rerun}}.
-- B = {{null_B}}.
-- NC1 pass/fail: {{NC1_status}}.
-- NC2a and NC2b: {{NC2_values}}. Their bounds are 0.0011 and 1.2; 1.2 is very loose (ER17).
-- NC3: {{NC3_value}}. NC4: {{NC4_value}}. NC6: {{NC6_value}}.
+Fixed-threshold null on the 300-gene subset, B = 20 draws, 3 workers (`results/null/summary.json`, `fdr_fixed.csv`). B stayed at 20: draw 0 took 706 s, so 50 draws would take about 588 min (derived), over the 180-min cap.
+
+| List | Observed hits (subset) | Mean hits per permutation | FDR_emp_fixed (95% CI) | P(any hit in a draw) | ≤ 0.10 | Label (`configs/outcome_actions.csv`) |
+|---|---|---|---|---|---|---|
+| S1-obs | 515 | 11.55 | 0.0224 (0.0185–0.0269) | 1.0 | yes | — |
+| S1-pred | 38,482 | 1,570.05 | 0.0408 (0.0396–0.0420) | 1.0 | yes | not calibrated (A6/A7) |
+| EN-obs | 107 | 21.35 | **0.1995 (0.1813–0.2196)** | 1.0 | **no** | **FDR not controlled** |
+| EN-pred | 6,979 | 2,284.45 | **0.3273 (0.3229–0.3318)** | 1.0 | **no** | not calibrated (A6/A7) |
+| MD-strict | 1,701 | 63.1 | 0.0371 (0.0350–0.0389) | 1.0 | yes | not calibrated (A6/A7) |
+| MD-global | 213 | 0.2 | 0.0009 (0–0.0021) | 0.15 | yes | — |
+
+**NC1.**
+- **Failed for EN-obs** (FDR_emp 0.20 > 0.10). The list is labelled "FDR not controlled"; no threshold was changed.
+- EN-pred also exceeds 0.10 (0.327).
+- For S1-pred, EN-pred and MD-strict, the null cannot be read as an FDR. On ridge toys their true FDP was 0.7–0.8 (EN-pred and S1-pred, D11) and 0.16–0.26 (MD-strict, A7), and the permutation null does not see it.
+- The selection-adaptive re-run was cut (Tier B; `fdr_emp_rerun: null`).
+
+**Observed-count bug, found and fixed.** The first summary had MD-global observed hits = 0, because `md_global` was missing from the observed inputs.
+- The summary was recomputed from the same draws (draws commit 01b2cc5, resummarise commit 732e50e; `summary.json:resummarised`).
+- The only changed value is MD-global's observed count (0 → 213). The permutation counts and the other lists are unchanged.
+
+**Negative-control bounds** (`results/toy/nc_bounds.json`):
+- NC2a ≤ 0.0011 and NC2b ≤ **1.2**. NC2b is set by one ridge replicate; its per-replicate values were 0, 0.2, 0.2, 0.2 and 1.2, so the bound is very loose.
+- NC3 0.1, NC5 0.2 and NC6 0.7 keep their provisional values.
+
+**Real-data values.**
+- NC2, NC3 and NC5 were not computed (not done: time).
+- NC4 is the toy fold-offset control (A7-iii).
+- **NC6 fails**: 0 of 18 lineage-TF genes are in class 3, against a bound of ≥ 0.7 (`results/limits/limits_summary.json`). The 17 genes with r_within ≥ 0.10 are classes 3b or 9, so the class-3 rule does not fire. Per `outcome_actions`, class-3 (lineage) labels are flagged unreliable.
 
 ### 7.6 XLIB (library-independent replication, S1-obs and EN-obs only)
-Rates {{XLIB_rates}}; contrast {{XLIB_contrast}}. Caveat: eligibility was selected on all-D effects, so absolute rates are optimistic (DESIGN §6.3).
+Rates {{XLIB_rates}}; contrast {{XLIB_contrast}}. The discovery_only sensitivity (`u_rule`) was cut under the pre-declared cut order (DEV-CUT-XLIB-DISC, `results/deviations.csv`). It had also crashed: `eligible_genes.csv` lacks columns that the discovery step expects. The main all-D rule is unaffected. Caveat: eligibility was selected on all-D effects, so absolute rates are optimistic (DESIGN §6.3).
 
 ### 7.7 P1 and P2 replication in R
 A single run after `freeze-catalogue`.
@@ -391,10 +484,15 @@ A single run after `freeze-catalogue`.
 - Set A normal-line dependency flags: {{setA}}.
 
 ### 7.8 Limits classes
-Gene classes {{gene_class_counts}}; pair classes {{pair_class_counts}}; predictor-blind and processing-limited labels {{limit_labels}}.
+Pre-R state (`results/limits/limits_summary.json`). Class-9 pairs are "pending R"; power, the data ceiling and the Tier B attribution are missing.
+- Genes (3,501): 3b 1,416; 3 884; 9 690; 2 417; 6 73; 1 21.
+- MD-global pairs: class 9 = 1,128; class 6 = 252.
+- MD-strict pairs: class 9 = 9,083; class 6 = 2,477; class 4 = 102.
+- Labels: 231 processing-limited pairs and 1,761 predictor-blind rows.
+- NC6 fails (Section 7.5).
 
 ### 7.9 Candidate cards
-`known_recovery.csv` {{known_recovery}}; `shortlist.csv` top 15 {{shortlist_top15}}; three case studies {{case_studies}}. The word "novel" is not applied to any gene.
+`known_recovery.csv` has 88 rows (Section 7.4); `shortlist.csv` top 15 {{shortlist_top15}}; three case studies {{case_studies}}. The word "novel" is not applied to any gene.
 
 ## 8. Deviations and amendments
 
@@ -426,11 +524,16 @@ Gene classes {{gene_class_counts}}; pair classes {{pair_class_counts}}; predicto
 - **The gate failed twice (21/39).** The pipeline recovers 54% of the specified positive controls on MD-strict, and 17/39 on MD-global. Families ADD-CN, SIG and W fall below 50%. The gate is a pre-declared bar and was not re-scored after the fact.
 - **The gate denominator mixes universes.** The 7 U_ctrl controls are 0/7, and ESR1 could not be recovered by construction (own-expression is family F2). The eligible-only recall (21/32) does not replace the verdict.
 - **Negative-control bounds.** NC2b = 1.2 is very loose (provisional value 0.1). NC3, NC5 and NC6 keep their provisional bounds, because the toy has no faithful analogue (ER17–ER21).
+- **NC1 failed for EN-obs** (FDR_emp 0.20). EN-pred (0.327), S1-pred and MD-strict are "not calibrated". Only S1-obs (0.022) and MD-global (0.0009) are within 0.10 with no label (`results/null/summary.json`). The null covers 300 genes with B = 20.
+- **NC6 failed.** Lineage-TF genes are not class 3 under the frozen rule (0/18), so class-3 (lineage) labels are flagged unreliable.
+- **P2 is descriptive.** The gate-disjoint headline has 6 testable tests, and every arm recovers 0. EN-pred recovers no CGT test at k = 200 in any non-proxy subset.
+- **65% of MD-global pairs are lineage-unresolvable** (894/1,380), and 139 of the 430 cross-lineage labels are single-lineage driven.
+- **Not done (time):** the data ceiling, NC2/NC3/NC5 on real data, refuted-vs-approved recall, the pseudo-R dry run, and the independent delta check against the engine file.
 - **Three toy checks fail** (Section 5.2), one of them the positive control for the fold artefact. The ridge-predictor FDP of the prediction-based lists is invisible to the permutation null.
 - **The β tolerance failed in the independent check** (Section 5.6), on one of 30 pairs, by 25% over the tolerance. The cause is attributed, not removed.
 - **Calibration.** CR2 + ν was anti-conservative at n = 255. The fallback is conservative for binary features with 3–5 carriers, so rare determinants are under-powered (ER11). Example: EGFR-activating, 8 carriers.
 - **The catalogue is a D-only, selection-conditional list.** MD-global p-values are not confirmatory. With a BH family of about 6.6 million tests, borderline known pairs fail: SMARCA2, ARID1B, MAT2A.
-- **Methylation** is assayed for only 453 of the 1,022 D lines (D10), and methylation findings carry that coverage.
+- **Methylation** is assayed for only 456 of the 1,022 D lines (`results/limits/limits_summary.json`; D10 says 453, not reconciled), and methylation findings carry that coverage.
 - **Proxy and access class.** Only non-direct pairs can support "the predictor learnt more than its hand-coded inputs". Most gate controls are not direct (direct 4/10).
 - **Agent-chosen rules.** The cross-lineage rule can mislabel a one-lineage effect (D13-vi). The combinatorial hit rule is an agent choice (D18).
 - **Shared processing.** R shares the Chronos fit with D, so replication tests generalisation across lines, not across processing (DESIGN §1.2).
@@ -446,7 +549,12 @@ Gene classes {{gene_class_counts}}; pair classes {{pair_class_counts}}; predicto
   - gate attempts: 0346d69 and 415c593 (the gate JSONs record f6737621 and b4874674);
   - independent check: 4c902fb;
   - subtypes and combinatorial: dcbacd4;
-  - confounder-audit change: 19e4b31.
+  - confounder-audit change: 19e4b31;
+  - null draws: 01b2cc5 (resummarised at 732e50e);
+  - M5 audits: f42ddf4;
+  - pre-R limits: b125298;
+  - XLIB: 2d3675a and 8989602;
+  - toy suite on the final engine: dfcd474.
 - **Frozen configs and hashes.** `configs/frozen_hashes.json` has sections `design`, `bounds`, `bounds_values` and `actions`; they are checked by `scripts/check_frozen.py`. `configs/outcome_actions.csv` was hashed before any real output.
 - **Seeds and fixed inputs.** `configs/seeds.json`; subsamples in `configs/subsamples.json`; null genes in `configs/null_genes.txt`.
 - **Pipeline scripts (`scripts/`):**
