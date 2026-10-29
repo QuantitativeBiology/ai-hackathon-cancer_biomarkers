@@ -1,0 +1,10 @@
+{
+ "job": "component_readout",
+ "utc": "2026-10-29T13:13:00+00:00",
+ "start_utc": "2026-10-29T12:45:27+00:00",
+ "wall_s": 1652.7078770999979,
+ "workers": 6,
+ "run_id": "run_component_readout-14240-20261029T124630",
+ "n_genes": 2134,
+ "n_pairs": 11662
+}
