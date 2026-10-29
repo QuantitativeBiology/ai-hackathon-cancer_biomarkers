@@ -88,3 +88,37 @@ def test_top_k_null_p1_p2_never_read_u_ctrl(script):
     for bad in ("arms_ctrl", "md_ctrl", "benchmark_ctrl", "u_ctrl_genes", 'universe="ctrl"', "universe='ctrl'"):
         assert bad not in txt, (script, bad)
     assert IO.ARMS_DIR == IO.arms_dir("eligible") and IO.ARMS_DIR.name == "arms"     # default reader = eligible
+
+
+def test_confounder_audit_adds_u_ctrl_controls_eligible_unchanged(world, monkeypatch):
+    """§5.5 pairs ∪ controls: gate controls of U_ctrl genes come from the ctrl dataset (universe = ctrl in delta.csv /
+    delta_flags.csv); the eligible pairs and their deltas are identical to the run without U_ctrl."""
+    from biomark import params as PR
+    from biomark import paths as P
+    from biomark import pipeline as PL
+    for f in (PR.dp, PR.pp, PR.en_params, PR.endpoints, PR.stats_params, PR.null_params):
+        f()                                                               # frozen params cached before CONFIGS moves
+    root = world["root"]
+    monkeypatch.setattr(P, "CONFIGS", root / "configs")
+    monkeypatch.setattr(P, "RESULTS", root / "results")
+    monkeypatch.setattr(P, "CACHE", root / "cache")
+    ca = _script("run_confounder_audit")
+    p_all, p_e = ca.audit_pairs(), ca.audit_pairs(include_ctrl=False)
+    k = p_all.set_index(["gene", "feature"])
+    assert k.loc[_key(world), "universe"] == "ctrl" and k.loc[_key(world), "source"] == "control"
+    assert (p_e["universe"] == "eligible").all() and _key(world) not in set(zip(p_e["gene"], p_e["feature"]))
+    pd.testing.assert_frame_equal(p_all[p_all["universe"] == "eligible"].reset_index(drop=True), p_e)
+    monkeypatch.undo()                                                    # toy Data reads the project configs
+
+    def tables(pairs):
+        d = PL.Data.from_toy(world["toy"], genes=sorted(set(pairs["gene"])))
+        d.target("obs")
+        return ca.delta_tables(d, pairs, 1)
+
+    d_e, f_e = tables(p_e)
+    d_a, f_a = tables(p_all)
+    pd.testing.assert_frame_equal(d_a[d_a["universe"] == "eligible"].reset_index(drop=True), d_e)
+    pd.testing.assert_frame_equal(f_a[f_a["universe"] == "eligible"].reset_index(drop=True), f_e)
+    dc = d_a[d_a["universe"] == "ctrl"]
+    assert len(dc) and set(zip(dc["gene"], dc["feature"])) == {_key(world)} and dc["beta_full"].notna().all()
+    assert (f_a.loc[f_a["universe"] == "ctrl", ["gene", "feature"]].apply(tuple, axis=1) == _key(world)).all()

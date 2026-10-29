@@ -45,7 +45,8 @@ def build(root: Path) -> dict:
     ctl = pd.concat([pd.DataFrame([moved]), kept])
     pd.DataFrame({"control_id": ctl["control_id"], "family": ctl["family"], "dependency_entrez": ctl["dependency_entrez"],
                   "feature_primary_ids": ctl["feature_primary"], "feature_secondary_ids": ctl["feature_secondary"],
-                  "fallback_feature_ids": "", "gate_feature": "primary", "expected_sign": ctl["expected_sign"]}).to_csv(
+                  "fallback_feature_ids": "", "gate_feature": "primary", "expected_sign": ctl["expected_sign"],
+                  "scope": "gate"}).to_csv(
         cfg / "positive_controls.csv", index=False)
     pd.DataFrame({"control_id": ctl["control_id"], "family": ctl["family"], "gate_eligible": "True",
                   "access_class": "direct", "en_max_attainable_freq": "1.0"}).to_csv(
