@@ -105,6 +105,11 @@
       "id": "lessons_item",
       "regex": "\\bLESSONS \\d+\\b",
       "reason": "item number in LESSONS.md (a reference label)"
+    },
+    {
+      "id": "example_label",
+      "regex": "\\*\\*Example \\d+:",
+      "reason": "numbering of the worked examples in §6.5"
     }
   ]
 }

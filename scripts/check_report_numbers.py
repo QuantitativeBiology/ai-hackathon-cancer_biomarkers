@@ -87,7 +87,7 @@ def parse_number(s: str):
     t = s.rstrip("%").replace("−", "-").replace(",", "")
     mant, ex = re.split(r"[eE]", t) if re.search(r"[eE]", t) else (t, "0")
     dec = len(mant.split(".")[1]) if "." in mant else 0
-    return float(t), max(dec - int(ex), 0), pct
+    return float(t), dec - int(ex), pct          # decimals of the last printed digit (negative for e.g. 2e14)
 
 
 def tolerance(dec: int) -> float:

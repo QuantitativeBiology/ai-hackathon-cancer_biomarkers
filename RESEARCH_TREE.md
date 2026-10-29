@@ -4,6 +4,16 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-29 ~23:30 — Post-R completion (user-approved follow-ups)
+These were completed after the R read, with frozen definitions and D-only data (DEV-POST-R-COMPLETION).
+- **Independent review of the R results.** Every P1 rate reproduced. It found the class-9 power gap, the bootstrap bias, the unreported secondaries and some over-claims; all are fixed or reported.
+- **The predictor verdict is fragile.** The basic bootstrap CI is (−0.16, −0.02), and EN-pred beats EN-obs at k 200 and k 500. S1-obs is never beaten at k 50–200 and ties S1-pred at k 500.
+- **R power for continuous features.** With power computed, class 9 falls from 1,031 to 552 and the shortlist from 735 to 552.
+- **Data ceiling.** 19 of 28 testable CGT tests are data-supported, 9 data-null. EN-pred recovers 0 of 11 data-supported non-proxy tests; S1-obs recovers 3.
+- **Negative controls on real data.** NC2a fails (0.104), NC3 fails (0.424; DEL-driven; 46 suspect genes labelled), and NC5 passes.
+- **Independent delta check.** 0 flag disagreements; the library-block ambiguity is logged.
+- **Report.** Worked subtype examples added (§6.5). The number check passes non-strict; strict fails only on 4 pre-registry source files.
+
 ### 2026-10-29 ~20:40 — FINAL milestone: replication done, report written
 The single replication in the 255 held-out lines was made once (logged at ae6aa84, after tag `freeze-catalogue`, with the dry run first). It answers the primary question in the negative:
 - Reading determinants out of the Part 1 predictor (EN-pred) does not replicate better than the same elastic net on observed effects. P1 at k 100: 0.82 vs 0.89, difference −0.07 (CI −0.12 to 0.02).
@@ -11,7 +21,7 @@ The single replication in the 255 held-out lines was made once (logged at ae6aa8
 - XLIB points the same way: S1-obs 0.82 vs EN-obs 0.62. Caveats: the arms were reused from a legacy dataset whose lines cannot be verified, eligibility was selected on all D lines, and the discovery_only sensitivity was cut.
 - The predictor verdict is fragile: a basic bootstrap CI for EN-pred − EN-obs at k 100 is (−0.16, −0.02), and EN-pred beats EN-obs at k 200 and k 500 (p1_secondary.json).
 - On the dev set, every other signal points the same way. The gate failed twice (21/39). The predictor-derived lists recover essentially no clinical test (P2 descriptive, 6 tests). Combinatorial validation shows no advantage over S1-obs. EN-obs fails NC1 and EN-pred is not calibrated. NC6 fails.
-- The catalogue MD-global (EN-pred ∩ S1-obs) is well controlled (FDR_emp 0.0009). Its 735 replicated class-9 pairs are mostly expression-level paralog dependencies (FAM50A–FAM50B, DDX3X–DDX3Y, DNAJC19–DNAJC15), several with high non-cancerous dependency.
+- The catalogue MD-global (EN-pred ∩ S1-obs) is well controlled (FDR_emp 0.0009). Its 552 class-9 pairs (replicated in R, R power ≥ 0.5; 735 before R power was computed for continuous features) are mostly expression-level paralog dependencies (FAM50A–FAM50B, DDX3X–DDX3Y, DNAJC19–DNAJC15), several with high non-cancerous dependency; 13 sit on CN/cutting-suspect genes (NC3 action).
 
 Process: the design was frozen in stages (design, CGT, bounds, catalogue). Outcome actions were pre-committed before any real output, so the gate failure and the negative P1 needed no new rulings. Every deviation is in results/deviations.csv, including the budget overrun decided by the user and the withdrawn dry-run cut. The run lost about 5 h to an overnight interruption and memory limits on a 15.7 GB machine, which led to LESSONS rules 8 and 13. Open items, reported as not done: the data ceiling, NC2/NC3/NC5 on real data, refuted-vs-approved recall, the independent delta check against the engine, and the Tier B items (TCGA prevalence, M1-proxy attribution, selection-adaptive null).
 

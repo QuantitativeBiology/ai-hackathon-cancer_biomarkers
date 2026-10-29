@@ -1,0 +1,4 @@
+{
+  "_comment": "REPORT.md §6.5 worked subtype examples (gene, feature) chosen after R by the writer; used only by scripts/report_counts.py",
+  "examples": [["9130", "EXPPAR:26240"], ["4193", "COMP:TP53MUT"], ["3845", "HOT:3845"], ["10419", "CLIN:MTAP_LOSS"], ["595", "EXPPAR:896"]]
+}

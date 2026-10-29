@@ -74,16 +74,16 @@
   }
  },
  "shortlist": {
-  "n_rows": 735,
+  "n_rows": 552,
   "by_feature_family": {
-   "PROG": 317,
-   "EXPPAR": 178,
+   "PROG": 171,
+   "EXPPAR": 162,
    "COMP": 61,
-   "SIL-other": 39,
    "LOFBI": 37,
+   "SIL-other": 26,
    "CLIN": 23,
-   "PSCORE": 22,
    "HOT": 15,
+   "PSCORE": 14,
    "LOSS": 12,
    "SIL-METH": 7,
    "SIG": 5,
@@ -406,9 +406,419 @@
   "n_r_within_ge_0.10": 17,
   "classes_r_within_ge_0.10": {
    "3b": 12,
-   "9": 5
+   "9": 4,
+   "7": 1
   },
   "n_class3": 0
+ },
+ "lineage_by_class": {
+  "all": {
+   "lineage-unresolvable": 894,
+   "cross-lineage": 430,
+   "undetermined": 34,
+   "lineage-restricted": 22
+  },
+  "class_9": {
+   "cross-lineage": 314,
+   "lineage-unresolvable": 196,
+   "undetermined": 28,
+   "lineage-restricted": 14
+  },
+  "class_9_share_pct": {
+   "lineage-unresolvable": 21.92393736017897,
+   "cross-lineage": 73.02325581395348,
+   "undetermined": 82.3529411764706,
+   "lineage-restricted": 63.63636363636363
+  }
+ },
+ "ceiling_class8": {
+  "n_ceiling_class8_rows": 7,
+  "n_ceiling_class8_genes": 4,
+  "n_gene_class8": 2,
+  "gene_class8_symbols": [
+   "ESR1",
+   "PKMYT1"
+  ]
+ },
+ "miss_testable": {
+  "incl_proxy|all|k100": {
+   "EN-obs": {
+    "eligible, ranked below k": 10,
+    "lost_to_group_member": 7,
+    "ceiling data-null": 4,
+    "n_misses": 21
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 12,
+    "lost_to_group_member": 6,
+    "ceiling data-null": 4,
+    "n_misses": 22
+   },
+   "S1-obs": {
+    "lost_to_group_member": 9,
+    "eligible, ranked below k": 9,
+    "ceiling data-null": 4,
+    "n_misses": 22
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 10,
+    "lost_to_group_member": 8,
+    "ceiling data-null": 4,
+    "n_misses": 22
+   }
+  },
+  "incl_proxy|all|k200": {
+   "EN-obs": {
+    "eligible, ranked below k": 10,
+    "lost_to_group_member": 6,
+    "ceiling data-null": 4,
+    "n_misses": 20
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 12,
+    "lost_to_group_member": 6,
+    "ceiling data-null": 4,
+    "n_misses": 22
+   },
+   "S1-obs": {
+    "eligible, ranked below k": 6,
+    "lost_to_group_member": 5,
+    "ceiling data-null": 4,
+    "n_misses": 15
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 10,
+    "lost_to_group_member": 8,
+    "ceiling data-null": 4,
+    "n_misses": 22
+   }
+  },
+  "incl_proxy|all|k500": {
+   "EN-obs": {
+    "eligible, ranked below k": 7,
+    "lost_to_group_member": 6,
+    "ceiling data-null": 4,
+    "n_misses": 17
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 9,
+    "lost_to_group_member": 6,
+    "ceiling data-null": 4,
+    "n_misses": 19
+   },
+   "S1-obs": {
+    "eligible, ranked below k": 6,
+    "ceiling data-null": 4,
+    "lost_to_group_member": 3,
+    "n_misses": 13
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 10,
+    "lost_to_group_member": 8,
+    "ceiling data-null": 4,
+    "n_misses": 22
+   }
+  },
+  "incl_proxy|gate_disjoint|k100": {
+   "EN-obs": {
+    "eligible, ranked below k": 4,
+    "lost_to_group_member": 3,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 5,
+    "lost_to_group_member": 2,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   },
+   "S1-obs": {
+    "lost_to_group_member": 4,
+    "eligible, ranked below k": 3,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 4,
+    "lost_to_group_member": 3,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   }
+  },
+  "incl_proxy|gate_disjoint|k200": {
+   "EN-obs": {
+    "eligible, ranked below k": 4,
+    "lost_to_group_member": 3,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 5,
+    "lost_to_group_member": 2,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   },
+   "S1-obs": {
+    "lost_to_group_member": 4,
+    "eligible, ranked below k": 3,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 4,
+    "lost_to_group_member": 3,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   }
+  },
+  "incl_proxy|gate_disjoint|k500": {
+   "EN-obs": {
+    "eligible, ranked below k": 4,
+    "lost_to_group_member": 3,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 5,
+    "lost_to_group_member": 2,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   },
+   "S1-obs": {
+    "eligible, ranked below k": 3,
+    "lost_to_group_member": 2,
+    "ceiling data-null": 1,
+    "n_misses": 6
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 4,
+    "lost_to_group_member": 3,
+    "ceiling data-null": 1,
+    "n_misses": 8
+   }
+  },
+  "non_proxy|all|k100": {
+   "EN-obs": {
+    "eligible, ranked below k": 7,
+    "lost_to_group_member": 5,
+    "ceiling data-null": 3,
+    "n_misses": 15
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 8,
+    "lost_to_group_member": 5,
+    "ceiling data-null": 3,
+    "n_misses": 16
+   },
+   "S1-obs": {
+    "eligible, ranked below k": 7,
+    "lost_to_group_member": 6,
+    "ceiling data-null": 3,
+    "n_misses": 16
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 8,
+    "lost_to_group_member": 5,
+    "ceiling data-null": 3,
+    "n_misses": 16
+   }
+  },
+  "non_proxy|all|k200": {
+   "EN-obs": {
+    "eligible, ranked below k": 7,
+    "lost_to_group_member": 5,
+    "ceiling data-null": 3,
+    "n_misses": 15
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 8,
+    "lost_to_group_member": 5,
+    "ceiling data-null": 3,
+    "n_misses": 16
+   },
+   "S1-obs": {
+    "eligible, ranked below k": 6,
+    "lost_to_group_member": 3,
+    "ceiling data-null": 3,
+    "n_misses": 12
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 8,
+    "lost_to_group_member": 5,
+    "ceiling data-null": 3,
+    "n_misses": 16
+   }
+  },
+  "non_proxy|all|k500": {
+   "EN-obs": {
+    "eligible, ranked below k": 6,
+    "lost_to_group_member": 5,
+    "ceiling data-null": 3,
+    "n_misses": 14
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 8,
+    "lost_to_group_member": 5,
+    "ceiling data-null": 3,
+    "n_misses": 16
+   },
+   "S1-obs": {
+    "eligible, ranked below k": 6,
+    "ceiling data-null": 3,
+    "lost_to_group_member": 2,
+    "n_misses": 11
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 8,
+    "lost_to_group_member": 5,
+    "ceiling data-null": 3,
+    "n_misses": 16
+   }
+  },
+  "non_proxy|gate_disjoint|k100": {
+   "EN-obs": {
+    "eligible, ranked below k": 3,
+    "lost_to_group_member": 2,
+    "ceiling data-null": 1,
+    "n_misses": 6
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 4,
+    "ceiling data-null": 1,
+    "lost_to_group_member": 1,
+    "n_misses": 6
+   },
+   "S1-obs": {
+    "eligible, ranked below k": 3,
+    "lost_to_group_member": 2,
+    "ceiling data-null": 1,
+    "n_misses": 6
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 4,
+    "lost_to_group_member": 1,
+    "ceiling data-null": 1,
+    "n_misses": 6
+   }
+  },
+  "non_proxy|gate_disjoint|k200": {
+   "EN-obs": {
+    "eligible, ranked below k": 3,
+    "lost_to_group_member": 2,
+    "ceiling data-null": 1,
+    "n_misses": 6
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 4,
+    "ceiling data-null": 1,
+    "lost_to_group_member": 1,
+    "n_misses": 6
+   },
+   "S1-obs": {
+    "eligible, ranked below k": 3,
+    "lost_to_group_member": 2,
+    "ceiling data-null": 1,
+    "n_misses": 6
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 4,
+    "lost_to_group_member": 1,
+    "ceiling data-null": 1,
+    "n_misses": 6
+   }
+  },
+  "non_proxy|gate_disjoint|k500": {
+   "EN-obs": {
+    "eligible, ranked below k": 3,
+    "lost_to_group_member": 2,
+    "ceiling data-null": 1,
+    "n_misses": 6
+   },
+   "EN-pred": {
+    "eligible, ranked below k": 4,
+    "ceiling data-null": 1,
+    "lost_to_group_member": 1,
+    "n_misses": 6
+   },
+   "S1-obs": {
+    "eligible, ranked below k": 3,
+    "lost_to_group_member": 1,
+    "ceiling data-null": 1,
+    "n_misses": 5
+   },
+   "S1-pred": {
+    "eligible, ranked below k": 4,
+    "lost_to_group_member": 1,
+    "ceiling data-null": 1,
+    "n_misses": 6
+   }
+  }
+ },
+ "nc_detail": {
+  "eligible_en_pred_fidelity_median": 0.3385127437981569,
+  "nc3_by_family": {
+   "DEL": {
+    "n_testable": 478,
+    "dependent_frac": 0.5271966527196653
+   },
+   "LOFBI": {
+    "n_testable": 40,
+    "dependent_frac": 0.1
+   },
+   "METH": {
+    "n_testable": 68,
+    "dependent_frac": 0.38235294117647056
+   },
+   "SIL-DEL": {
+    "n_testable": 3,
+    "dependent_frac": 0.0
+   },
+   "SIL-METH": {
+    "n_testable": 19,
+    "dependent_frac": 0.0
+   },
+   "SIL-other": {
+    "n_testable": 76,
+    "dependent_frac": 0.10526315789473684
+   }
+  }
+ },
+ "pre_power_fix": {
+  "commit": "5de3c19",
+  "pair_classes_md_global": {
+   "5": 90,
+   "6": 211,
+   "7": 48,
+   "9": 1031
+  },
+  "n_shortlist": 735
+ },
+ "subtype_examples": {
+  "PRMT5|CLIN:MTAP_LOSS": {
+   "n_accurate_dependent": 112,
+   "n_members": 47,
+   "n_accurate_non_members": 65
+  },
+  "KRAS|HOT:3845": {
+   "n_accurate_dependent": 187,
+   "n_members": 95,
+   "n_accurate_non_members": 92
+  },
+  "MDM2|COMP:TP53MUT": {
+   "n_accurate_dependent": 274,
+   "n_members": 0,
+   "n_accurate_non_members": 274
+  },
+  "CCND1|EXPPAR:896": {
+   "n_accurate_dependent": 147,
+   "n_members": 23,
+   "n_accurate_non_members": 124
+  },
+  "FAM50A|EXPPAR:26240": {
+   "n_accurate_dependent": 176,
+   "n_members": 174,
+   "n_accurate_non_members": 2
+  }
  },
  "_sources": [
   "results/confounders/delta_flags.csv",
@@ -432,7 +842,15 @@
   "results/gates/G_indep.json",
   "results/benchmark/summary.json",
   "results/m5_audits_summary.json",
-  "results/limits/gene_classes.csv"
+  "results/limits/gene_classes.csv",
+  "results/limits/pair_classes.csv",
+  "results/lineage/cross_lineage.csv",
+  "results/clinical/miss_decomposition.csv",
+  "results/benchmark/lambda.csv",
+  "results/controls/nc3_self_null.csv",
+  "results/subtypes/subtypes.csv",
+  "git show 5de3c19:results/limits/limits_summary.json",
+  "git show 5de3c19:results/candidates/cards_summary.json"
  ],
  "_rules": {
   "by_list": "a row counts for every list named in its '|'-joined source column",

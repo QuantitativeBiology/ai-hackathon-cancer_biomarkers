@@ -218,3 +218,11 @@ def test_citation_qualifiers_are_checked_not_hidden(world):
     assert [r["printed"] for r in bad] == ["40"]
     bare = _bad(_run(world, "Recall 0.4167 (`results/gates/g.json`, `p2.csv`).", strict=True))
     assert [r["printed"] for r in bare] == ["0.4167"] and "p2.csv" not in bare[0]["sources"]
+
+
+def test_positive_exponent_precision():
+    """A number printed with a positive exponent is rounded at its last printed digit: 2e14 matches 2.04e14."""
+    v, dec, pct = C.parse_number("−2e14")
+    assert v == -2e14 and dec == -14 and not pct
+    assert abs(-2.036e14 - v) <= C.tolerance(dec) and abs(-2.6e14 - v) > C.tolerance(dec)
+    assert C.parse_number("1.6e-26")[1] == 27 and C.parse_number("0.25")[1] == 2

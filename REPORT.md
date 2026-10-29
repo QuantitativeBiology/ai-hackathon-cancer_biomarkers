@@ -5,7 +5,7 @@
 This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality predictor on DepMap 26Q3 (`../project`, read-only).
 
 - The rules in force are listed in `docs/effective_rules.md`, cited here as ER#. Each number cites its source file.
-- Claims of replication refer to the single run in R (255 held-out lines). They are not clinical-validity claims.
+- Claims of replication refer to the single run in R (DESIGN.md §1.3: 255 held-out lines). They are not clinical-validity claims.
 
 ## 1. Summary
 
@@ -25,7 +25,7 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
    - **The predictor verdict is fragile.**
      - The bootstrap rates sit below the observed ones, so the percentile CI is biased. A basic bootstrap CI for EN-pred − EN-obs is entirely negative, (−0.16, −0.02) (`results/replication/p1_secondary.json`, bootstrap_diagnostic).
      - At deeper lists the sign flips: EN-pred replicates better than EN-obs at k = 200 (0.79 vs 0.715) and at k = 500 (0.634 vs 0.60) (`results/replication/p1_secondary.json`, secondary_k).
-     - S1-obs is never beaten at k = 50, 100 or 200 (0.98, 0.99, 0.91) (`results/replication/p1_summary.json`; `results/replication/p1_secondary.json`). At k = 500, S1-pred is level with it (0.708 vs 0.702, `results/replication/p1_secondary.json`).
+     - S1-obs is never beaten at k = 50, 100 or 200 (0.98, 0.99, 0.91) (`results/replication/p1_summary.json`; `results/replication/p1_secondary.json`). At k = 500, S1-pred is level with it (`results/replication/p1_secondary.json`: 0.708 vs 0.702).
      - The pre-declared verdicts stand as stated.
 
 4. **Combinatorial screens.**
@@ -41,8 +41,9 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
 
 6. **Confounders (Q3).**
    - The drop-one-block audit flags 1,856 of 13,447 tested pairs, 98 of them among the 1,380 MD-global pairs (`results/report_counts.json`: confounders, counted from `results/confounders/delta_flags.csv`).
-   - The fixed-threshold null gives FDR_emp 0.0009 for MD-global and 0.022 for S1-obs (`results/null/summary.json`). **NC1 fails for EN-obs (0.200)** (`results/null/summary.json`). EN-pred (0.327) is labelled "not calibrated" and exceeds 0.10 even on a null that cannot see the ridge FDP (`results/null/summary.json`; `configs/design_params.json`: NC1).
-   - NC6 also fails: 0 of 18 lineage-TF genes are in class 3 (`results/limits/limits_summary.json`).
+   - The fixed-threshold null gives FDR_emp 0.0009 for MD-global and 0.022 for S1-obs (`results/null/summary.json`). **NC1 fails for EN-obs (0.200)**, labelled "FDR not controlled" (`results/null/summary.json`; `configs/outcome_actions.csv`). EN-pred (0.327) is labelled "not calibrated" and exceeds 0.10 even on a null that cannot see the ridge FDP (`results/null/summary.json`; `configs/design_params.json`: NC1).
+   - NC6 also fails: 0 of 18 lineage-TF genes are in class 3 (`results/limits/limits_summary.json`), so class-3 (lineage) labels are flagged unreliable.
+   - NC2a fails (0.104 against ≤ 0.0011; no bug found) and NC3 fails (0.424 against ≤ 0.1; its genes are labelled CN/cutting-artefact suspects) (`results/controls/nc_real.json`). NC2b (0.26, ≤ 1.2) and NC5 (0.0, ≤ 0.2) pass (`results/controls/nc_real.json`).
 
 7. **Cross-lineage (Q1b).**
    - Of the 1,380 MD-global pairs, 430 are cross-lineage, 22 lineage-restricted, 894 lineage-unresolvable and 34 undetermined (`results/lineage/summary.json`).
@@ -56,12 +57,13 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
    - XLIB (S1-obs and EN-obs only; discovery on 638 D lines, replication on 200 D lines from another library): S1-obs 0.82, EN-obs 0.62 (k = 100; pool 594) (`results/benchmark/replication_xlib.csv`, `results/benchmark/xlib_summary.json`).
 
 9. **Limits (Q5).** Gene and pair failure classes after R (`results/limits/limits_summary.json`):
-   - genes (3,501): 3b 1,416; 3 884; 9 632; 2 417; 6 60; 5 41; 7 30; 1 21 (`results/limits/limits_summary.json`; codes in `results/limits/gene_classes.csv`);
-   - MD-global pairs: 9 (valid, replicated) = 1,031; 6 (confounded) = 211; 5 (rare or under-powered) = 90; 7 (powered, not replicated) = 48 (`results/limits/limits_summary.json`; codes in `results/limits/pair_classes.csv`).
+   - genes (3,501): 3b 1,415; 3 884; 2 417; 9 364; 5 282; 7 70; 6 46; 1 21; 8 2 (`results/limits/limits_summary.json`; codes in `results/limits/gene_classes.csv`);
+   - MD-global pairs: 9 (valid, replicated) = 552; 5 (rare or under-powered) = 537; 6 (confounded) = 160; 7 (powered, not replicated) = 131 (`results/limits/limits_summary.json`; codes in `results/limits/pair_classes.csv`).
+   - The earlier 1,031 class-9 pairs and 735-pair shortlist came from missing R power for continuous features, now fixed (`results/report_counts.json`: pre_power_fix; `tests/test_limits_power.py`). Every class-9 pair is now replicated in R with power ≥ 0.5 (`results/limits/pair_classes.csv`).
 
    Class codes (DESIGN §12.1–12.2):
    - Gene classes: 1 no between-line contrast; 2 not predictable; 3 accurate only via lineage or library, or unnameable; 3b predictable and nameable but with no MD-strict determinant (DESIGN.md §12.1). Otherwise a gene takes 9 if any of its pairs is class 9, else its furthest pair class (DESIGN.md §12.1).
-   - Pair classes: 4 expression gating only; 5 too rare or under-powered; 6 confounded; 7 not replicated; 8 KO–drug discordant; 9 valid candidate (DESIGN.md §12.2). Classes 5, 7 and 8, and the class-9 status, wait for R and the data ceiling.
+   - Pair classes: 4 expression gating only; 5 too rare or under-powered; 6 confounded; 7 not replicated; 8 KO–drug discordant; 9 valid candidate (DESIGN.md §12.2). Classes 5, 7 and 8 and class 9 are final after the R run and the data ceiling (`results/limits/limits_summary.json`).
 
    Limits already visible:
    - 109,919 accurate-but-unassigned dependent lines in the MD-strict gene set (`results/subtypes/summary.json`) contradict the brief's premise that every accurate prediction implies a nameable determinant.
@@ -73,10 +75,10 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
    - the own-expression control ESR1 could not be recovered under the list definitions (Section 6.2).
 
 10. **Candidates** (`results/candidates/shortlist.csv`, `cards_summary.json`).
-    - The shortlist holds 735 class-9 MD-global pairs replicated in R (`results/candidates/cards_summary.json`).
-    - It is dominated by expression-level determinants: 317 expression-programme and 178 paralog-expression features (`results/report_counts.json`: shortlist). Only 15 are hotspot and 37 loss-of-function features (`results/report_counts.json`: shortlist).
+    - The shortlist holds 552 class-9 MD-global pairs replicated in R (`results/candidates/cards_summary.json`).
+    - Expression-level determinants make up most of it: 171 expression-programme and 162 paralog-expression features (`results/report_counts.json`: shortlist). Only 15 are hotspot and 37 loss-of-function features (`results/report_counts.json`: shortlist).
     - The top hits are paralog pairs: FAM50A–FAM50B, DDX3X–DDX3Y, DNAJC19–DNAJC15, EIF1AX, RPP25L, INTS6, RAB6A, ATP6V0E1 and EFR3A. Most are not in the curated lists the cards check (`results/candidates/shortlist.csv`: not_in_curated_lists). MDM2 dependency in TP53 wild-type lines also appears.
-    - Several top hits are frequently dependent in the 15 non-cancerous lines: RAB6A 0.73, MDM2 0.67, FAM50A 0.47 (`results/candidates/shortlist.csv:setA_dependent_frac`; `results/report_counts.json`: set_a). That flags possible normal-cell dependency. Set A is an unconditional fraction over 15 immortalised lines, not split by determinant, so this is not a therapeutic-window measurement.
+    - Several top hits are frequently dependent in the 15 non-cancerous lines: RAB6A 0.73, MDM2 0.67, FAM50A 0.47 (`results/candidates/shortlist.csv:setA_dependent_frac`; `results/report_counts.json`: set_a). That flags possible normal-cell dependency. Set A is an unconditional fraction over 15 immortalised lines (DESIGN.md §1.3), not split by determinant, so this is not a therapeutic-window measurement.
 
 ## 2. Question and approach
 
@@ -278,12 +280,12 @@ A separate agent, which did not read the engine modules, reimplemented S1-obs, t
 | λ (G and X) | max relative difference 4e-7 | none stated |
 | **EN-obs mean β over 50 subsamples** | **FAIL: 29 of 30 within tolerance; worst 1.25e-3 relative (gene 5045 × SIL-METH:604)** | 1e-3 relative |
 | Full-D β | 30 of 30 within 4e-5 | n/a |
-| Confounding delta, 10 pairs | not scored: `results/confounders/delta.csv` did not exist yet; the checker's own refit flagged 1 of 10 | reported only |
+| Confounding delta, 10 pairs (80 block rows) | 0 flag disagreements with the engine; 7 of 8 blocks match to 1.7e-12; the library block differs (DEV-DELTA-LIBRARY-BLOCK) (`results/gates/G_indep.json`; `results/deviations.csv`) | flags exact |
 
 - **The β-tolerance check failed.** The checker attributes it to the subsample fits for gene 5045, where the active set differed (solver tolerance 1e-3 and the screening boundary) (`results/gates/G_indep.json:notes`). The full-D β of that pair agrees to 6e-10 (`results/gates/G_indep.json:notes`). No tolerance was changed.
 - The file records tasks 1 and 2 as pass and task 3 as fail (`results/gates/G_indep.json`: overall).
 - **Pair universe.** The checker's universe is larger than the engine's: 6,574,471 vs 6,561,731 pairs, i.e. 12,740 pairs in 75 genes that only the checker has (`results/gates/G_indep.json`). All of them are untested, because they have fewer than 5 carriers on the gene's rows (`results/gates/G_indep.json`; `configs/design_params.json`: carrier minimum). The checker carries such pairs as untested rows; the engine leaves them out of its table. The S1 p-values and the BH counts match exactly.
-- The engine's `results/confounders/delta.csv` now exists, but the independent delta check was not re-run against it (not done: time).
+- **Delta check against the engine** (`results/gates/G_indep.json`: task4_engine_comparison): 0 flag disagreements over 80 block rows. The library block differs because the design is ambiguous about screen days (`results/deviations.csv`: DEV-DELTA-LIBRARY-BLOCK).
 
 ## 6. Results on the dev set D
 
@@ -366,6 +368,74 @@ The test covers paralog candidates (loss of A → dependency on B), screened in 
 - The hit rule is an agent choice (Section 4.5).
 - **Conclusion.** Catalogue paralog candidates are experimentally supported combinatorial dependencies, but the test shows no advantage over the univariate S1-obs list.
 
+### 6.5 Worked subtype examples
+
+The five MD-global pairs below show what a recovered subtype looks like. All five are class 9 and replicated in R, and each is a row of `results/candidates/shortlist.csv`.
+- They were picked to cover the cases the brief asks about, not by effect size. The exception is FAM50A, which is shortlist rank 1 (`results/candidates/shortlist.csv`).
+- **Members** are dependent lines that the predictor ranks as dependent and whose share of the explained signal is at least 0.25 (`results/subtypes/subtypes.csv`; DESIGN.md §8.1).
+- **Lineage composition** gives the five largest lineages in that file.
+- **Powered lineages** counts lineages with per-lineage power of at least 0.5 (`results/lineage/cross_lineage.csv`; DESIGN.md §8.3).
+- **Set-A fractions** are over the 15 non-cancerous lines (DESIGN.md §1.3).
+- **R effects** are one-sided, from `results/replication/r_tests.csv`.
+
+**Example 1: FAM50A × expression of its paralog FAM50B (cross-lineage, expression determinant).**
+- **Determinant.** FAM50A is less essential where its paralog FAM50B is highly expressed: EXPPAR:26240, pooled β +0.277 (`results/lineage/cross_lineage.csv`). The access class is direct, because paralog expression is a hand-coded input of the predictor's paralog stage (`results/candidates/shortlist.csv`; DESIGN §4.4).
+- **Members.** 174 of 176 accurate-dependent lines, out of 256 dependent lines (`results/subtypes/subtypes.csv`). They span 21 lineages; the largest are Lymphoid 32, CNS/Brain 25, Bowel 24, Esophagus/Stomach 17 and Myeloid 13 (`results/subtypes/subtypes.csv`).
+- **Lineage label.** Cross-lineage: 21 powered lineages, same-sign fraction 1.0 (`results/lineage/cross_lineage.csv`). The interaction p of 0.00099 shows that the effect size varies by lineage (`results/lineage/cross_lineage.csv`).
+- **R.** β = 0.278 (SE 0.020), p = 1.6e-26 (`results/replication/r_tests.csv`).
+- **Other support.** Combinatorial screens: replicated (`results/candidates/shortlist.csv`). The silencing and methylation variants of the same paralog are also on the shortlist (`results/candidates/shortlist.csv`).
+- **Set A.** Dependent fraction 0.467 (`results/candidates/shortlist.csv`).
+- **Reading.** Low FAM50B marks FAM50A-dependent lines in 21 lineages (`results/lineage/cross_lineage.csv`). But the dependency is also common in non-cancerous lines, so it is not tumour-selective. The "subtype" is nearly the whole dependent set. Because the access class is direct, the result shows that the predictor used an input it was given, not a determinant beyond its inputs.
+
+**Example 2: MDM2 × TP53 mutation (cross-lineage; the determinant is shared by a 71-gene module) (`results/subtypes/modules.csv`).**
+- **Determinant.** MDM2 is less essential in TP53-mutant lines: COMP:TP53MUT, pooled β +0.740 (`results/lineage/cross_lineage.csv`). The access class is proxy, because TP53 status is not a predictor input (`results/candidates/shortlist.csv`).
+- **Members.** The subtype files list no member lines (`results/subtypes/subtypes.csv`). They define members among carriers of the feature, and here the dependent lines are the non-carriers (TP53 wild type).
+- **Module.** COMP:TP53MUT with positive sign covers 71 genes (`results/subtypes/modules.csv`). These include MDM2, MDM4, PPM1D and USP7, but also ribosomal and exosome genes (`results/subtypes/modules.csv`).
+- **Lineage label.** Cross-lineage across 19 powered lineages (`results/lineage/cross_lineage.csv`). The interaction p is 1.2e-12 (`results/lineage/cross_lineage.csv`).
+- **R.** β = 0.834 (SE 0.089), p = 2.9e-17 (`results/replication/r_tests.csv`).
+- **Other support.** MDM2 is a P53-family gate control (`results/gates/G_pc_attempt2.json`).
+- **Set A.** Dependent fraction 0.667 (`results/candidates/shortlist.csv`).
+- **Reading.** This recovers a known TP53-status dependency. It is strongly heterogeneous across lineages, and the module mixes p53-pathway genes with general ribosome and exosome genes, so it is not 71 independent dependencies (`results/subtypes/modules.csv`).
+
+**Example 3: KRAS × KRAS hotspot mutation (cross-lineage, genomic determinant).**
+- **Determinant.** Lines with a KRAS hotspot mutation depend more on KRAS: HOT:3845, pooled β −1.03 (`results/lineage/cross_lineage.csv`). The access class is potentially-direct (`results/candidates/shortlist.csv`).
+- **Members.** 95 of 187 accurate-dependent lines (`results/subtypes/subtypes.csv`). The largest lineages are Bowel 30, Lung 21, Pancreas 14, Biliary Tract 7 and Esophagus/Stomach 6 (`results/subtypes/subtypes.csv`).
+- **Lineage label.** Cross-lineage, with 10 powered lineages (`results/lineage/cross_lineage.csv`).
+- **R.** β = −1.080 (SE 0.140), p = 3.0e-9 (`results/replication/r_tests.csv`).
+- **Other support.** KRAS is a gate control (`results/candidates/known_recovery.csv`).
+- **Set A.** Dependent fraction 0.4 (`results/candidates/shortlist.csv`).
+- **Reading.** This is the cleanest genomic subtype, and it shows the pipeline returns a known biology. But the call is gene-level: the allele-specific KRAS G12C clinical test is not recovered at k = 200 (`results/candidates/known_recovery.csv`). The 92 accurate-dependent non-member lines (derived) are not explained by this feature (`results/report_counts.json`: subtype_examples).
+
+**Example 4: PRMT5 × MTAP loss (cross-lineage, multi-gene module with a clinical test).**
+- **Determinant.** MTAP loss (CLIN:MTAP_LOSS) makes lines more dependent on PRMT5, pooled β −0.329 (`results/lineage/cross_lineage.csv`). The access class is proxy (`results/candidates/shortlist.csv`).
+- **Members.** 47 of 112 accurate-dependent lines (`results/subtypes/subtypes.csv`). The largest lineages are Pancreas 11 and Esophagus/Stomach 8 (`results/subtypes/subtypes.csv`).
+- **Module.** The MTAP-loss module groups PRMT5, PRMT1, PELO, METTL16 and WDR77 (`results/subtypes/modules.csv`).
+- **Lineage label.** Cross-lineage, with 10 powered lineages and interaction p = 0.386, so the effect is homogeneous across lineages (`results/lineage/cross_lineage.csv`).
+- **R.** β = −0.160 (SE 0.061), p = 0.0062 (`results/replication/r_tests.csv`). That is about half the D estimate.
+- **Clinical.** CGT test MTAP_LOSS__PRMT5__pan, tier T2. S1-obs ranks it 139 (a hit at k = 200); EN-pred ranks it 7,961 (`results/clinical/p2_scores.csv`).
+- **Set A.** Dependent fraction 0.067 (`results/candidates/shortlist.csv`).
+- **Reading.** This is the one example with a curated clinical test. Its MD-global entry comes from the S1-obs half of the intersection, not from a determinant that the predictor revealed.
+
+**Example 5: CCND1 × expression of CCND3 (lineage-restricted).**
+- **Determinant.** CCND1 is less essential where its paralog CCND3 is highly expressed: EXPPAR:896, pooled β +0.127 (`results/lineage/cross_lineage.csv`).
+- **Members.** 23 of 147 accurate-dependent lines (`results/subtypes/subtypes.csv`).
+- **Lineage label.** Lineage-restricted, with only 1 powered lineage (`results/lineage/cross_lineage.csv`). The significant lineage is Lung (β 0.307, q 0.0064), but its power of 0.42 is below the 0.5 cut (`results/lineage/cross_lineage.csv`).
+- **R.** β = 0.157 (SE 0.044), p = 4.4e-4 (`results/replication/r_tests.csv`).
+- **Set A.** Dependent fraction 0.133 (`results/candidates/shortlist.csv`).
+- **Reading.** The label rests on a lineage that fails the power cut, so this is a lineage-concentrated candidate, not a confirmed restriction.
+
+**Across vs within lineage** (`results/report_counts.json`: lineage_by_class; MD-global pairs by cross-lineage label, all pairs vs class 9):
+
+| Label | MD-global pairs | Class 9 | Class-9 share |
+|---|---|---|---|
+| Cross-lineage | 430 | 314 | 73% |
+| Lineage-restricted | 22 | 14 | 64% |
+| Lineage-unresolvable | 894 | 196 | 22% |
+| Undetermined | 34 | 28 | 82% |
+
+- **Caveat.** The cross-lineage label needs ≥ 2 powered lineages, and class 9 needs R power ≥ 0.5, so the higher class-9 share of cross-lineage pairs is confounded with power (DESIGN.md §8.3, §12.2).
+- DDX3X, at shortlist ranks 2, 4 and 14, is not one of the five examples; it carries the `cn_cutting_suspect` label (`results/candidates/shortlist.csv`; Section 7.8).
+
 ## 7. Further results, including the replication in R
 
 ### 7.1 Confounder audit
@@ -437,7 +507,32 @@ The headline set is gate-disjoint (ER14, ER26).
 
 **Direction.** Every recovered test has the expected sign: direction accuracy 1.0 and 0 sign errors for S1-obs, EN-obs, and EN-pred at k = 500 incl-proxy (`results/clinical/q4_summary.json`). Direction is not estimable for arms with no hits (`results/clinical/q4_summary.json`).
 
-**Not produced (not done: time).** The data ceiling (`cgt_ceiling.csv`), so there are no ceiling labels and no miss decomposition, and class 8 uses KO class and sign only (`results/limits/limits_summary.json`). Also missing: the NC5 false-sensitivity rate on real data and refuted-vs-approved recall. The TCGA prevalence (Tier B) was cut.
+**Data ceiling** (`results/clinical/cgt_ceiling.csv`; `results/clinical/ceiling_summary.json`; DESIGN §10.4). S1-obs is run on each ceiling-testable test in its own comparator (§5.3 model, one-sided, BH q < 0.1 over the tests, F7).
+- 28 tests are ceiling-testable: 19 data-supported, 9 data-null and 0 data-contradicted (`results/clinical/ceiling_summary.json`). The other 36 are untestable (`results/clinical/ceiling_summary.json`).
+- The one-sided Wilcoxon robustness check agrees with the label in 21 of 28 (`results/clinical/ceiling_summary.json`).
+- Data-null tests: EGFR-activating in NSCLC (and its HOT proxy), ALK fusion, BCR::ABL1, RAS-mutant → EGFR in CRC, ER+ → ESR1, CCNE1 amplification → PKMYT1, and the refuted KRAS-mutant → MEK and EGFR-amplified GBM tests (`results/clinical/cgt_ceiling.csv`).
+- **Caveat.** For BCR::ABL1 and ALK fusion the carrier indicator is collinear with the design blocks inside the comparator, so the fit is degenerate (BCR::ABL1 β ≈ −2e14) (`results/clinical/cgt_ceiling.csv`). Both are flagged and, as in S1, cannot be data-supported; for BCR::ABL1 the Wilcoxon q is 0.002 (`results/clinical/cgt_ceiling.csv`).
+- Stratified comparators get no separate indication fixed effect; the §5.3 lineage block is used (`results/clinical/ceiling_summary.json`: rules).
+- **Class 8 from the ceiling:** concordant tests with a data-null ceiling add 7 gene-level class-8 rows on 4 genes; ESR1 and PKMYT1 end in gene class 8 (`results/report_counts.json`: ceiling_class8).
+
+**Miss decomposition** (`results/clinical/miss_decomposition.csv`; `results/report_counts.json`: miss_testable). The category order (ineligible gene, no feature_D, ceiling data-null, lost to a group member, ranked below k) is an implementation choice; the design lists the categories only (`results/clinical/cgt_secondary.json`: rules). Misses among testable tests at k = 200:
+
+| Set (testable tests) | Arm | Misses | Ceiling data-null | Lost to a group member | Ranked below k |
+|---|---|---|---|---|---|
+| headline, gate-disjoint (6) | S1-obs | 6 | 1 | 2 | 3 |
+| headline, gate-disjoint (6) | EN-obs | 6 | 1 | 2 | 3 |
+| headline, gate-disjoint (6) | EN-pred | 6 | 1 | 1 | 4 |
+| headline, gate-disjoint (6) | S1-pred | 6 | 1 | 1 | 4 |
+| non-proxy all (16) | S1-obs | 12 | 3 | 3 | 6 |
+| non-proxy all (16) | EN-obs | 15 | 3 | 5 | 7 |
+| non-proxy all (16) | EN-pred | 16 | 3 | 5 | 8 |
+| non-proxy all (16) | S1-pred | 16 | 3 | 5 | 8 |
+
+- The untestable headline tests add 14 ineligible-gene and 5 no-feature misses per arm (`results/clinical/cgt_secondary.json`: miss_decomposition).
+- **Recall over data-supported tests** (non-proxy all, k = 200; 11 tests): S1-obs 3/11, every other arm 0/11 (`results/clinical/cgt_secondary.json`: recall_data_supported).
+- **NC5** (false-sensitivity rate): 0.0, a pass against ≤ 0.2 (`results/clinical/cgt_secondary.json`: NC5). Only 2–3 tests per arm are ranked (`results/clinical/cgt_secondary.json`: NC5; `results/controls/nc_real.json`).
+- **Refuted vs approved** (k = 200): refuted 0/3 in every arm; approved (T1 sensitivity, non-proxy, testable) S1-obs 3/10, EN-obs 1/10, EN-pred 0/10, S1-pred 0/10 (`results/clinical/cgt_secondary.json`: refuted_vs_approved).
+- The TCGA prevalence (Tier B) was cut.
 
 **Known-recovery rows** (`results/candidates/cards_summary.json`; `results/report_counts.json`: known_recovery): 88 rows, 58 controls and 30 CGT tests.
 - Gate controls: MD-global 17/39, MD-strict 21/39 (`results/report_counts.json`: known_recovery).
@@ -488,7 +583,11 @@ Fixed-threshold null on the 300-gene subset, B = 20 draws, 3 workers (`results/n
 - NC3 0.1, NC5 0.2 and NC6 0.7 keep their provisional values (`configs/frozen_hashes.json`: bounds_values).
 
 **Real-data values.**
-- NC2, NC3 and NC5 were not computed (not done: time).
+- **NC2a fails**: the median EN-pred fidelity of the 100 low-tier genes is 0.104, against ≤ 0.0011 (`results/controls/nc_real.json`). Per `outcome_actions` a bug check was done and found none: the statistic runs through the same code as for the eligible genes, whose median fidelity is 0.339 (`results/report_counts.json`: nc_detail). The toy bound came from low-tier genes whose signal is latent only, which real low-tier predictions are not.
+- **NC2b passes**: 0.26 MD-strict hits per low-tier gene, against ≤ 1.2; MD-global 0/100 for information (provisional 0.1) (`results/controls/nc_real.json`).
+- The NC2 genes are "matched-SD" by an implementation choice: each of 100 eligible genes drawn with `lowtier_seed` is matched to the unused low-tier gene with the nearest D effect SD (`results/controls/lowtier_genes_summary.json`; list in `configs/lowtier_genes.txt`).
+- **NC3 fails**: 0.424 of the 684 testable self-null pairs are dependent, against ≤ 0.1, driven by DEL self-null pairs (0.527 of 478) (`results/controls/nc_real.json`; `results/report_counts.json`: nc_detail). Per `outcome_actions` the affected genes are labelled CN/cutting-artefact suspects: 46 genes, 33 MD-global pairs and 13 of the 552 shortlist pairs (`results/limits/limits_summary.json`: cn_cutting_suspect).
+- **NC5 passes**: 0.0, against ≤ 0.2 (`results/controls/nc_real.json`).
 - NC4 is the toy fold-offset control (A7-iii).
 - **NC6 fails**: 0 of 18 lineage-TF genes are in class 3, against a bound of ≥ 0.7 (`results/limits/limits_summary.json`). The 17 genes with r_within ≥ 0.10 are classes 3b or 9, so the class-3 rule does not fire (`results/report_counts.json`: lineage_tf). Per `outcome_actions`, class-3 (lineage) labels are flagged unreliable.
 
@@ -538,26 +637,28 @@ Rates and contrasts (`results/replication/p1_summary.json`; `results/replication
 **Set A** (`results/report_counts.json`: set_a, counted from `results/replication/setA_lines.csv`; 15 non-cancerous lines). Across the 2,142 requested genes, the median dependent fraction is 0.20, and 144 genes are dependent in at least half of the set-A lines (`results/report_counts.json`: set_a).
 
 ### 7.8 Limits classes
-Final state, after R (`results/limits/limits_summary.json`, R_status available). The data ceiling and the Tier B attribution are missing, so class 8 uses KO class and sign only.
-- Genes (3,501): 3b 1,416; 3 884; 9 632; 2 417; 6 60; 5 41; 7 30; 1 21 (`results/limits/limits_summary.json`; codes in `results/limits/gene_classes.csv`).
-- MD-global pairs: class 9 = 1,031; class 6 = 211; class 5 = 90; class 7 = 48 (`results/limits/limits_summary.json`).
-- MD-strict pairs: class 9 = 8,208; class 6 = 1,971; class 5 = 1,326; class 4 = 102; class 7 = 55 (`results/limits/limits_summary.json`).
+Final state, after R (`results/limits/limits_summary.json`, R_status available), with R power for every R test (`results/replication/r_power.csv`) and the data ceiling for class 8 (Section 7.4). The Tier B attribution is missing.
+- Genes (3,501): 3b 1,415; 3 884; 2 417; 9 364; 5 282; 7 70; 6 46; 1 21; 8 2 (`results/limits/limits_summary.json`; codes in `results/limits/gene_classes.csv`).
+- MD-global pairs: class 9 = 552; class 5 = 537; class 6 = 160; class 7 = 131 (`results/limits/limits_summary.json`).
+- MD-strict pairs: class 9 = 615; class 5 = 10,623; class 6 = 174; class 7 = 148; class 4 = 102 (`results/limits/limits_summary.json`).
+- Class 8 from the ceiling: 7 gene-level rows on 4 genes; ESR1 and PKMYT1 end in gene class 8 (`results/report_counts.json`: ceiling_class8).
+- **CN/cutting-artefact suspects (NC3 outcome action).** 46 genes with at least one dependent self-null pair carry the label `cn_cutting_suspect`; the label changes no class. 33 MD-global pairs and 13 of the 552 shortlist pairs sit on these genes, including DDX3X at shortlist ranks 2, 4 and 14 (`results/limits/limits_summary.json`: cn_cutting_suspect; `results/candidates/shortlist.csv`).
 - Labels: 231 processing-limited pairs and 1,761 predictor-blind rows (`results/limits/limits_summary.json`).
 - NC6 fails (Section 7.5).
 
 ### 7.9 Candidate cards
 `known_recovery.csv` has 88 rows (`results/candidates/cards_summary.json`; Section 7.4). With R: MD-global recovers 22 and MD-strict 28 (`results/candidates/cards_summary.json`).
 
-`shortlist.csv` (735 rows, top 15 below) holds class-9 MD-global pairs that replicated in R (`results/candidates/cards_summary.json`). Its features are PROG 317, EXPPAR 178, COMP 61, SIL-other 39, LOFBI 37, CLIN 23, PSCORE 22, HOT 15 (`results/report_counts.json`: shortlist, counted from `results/candidates/shortlist.csv`).
+`shortlist.csv` (552 rows, top 15 below) holds class-9 MD-global pairs that replicated in R (`results/candidates/cards_summary.json`). Its features are PROG 171, EXPPAR 162, COMP 61, LOFBI 37, SIL-other 26, CLIN 23, HOT 15, PSCORE 14 (`results/report_counts.json`: shortlist, counted from `results/candidates/shortlist.csv`).
 
 Top rows (`results/candidates/shortlist.csv`):
 
 | Rank | Dependency | Determinant | Access | Powered lineages | R one-sided p | Combinatorial | Set-A dependent fraction |
 |---|---|---|---|---|---|---|---|
 | 1 | FAM50A | low FAM50B expression (EXPPAR:26240) | direct | 21 | 1.6e-26 | replicated | 0.47 |
-| 2 | DDX3X | low DDX3Y expression (EXPPAR:8653) | direct | 16 | 1.7e-21 | tested, not replicated | 0.07 |
+| 2 | DDX3X (cn_cutting_suspect) | low DDX3Y expression (EXPPAR:8653) | direct | 16 | 1.7e-21 | tested, not replicated | 0.07 |
 | 3 | DNAJC19 | low DNAJC15 expression (EXPPAR:29103) | direct | 21 | 1.2e-19 | tested, not replicated | 0.53 |
-| 4 | DDX3X | expression programme NMF49 | expression-derived | 16 | 2.8e-19 | — | 0.07 |
+| 4 | DDX3X (cn_cutting_suspect) | expression programme NMF49 | expression-derived | 16 | 2.8e-19 | — | 0.07 |
 | 5 | MYBL2 | EXPPAR:4603 | direct | 14 | 1.8e-17 | tested, not replicated | 0.33 |
 | 6 | MDM2 | TP53 mutation composite | proxy | 19 | 2.9e-17 | — | 0.67 |
 | 7 | EIF1AX | EXPPAR:9086 | direct | 17 | 1.3e-16 | tested, not replicated | 0.33 |
@@ -567,14 +668,14 @@ Top rows (`results/candidates/shortlist.csv`):
 | 11 | INTS6 | EXPPAR:203522 | direct | 19 | 9.1e-15 | tested, not replicated | 0.20 |
 | 12 | RAB6A | EXPPAR:51560 | direct | 17 | 6.0e-14 | tested, not replicated | 0.73 |
 | 13 | ATP6V0E1 | EXPPAR:155066 | direct | 13 | 1.0e-13 | tested, not replicated | 0.07 |
-| 14 | DDX3X | Y-chromosome loss (YABS:8653) | expression-derived | 16 | 3.1e-13 | tested, not replicated | 0.07 |
+| 14 | DDX3X (cn_cutting_suspect) | Y-chromosome loss (YABS:8653) | expression-derived | 16 | 3.1e-13 | tested, not replicated | 0.07 |
 | 15 | EFR3A | EXPPAR:22979 | direct | 10 | 1.1e-12 | tested, not replicated | 0.47 |
 
 (`results/candidates/shortlist.csv`.)
 
 **Case studies** (chosen by `build_candidate_cards.py`):
 1. **FAM50A, dependent when the paralog FAM50B is low.** Cross-lineage across 21 lineages, replicated in R and in the combinatorial screens (`results/candidates/shortlist.csv`). But set-A dependency is 0.47 (`results/candidates/shortlist.csv`).
-2. **DDX3X, dependent when DDX3Y is low or the Y chromosome is lost.** This is the same biology captured three times: paralog expression, an NMF programme, and Y loss. The determinant is consistent with sex and Y-chromosome status of the line rather than a lineage-specific tumour alteration; sex was not tested directly. The pair was tested in the combinatorial screens and did not replicate there (`results/candidates/shortlist.csv`). Set-A dependency is low (`results/candidates/shortlist.csv`: 0.07).
+2. **DDX3X, dependent when DDX3Y is low or the Y chromosome is lost.** This is the same biology captured three times: paralog expression, an NMF programme, and Y loss. The determinant is consistent with sex and Y-chromosome status of the line rather than a lineage-specific tumour alteration; sex was not tested directly. The pair was tested in the combinatorial screens and did not replicate there (`results/candidates/shortlist.csv`). Set-A dependency is low (`results/candidates/shortlist.csv`: 0.07). DDX3X carries the `cn_cutting_suspect` label from the NC3 outcome action (Section 7.8; `results/candidates/shortlist.csv`).
 3. **DNAJC19, dependent when DNAJC15 is low.** Whether low DNAJC15 reflects promoter silencing was not tested here, because the determinant is the expression feature. It was tested in combinatorial screens but not replicated there, and set-A dependency is 0.53 (`results/candidates/shortlist.csv`).
 
 None of these is named "novel". All three are paralog-buffering dependencies, the class the predictor's M2 stage encodes directly. The word "novel" is not applied to any gene.
@@ -613,7 +714,9 @@ None of these is named "novel". All three are paralog-buffering dependencies, th
 - **NC6 failed.** Lineage-TF genes are not class 3 under the frozen rule (0/18) (`results/limits/limits_summary.json`), so class-3 (lineage) labels are flagged unreliable.
 - **P2 is descriptive.** The gate-disjoint headline has 6 testable tests, and every arm recovers 0 (`results/clinical/q4_summary.json`, non_proxy|gate_disjoint|k200). EN-pred recovers no CGT test at k = 200 in any non-proxy subset.
 - **65% of MD-global pairs are lineage-unresolvable** (`results/lineage/summary.json`; `results/report_counts.json`: lineage; 894/1,380), and 139 of the 430 cross-lineage labels are single-lineage driven (`results/lineage/summary.json`).
-- **Completed after the R read** (DEV-POST-R-COMPLETION, `results/deviations.csv`): the data ceiling, NC2/NC3/NC5 on real data, refuted-vs-approved recall, and the independent delta check. Their definitions were frozen beforehand and the data are D only.
+- **Completed after the R read** (DEV-POST-R-COMPLETION, `results/deviations.csv`), with definitions frozen beforehand and D data only: the data ceiling (19 of 28 ceiling-testable tests data-supported, 9 data-null) (`results/clinical/ceiling_summary.json`); NC2/NC3/NC5 on real data, of which NC2a and NC3 fail and NC5 passes (`results/controls/nc_real.json`); refuted-vs-approved recall, refuted 0/3 in every arm (`results/clinical/cgt_secondary.json`); and the independent delta check, 0 flag disagreements over 80 block rows (`results/gates/G_indep.json`: task4_engine_comparison).
+- **NC2a failed** (0.104 against ≤ 0.0011; outcome action: "NC2a failed", then a bug check, which found none) (`results/controls/nc_real.json`).
+- **NC3 failed** (0.424 against ≤ 0.1; outcome action: "NC3 failed", affected genes labelled CN/cutting-artefact suspects): 46 genes, 33 MD-global pairs and 13 of the 552 shortlist pairs, including DDX3X at ranks 2, 4 and 14 (`results/controls/nc_real.json`; `results/limits/limits_summary.json`: cn_cutting_suspect; `results/candidates/shortlist.csv`).
 - **Confounder audit, library block:** the design is ambiguous on whether screen days belong to the library block (DEV-DELTA-LIBRARY-BLOCK, `results/deviations.csv`). The independent check agrees with the engine on every flag.
 - **Three toy checks fail** (Section 5.2), one of them the positive control for the fold artefact. The ridge-predictor FDP of the prediction-based lists is invisible to the permutation null.
 - **The β tolerance failed in the independent check** (Section 5.6), on one of 30 pairs, by 25% over the tolerance (`results/report_counts.json`: independent, from `results/gates/G_indep.json`). The cause is attributed, not removed.

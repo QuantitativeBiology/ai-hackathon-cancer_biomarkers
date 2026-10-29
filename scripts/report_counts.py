@@ -189,6 +189,77 @@ def lineage_tf() -> dict:
             "n_class3": int((x["failure_class"] == "3").sum())}
 
 
+def lineage_by_class() -> dict:
+    """MD-global pairs by cross-lineage label (base label; the '(single-lineage carriers)' variant counts as
+    lineage-unresolvable), all pairs and class-9 pairs (results/lineage/cross_lineage.csv x pair_classes.csv)."""
+    pc = _csv("results/limits/pair_classes.csv", dtype={"gene": str})
+    cl = _csv("results/lineage/cross_lineage.csv", dtype={"gene": str})
+    g = pc[_true(pc["in_md_global"])].merge(cl[["gene", "feature", "label"]], on=["gene", "feature"], how="left")
+    g["base"] = g["label"].astype(str).str.split(" (", regex=False).str[0]
+    allc = g["base"].value_counts()
+    c9 = g.loc[pd.to_numeric(g["pair_class"], errors="coerce") == 9, "base"].value_counts()
+    return {"all": allc.to_dict(), "class_9": c9.to_dict(),
+            "class_9_share_pct": {k: 100.0 * c9.get(k, 0) / v for k, v in allc.items()}}
+
+
+def ceiling_class8() -> dict:
+    pc = _csv("results/limits/pair_classes.csv", dtype={"gene": str})
+    gc = _csv("results/limits/gene_classes.csv", dtype={"gene": str, "failure_class": str})
+    r = pc[pc["source"] == "cgt_ceiling"]
+    g8 = gc[gc["failure_class"] == "8"]
+    return {"n_ceiling_class8_rows": len(r), "n_ceiling_class8_genes": int(r["gene"].nunique()),
+            "n_gene_class8": len(g8), "gene_class8_symbols": sorted(g8["symbol"].astype(str))}
+
+
+def miss_testable() -> dict:
+    """Misses among testable tests per arm and category (results/clinical/miss_decomposition.csv)."""
+    m = _csv("results/clinical/miss_decomposition.csv")
+    m = m[_true(m["testable"])]
+    out = {}
+    for (st, sub, k), g in m.groupby(["set", "subset", "k"]):
+        out[f"{st}|{sub}|k{int(k)}"] = {a: x["category"].value_counts().to_dict() | {"n_misses": len(x)}
+                                         for a, x in g.groupby("arm")}
+    return out
+
+
+def nc_detail() -> dict:
+    lam = _csv("results/benchmark/lambda.csv", dtype={"gene": str})
+    s = _csv("results/controls/nc3_self_null.csv", dtype={"gene": str})
+    t = s[_true(s["testable"])].assign(fam=lambda d: d["feature"].str.split(":").str[0])
+    return {"eligible_en_pred_fidelity_median": float(lam.loc[lam["arm"] == "EN-pred", "r2_oof_beyond_design"].median()),
+            "nc3_by_family": {f: {"n_testable": len(x), "dependent_frac": float(x["frac_dependent"].mean())}
+                              for f, x in t.groupby("fam")}}
+
+
+def subtype_examples() -> dict:
+    """Accurate-dependent lines outside the subtype (n_accurate_dependent - n_members) for the §6.5 examples."""
+    s = _csv("results/subtypes/subtypes.csv", dtype={"gene": str})
+    out = {}
+    ex = {tuple(x) for x in json.loads((P.CONFIGS / "report_examples.json").read_text(encoding="utf-8"))["examples"]}
+    for _, r in s[s["lists"].fillna("").str.contains("MD-global")].iterrows():
+        if (str(r["gene"]), r["feature"]) in ex:
+            out[f"{r['symbol']}|{r['feature']}"] = {"n_accurate_dependent": int(r["n_accurate_dependent"]),
+                                                    "n_members": int(r["n_members"]),
+                                                    "n_accurate_non_members": int(r["n_accurate_dependent"] - r["n_members"])}
+    return out
+
+
+PRE_POWER_FIX_COMMIT = "5de3c19"     # last commit before the R-power fix (50d40aa); committed files only
+
+
+def pre_power_fix() -> dict:
+    """Class-9 / shortlist counts as committed before the R-power fix (git show <commit>:<file>)."""
+    import subprocess
+    def show(rel):
+        r = subprocess.run(["git", "-C", str(P.PROJECT), "show", f"{PRE_POWER_FIX_COMMIT}:{rel}"], capture_output=True,
+                           text=True, encoding="utf-8", check=True)
+        return r.stdout
+    lim = json.loads(show("results/limits/limits_summary.json"))
+    cards = json.loads(show("results/candidates/cards_summary.json"))
+    return {"commit": PRE_POWER_FIX_COMMIT, "pair_classes_md_global": lim["pair_classes_md_global"],
+            "n_shortlist": cards["n_shortlist"]}
+
+
 def controls() -> dict:
     c = _json("results/controls/pc_summary.json")
     fam = c["gate_eligible_by_family"]
@@ -215,7 +286,10 @@ def main(argv=None) -> int:
     out = {"confounders": confounders(), "components": components(), "locus": locus(), "shortlist": shortlist(),
            "set_a": set_a(), "known_recovery": known_recovery(), "combinatorial": combinatorial(), "p2": p2(), "controls": controls(), "md_lists": md_lists(), "q4c": q4c(), "null": null(), "lineage": lineage(), "eligibility": eligibility(),
            "controls_spec": controls_spec(), "independent": independent(), "bh_family": bh_family(),
-           "m5_audits": m5_audits(), "lineage_tf": lineage_tf()}
+           "m5_audits": m5_audits(), "lineage_tf": lineage_tf(),
+           "lineage_by_class": lineage_by_class(), "ceiling_class8": ceiling_class8(), "miss_testable": miss_testable(),
+           "nc_detail": nc_detail(), "pre_power_fix": pre_power_fix(),
+           "subtype_examples": subtype_examples()}
     out["_sources"] = ["results/confounders/delta_flags.csv", "results/components/component_selection.csv",
                        "results/locus/resolution.csv", "results/locus/amplicon.csv", "results/candidates/shortlist.csv",
                        "results/replication/setA_lines.csv", "results/candidates/known_recovery.csv",
@@ -224,7 +298,11 @@ def main(argv=None) -> int:
                        "results/clinical/q4c_labels.csv", "results/null/summary.json", "configs/design_params.json",
                        "results/lineage/summary.json", "configs/eligible_genes.csv", "configs/positive_controls.csv",
                        "results/gates/G_indep.json", "results/benchmark/summary.json", "results/m5_audits_summary.json",
-                       "results/limits/gene_classes.csv"]
+                       "results/limits/gene_classes.csv", "results/limits/pair_classes.csv",
+                       "results/lineage/cross_lineage.csv", "results/clinical/miss_decomposition.csv",
+                       "results/benchmark/lambda.csv", "results/controls/nc3_self_null.csv",
+                       "results/subtypes/subtypes.csv", "git show 5de3c19:results/limits/limits_summary.json",
+                       "git show 5de3c19:results/candidates/cards_summary.json"]
     out["_rules"] = {"by_list": "a row counts for every list named in its '|'-joined source column",
                      "pct": "100 x the fraction in the source file", "md_global": "rows whose source / flag marks MD-global"}
     f = P.PROJECT / OUT
