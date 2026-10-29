@@ -108,6 +108,7 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D21 (15:20, correction of D20 after the red-team review): D20's "missed by every arm" is false. In G_pc_attempt2.json the 7 U_ctrl controls are missed by MD-strict, MD-global and S1-obs, but S1-pred recovers MYCN, SMARCA2 and ARID1B, and EN-obs recovers ESR1 and SMARCA2. "ESR1 could never be recovered" applies to the F1 lists only (S1-obs, MD lists), not to EN-obs. For MD-strict, the SMARCA2 and ARID1B misses are due to EN-pred not selecting them. The pseudo-R dry-run cut is withdrawn (DEV-CUT-DRYRUN-WITHDRAWN). Deviation rows were added for the U_ctrl fix without an eligible re-run and for the null recount.
 - D20 (M4, 04:40): [!] **Gate attempt 2 also failed, 21/39**, after the U_ctrl bug fix (41 genes; toy test
   test_gate_u_ctrl.py fails on 0346d69 and passes after). All 7 non-eligible gate controls are missed by every arm. These
   are genuine misses with no further bug:
