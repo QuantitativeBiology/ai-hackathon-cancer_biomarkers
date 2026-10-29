@@ -1,0 +1,43 @@
+{
+ "fdr_emp_fixed": {
+  "S1-obs": 0.02242718446601942,
+  "S1-pred": 0.040799594615664465,
+  "EN-obs selected": 0.19953271028037384,
+  "EN-pred selected": 0.32733199598796386,
+  "MD-strict": 0.03709582598471487,
+  "MD-global": 0.2
+ },
+ "pass": {
+  "S1-obs": true,
+  "S1-pred": true,
+  "EN-obs selected": false,
+  "EN-pred selected": false,
+  "MD-strict": true,
+  "MD-global": false
+ },
+ "fdr_emp_rerun": null,
+ "p_cut_F1": {
+  "S1-obs|F1": 2.5559981134588366e-05,
+  "S1-pred|F1": 0.002184218975949538
+ },
+ "p_cut_sc": 0.013110469925970397,
+ "lambda_source": "observed",
+ "B": 20,
+ "wall_draw0_s": 706.2361698999994,
+ "hits_obs": {
+  "S1-obs": 515,
+  "S1-pred": 38482,
+  "EN-obs selected": 107,
+  "EN-pred selected": 6979,
+  "MD-strict": 1701,
+  "MD-global": 0
+ },
+ "n_genes": 300,
+ "config_sha256": {
+  "design_params.json": "7673ebb72f183c4f4a362ef52cca52f0b34a94028d424e7cc9e7d45bf615c919",
+  "pipeline_params.json": "4a5da9b9707bf481650f1c9cbbb316d3e2d622db88e3b450b7b9b823ca2a6a79",
+  "seeds.json": "19d1d9b47b965e9a2db943d3a1aa6689925de10ed0202085413e48893f22419e",
+  "primary_endpoints.json": "6125708282190c7b0b3a04f7c89ff5b4ff2a76179c0d11061160508c759c2d69"
+ },
+ "commit": "01b2cc5a2c9d2b2a3d9879e600d2ebb95c2ca69f"
+}

@@ -1,0 +1,19 @@
+{
+ "job": "null_fixed",
+ "utc": "2026-10-29T13:06:40+00:00",
+ "start_utc": "2026-10-29T08:50:04+00:00",
+ "wall_s": 15396.881968,
+ "workers": 3,
+ "run_id": "run_null-30004-20261029T085005",
+ "B": 20,
+ "wall_draw0_s": 706.2361698999994,
+ "memory_guard": {
+  "kind": "null",
+  "requested": 6,
+  "effective": 3,
+  "per_worker_gb": 1.5,
+  "available_gb": 5.74,
+  "parent_rss_gb": 0.75,
+  "budget_gb": 10.0
+ }
+}
