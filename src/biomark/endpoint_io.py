@@ -10,6 +10,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from . import params as PR
 from . import paths as P
 from . import pipeline as PL
 from . import stats as ST
@@ -236,11 +237,70 @@ def _js(o):
 # ------------------------------------------------------------------------------------------------
 
 
+EB_CHUNK_ROWS = 262144                     # literal-ok: row chunk of the low-memory EB (memory only, never results)
+
+
+def shrunk_beta_lowmem(beta, se, sd_dtilde, chunk: int = EB_CHUNK_ROWS) -> np.ndarray:
+    """``stats.shrunk_beta`` (§6.1 EB normal scale mixture; unchanged grid, start, EM, tolerance and cap) with the
+    n x K temporaries built in row chunks: only the likelihood matrix L (n x K) is held. Every row-wise operation is
+    the same elementwise arithmetic; the EM column sum accumulates the rows in the same order as the one-shot
+    ``w.mean(0)`` (previous partial sum prepended to each chunk), so the result is bit-identical
+    (tests/test_pool_fast.py). Peak memory ~ n x K x 8 bytes instead of ~5 such arrays."""
+    rp = PR.replication_params()
+    tiny = PR.stats_params()["tiny"]
+    sd = np.asarray(sd_dtilde, float)
+    b, s = np.asarray(beta, float) * sd, np.asarray(se, float) * sd
+    ok = np.isfinite(b) & np.isfinite(s) & (s > 0)
+    bo, so = b[ok], s[ok]
+    lo = rp["eb_sigma_min_frac"] * so.min()
+    hi = rp["eb_sigma_max_mult"] * np.sqrt(max(np.max(bo ** 2 - so ** 2), (2 * lo) ** 2))
+    sig = np.geomspace(lo, max(hi, lo * 2), rp["eb_n_sigma"])
+    n, K = bo.size, sig.size
+    L = np.empty((n, K))
+    for i in range(0, n, chunk):
+        var = sig[None, :] ** 2 + so[i:i + chunk, None] ** 2
+        L[i:i + chunk] = np.exp(-0.5 * bo[i:i + chunk, None] ** 2 / var) / np.sqrt(var)  # literal-ok: as stats
+    pi = np.full(K, 1.0 / K)
+    buf = np.empty((min(chunk, n) + 1, K))
+
+    def weights(i, p):
+        m = min(chunk, n - i)
+        w = np.multiply(L[i:i + m], p, out=buf[1:m + 1])
+        w /= np.maximum(w.sum(1, keepdims=True), tiny)
+        return w, m
+
+    for _ in range(rp["eb_max_iter"]):
+        acc = None
+        for i in range(0, n, chunk):
+            w, m = weights(i, pi)
+            if acc is None:
+                acc = np.add.reduce(w, axis=0)
+            else:
+                buf[0] = acc                                   # same left-to-right row order as w.sum(0)
+                acc = np.add.reduce(buf[:m + 1], axis=0)
+        new = acc / n
+        done = np.max(np.abs(new - pi)) < rp["eb_tol"]
+        pi = new
+        if done:
+            break
+    shrink = np.empty(n)
+    for i in range(0, n, chunk):
+        w, m = weights(i, pi)
+        var = sig[None, :] ** 2 + so[i:i + m, None] ** 2
+        shrink[i:i + m] = (w * (sig[None, :] ** 2 / var)).sum(1)
+    post = np.full(b.shape, np.nan)
+    post[ok] = shrink * bo
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return post / sd
+
+
 def make_pool(arms_tab: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, D_ids, R_ids,
-              nan_D: pd.DataFrame, arms=None) -> tuple:
+              nan_D: pd.DataFrame, arms=None, fast: bool = True) -> tuple:
     """Pool_G and frozen top-k lists (DESIGN §6.1). ``s1_obs``: S1-obs rows (all U incl. F2; beta, se, sd_dtilde,
     dropped_cov, test_family) used for the EB shrinkage and the drops; ``arms_tab``: ranks of every arm on the same U.
     ``arms``: the arms to list (default the four benchmark arms; XLIB §6.3: S1-obs and EN-obs only).
+    ``fast`` (default): low-memory EB (shrunk_beta_lowmem) and the arms rows restricted to P_G once before the lists;
+    results are identical to ``fast=False`` (tests/test_pool_fast.py).
     Returns (pool DataFrame over U_G, lists dict for p1_pool.json)."""
     from . import arms as A
     from . import endpoints as EP
@@ -249,8 +309,8 @@ def make_pool(arms_tab: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, 
     s = s1_obs.copy()
     s["gene"] = s["gene"].astype(str)
     ok = s["beta"].notna() & s["se"].notna() & (s["sd_dtilde"] > 0)
-    bsh = pd.Series(ST.shrunk_beta(s.loc[ok, "beta"].to_numpy(), s.loc[ok, "se"].to_numpy(),
-                                   s.loc[ok, "sd_dtilde"].to_numpy()),
+    shrink = shrunk_beta_lowmem if fast else ST.shrunk_beta          # bit-identical; fast = low memory
+    bsh = pd.Series(shrink(s.loc[ok, "beta"].to_numpy(), s.loc[ok, "se"].to_numpy(), s.loc[ok, "sd_dtilde"].to_numpy()),
                     index=pd.MultiIndex.from_arrays([s.loc[ok, "gene"], s.loc[ok, "feature"]]))
     fl = feature_meta()
     stage = fl["stage"].reindex(s["feature"]).to_numpy()
@@ -276,6 +336,10 @@ def make_pool(arms_tab: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, 
     out = {"k_rule": e["k_rule"], "pool_size": int(len(P_G)), "k": EP.p1_k(len(P_G)), "lists": {}, "strata": {},
            "secondary_k": {}}
     arms = tuple(A.ARMS if arms is None else arms)
+    if fast:     # every list pool is a subset of P_G: rows outside it never enter a list (identical lists, less work)
+        pk = set(zip(P_G["gene"].astype(str), P_G["feature"]))
+        keep = np.array([(str(g), f) in pk for g, f in zip(arms_tab["gene"], arms_tab["feature"])], dtype=bool)
+        arms_tab = arms_tab[keep]
     out["lists"]["G"] = EP.build_lists(arms_tab, P_G, arms)
     for name, m in EP.strata_of(P_G["access_class"]).items():
         sub = P_G[m.to_numpy()]
