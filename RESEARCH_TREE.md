@@ -7,8 +7,9 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 ### 2026-10-29 ~20:40 — FINAL milestone: replication done, report written
 The single replication in the 255 held-out lines was made once (logged at ae6aa84, after tag `freeze-catalogue`, with the dry run first). It answers the primary question in the negative:
 - Reading determinants out of the Part 1 predictor (EN-pred) does not replicate better than the same elastic net on observed effects. P1 at k 100: 0.82 vs 0.89, difference −0.07 (CI −0.12 to 0.02).
-- The univariate confounder-adjusted test (S1-obs) beats both: 0.99 for S1-obs, EN-obs − S1-obs −0.10 (CI −0.17 to −0.05).
-- XLIB agrees: S1-obs 0.82 vs EN-obs 0.62.
+- The univariate confounder-adjusted test (S1-obs) replicates best (the EN-obs vs S1-obs contrast is pre-declared; EN-pred vs S1-obs is a secondary comparison): 0.99 for S1-obs, EN-obs − S1-obs −0.10 (CI −0.17 to −0.05).
+- XLIB points the same way: S1-obs 0.82 vs EN-obs 0.62. Caveats: the arms were reused from a legacy dataset whose lines cannot be verified, eligibility was selected on all D lines, and the discovery_only sensitivity was cut.
+- The predictor verdict is fragile: a basic bootstrap CI for EN-pred − EN-obs at k 100 is (−0.16, −0.02), and EN-pred beats EN-obs at k 200 and k 500 (p1_secondary.json).
 - On the dev set, every other signal points the same way. The gate failed twice (21/39). The predictor-derived lists recover essentially no clinical test (P2 descriptive, 6 tests). Combinatorial validation shows no advantage over S1-obs. EN-obs fails NC1 and EN-pred is not calibrated. NC6 fails.
 - The catalogue MD-global (EN-pred ∩ S1-obs) is well controlled (FDR_emp 0.0009). Its 735 replicated class-9 pairs are mostly expression-level paralog dependencies (FAM50A–FAM50B, DDX3X–DDX3Y, DNAJC19–DNAJC15), several with high non-cancerous dependency.
 
@@ -134,7 +135,7 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
-- D22 (19:50): P1 pool built (1,020 powered U_G candidates, k_G = 100; 13,652 R requests). The pseudo-R fold-0 dry run completed, and all strata, contrasts and verdict branches were produced. Its numbers are in-sample (registry status dryrun, uncitable) and were reviewed for completeness only. Next: tag `freeze-catalogue`, then the single R read (`PART2_UNBLIND=1 replicate.py`).
+- D22 (19:46): P1 pool built (1,020 powered U_G candidates, k_G = 100; 13,652 R requests). The pseudo-R fold-0 dry run completed, and all strata, contrasts and verdict branches were produced. Its numbers are in-sample (registry status dryrun, uncitable) and were reviewed for completeness only. Next: tag `freeze-catalogue`, then the single R read (`PART2_UNBLIND=1 replicate.py`).
 - D21 (15:20, correction of D20 after the red-team review): D20's "missed by every arm" is false. In G_pc_attempt2.json the 7 U_ctrl controls are missed by MD-strict, MD-global and S1-obs, but S1-pred recovers MYCN, SMARCA2 and ARID1B, and EN-obs recovers ESR1 and SMARCA2. "ESR1 could never be recovered" applies to the F1 lists only (S1-obs, MD lists), not to EN-obs. For MD-strict, the SMARCA2 and ARID1B misses are due to EN-pred not selecting them. The pseudo-R dry-run cut is withdrawn (DEV-CUT-DRYRUN-WITHDRAWN). Deviation rows were added for the U_ctrl fix without an eligible re-run and for the null recount.
 - D20 (M4, 04:40): [!] **Gate attempt 2 also failed, 21/39**, after the U_ctrl bug fix (41 genes; toy test
   test_gate_u_ctrl.py fails on 0346d69 and passes after). All 7 non-eligible gate controls are missed by every arm. These

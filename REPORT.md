@@ -1,11 +1,11 @@
-# Predictor-derived dependency subtypes and their molecular biomarkers (DRAFT)
+# Predictor-derived dependency subtypes and their molecular biomarkers
 
 **Status: final.** Written on 2026-10-29. The single replication in R (255 lines, one logged read, after tag `freeze-catalogue`) is done (DESIGN.md §1.3). A red-team review's corrections are applied. The budget was extended by the user (DEV-BUDGET-OVERRUN).
 
 This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality predictor on DepMap 26Q3 (`../project`, read-only).
 
 - The rules in force are listed in `docs/effective_rules.md`, cited here as ER#. Each number cites its source file.
-- No claim in this draft is a replicated or "valid biomarker" claim: R has not been read.
+- Claims of replication refer to the single run in R (255 held-out lines). They are not clinical-validity claims.
 
 ## 1. Summary
 
@@ -19,9 +19,14 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
 
 3. **Benchmark against single-feature tests (Q2).**
    - Selected pairs: S1-obs 3,142; EN-obs 738; EN-pred 50,728; S1-pred 276,557 (`results/benchmark/summary.json`).
-   - **P1, the primary endpoint, answers no on both questions** (`results/replication/p1_summary.json`, k_G = 100).
+   - **P1, the primary endpoint: neither "adds value" claim is supported** (`results/replication/p1_summary.json`, k_G = 100).
    - Does the predictor add value? EN-pred − EN-obs = −0.07 (bootstrap 95% CI −0.12 to 0.02): no detectable difference (`results/replication/p1_summary.json`).
    - Does the multivariate model add value? EN-obs − S1-obs = −0.10 (−0.17 to −0.05): the univariate test replicates better (`results/replication/p1_summary.json`).
+   - **The predictor verdict is fragile.**
+     - The bootstrap rates sit below the observed ones, so the percentile CI is biased. A basic bootstrap CI for EN-pred − EN-obs is entirely negative, (−0.16, −0.02) (`results/replication/p1_secondary.json`, bootstrap_diagnostic).
+     - At deeper lists the sign flips: EN-pred replicates better than EN-obs at k = 200 (0.79 vs 0.715) and at k = 500 (0.634 vs 0.60) (`results/replication/p1_secondary.json`, secondary_k).
+     - S1-obs is never beaten at k = 50, 100 or 200 (0.98, 0.99, 0.91) (`results/replication/p1_summary.json`; `results/replication/p1_secondary.json`). At k = 500, S1-pred is level with it (0.708 vs 0.702, `results/replication/p1_secondary.json`).
+     - The pre-declared verdicts stand as stated.
 
 4. **Combinatorial screens.**
    - 31 of 183 tested MD-global paralog candidates replicate: 16.9% (CI 11.8–23.2%), against an expected 2.5% for paralog pairs matched on sequence identity and family size, about 6.8× (`results/combinatorial/validation.json`; `results/report_counts.json`: combinatorial). The unmatched background rate is 1.0% (OR 19.6) (`results/combinatorial/validation.json`).
@@ -70,8 +75,8 @@ This is Part 2 of a two-part project. Part 1 built a CRISPR gene-essentiality pr
 10. **Candidates** (`results/candidates/shortlist.csv`, `cards_summary.json`).
     - The shortlist holds 735 class-9 MD-global pairs replicated in R (`results/candidates/cards_summary.json`).
     - It is dominated by expression-level determinants: 317 expression-programme and 178 paralog-expression features (`results/report_counts.json`: shortlist). Only 15 are hotspot and 37 loss-of-function features (`results/report_counts.json`: shortlist).
-    - The top hits are known paralog dependencies: FAM50A–FAM50B, DDX3X–DDX3Y, DNAJC19–DNAJC15, EIF1AX, RPP25L, INTS6, RAB6A, ATP6V0E1 and EFR3A. MDM2 dependency in TP53 wild-type lines also appears.
-    - Several top hits are frequently dependent in the 15 non-cancerous lines: RAB6A 0.73, MDM2 0.67, FAM50A 0.47 (`results/candidates/shortlist.csv:setA_dependent_frac`; `results/report_counts.json`: set_a). That argues against a selective therapeutic window.
+    - The top hits are paralog pairs: FAM50A–FAM50B, DDX3X–DDX3Y, DNAJC19–DNAJC15, EIF1AX, RPP25L, INTS6, RAB6A, ATP6V0E1 and EFR3A. Most are not in the curated lists the cards check (`results/candidates/shortlist.csv`: not_in_curated_lists). MDM2 dependency in TP53 wild-type lines also appears.
+    - Several top hits are frequently dependent in the 15 non-cancerous lines: RAB6A 0.73, MDM2 0.67, FAM50A 0.47 (`results/candidates/shortlist.csv:setA_dependent_frac`; `results/report_counts.json`: set_a). That flags possible normal-cell dependency. Set A is an unconditional fraction over 15 immortalised lines, not split by determinant, so this is not a therapeutic-window measurement.
 
 ## 2. Question and approach
 
@@ -280,7 +285,7 @@ A separate agent, which did not read the engine modules, reimplemented S1-obs, t
 - **Pair universe.** The checker's universe is larger than the engine's: 6,574,471 vs 6,561,731 pairs, i.e. 12,740 pairs in 75 genes that only the checker has (`results/gates/G_indep.json`). All of them are untested, because they have fewer than 5 carriers on the gene's rows (`results/gates/G_indep.json`; `configs/design_params.json`: carrier minimum). The checker carries such pairs as untested rows; the engine leaves them out of its table. The S1 p-values and the BH counts match exactly.
 - The engine's `results/confounders/delta.csv` now exists, but the independent delta check was not re-run against it (not done: time).
 
-## 6. Results so far (dev set D only; R has not been read)
+## 6. Results on the dev set D
 
 ### 6.1 Benchmark list sizes
 The run covered 2,193 genes and 26.2 million (g, d) rows, all four arms in 45 minutes (RESEARCH_TREE.md M4; D19). Selected pairs (`results/benchmark/summary.json`):
@@ -361,7 +366,7 @@ The test covers paralog candidates (loss of A → dependency on B), screened in 
 - The hit rule is an agent choice (Section 4.5).
 - **Conclusion.** Catalogue paralog candidates are experimentally supported combinatorial dependencies, but the test shows no advantage over the univariate S1-obs list.
 
-## 7. Further results (R-dependent items pending)
+## 7. Further results, including the replication in R
 
 ### 7.1 Confounder audit
 Drop-one-block deltas on MD-global ∪ S1-obs hits ∪ controls, including the U_ctrl gate controls.
@@ -515,6 +520,20 @@ Rates and contrasts (`results/replication/p1_summary.json`; `results/replication
 - "Predictor adds value": not supported in any stratum.
 - "Multivariate adds value": the reverse holds in the headline and non-direct strata, where the univariate test is better.
 - The high absolute rates (`results/replication/p1_summary.json`: 0.82–0.99) reflect lists of powered, strong D associations re-tested in lines that share the Chronos processing with D (DESIGN §1.2). They measure generalisation across lines, not across processing.
+- The rates also track list composition:
+  - Lists ranked by p pick the strongest effects, so the contrasts partly compare ranking rules.
+  - The S1-obs top 100 is dominated by TP53-status features and spans few genes. EN-pred covers more genes.
+  - Part 1 had already scored its predictor on R (DESIGN §1.2), so R is held out from this project but not untouched.
+- **Bootstrap bias.** The bootstrap mean sits below the observed rates in every list (`results/replication/p1_secondary.json`, bootstrap_diagnostic). The percentile CIs are therefore unreliable, and the basic CIs are reported alongside as a diagnostic.
+- **Secondary k** (`results/replication/p1_secondary.json`):
+
+| k | S1-obs | S1-pred | EN-obs | EN-pred |
+|---|---|---|---|---|
+| 50 | 0.98 | 0.98 | 0.92 | 0.90 |
+| 200 | 0.91 | 0.845 | 0.715 | 0.79 |
+| 500 | 0.702 | 0.708 | 0.60 | 0.634 |
+
+- Not computed: the remaining P1 secondaries (gene-matched, observed/expected, sign concordance, Deming) were cut. The R non-Avana subset would have needed a second R read (DEV-P1-SECONDARIES, `results/deviations.csv`).
 
 **Set A** (`results/report_counts.json`: set_a, counted from `results/replication/setA_lines.csv`; 15 non-cancerous lines). Across the 2,142 requested genes, the median dependent fraction is 0.20, and 144 genes are dependent in at least half of the set-A lines (`results/report_counts.json`: set_a).
 
@@ -555,7 +574,7 @@ Top rows (`results/candidates/shortlist.csv`):
 
 **Case studies** (chosen by `build_candidate_cards.py`):
 1. **FAM50A, dependent when the paralog FAM50B is low.** Cross-lineage across 21 lineages, replicated in R and in the combinatorial screens (`results/candidates/shortlist.csv`). But set-A dependency is 0.47 (`results/candidates/shortlist.csv`).
-2. **DDX3X, dependent when DDX3Y is low or the Y chromosome is lost.** This is the same biology captured three times: paralog expression, an NMF programme, and Y loss. The determinant largely tracks sex and Y-chromosome status of the line, not a lineage-specific tumour alteration. Set-A dependency is low (`results/candidates/shortlist.csv`: 0.07).
+2. **DDX3X, dependent when DDX3Y is low or the Y chromosome is lost.** This is the same biology captured three times: paralog expression, an NMF programme, and Y loss. The determinant is consistent with sex and Y-chromosome status of the line rather than a lineage-specific tumour alteration; sex was not tested directly. The pair was tested in the combinatorial screens and did not replicate there (`results/candidates/shortlist.csv`). Set-A dependency is low (`results/candidates/shortlist.csv`: 0.07).
 3. **DNAJC19, dependent when DNAJC15 is low.** Whether low DNAJC15 reflects promoter silencing was not tested here, because the determinant is the expression feature. It was tested in combinatorial screens but not replicated there, and set-A dependency is 0.53 (`results/candidates/shortlist.csv`).
 
 None of these is named "novel". All three are paralog-buffering dependencies, the class the predictor's M2 stage encodes directly. The word "novel" is not applied to any gene.
@@ -594,7 +613,8 @@ None of these is named "novel". All three are paralog-buffering dependencies, th
 - **NC6 failed.** Lineage-TF genes are not class 3 under the frozen rule (0/18) (`results/limits/limits_summary.json`), so class-3 (lineage) labels are flagged unreliable.
 - **P2 is descriptive.** The gate-disjoint headline has 6 testable tests, and every arm recovers 0 (`results/clinical/q4_summary.json`, non_proxy|gate_disjoint|k200). EN-pred recovers no CGT test at k = 200 in any non-proxy subset.
 - **65% of MD-global pairs are lineage-unresolvable** (`results/lineage/summary.json`; `results/report_counts.json`: lineage; 894/1,380), and 139 of the 430 cross-lineage labels are single-lineage driven (`results/lineage/summary.json`).
-- **Not done (time):** the data ceiling, NC2/NC3/NC5 on real data, refuted-vs-approved recall, and the independent delta check against the engine file.
+- **Completed after the R read** (DEV-POST-R-COMPLETION, `results/deviations.csv`): the data ceiling, NC2/NC3/NC5 on real data, refuted-vs-approved recall, and the independent delta check. Their definitions were frozen beforehand and the data are D only.
+- **Confounder audit, library block:** the design is ambiguous on whether screen days belong to the library block (DEV-DELTA-LIBRARY-BLOCK, `results/deviations.csv`). The independent check agrees with the engine on every flag.
 - **Three toy checks fail** (Section 5.2), one of them the positive control for the fold artefact. The ridge-predictor FDP of the prediction-based lists is invisible to the permutation null.
 - **The β tolerance failed in the independent check** (Section 5.6), on one of 30 pairs, by 25% over the tolerance (`results/report_counts.json`: independent, from `results/gates/G_indep.json`). The cause is attributed, not removed.
 - **Calibration.** CR2 + ν was anti-conservative at n = 255 (`results/deviations.csv`: DEV-DF-FALLBACK). The fallback is conservative for binary features with 3–5 carriers, so rare determinants are under-powered (`results/deviations.csv`: DEV-CAL-CONSERVATIVE; ER11). Example: EGFR-activating, 8 carriers (RESEARCH_TREE.md D19).
