@@ -1,0 +1,1025 @@
+{
+ "headline_subset": "gate_disjoint",
+ "results": {
+  "non_proxy|all|k200": {
+   "n_testable": 16,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 1,
+     "n": 16,
+     "recall": 0.0625,
+     "ci95": [
+      0.0015811117227658884,
+      0.30232073843453194
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 16,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.2059072142078227
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 4,
+     "n": 16,
+     "recall": 0.25,
+     "ci95": [
+      0.0726620382528822,
+      0.5237708198961273
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 16,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.2059072142078227
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 4,
+    "p": 0.125
+   },
+   "p2_status": "evaluated",
+   "verdict": "no detectable difference",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.09090909090909091,
+     "EN-pred": 0.0,
+     "S1-obs": 0.2727272727272727,
+     "S1-pred": 0.0
+    },
+    "T2": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 1.0,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 11,
+    "T2": 1,
+    "T3": 4
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  },
+  "non_proxy|all|k100": {
+   "n_testable": 16,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 1,
+     "n": 16,
+     "recall": 0.0625,
+     "ci95": [
+      0.0015811117227658884,
+      0.30232073843453194
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 16,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.2059072142078227
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 0,
+     "n": 16,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.2059072142078227
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 16,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.2059072142078227
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 0,
+    "p": 1.0
+   },
+   "p2_status": "evaluated",
+   "verdict": "no detectable difference",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.09090909090909091,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    },
+    "T2": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 11,
+    "T2": 1,
+    "T3": 4
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  },
+  "non_proxy|all|k500": {
+   "n_testable": 16,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 2,
+     "n": 16,
+     "recall": 0.125,
+     "ci95": [
+      0.015513603815413893,
+      0.3834762368492636
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 16,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.2059072142078227
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 5,
+     "n": 16,
+     "recall": 0.3125,
+     "ci95": [
+      0.11016995471711763,
+      0.5866206364513586
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 16,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.2059072142078227
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 5,
+    "p": 0.0625
+   },
+   "p2_status": "evaluated",
+   "verdict": "no detectable difference",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.09090909090909091,
+     "EN-pred": 0.0,
+     "S1-obs": 0.36363636363636365,
+     "S1-pred": 0.0
+    },
+    "T2": {
+     "EN-obs": 1.0,
+     "EN-pred": 0.0,
+     "S1-obs": 1.0,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 11,
+    "T2": 1,
+    "T3": 4
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  },
+  "non_proxy|gate_disjoint|k200": {
+   "n_testable": 6,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 0,
+    "p": 1.0
+   },
+   "p2_status": "descriptive",
+   "verdict": "descriptive (underpowered: 6)",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 5,
+    "T3": 1
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": true
+  },
+  "non_proxy|gate_disjoint|k100": {
+   "n_testable": 6,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 0,
+    "p": 1.0
+   },
+   "p2_status": "descriptive",
+   "verdict": "descriptive (underpowered: 6)",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 5,
+    "T3": 1
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  },
+  "non_proxy|gate_disjoint|k500": {
+   "n_testable": 6,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 1,
+     "n": 6,
+     "recall": 0.16666666666666666,
+     "ci95": [
+      0.004210744514489474,
+      0.6412345789976748
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 6,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.4592581264399005
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 1,
+    "p": 1.0
+   },
+   "p2_status": "descriptive",
+   "verdict": "descriptive (underpowered: 6)",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.2,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 5,
+    "T3": 1
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  },
+  "incl_proxy|all|k200": {
+   "n_testable": 22,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 2,
+     "n": 22,
+     "recall": 0.09090909090909091,
+     "ci95": [
+      0.011205586024150989,
+      0.29161274155393346
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 22,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.15437251281557457
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 7,
+     "n": 22,
+     "recall": 0.3181818181818182,
+     "ci95": [
+      0.13864652155379786,
+      0.5487244275737704
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 22,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.15437251281557457
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 7,
+    "p": 0.015625
+   },
+   "p2_status": "evaluated",
+   "verdict": "univariate recovers more",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.11764705882352941,
+     "EN-pred": 0.0,
+     "S1-obs": 0.35294117647058826,
+     "S1-pred": 0.0
+    },
+    "T2": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 1.0,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 17,
+    "T2": 1,
+    "T3": 4
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  },
+  "incl_proxy|all|k100": {
+   "n_testable": 22,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 1,
+     "n": 22,
+     "recall": 0.045454545454545456,
+     "ci95": [
+      0.0011501475265735762,
+      0.22844439766763341
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 22,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.15437251281557457
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 0,
+     "n": 22,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.15437251281557457
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 22,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.15437251281557457
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 0,
+    "p": 1.0
+   },
+   "p2_status": "evaluated",
+   "verdict": "no detectable difference",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.058823529411764705,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    },
+    "T2": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 17,
+    "T2": 1,
+    "T3": 4
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  },
+  "incl_proxy|all|k500": {
+   "n_testable": 22,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 5,
+     "n": 22,
+     "recall": 0.22727272727272727,
+     "ci95": [
+      0.07820626035189256,
+      0.4537036236621219
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 3,
+     "n": 22,
+     "recall": 0.13636363636363635,
+     "ci95": [
+      0.029055851128746684,
+      0.34912209725740806
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 9,
+     "n": 22,
+     "recall": 0.4090909090909091,
+     "ci95": [
+      0.20709312299714916,
+      0.6364530382702687
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 22,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.15437251281557457
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 6,
+    "p": 0.03125
+   },
+   "p2_status": "evaluated",
+   "verdict": "univariate recovers more",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.23529411764705882,
+     "EN-pred": 0.17647058823529413,
+     "S1-obs": 0.47058823529411764,
+     "S1-pred": 0.0
+    },
+    "T2": {
+     "EN-obs": 1.0,
+     "EN-pred": 0.0,
+     "S1-obs": 1.0,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 17,
+    "T2": 1,
+    "T3": 4
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  },
+  "incl_proxy|gate_disjoint|k200": {
+   "n_testable": 8,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 0,
+    "p": 1.0
+   },
+   "p2_status": "descriptive",
+   "verdict": "descriptive (underpowered: 8)",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 7,
+    "T3": 1
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  },
+  "incl_proxy|gate_disjoint|k100": {
+   "n_testable": 8,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 0,
+    "p": 1.0
+   },
+   "p2_status": "descriptive",
+   "verdict": "descriptive (underpowered: 8)",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 7,
+    "T3": 1
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  },
+  "incl_proxy|gate_disjoint|k500": {
+   "n_testable": 8,
+   "per_arm": {
+    "EN-obs": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "EN-pred": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    },
+    "S1-obs": {
+     "hits": 2,
+     "n": 8,
+     "recall": 0.25,
+     "ci95": [
+      0.03185402624994423,
+      0.6508557944128242
+     ],
+     "direction_accuracy": 1.0,
+     "sign_errors": 0
+    },
+    "S1-pred": {
+     "hits": 0,
+     "n": 8,
+     "recall": 0.0,
+     "ci95": [
+      0.0,
+      0.3694166475528192
+     ],
+     "direction_accuracy": NaN,
+     "sign_errors": 0
+    }
+   },
+   "pair": [
+    "EN-pred",
+    "S1-obs"
+   ],
+   "mcnemar": {
+    "b": 0,
+    "c": 2,
+    "p": 0.5
+   },
+   "p2_status": "descriptive",
+   "verdict": "descriptive (underpowered: 8)",
+   "per_tier": {
+    "T1": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.2857142857142857,
+     "S1-pred": 0.0
+    },
+    "T3": {
+     "EN-obs": 0.0,
+     "EN-pred": 0.0,
+     "S1-obs": 0.0,
+     "S1-pred": 0.0
+    }
+   },
+   "n_per_tier": {
+    "T1": 7,
+    "T3": 1
+   },
+   "trend_test": "not run: a tier has < trend_test_min_per_tier tests",
+   "primary": false
+  }
+ },
+ "q4c": {
+  "labels": {
+   "on-label": 6,
+   "beyond-label": 4,
+   "not supported": 3,
+   "off-label-only": 2,
+   "indication-untestable": 1
+  },
+  "unmapped_indication_codes": [
+   "BALL",
+   "BNHL",
+   "BTC",
+   "DLBCL",
+   "EGC",
+   "FL"
+  ],
+  "indication_mapping": "OncotreeCode, or OncoTree term (frozen MOAlmanac code/term pairs) equal to the line's Model.csv Subtype / PrimaryDisease / Lineage name; no full OncoTree file"
+ }
+}
