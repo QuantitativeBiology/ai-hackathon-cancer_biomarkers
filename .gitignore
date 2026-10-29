@@ -33,3 +33,5 @@ results/md_ctrl/md_*_all.csv
 results/subtypes/subtype_lines.csv
 results/confounders/delta.csv
 results/lineage/cross_lineage_per_lineage.csv
+results/dryrun/r_lines.csv
+results/replication/r_lines.csv
