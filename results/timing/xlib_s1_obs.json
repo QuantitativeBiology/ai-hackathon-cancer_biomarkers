@@ -1,0 +1,21 @@
+{
+ "job": "xlib_s1_obs",
+ "utc": "2026-10-29T13:36:56+00:00",
+ "start_utc": "2026-10-29T13:34:13+00:00",
+ "wall_s": 163.809353,
+ "workers": 8,
+ "run_id": "run_xlib-32572-20261029T203029",
+ "n_genes": 2193,
+ "n_discovery": 638,
+ "memory_guard": {
+  "kind": "s1",
+  "requested": 8,
+  "effective": 8,
+  "per_worker_gb": 0.5,
+  "available_gb": 7.87,
+  "parent_rss_gb": 0.14,
+  "budget_gb": 10.0
+ },
+ "reused_arms": true,
+ "note": "reused arms dataset: window = part write times of the original streamed run (S1/EN compute not re-timed; see that run's log)"
+}

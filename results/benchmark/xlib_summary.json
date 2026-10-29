@@ -1,0 +1,18 @@
+{
+ "discovery_lines": 638,
+ "replication_lines": 200,
+ "u_rules": {
+  "all_D": {
+   "pool_size": 594,
+   "k": 100
+  },
+  "discovery_only": "cut (tiers.json cut_order; budget lateness; DEV-CUT-XLIB-DISC)"
+ },
+ "caveat": "U and eligibility were selected on all-D effects, so absolute XLIB rates are optimistic; u_rule = discovery_only recomputes eligibility on discovery lines (no refit). Pred arms are not run on XLIB (their OOF predictions were trained on replication-line effects).",
+ "reused_arms": true,
+ "arms_dataset": {
+  "n_rows": 11887500,
+  "n_parts": 46,
+  "verified_from": "legacy part / row counts (lines not verifiable)"
+ }
+}

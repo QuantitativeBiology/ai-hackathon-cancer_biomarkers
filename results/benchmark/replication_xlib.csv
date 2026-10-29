@@ -1,0 +1,5 @@
+u_rule,stratum,rate_S1-obs,rate_EN-obs,contrast,diff,estimate,ci_lo,ci_hi,k,verdict,frac_degenerate_EN-obs
+all_D,G,0.82,0.62,multivariate_adds_value,EN-obs - S1-obs,-0.19999999999999996,-0.22999999999999998,-0.06975000000000019,100,univariate better,0.03327000000000001
+all_D,direct,0.625,0.4375,multivariate_adds_value,EN-obs - S1-obs,-0.1875,-0.25,0.0625,16,descriptive (underpowered: 16),0.08275
+all_D,non_direct,0.83,0.63,multivariate_adds_value,EN-obs - S1-obs,-0.19999999999999996,-0.25,-0.07000000000000006,100,univariate better,0.02298
+all_D,proxy,0.78,0.66,multivariate_adds_value,EN-obs - S1-obs,-0.12,-0.17999999999999994,0.020000000000000018,50,no detectable difference,0.00658

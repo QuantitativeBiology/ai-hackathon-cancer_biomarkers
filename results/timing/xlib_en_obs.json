@@ -1,0 +1,18 @@
+{
+ "job": "xlib_en_obs",
+ "utc": "2026-10-29T20:30:29+00:00",
+ "start_utc": "2026-10-29T20:08:29+00:00",
+ "wall_s": 1319.831003,
+ "workers": 6,
+ "run_id": "run_xlib-32572-20261029T203029",
+ "note": "EN-obs refit + pool + replication bootstrap",
+ "memory_guard": {
+  "kind": "en",
+  "requested": 6,
+  "effective": 6,
+  "per_worker_gb": 0.9,
+  "available_gb": 7.87,
+  "parent_rss_gb": 0.14,
+  "budget_gb": 10.0
+ }
+}
