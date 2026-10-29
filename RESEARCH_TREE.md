@@ -71,6 +71,19 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D19 (M4, 03:40, first real results):
+  - **Arms.** The four arms ran on D: 2,193 genes, 26.2 M rows, 45 min with S1 at 8 and EN at 5 workers. Selected:
+    S1-obs 3,142, EN-obs 738, EN-pred 50,728, S1-pred 276,557. The catalogue MD-global has 1,380 pairs; MD-strict has 11,662.
+  - [!] **Gate attempt 1 failed: 21/39** (0.54, CI 0.37–0.70). ADD-CN 1/5, SIG 0/2 and W 1/3 are below 0.5.
+  - **Bug search, per outcome_actions.** U_ctrl (§2, the non-eligible control and CGT-target genes) was never built or
+    read. As a result, SMARCA2, ARID1B, MYCN and ESR1 had no rows, which is a pipeline omission. This is fixed as a §9.3
+    bug fix with a toy test, leading to attempt 2. The report will state "gate failed at attempt 1 (21/39)".
+  - **Misses that are not bugs.**
+    - EGFR-activating: 8 carriers, so the triggered df fallback gives df 7 and p = 0.13 for β −0.63. This is the cost
+      of DEV-CAL-CONSERVATIVE.
+    - MAT2A × MTAP-del: q = 0.15.
+  - **Other steps.** The null runs in the background; the independent §13.3 check has started (separate agent, no
+    engine code read).
 - D18 (M5/M6 code, ~01:45, before any real catalogue exists): the M5/M6/M8 Tier A scripts are built and toy-tested
   (24/24). The implementation choices that DESIGN §8/§11/§12 leaves open are fixed in configs/m5_m8_params.json and hashed
   under frozen_hashes `actions` before any real M5 output. Among them, the combinatorial per-line hit rule (Cohen's
