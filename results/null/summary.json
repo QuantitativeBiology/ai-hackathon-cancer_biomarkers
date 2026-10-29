@@ -5,7 +5,7 @@
   "EN-obs selected": 0.19953271028037384,
   "EN-pred selected": 0.32733199598796386,
   "MD-strict": 0.03709582598471487,
-  "MD-global": 0.2
+  "MD-global": 0.0009389671361502348
  },
  "pass": {
   "S1-obs": true,
@@ -13,7 +13,7 @@
   "EN-obs selected": false,
   "EN-pred selected": false,
   "MD-strict": true,
-  "MD-global": false
+  "MD-global": true
  },
  "fdr_emp_rerun": null,
  "p_cut_F1": {
@@ -30,7 +30,7 @@
   "EN-obs selected": 107,
   "EN-pred selected": 6979,
   "MD-strict": 1701,
-  "MD-global": 0
+  "MD-global": 213
  },
  "n_genes": 300,
  "config_sha256": {
@@ -39,5 +39,19 @@
   "seeds.json": "19d1d9b47b965e9a2db943d3a1aa6689925de10ed0202085413e48893f22419e",
   "primary_endpoints.json": "6125708282190c7b0b3a04f7c89ff5b4ff2a76179c0d11061160508c759c2d69"
  },
- "commit": "01b2cc5a2c9d2b2a3d9879e600d2ebb95c2ca69f"
+ "commit": "01b2cc5a2c9d2b2a3d9879e600d2ebb95c2ca69f",
+ "resummarised": {
+  "utc": "2026-10-29T13:09:52+00:00",
+  "commit": "732e50edc0789f955674152b68182c6cd205c9b1",
+  "reason": "observed MD-global count was 0 (md_global missing from observed inputs)",
+  "draws_commit": "01b2cc5a2c9d2b2a3d9879e600d2ebb95c2ca69f",
+  "previous_hits_obs": {
+   "S1-obs": 515,
+   "S1-pred": 38482,
+   "EN-obs selected": 107,
+   "EN-pred selected": 6979,
+   "MD-strict": 1701,
+   "MD-global": 0
+  }
+ }
 }

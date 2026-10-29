@@ -52,7 +52,7 @@ def resummarise(res: dict, genes: list) -> int:
     summ_t.to_csv(out_dir / "fdr_fixed.csv", index=False)
     summ = dict(old, fdr_emp_fixed=dict(zip(summ_t["list"], summ_t["fdr_emp_fixed"])),
                 **{"pass": dict(zip(summ_t["list"], summ_t["pass"].astype(bool))), "hits_obs": obs,
-                   "resummarised": {"utc": AN.utc_now(), "commit": gitutil.head(P.PROJECT),
+                   "resummarised": {"utc": AN.utc_now().isoformat(timespec="seconds"), "commit": gitutil.head(P.PROJECT),
                                     "reason": "observed MD-global count was 0 (md_global missing from observed inputs)",
                                     "draws_commit": old.get("commit"), "previous_hits_obs": old.get("hits_obs")}})
     (out_dir / "summary.json").write_text(json.dumps(summ, indent=1, default=float), encoding="utf-8")
