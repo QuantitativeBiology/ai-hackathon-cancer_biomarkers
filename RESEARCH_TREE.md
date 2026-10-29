@@ -4,6 +4,25 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-29 ~00:35 — M3b milestone: bounds frozen (tag `freeze-bounds`), engine verified on the toy
+The Tier A engine (S1 with CR2 and a carrier df, a two-stage stability elastic net, the four arms, the MD lists, the
+fixed-threshold null) was written by one agent. Two others checked it on the toy simulation and with process checks.
+Neither found an engine bug in the final version, but the checks changed four things before any real association
+result:
+- The calibration test showed CR2 + ν is anti-conservative at n = 255, so the pre-declared df fallback now applies.
+- Power and test df were made consistent.
+- Expression programmes are now computed without the held-out lines.
+- The catalogue became MD-global (A7). MD-strict, the frozen catalogue, had a true FDP of 0.16–0.26 on all five
+  ridge-predictor toys and a false hit in 30% of pure-null toys. The double dip causes this: the observed screen re-uses
+  the dev-set noise the ridge predictions absorbed. MD-global had FDP ≤ 0.025 and no pure-null hits, at the same recall.
+
+The final toy suite gives 19 pass, 3 fail. The fails are the fold-offset positive control (the bound was derived on a
+different list), ridge MD-strict, and pure-null S1-pred (4 marginal hits). All are reported, not changed. The NC bounds
+come from 5 toy replicates under rulings fixed in advance: NC2a 0.0011, NC2b 1.2, and the provisional values for NC3,
+NC5 and NC6. `configs/frozen_hashes.json:bounds` covers the dictionary, controls, null genes, subsamples, data status,
+the CGT files and the pipeline constants. Next is M4 on real D: the four arms + MD lists, the confounder audit, gate
+attempt 1, then the null in the background, XLIB and the independent check. Time used ≈ 7.5 h of 24.
+
 ### 2026-10-28 ~19:40 — M2 milestone: design frozen (tag `freeze-design`, DESIGN v3.2)
 The design went through three review rounds: 7 reviewers / 84 items (R1), a fresh PI plus statistics and implementability
 reviewers / 23 items (R2), and one fresh reviewer / 6 items (R3). Every item has a recorded decision
@@ -52,6 +71,11 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   primary endpoint (replication in R of top-100, power ≥ 0.5). Reason: v1's MD was S1 with a smaller BH family (R1-PI-1, ST1, PW1).
 - D2 (M2, R1): covariates equal to / collinear with the determinant (|ρ| > 0.7) are dropped per test; self-null
   features removed; 9p21 handled by locus groups + resolution test, not merging; LOSS (CN < 0.75) family added (R1-ST3, PW2, DA1, DA2).
+- D16 (M3b end, 00:35): NC2b = 1.2 (MD-strict hits per low-tier gene) is applied as the mechanical result of ruling R1.
+  R1 was fixed before any ridge value existed, so it is not revisited. MD-global's low-tier rate is reported next to the
+  provisional 0.1 for information. NC values are recorded in frozen_hashes `bounds_values`; design_params.json is not
+  edited. The calibration fallback is kept although 4 few-carrier cells are conservative (DEV-CAL-CONSERVATIVE).
+  Tag `freeze-bounds`.
 - D15 (M4, ~23:30): [!] The catalogue becomes MD-global (EN-pred ∩ S1-obs full-family BH, same sign); this is amendment
   A7, made before any real association result. On the engine's ridge toys MD-strict FDP was 0.228, 0.255 and 0.237 and
   MD-global's was 0, 0 and 0.013. On the pure nulls P(any hit) was 0.30 for MD-strict and 0.00 for MD-global. Recall was
@@ -137,13 +161,15 @@ Next: parallel literature surveys and a technical brief of Part 1, then DESIGN.m
   - [x] CGT table: 64 tests; independent audit (2 critical, 5 major, 11 minor, all fixed: AUD-1..18) → 27 testable,
     18 P2-headline, 8 gate-disjoint; tag `freeze-cgt` (no dependency data joined); DESIGN amendments A1–A5 (append-only)
   - [x] Dictionary track committed; [~] single rebuild #4 with ALLELE/CLIN
-  - [~] M3b parallel tracks (started during round 2, D4): dictionary/eligibility/controls · CGT table (no dependency data) · toy simulation (separate verification agent)
+  - [x] M3b parallel tracks (started during round 2, D4): dictionary/eligibility/controls · CGT table (no dependency data) · toy simulation (separate verification agent); tag `freeze-bounds`
 - [~] M4 Core pipeline engine (stats/HC2, two-stage stability EN, 4 arms, MD-strict, fixed-threshold null) — pipeline author agent; unit tests on synthetic data; real run after freeze-bounds
   - [x] Engine committed (8cffc91): 19/19 unit tests; real pilot on 50 genes → K = 300, null B = 20 (≈ 96 min on 6 workers)
-  - [!] Toy run 14/19: ridge-toy MD-strict FDP 0.228 (D12); 4 other failures under independent diagnosis
-  - [~] Independent toy verifier: NC2–NC6 bounds (5 replicates, 45-min timebox), null_genes.txt, diagnostics, suite re-run
-  - [~] Endpoint code (author): run_gate.py, replicate.py (+ pseudo-R fold-0 dry run), P2 McNemar, branch tests
-  - [ ] Tag `freeze-bounds` (frozen_hashes `bounds`), then the real run: 4 arms + MD-strict, confounder audit, gate attempt 1, null (background), dry run
+  - [!] Toy run 14/19 on 8cffc91: ridge-toy MD-strict FDP 0.228 (D12) → [!] catalogue = MD-global (A7, D15)
+  - [x] Process checks (budget_check, leakscan + allowlist, check_frozen, §13.2 tests) → df fallback triggered, power-df and NMF fixes (D13)
+  - [x] Independent toy verifier: NC bounds (9.2 min), null_genes.txt, diagnostics; final suite on 04aa982 19/22, MD-global 3/3
+  - [x] Endpoint code (author): run_gate.py, replicate.py (+ pseudo-R fold-0 dry run), P2 McNemar, branch tests; XLIB, component readout, confounder audit, Q4
+  - [x] Tag `freeze-bounds` (frozen_hashes `bounds` + `bounds_values`)
+  - [ ] Real run: 4 arms + MD lists, confounder audit, gate attempt 1, null (background), XLIB, dry run
   - [ ] Independent reimplementation check §13.3 (separate agent, after G_pc_attempt1)
 - [ ] M5 Subtypes: per gene and per module, cross-lineage labels, co-location/cutting/culture/hypermutation audits
 - [ ] M6 Clinical and combinatorial: CGT recovery, direction, actionability, population by lineage; combinatorial-screen lookup (Esmaeili harmonised table)

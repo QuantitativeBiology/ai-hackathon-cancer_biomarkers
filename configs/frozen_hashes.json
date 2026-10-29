@@ -19,5 +19,62 @@
    "A7"
   ],
   "note": "appended section 'Amendments after freeze'; text above it unchanged from freeze-design"
+ },
+ "bounds": {
+  "results/toy/nc_bounds.json": "21f5c1b746ba12f067ba474906ed18d2d2c04f1a3e63556557ef6720a2b258ef",
+  "results/controls/pc_eligibility.csv": "11216747084252c31785c0db7304d868cb8631a83541b67c70f47c3fdf0ecf69",
+  "configs/positive_controls.csv": "6c118c930388cba0619ee7a12d1ef8d01316758b8103490511adde756d681dd1",
+  "configs/null_genes.txt": "847af0251d53f4422afb1d7ccfe7d982f7921a334b17f033d21a56f3546cb9de",
+  "configs/subsamples.json": "a0b1b0ff023db0f38701aae855429e13b3c61b8717b2a57c572b6f4af7e17dfe",
+  "configs/dictionary_v1.json": "7b90295ce33e30b5f5080c2b51e1dda129642a6ae9eb0dc26f12bae3e67769e7",
+  "results/data_status.json": "96430fa43c0eb50647433d151cf326d03f524dec104b7f92fcdd2a8f2324d80d",
+  "configs/eligible_genes.csv": "e96225cb96e87f2203ec6f8fccb026faff7ccd115a32ccc27e7382e49ffac3bf",
+  "configs/build_params.json": "8244b2b0130a86f6e14891ea32f9c9b0a079889e153a82fa9eefa9e773429d30",
+  "configs/positive_controls_spec.csv": "fad6eff93795189313c386613ef6f3d9a6ebfabe8883103eed64173106704279",
+  "configs/cgt_allele_rules.json": "e01f83c97e805a11c72234f423c70fe8067243739c4d5345ee6e42defdb679d5",
+  "configs/fusion_known_positives.csv": "e57895019cd3615ac310f19ef95a0ed21695a24e16fc554a312beb8ae9642465",
+  "configs/cgt_corrections.csv": "f4ca0eeaf16ce52056a384d371c5118b60e28ee63270b9f1f28e752c71ba7496",
+  "configs/toy_answer_key.json": "bec2166e1225321668cab478874bdfcedfd9c7ddd2adbdf588f7da5bec5928a4",
+  "configs/cgt_build_rules.json": "0b55e260883e7cb26c2f971c0449529723e43aaa280c43697dcc12d636559110",
+  "configs/pipeline_params.json": "4a5da9b9707bf481650f1c9cbbb316d3e2d622db88e3b450b7b9b823ca2a6a79",
+  "configs/clinical_ground_truth.csv": "2c9203c7859c1fdb07bb3e01397b29a212213a039d798c06826a42fc2b73c2e8",
+  "configs/cgt_features.csv": "32554882d17920bc93ed2bf4f04e6ad51079949ecf24d4a25a5713b18bc51e08",
+  "configs/leakscan_allow.json": "472183ac29ad3c323aff547ad15345d766e20c54a6fdb036b0fb39f51e8a48f4"
+ },
+ "bounds_values": {
+  "_comment": "NC2-NC6 at freeze-bounds (DESIGN §7.3, A7-ii rulings R1/R2): provisional vs final; design_params.json is not edited (its freeze-design hash stays valid); consumers read results/toy/nc_bounds.json",
+  "NC1_fdr_emp_max": {
+   "final": 0.1,
+   "source": "pre-declared, never replaced"
+  },
+  "NC2a_lowtier_median_fidelity_max": {
+   "provisional": 0.02,
+   "final": 0.0011,
+   "source": "ridge toy max (R1)"
+  },
+  "NC2b_lowtier_md_strict_per_gene_max": {
+   "provisional": 0.1,
+   "final": 1.2,
+   "source": "ridge toy max (R1); MD-global per-gene rate reported vs 0.1, information only"
+  },
+  "NC3_self_null_dependent_frac_max": {
+   "provisional": 0.1,
+   "final": 0.1,
+   "source": "provisional (resolution rule; DEV-TOY-NC3-04aa982)"
+  },
+  "NC4": {
+   "final": "toy pass bounds (fold_offset_*); positive control fails 0/5 (A7-iii)"
+  },
+  "NC5_false_sensitivity_rate_max": {
+   "provisional": 0.2,
+   "final": 0.2,
+   "source": "provisional (resolution rule; DEV-TOY-NC5-04aa982)"
+  },
+  "NC6_lineage_tf_class3_frac_min": {
+   "provisional": 0.7,
+   "final": 0.7,
+   "source": "provisional (R2 degeneracy; DEV-TOY-NC6-04aa982)"
+  },
+  "engine_commit": "04aa982"
  }
 }
