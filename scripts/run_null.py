@@ -28,10 +28,46 @@ from biomark import paths as P  # noqa: E402
 from biomark import pipeline as PL  # noqa: E402
 
 
+def observed_inputs() -> dict:
+    """Observed operating points: arms, λ, cut-offs and both MD lists (MD-global was missing before 2026-10-29,
+    which made its observed null-subset count 0)."""
+    from biomark import endpoint_io as IO
+    rb = P.RESULTS / "benchmark"
+    pc = json.loads((rb / "p_cut.json").read_text(encoding="utf-8"))
+    return {"arms": IO.read_arms(columns=["arm", "gene", "feature", "selected"], selected_only=True),
+            "lam": pd.read_csv(rb / "lambda.csv", dtype={"gene": str}),
+            "md_strict": IO.md_strict(), "md_global": IO.md_global(),
+            "p_cut": {k: v for k, v in pc.items() if k != "MD-strict"}, "p_cut_sc": pc.get("MD-strict", 0.0)}
+
+
+def resummarise(res: dict, genes: list) -> int:
+    """Recompute results/null/{fdr_fixed.csv, summary.json} from the saved draws.csv and the observed inputs, without
+    re-running any permutation (the draws do not depend on the observed counts)."""
+    from biomark import analyses as AN
+    out_dir = P.RESULTS / "null"
+    draws = pd.read_csv(out_dir / "draws.csv")
+    old = json.loads((out_dir / "summary.json").read_text(encoding="utf-8"))
+    obs = NL.observed_hits(res, genes)
+    summ_t = NL.summarise(draws, obs)
+    summ_t.to_csv(out_dir / "fdr_fixed.csv", index=False)
+    summ = dict(old, fdr_emp_fixed=dict(zip(summ_t["list"], summ_t["fdr_emp_fixed"])),
+                **{"pass": dict(zip(summ_t["list"], summ_t["pass"].astype(bool))), "hits_obs": obs,
+                   "resummarised": {"utc": AN.utc_now(), "commit": gitutil.head(P.PROJECT),
+                                    "reason": "observed MD-global count was 0 (md_global missing from observed inputs)",
+                                    "draws_commit": old.get("commit"), "previous_hits_obs": old.get("hits_obs")}})
+    (out_dir / "summary.json").write_text(json.dumps(summ, indent=1, default=float), encoding="utf-8")
+    AN.append_registry("scripts/run_null.py --resummarise", "ok",
+                       ["results/null/summary.json", "results/null/fdr_fixed.csv", "results/null/draws.csv"])
+    print(json.dumps(summ, indent=1, default=float))
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--workers", type=int, default=None)
     ap.add_argument("--s1-vectorised", action="store_true")
+    ap.add_argument("--resummarise", action="store_true",
+                    help="recompute the summary from the saved draws.csv (no permutation is re-run)")
     ap.add_argument("--force-before-bounds", action="store_true")
     a = ap.parse_args(argv)
     if not gitutil.tag_exists(P.PROJECT, "freeze-bounds") and not a.force_before_bounds:
@@ -44,14 +80,10 @@ def main(argv=None) -> int:
     el = pd.read_csv(P.CONFIGS / "eligible_genes.csv", dtype={"entrez": str})
     elig = set(el.loc[el["eligible"].astype(bool), "entrez"])
     assert set(genes) <= elig, "null_genes.txt must be a subset of the eligible genes (DESIGN §2)"
+    res = observed_inputs()
+    if a.resummarise:
+        return resummarise(res, genes)
     data = PL.Data.from_real()
-    rb = P.RESULTS / "benchmark"
-    pc = json.loads((rb / "p_cut.json").read_text(encoding="utf-8"))
-    from biomark import endpoint_io as IO
-    res = {"arms": IO.read_arms(columns=["arm", "gene", "feature", "selected"], selected_only=True),
-           "lam": pd.read_csv(rb / "lambda.csv", dtype={"gene": str}),
-           "md_strict": pd.read_csv(P.RESULTS / "md" / "md_strict.csv", dtype={"gene": str}),
-           "p_cut": {k: v for k, v in pc.items() if k != "MD-strict"}, "p_cut_sc": pc.get("MD-strict", 0.0)}
     from biomark import analyses as AN
     w, gnull = AN.guard_workers(a.workers, "null", log=print)
     out_dir = P.RESULTS / "null"
