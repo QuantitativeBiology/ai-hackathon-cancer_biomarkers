@@ -221,6 +221,22 @@ class RankIndex:
             self.by[arm] = {"tab": s.set_index(key), "dr": np.sort(d["rank"].to_numpy(dtype=float)),
                             "dedup": d.assign(vg=vg.to_numpy())}
 
+    @classmethod
+    def slim(cls, dedup_ranks: dict, rows: pd.DataFrame) -> "RankIndex":
+        """Memory-light index for the full real table: ``dedup_ranks`` = {arm: rank values of every de-duplicated
+        row} and ``rows`` = all rows (gene, feature, rank, rank_dedup, variant_group, beta, arm) of the genes that
+        will be queried. ``rank_of`` is identical to the full constructor for those genes."""
+        self = cls.__new__(cls)
+        self.by = {}
+        for arm, dr in dedup_ranks.items():
+            s = rows[rows["arm"] == arm][["gene", "feature", "rank", "rank_dedup", "variant_group", "beta"]]
+            key = pd.MultiIndex.from_arrays([s["gene"].astype(str), s["feature"]])
+            d = s[s["rank_dedup"].notna()]
+            vg = d["variant_group"].where(d["variant_group"].notna() & (d["variant_group"].astype(str) != ""), None)
+            self.by[arm] = {"tab": s.set_index(key), "dr": np.sort(np.asarray(dr, dtype=float)),
+                            "dedup": d.assign(vg=vg.to_numpy())}
+        return self
+
     def rank_of(self, arm: str, gene: str, feature: str) -> tuple:
         """(rank_of_feature_D, beta) or (nan, nan) when (g, d) is not rankable in the arm."""
         A = self.by.get(arm)

@@ -169,11 +169,11 @@ def main(argv=None) -> int:
             nan_D = pd.read_parquet(P.CACHE / "effect_nan_mask.parquet").reindex(index=D2, columns=genes)
             covD = ST.CovDesign(IO.line_covariates(D2))
             sig = IO.sigma_resid_genes(Y_all.loc[D2].to_numpy(), ~nan_D.to_numpy(dtype=bool), covD, genes)
-            arms_tab = IO.arms_table()
+            arms_tab, s1o_full = IO.pool_inputs(genes=genes)    # frozen full-D ranks (slim) for the requested genes
             s1o = s1.copy()                                  # finish_s1 already set test_family F1 / F2
-            acc = arms_tab[arms_tab["arm"] == "S1-obs"].drop_duplicates(["gene", "feature"]).set_index(["gene", "feature"])["access_class"]
+            acc = s1o_full.drop_duplicates(["gene", "feature"]).set_index(["gene", "feature"])["access_class"]
             s1o["access_class"] = acc.reindex(pd.MultiIndex.from_arrays([s1o["gene"], s1o["feature"]])).to_numpy()
-            pool, pj = IO.make_pool(arms_tab[arms_tab["gene"].isin(genes)], s1o, sig, D2, R_ids, nan_D)
+            pool, pj = IO.make_pool(arms_tab, s1o, sig, D2, R_ids, nan_D)
             out.mkdir(parents=True, exist_ok=True)
             pool.to_parquet(out / "p1_pool.parquet")
             pj["note"] = "dry run: D' = folds 1-4, pseudo-R = fold 0; lists frozen from full-D ranks (in-sample)"

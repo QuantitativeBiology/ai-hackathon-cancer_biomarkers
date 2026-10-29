@@ -39,20 +39,27 @@ def main() -> int:
     EP.require_descends("freeze-bounds")
     t0 = time.perf_counter()
     pc = PR.endpoints()["P2_primary_clinical"]
-    a = IO.arms_table()
-    U = a[a["arm"] == "S1-obs"][["gene", "feature", "n_carriers"]]
     cgt = pd.read_csv(P.CONFIGS / "clinical_ground_truth.csv")
     ez = GS.symbol_to_entrez(sorted({x for v in cgt["target_set"] for x in EP._targets(v)})).dropna().astype(str).to_dict()
+    tgenes = sorted({str(ez.get(x, x)) for v in cgt["target_set"] for x in EP._targets(v)})
+    # slim reads (the arms table is ~26 M rows): U and drops for the CGT target genes, ranks via RankIndex.slim
+    U = IO.read_arms(arms=["S1-obs"], columns=["gene", "feature", "n_carriers", "dropped_cov"], genes=tgenes)
+    rows = IO.read_arms(columns=["arm", "gene", "feature", "rank", "rank_dedup", "variant_group", "beta"], genes=tgenes)
+    dedup = {}
+    for arm in ("S1-obs", "S1-pred", "EN-obs", "EN-pred"):
+        r = IO.read_arms(arms=[arm], columns=["rank", "rank_dedup"])
+        dedup[arm] = r.loc[r["rank_dedup"].notna(), "rank"].to_numpy()
+        del r
     it = P.RESULTS / "gate_iterations.csv"
     gd_headline = it.exists() and len(pd.read_csv(it)) > 1
-    ridx = EP.RankIndex(a)
+    ridx = EP.RankIndex.slim(dedup, rows)
     summ = {"headline_subset": "gate_disjoint" if gd_headline else "all", "results": {}}
     scores_all = []
     for set_ in ("non_proxy", "incl_proxy"):
         for subset in ("all", "gate_disjoint"):
             T = EP.p2_test_set(cgt, U, set_, gate_disjoint=subset == "gate_disjoint", entrez_of=ez)
             for k in [pc["k"]] + list(pc["secondary_k"]):
-                sc = EP.p2_score(a, T, k=k, ridx=ridx)
+                sc = EP.p2_score(None, T, k=k, ridx=ridx)
                 s = EP.p2_summary(sc)
                 s["per_tier"] = {tier: {arm: float(g["hit"].mean()) for arm, g in sub.groupby("arm")}
                                  for tier, sub in sc[sc["testable"]].groupby("tier")}
@@ -69,7 +76,7 @@ def main() -> int:
     pd.concat(scores_all, ignore_index=True).to_csv(out / "p2_scores.csv", index=False)
     # Q4b actionability
     cg = cgt.assign(target_set=[";".join(ez.get(x, x) for x in EP._targets(v)) for v in cgt["target_set"]])
-    s1h = a[(a["arm"] == "S1-obs") & a["selected"].astype(bool)]
+    s1h = IO.read_arms(arms=["S1-obs"], columns=["gene", "feature", "beta"], selected_only=True)
     act = EP.actionability(IO.catalogue(), s1h, cg)                    # A7: catalogue = MD-global
     act["list"] = act["list"].replace({"MD-strict": "MD-global"})
     act2 = EP.actionability(IO.md_strict(), s1h.iloc[:0], cg)          # MD-strict reported alongside
@@ -83,8 +90,7 @@ def main() -> int:
     feats = sorted(set(T["feature_D"]))
     Y = guard.load_effects(dev, scope="dev", genes=genes)
     fitter = IO.fitter_for(dev, genes, feats, Y)
-    s1o = a[a["arm"] == "S1-obs"]
-    drops = {(str(g), f): (d if isinstance(d, str) else "") for g, f, d in zip(s1o["gene"], s1o["feature"], s1o["dropped_cov"])}
+    drops = {(str(g), f): (d if isinstance(d, str) else "") for g, f, d in zip(U["gene"], U["feature"], U["dropped_cov"])}
     model = p1.model_table(["OncotreeCode", "OncotreeSubtype", "OncotreePrimaryDisease", "OncotreeLineage"]).reindex(dev)
     terms = AN.oncotree_terms()
     unmapped = set()

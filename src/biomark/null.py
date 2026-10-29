@@ -92,7 +92,10 @@ def _draw(data, res_obs: dict, genes: list, b: int, s1_only: bool = False) -> di
         lam_tab = res_obs["lam"]
         U = s1[s1["arm"] == "S1-obs"][["gene", "feature"]]
         eng = A.en_engine(data, X=Xp, Xstd=Xsp, na_flags=NAp)
+        eng.max_patterns = int(PR.runtime()["blocked"]["en_max_patterns"])     # bounds worker memory; cache only
         gf = A.gene_feats(data, U)
+        gi = {g: i for i, g in enumerate(data.genes)}
+        genes = sorted(genes, key=lambda g: data.rows_ok[:, gi[g]].tobytes())
         en_parts = []
         for arm in A.EN_ARMS:
             lt = lam_tab[lam_tab["arm"] == arm].set_index("gene")
@@ -118,6 +121,9 @@ _WN = {}
 
 
 def _winit(payload):
+    if isinstance(payload, str):                      # workerstore directory (file-backed, mmap)
+        from . import workerstore as WS
+        payload = WS.load(payload)
     for k in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
         os.environ[k] = str(payload["blas_threads"])
     try:
@@ -178,7 +184,7 @@ def run_null(data, res_obs: dict, B: int | None = None, workers: int = 1, genes=
     B = npar["B_base"] if B is None else int(B)
     draws = []
     data.target("obs")
-    payload = {"data": data.for_workers(include_obs=True), "res": {k: res_obs[k] for k in ("p_cut", "lam", "arms", "p_cut_sc")
+    payload = {"data": data.for_workers(include_obs=True), "res": {k: res_obs[k] for k in ("p_cut", "lam", "p_cut_sc")
                                                                     if k in res_obs},
                "genes": genes, "blas_threads": npar["blas_threads"]}
     if workers <= 1:
@@ -193,7 +199,10 @@ def run_null(data, res_obs: dict, B: int | None = None, workers: int = 1, genes=
                 log(draws[-1])
     else:
         from concurrent.futures import ProcessPoolExecutor
-        with ProcessPoolExecutor(max_workers=workers, initializer=_winit, initargs=(payload,)) as ex:
+
+        from . import workerstore as WS
+        with WS.staged(payload, "null") as path, \
+                ProcessPoolExecutor(max_workers=workers, initializer=_winit, initargs=(path,)) as ex:
             d0 = ex.submit(_wdraw, (0, s1_only)).result()
             draws.append(d0)
             if decide_B and npar["B_raised"] * d0["wall_s"] / npar["sec_per_min"] <= npar["wall_cap_min"]:

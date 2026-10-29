@@ -169,6 +169,7 @@ class ENEngine:
         self.sub = [np.asarray(s, dtype=bool) for s in sub_masks]
         self.cache: OrderedDict = OrderedDict()
         self.hits = self.miss = 0
+        self.max_patterns = None          # optional eviction: keep FWL entries of at most this many row patterns
         self.gram_shared = self.shared.size <= self.ep["gram_cache_max"]
 
     # ---- FWL ----------------------------------------------------------------------------------------------
@@ -184,6 +185,12 @@ class ENEngine:
             self.cache.move_to_end(key)
             return self.cache[key]
         self.miss += 1
+        if self.max_patterns:
+            recent = list(dict.fromkeys(k[0] for k in reversed(self.cache)))   # most recently used first
+            if gkey not in recent and len(recent) >= self.max_patterns:
+                keep = set(recent[: self.max_patterns - 1])
+                for k in [k for k in self.cache if k[0] not in keep]:
+                    del self.cache[k]
         if fit == "full":
             rows = grows
         elif fit.startswith("cv"):
@@ -193,8 +200,12 @@ class ENEngine:
         Uf = self.U(rows)
         Q = ST.orth(Uf)
         e = {"rows": rows, "Q": Q, "n": int(rows.sum())}
-        Xsh = ST.resid(Q, self.Xs[rows][:, self.shared])
-        e["car"] = self.car01[rows][:, self.shared].sum(0)
+        ri = np.flatnonzero(rows)
+        XsR = self.Xs[np.ix_(ri, self.shared)]                  # rows x shared only (no full-matrix temporary)
+        Xsh = ST.resid(Q, XsR)
+        if not fit.startswith("cv"):
+            del XsR
+        e["car"] = self.car01[np.ix_(ri, self.shared)].sum(0)
         e["sd"] = np.sqrt((Xsh ** 2).mean(0)) if e["n"] else np.zeros(self.shared.size)
         if self.gram_shared:
             e["G"] = Xsh.T @ Xsh
@@ -203,8 +214,8 @@ class ENEngine:
             te = grows & (self.folds == int(fit[2:]))
             e["te"] = te
             Ute = self.U(rows, te)
-            coefU, *_ = np.linalg.lstsq(Uf, self.Xs[rows][:, self.shared], rcond=None)
-            e["Xte"] = (self.Xs[te][:, self.shared] - Ute @ coefU).astype(np.float32)
+            coefU, *_ = np.linalg.lstsq(Uf, XsR, rcond=None)
+            e["Xte"] = (self.Xs[np.ix_(np.flatnonzero(te), self.shared)] - Ute @ coefU).astype(np.float32)
             e["Ute"], e["Uf"] = Ute, Uf
         self.cache[key] = e
         while len(self.cache) > self.ep["cache_entries"]:
@@ -475,12 +486,36 @@ def standardise(X: np.ndarray) -> np.ndarray:
     return np.where(np.isnan(Z), 0.0, Z)
 
 
+def tie_order(keys: list, rel: float | None = None) -> np.ndarray:
+    """Order of a rank rule ``keys`` = [stat_1, ..., stat_m, id] (ascending; most significant first). The order is
+    the exact lexicographic order, except that rows whose statistics ALL agree within ``rel`` (params.rank_tie_rel)
+    with the neighbouring row form a tie group ordered by id: duplicate tests (identical feature columns computed in
+    different matrix blocks) differ only by floating-point noise, and that noise must not decide their order. Distinct
+    tests whose p happen to coincide but whose |beta| differ keep the exact order."""
+    rel = PR.rank_tie_rel() if rel is None else rel
+    *stats_, ids = keys
+    ids = np.asarray(ids, dtype=object)
+    n = len(ids)
+    if n == 0:
+        return np.zeros(0, dtype=np.int64)
+    order = np.lexsort(tuple([ids] + [np.asarray(k) for k in stats_[::-1]]))
+    tie = np.ones(n - 1, dtype=bool)
+    for k in stats_:
+        v = np.asarray(k, dtype=np.float64)[order]
+        scale = np.maximum(np.abs(v[1:]), np.abs(v[:-1]))
+        tie &= np.abs(v[1:] - v[:-1]) <= rel * scale
+    if not tie.any():
+        return order
+    grp = np.cumsum(np.r_[True, ~tie])
+    return order[np.lexsort((ids[order], grp))]
+
+
 def rank_en(freq: np.ndarray, mean_beta: np.ndarray, fid: np.ndarray) -> np.ndarray:
-    """Rank within a gene-agnostic list: frequency desc, |mean β| desc, feature id asc; zero frequency -> NaN."""
-    df = pd.DataFrame({"f": -np.asarray(freq, float), "b": -np.abs(np.asarray(mean_beta, float)),
-                       "id": np.asarray(fid, dtype=object)})
-    order = df.sort_values(["f", "b", "id"], kind="mergesort").index.to_numpy()
-    rk = np.empty(len(df))
-    rk[order] = np.arange(1, len(df) + 1)
+    """Rank within a gene-agnostic list: frequency desc, |mean β| desc (ties within params.rank_tie_rel), feature id
+    asc; zero frequency -> NaN."""
+    f = -np.asarray(freq, float)
+    order = tie_order([f, -np.abs(np.asarray(mean_beta, float)), np.asarray(fid, dtype=object)])
+    rk = np.empty(len(f))
+    rk[order] = np.arange(1, len(f) + 1)
     rk[np.asarray(freq) <= 0] = np.nan
     return rk

@@ -33,8 +33,9 @@ from biomark import pipeline as PL  # noqa: E402
 _W = {}
 
 
-def _init(d):
-    _W["data"] = d
+def _init(path):
+    from biomark import workerstore as WS
+    _W["data"] = WS.load(path)["data"]
 
 
 def _chunk(pairs):
@@ -43,8 +44,7 @@ def _chunk(pairs):
 
 def audit_pairs() -> pd.DataFrame:
     md, mg = IO.md_strict(), IO.catalogue()                            # A7: MD-global (catalogue) and MD-strict
-    a = IO.arms_table()
-    s1h = a[(a["arm"] == "S1-obs") & a["selected"].astype(bool)]
+    s1h = IO.read_arms(arms=["S1-obs"], columns=["gene", "feature"], selected_only=True)
     ctl = pd.read_csv(P.CONFIGS / "positive_controls.csv", dtype=str)
     ctl = ctl[ctl["scope"] == "gate"]
     rows = [(g, f, "MD-global") for g, f in zip(mg["gene"], mg["feature"])]
@@ -53,7 +53,8 @@ def audit_pairs() -> pd.DataFrame:
     for _, c in ctl.iterrows():
         rows += [(str(c["dependency_entrez"]), f, "control") for f in EP.control_features(c)]
     p = pd.DataFrame(rows, columns=["gene", "feature", "source"])
-    U = set(zip(a.loc[a["arm"] == "S1-obs", "gene"], a.loc[a["arm"] == "S1-obs", "feature"]))
+    u = IO.read_arms(arms=["S1-obs"], columns=["gene", "feature"], genes=sorted({str(r[0]) for r in rows}))
+    U = set(zip(u["gene"], u["feature"]))
     p = p[[k in U for k in zip(p["gene"], p["feature"])]]
     return p.groupby(["gene", "feature"], as_index=False)["source"].agg(lambda s: "|".join(sorted(set(s))))
 
@@ -73,7 +74,10 @@ def main(argv=None) -> int:
         parts = [AU.confounding_delta(data, c) for c in chunks]
     else:
         from concurrent.futures import ProcessPoolExecutor
-        with ProcessPoolExecutor(max_workers=w, initializer=_init, initargs=(data.for_workers(include_obs=True),)) as ex:
+
+        from biomark import workerstore as WS
+        with WS.staged({"data": data.for_workers(include_obs=True)}, "delta") as path, \
+                ProcessPoolExecutor(max_workers=w, initializer=_init, initargs=(path,)) as ex:
             parts = list(ex.map(_chunk, chunks))
     delta = pd.concat(parts, ignore_index=True).merge(pairs, on=["gene", "feature"], how="left")
     out = P.RESULTS / "confounders"

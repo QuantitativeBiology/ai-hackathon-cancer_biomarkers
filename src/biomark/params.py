@@ -40,6 +40,18 @@ def tiers() -> dict:
     return _load("tiers.json")
 
 
+def rank_tie_rel() -> float:
+    """Relative tolerance under which two rows count as the same test for ranking: ALL their rank statistics (S1 p and
+    |beta|; EN frequency and |mean beta|) agree within it, so the id key of the frozen rank rule decides (DESIGN §6
+    rank_rule_S1 / rank_rule_EN). Duplicate tests (identical feature columns) differ by ~1e-15 relative."""
+    return 1e-9
+
+
+def runtime() -> dict:
+    """configs/runtime_params.json: worker counts, memory guard, streamed-arms settings (orchestration only)."""
+    return _load("runtime_params.json")
+
+
 def cgt_build_rules() -> dict:
     """configs/cgt_build_rules.json: gene-level constants of scripts/build_cgt.py (aliases, builder genes)."""
     return _load("cgt_build_rules.json")

@@ -5,6 +5,7 @@ the scripts, through ``guard.load_effects``."""
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -14,10 +15,64 @@ from . import pipeline as PL
 from . import stats as ST
 
 
-def arms_table() -> pd.DataFrame:
-    a = pd.read_parquet(P.CACHE / "benchmark" / "arms.parquet")
-    a["gene"] = a["gene"].astype(str)
-    return a
+ARMS_DIR = P.CACHE / "benchmark" / "arms"
+XLIB_ARMS_DIR = P.CACHE / "benchmark" / "xlib_arms"
+
+
+def read_arms(columns=None, arms=None, genes=None, features=None, selected_only: bool = False, dataset_dir=None,
+              categorical: bool = False) -> pd.DataFrame:
+    """Reader of the streamed arms dataset (``<dataset_dir>/part-*.parquet``, written by blocked.run_streamed).
+
+    Reads part by part with pyarrow row filters, so only the requested ``columns`` (None = all) and rows are
+    materialised: ``arms`` (arm names), ``genes`` (Entrez strings), ``features`` (feature ids), ``selected_only``
+    (rows with selected == True). String columns are stored as categoricals; they are returned as plain strings
+    (shared objects, 8 bytes per row) unless ``categorical`` is True. The full table is ~26 M rows: always pass
+    columns (and a row filter where possible)."""
+    d = Path(dataset_dir or ARMS_DIR)
+    parts = sorted(d.glob("part-*.parquet"))
+    if not parts:
+        raise FileNotFoundError(f"no arms parts under {d} (run scripts/run_arms.py)")
+    filt = []
+    if arms is not None:
+        filt.append(("arm", "in", [str(a) for a in arms]))
+    if genes is not None:
+        filt.append(("gene", "in", [str(g) for g in genes]))
+    if features is not None:
+        filt.append(("feature", "in", [str(f) for f in features]))
+    if selected_only:
+        filt.append(("selected", "==", True))
+    cols = None if columns is None else list(dict.fromkeys(columns))
+    out = []
+    for p in parts:
+        df = pd.read_parquet(p, columns=cols, filters=filt or None)
+        if len(df):
+            out.append(df)
+    if not out:
+        return pd.read_parquet(parts[0], columns=cols).iloc[:0]
+    df = pd.concat(out, ignore_index=True)
+    if not categorical:
+        for c in df.columns:
+            if isinstance(df[c].dtype, pd.CategoricalDtype):
+                df[c] = df[c].astype(object)
+    return df
+
+
+RANK_COLS = ["arm", "gene", "feature", "rank", "rank_stat", "variant_group", "beta", "maj_sign"]
+S1O_COLS = ["arm", "gene", "feature", "beta", "se", "sd_dtilde", "dropped_cov", "test_family", "access_class",
+            "n_carriers", "selected"]
+
+
+def pool_inputs(dataset_dir=None, genes=None) -> tuple:
+    """The two slim tables the P1 pool / lists need (instead of the whole arms table): ranks of every arm
+    (RANK_COLS) and the S1-obs rows (S1O_COLS) used for EB shrinkage, drops, access class and testability."""
+    a = read_arms(columns=RANK_COLS, genes=genes, dataset_dir=dataset_dir)
+    s1o = read_arms(columns=S1O_COLS, arms=["S1-obs"], genes=genes, dataset_dir=dataset_dir)
+    return a, s1o
+
+
+def arms_table(columns=None, **kw) -> pd.DataFrame:
+    """Back-compatible name for ``read_arms`` (pass ``columns``; the full table does not fit in memory)."""
+    return read_arms(columns=columns, **kw)
 
 
 def s1_table() -> pd.DataFrame:
@@ -169,7 +224,8 @@ def make_pool(arms_tab: pd.DataFrame, s1_obs: pd.DataFrame, sigma_g: pd.Series, 
     drops = s.set_index(["gene", "feature"])["dropped_cov"]
     binary = fl["d_type"].reindex(feats) == "binary"
     pool = EP.pool_power(UG, bsh, sigma_g, XR.to_numpy(dtype=np.float64), fpos, binary, covR, patR, expR, drops)
-    acc = arms_tab[arms_tab["arm"] == "S1-obs"].drop_duplicates(["gene", "feature"]).set_index(["gene", "feature"])["access_class"]
+    src = s1_obs if "access_class" in s1_obs else arms_tab[arms_tab["arm"] == "S1-obs"]
+    acc = src.drop_duplicates(["gene", "feature"]).set_index(["gene", "feature"])["access_class"]
     pool["access_class"] = acc.reindex(pd.MultiIndex.from_arrays([pool["gene"], pool["feature"]])).to_numpy()
     P_G = pool[pool["powered"]]
     out = {"k_rule": e["k_rule"], "pool_size": int(len(P_G)), "k": EP.p1_k(len(P_G)), "lists": {}, "strata": {},

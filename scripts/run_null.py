@@ -47,11 +47,13 @@ def main(argv=None) -> int:
     data = PL.Data.from_real()
     rb = P.RESULTS / "benchmark"
     pc = json.loads((rb / "p_cut.json").read_text(encoding="utf-8"))
-    res = {"arms": pd.read_parquet(P.CACHE / "benchmark" / "arms.parquet"),
+    from biomark import endpoint_io as IO
+    res = {"arms": IO.read_arms(columns=["arm", "gene", "feature", "selected"], selected_only=True),
            "lam": pd.read_csv(rb / "lambda.csv", dtype={"gene": str}),
            "md_strict": pd.read_csv(P.RESULTS / "md" / "md_strict.csv", dtype={"gene": str}),
            "p_cut": {k: v for k, v in pc.items() if k != "MD-strict"}, "p_cut_sc": pc.get("MD-strict", 0.0)}
-    w = a.workers or npar["workers"]
+    from biomark import analyses as AN
+    w, gnull = AN.guard_workers(a.workers, "null", log=print)
     out_dir = P.RESULTS / "null"
     out_dir.mkdir(parents=True, exist_ok=True)
     from biomark import analyses as AN
@@ -79,7 +81,7 @@ def main(argv=None) -> int:
     parked = out_dir / "timing_s1_vectorised_subrecord.json"     # not budgeted until the main null record exists
     if a.s1_vectorised:
         srec = AN.timing_subrecord("s1_vectorised", t_start, AN.utc_now(), w, B=nul["B"],
-                                   wall_draw0_s=nul["wall_draw0_s"])
+                                   wall_draw0_s=nul["wall_draw0_s"], memory_guard=gnull)
         if f_t.exists():
             prev = json.loads(f_t.read_text(encoding="utf-8"))
             prev.setdefault("subrecords", {})["s1_vectorised"] = srec
@@ -93,7 +95,8 @@ def main(argv=None) -> int:
         if parked.exists():
             subs["s1_vectorised"] = json.loads(parked.read_text(encoding="utf-8"))
         extra = {"subrecords": subs} if subs else {}
-        AN.write_timing("null_fixed", {"B": nul["B"], "wall_draw0_s": nul["wall_draw0_s"], **extra}, start_utc=t_start,
+        AN.write_timing("null_fixed", {"B": nul["B"], "wall_draw0_s": nul["wall_draw0_s"], "memory_guard": gnull, **extra},
+                        start_utc=t_start,
                         workers=w)
         if parked.exists():
             parked.unlink()

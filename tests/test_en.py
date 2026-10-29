@@ -101,3 +101,21 @@ def test_en_pred_is_blind_to_observed_effects(monkeypatch):
         A.run_en(data, ("EN-obs",), U=U)
     # identical row sets for both EN arms: the rows come from the NaN mask only
     assert (lam["n_rows"].to_numpy() == data.rows_ok.sum(0)[[data.genes.index(g) for g in lam["gene"]]]).all()
+
+
+def test_tie_order_is_noise_free_and_equals_lexsort_without_ties():
+    rng = np.random.default_rng(0)
+    p, b = rng.random(500), rng.normal(size=500)
+    f = np.array([f"F{i:04d}" for i in rng.permutation(500)], dtype=object)
+    assert (EN.tie_order([p, -np.abs(b), f]) == np.lexsort((f, -np.abs(b), p))).all()
+    # duplicate tests differing only by floating-point noise: the id decides, whatever the noise sign
+    for eps in (1e-15, -1e-15):
+        p2 = np.array([0.1, 0.1 * (1 + eps), 0.2])
+        b2 = np.array([1.0, 1.0 * (1 - eps), 0.5])
+        assert EN.tie_order([p2, -np.abs(b2), np.array(["Z", "A", "M"], dtype=object)]).tolist() == [1, 0, 2]
+    r = EN.rank_en(np.array([0.5, 0.5, 0.0]), np.array([0.2, 0.2 * (1 + 1e-15), 0.9]), np.array(["b", "a", "c"]))
+    assert r[1] == 1 and r[0] == 2 and np.isnan(r[2])
+    # distinct tests whose p coincide but whose |beta| differ keep the exact rule (p, then |beta|)
+    p3 = np.array([0.2, 0.2 * (1 + 1e-12)])
+    b3 = np.array([0.05, 0.07])
+    assert EN.tie_order([p3, -np.abs(b3), np.array(["A", "Z"], dtype=object)]).tolist() == [0, 1]

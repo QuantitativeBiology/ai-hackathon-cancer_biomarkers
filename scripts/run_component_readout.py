@@ -43,8 +43,8 @@ def main(argv=None) -> int:
     md["in_md_strict"] = [k in set(zip(ms["gene"].astype(str), ms["feature"])) for k in zip(md["gene"], md["feature"])]
     genes = sorted(md["gene"].astype(str).unique())
     data = PL.Data.from_real(genes=genes)
-    arms_tab = IO.arms_table()
-    U = arms_tab[(arms_tab["arm"] == "EN-pred") & arms_tab["gene"].isin(genes)][["gene", "feature"]]
+    arms_tab = IO.read_arms(arms=["EN-pred"], columns=["arm", "gene", "feature", "access_class"], genes=genes)
+    U = arms_tab[["gene", "feature"]]
     dev = list(data.lines)
     oof = {k: p1.oof_predictions(k, columns=genes, ids=dev) for k in ("m1", "m2n", "m3n")}
     targets = AN.component_targets(oof, p1.folds().reindex(dev))

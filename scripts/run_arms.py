@@ -141,31 +141,31 @@ def pilot(args) -> int:
 
 
 def full(args) -> int:
+    """Streamed (blocked) arms on the full universe: S1 + EN per pattern chunk to a parquet dataset, global steps on
+    slim columns (biomark.blocked). Peak memory ~ parent (slim columns) + workers x per-worker RSS, guarded."""
+    from biomark import analyses as AN
+    from biomark import blocked as BL
     if not gitutil.tag_exists(P.PROJECT, FREEZE_BOUNDS) and not args.force_before_bounds:
         raise SystemExit(f"tag {FREEZE_BOUNDS} missing: full arms are launched by the PI after freeze-bounds")
     genes = None
     if args.universe == "ctrl":
         f = P.CONFIGS / "u_ctrl_genes.txt"
         genes = [x.strip() for x in f.read_text(encoding="utf-8").splitlines() if x.strip()]
-    data = PL.Data.from_real(genes=genes)
-    npar = PR.null_params()
-    w = args.workers or npar["all_workers"]
-    tim = {}
-    res = A.run_arms(data, arms=A.ARMS, workers=w, timings=tim)
     tag = "" if args.universe == "eligible" else f"_{args.universe}"
-    cb = P.CACHE / "benchmark"
-    cb.mkdir(parents=True, exist_ok=True)
+    data = PL.Data.from_real(genes=genes)
+    ws1, g1 = AN.guard_workers(args.workers_s1, "s1", log=print)
+    wen, g2 = AN.guard_workers(args.workers_en, "en", log=print)
+    rt = PR.runtime()["blocked"]
+    out_dir = P.PROJECT / (rt["dataset_dir"] + tag)
+    res = BL.run_streamed(data, A.ARMS, out_dir=out_dir, stage_dir=P.PROJECT / (rt["stage_dir"] + tag),
+                          workers_s1=ws1, workers_en=wen, log=print)
+    tim = res["timings"]
+    from biomark import endpoint_io as IO
     rb, rm = P.RESULTS / "benchmark", P.RESULTS / "md"
     rb.mkdir(parents=True, exist_ok=True)
     rm.mkdir(parents=True, exist_ok=True)
-    bulk = []
-    for k in ("arms", "s1", "en"):
-        f = cb / f"{k}{tag}.parquet"
-        res[k].to_parquet(f)
-        bulk.append(f)
-    bulk_manifest(bulk)
-    a = res["arms"]
-    a[a["selected"]].to_csv(rb / f"selected{tag}.csv", index=False)
+    bulk_manifest([out_dir / p for p in res["parts"]])
+    IO.read_arms(selected_only=True, dataset_dir=out_dir).to_csv(rb / f"selected{tag}.csv", index=False)
     res["lam"].to_csv(rb / f"lambda{tag}.csv", index=False)
     pc = dict(res["p_cut"], **({"MD-strict": res["p_cut_sc"]} if "p_cut_sc" in res else {}))
     (rb / f"p_cut{tag}.json").write_text(json.dumps(pc, indent=1), encoding="utf-8")
@@ -175,23 +175,25 @@ def full(args) -> int:
     res["md_strict_all"].to_csv(rm / f"md_strict_all{tag}.csv", index=False)
     if "en_obs_strict" in res:
         res["en_obs_strict"].to_csv(rm / f"en_obs_strict{tag}.csv", index=False)
-    summ = {"universe": args.universe, "n_genes": len(data.genes), "n_rows_U": int(len(res["universe"])),
-            "selected": a.groupby("arm")["selected"].sum().astype(int).to_dict(), "n_md_global": int(len(res["md_global"])), "n_md_strict": int(len(res["md_strict"])),
-            "config_sha256": PR.config_hashes(), "subsamples_sha256": sha(P.CONFIGS / "subsamples.json"),
+    summ = {"universe": args.universe, "n_genes": len(data.genes), "n_rows_arms": int(res["n_rows"]),
+            "n_parts": len(res["parts"]), "dataset_dir": str(out_dir.relative_to(P.PROJECT).as_posix()),
+            "selected": res["selected"], "n_md_global": int(len(res["md_global"])), "n_md_strict": int(len(res["md_strict"])),
+            "workers": {"s1": g1, "en": g2}, "config_sha256": PR.config_hashes(),
+            "subsamples_sha256": sha(P.CONFIGS / "subsamples.json"),
             "dictionary_built_utc": data.extras.get("dictionary_built_utc"), "commit": gitutil.head(P.PROJECT)}
     (rb / f"summary{tag}.json").write_text(json.dumps(summ, indent=1, default=str), encoding="utf-8")
     n = len(data.genes)
     s0, s1e = tim["s1_window"]
     for stem in ("s1_obs", "s1_pred"):          # one scan, two stems: same window and run_id (counted once)
-        write_timing(stem, {"note": "S1-obs and S1-pred computed in one scan", "n_genes": n}, tag,
-                     workers=w, start_utc=_epoch(s0), end_utc=_epoch(s1e))
+        write_timing(stem, {"note": "S1-obs and S1-pred computed in one streamed scan", "n_genes": n, "memory_guard": g1},
+                     tag, workers=ws1, start_utc=_epoch(s0), end_utc=_epoch(s1e))
     for arm, stem in (("EN-obs", "en_obs"), ("EN-pred", "en_pred")):
-        win = [d for d in tim["en_detail"] if d.get("kind") == "arm_wall" and d["arm"] == arm][0]
-        cpu = sum(d["wall_s"] for d in tim["en_detail"] if d["arm"] == arm and "wall_s" in d)
-        write_timing(stem, {"worker_cpu_s": cpu, "n_genes": n}, tag, workers=int(win["workers"]),
+        win = [d for d in tim["en_walls"] if d["arm"] == arm][0]
+        write_timing(stem, {"n_genes": n, "memory_guard": g2}, tag, workers=int(win["workers"]),
                      start_utc=_epoch(win["start_epoch"]), end_utc=_epoch(win["end_epoch"]))
-    write_timing("md_strict", {"note": "computed from S1-obs and EN-pred tables inside run_arms"}, tag, wall_s=0.0,
-                 workers=1)
+    g0, g1e = tim["global_window"]
+    write_timing("md_strict", {"note": "global BH / ranks / dedup / MD lists and final parts (blocked.run_streamed)"},
+                 tag, workers=1, start_utc=_epoch(g0), end_utc=_epoch(g1e))
     print(json.dumps(summ, indent=1, default=str))
     return 0
 
@@ -199,7 +201,9 @@ def full(args) -> int:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--pilot", action="store_true")
-    ap.add_argument("--workers", type=int, default=None)
+    ap.add_argument("--workers", type=int, default=None, help="pilot only")
+    ap.add_argument("--workers-s1", type=int, default=None, help="S1 pool (default runtime_params workers_default.s1)")
+    ap.add_argument("--workers-en", type=int, default=None, help="EN pools (default runtime_params workers_default.en)")
     ap.add_argument("--universe", choices=["eligible", "ctrl"], default="eligible")
     ap.add_argument("--force-before-bounds", action="store_true", help="PI override of the freeze-bounds check")
     a = ap.parse_args(argv)

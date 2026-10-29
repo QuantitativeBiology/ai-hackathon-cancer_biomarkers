@@ -38,24 +38,24 @@ XARMS = tuple(PR.dp()["replication_s6"]["xlib_arms"])
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--workers", type=int, default=None)
+    ap.add_argument("--workers-s1", type=int, default=None)
+    ap.add_argument("--workers-en", type=int, default=None)
     a = ap.parse_args(argv)
     EP.require_descends("freeze-bounds")
-    w = a.workers or PR.null_params()["fg_workers"]
+    from biomark import blocked as BL
+    ws1, g1 = AN.guard_workers(a.workers_s1, "s1", log=print)
+    wen, g2 = AN.guard_workers(a.workers_en, "en", log=print)
     data = PL.Data.from_real()
     split = AN.xlib_split(IO.library_strings(list(data.lines)))
     disc = (split == "discovery").to_numpy()
     repl_ids = list(data.lines[(split == "replication").to_numpy()])
     dD = IO.subset_data(data, disc)
-    s1_start = AN.utc_now()
-    s1 = A.run_s1(dD, ("S1-obs",), workers=w)
-    s1_end = AN.utc_now()
+    # streamed arms on discovery lines (same orchestration as run_arms; XLIB arms S1-obs and EN-obs only)
+    res = BL.run_streamed(dD, XARMS, out_dir=IO.XLIB_ARMS_DIR, stage_dir=P.CACHE / "benchmark" / "_stage_xlib",
+                          workers_s1=ws1, workers_en=wen, log=print)
+    s1_start, s1_end = [AN.dt.datetime.fromtimestamp(x, tz=AN.dt.timezone.utc) for x in res["timings"]["s1_window"]]
     en_start = s1_end
-    en, _, _ = A.run_en(dD, ("EN-obs",), U=s1[["gene", "feature"]], workers=w)
-    arms_tab = A.assemble(dD, s1, en)
-    (P.CACHE / "benchmark").mkdir(parents=True, exist_ok=True)
-    arms_tab.to_parquet(P.CACHE / "benchmark" / "xlib_arms.parquet")
-    s1o = arms_tab[arms_tab["arm"] == "S1-obs"]
+    arms_tab, s1o = IO.pool_inputs(dataset_dir=IO.XLIB_ARMS_DIR)
     genes = list(dD.genes)
     disc_ids = list(dD.lines)
     nan_D = pd.read_parquet(P.CACHE / "effect_nan_mask.parquet").reindex(index=list(data.lines), columns=genes)
@@ -106,10 +106,10 @@ def main(argv=None) -> int:
     pd.DataFrame(rows).to_csv(out / "replication_xlib.csv", index=False)
     summ["caveat"] = PR.endpoints()["XLIB_secondary"]["caveat"]
     IO.write_json(out / "xlib_summary.json", summ)
-    AN.write_timing("xlib_s1_obs", {"n_genes": len(genes), "n_discovery": int(disc.sum())}, workers=w,
-                    start_utc=s1_start, end_utc=s1_end)
-    AN.write_timing("xlib_en_obs", {"note": "EN-obs refit + pool + replication bootstrap"}, workers=w,
-                    start_utc=en_start)
+    AN.write_timing("xlib_s1_obs", {"n_genes": len(genes), "n_discovery": int(disc.sum()), "memory_guard": g1},
+                    workers=ws1, start_utc=s1_start, end_utc=s1_end)
+    AN.write_timing("xlib_en_obs", {"note": "EN-obs refit + pool + replication bootstrap", "memory_guard": g2},
+                    workers=wen, start_utc=en_start)
     AN.append_registry("scripts/run_xlib.py", "ok", ["results/benchmark/replication_xlib.csv", "results/benchmark/xlib_summary.json"])
     print(pd.DataFrame(rows).to_string())
     return 0

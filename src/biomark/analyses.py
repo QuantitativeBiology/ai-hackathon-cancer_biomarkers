@@ -94,6 +94,27 @@ def timing_subrecord(name: str, start_utc: dt.datetime, end_utc: dt.datetime, wo
             "run_id": run_id(), **extra}
 
 
+def guard_workers(requested: int | None, kind: str, log=None) -> tuple:
+    """Pre-spawn memory guard: effective workers = min(requested, floor(room / per-worker RSS)), room =
+    min(total budget - current parent RSS, available memory - safety margin), at least 1. Settings and the per-worker
+    RSS estimates are in configs/runtime_params.json. Returns (effective, info) for the timing record."""
+    import psutil
+    rt = PR.runtime()
+    m = rt["memory"]
+    req = int(rt["workers_default"].get(kind, 1) if requested is None else requested)
+    per = float(m["rss_per_worker_gb"].get(kind, m["rss_per_worker_gb"]["default"]))
+    gib = float(1 << 30)  # literal-ok: bytes per GiB
+    avail = psutil.virtual_memory().available / gib
+    parent = psutil.Process().memory_info().rss / gib
+    room = min(float(m["total_budget_gb"]) - parent, avail - float(m["safety_margin_gb"]))
+    eff = max(1, min(req, int(room // per))) if req > 1 else 1
+    info = {"kind": kind, "requested": req, "effective": eff, "per_worker_gb": per, "available_gb": round(avail, 2),
+            "parent_rss_gb": round(parent, 2), "budget_gb": float(m["total_budget_gb"])}
+    if log and eff < req:
+        log(f"memory guard: {kind} workers {req} -> {eff} ({info})")
+    return eff, info
+
+
 def write_timing(stem: str, rec: dict, timing_dir=None, *, wall_s: float | None = None, workers: int | None = None,
                  start_utc: dt.datetime | None = None, end_utc: dt.datetime | None = None) -> dict:
     """results/timing/<stem>.json with the minimal schema of docs/process_checks.md §1.1: job (= stem), utc (end time),

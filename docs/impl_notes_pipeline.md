@@ -251,3 +251,165 @@ Ambiguities resolved:
   - `run_null --s1-vectorised` writes `null_fixed.subrecords.s1_vectorised`. Before the main null exists, it is
     parked in `results/null/timing_s1_vectorised_subrecord.json` and merged by the main run, so a placeholder never
     marks the stage done.
+
+# Worker payloads on Windows spawn (infrastructure fix after the first full arms launch)
+
+The full real-D arms run crashed at worker spawn: the `Data` payload passed as `ProcessPoolExecutor(initargs=...)` is
+pickled through the spawn pipe (OSError 22 / truncated pickle). `src/biomark/workerstore.py` now stages every pool
+payload to `cache/workers/<run_id>/<pool>-<id>/`.
+- Arrays ≥ 1 MiB (found recursively, including `Data` fields: X, Xstd, pred, own CN, EXPGATE, rows_ok, and `_obs` only
+  for obs pools) go to `.npy`; everything else goes to `payload.pkl`. Only the directory path crosses the pipe.
+- Workers rebuild the payload with `np.load(mmap_mode="r")` (read-only; `Data` is restored without `__post_init__`).
+- `WS.staged(...)` deletes the directory when the pool exits.
+- Used by `arms.run_s1`, `arms.run_en`, `null.run_null` and `run_confounder_audit`. XLIB and the component readout
+  go through `arms`.
+- The null payload no longer carries the observed arms table, which `_draw` never used.
+- Pred-arm pools are staged from `Data.for_workers(include_obs=False)`, so no observed-effect file exists.
+  `tests/test_workerstore.py` checks this, checks parallel (2 workers, mmap) == serial for S1 and EN on the toy,
+  memmaps and cleanup, and runs parallel EN-pred under a raising `guard.load_effects`.
+
+# M5 / M6 / M8 analysis scripts (subtypes, audits, combinatorial lookup, limits, candidate cards)
+
+Author: M5-M8 analysis agent, after `freeze-bounds`, before any M5-M8 output existed. Catalogue = MD-global
+(amendment A7) everywhere; MD-strict is computed alongside (flags `in_md_global` / `in_md_strict`, `lists`).
+Implementation constants (not design numbers) are in the new `configs/m5_m8_params.json` (`m5.cfg()`); design
+numbers come from `design_params.json` through `params`.
+
+| File | Content | Timing stem(s) |
+|---|---|---|
+| `src/biomark/m5.py` | `Workspace` (project layout, or a toy root with the same layout; arms read through `endpoint_io.read_arms` with column / row pushdown, never whole), `RealSource` / `ToySource` (data loaders: `pipeline.Data`, D effects via `guard.load_effects(scope='dev')`, expression, controls, gene info, CGT, paralogs), `prepare_toy`, `catalogue`, `analysis_pairs`, `subtypes`, `modules`, `culture_audit`, `culture_overlap`, `hypermut_tp53`, `cross_lineage` (chunked), `eb_fit_streamed` / `shrunk_beta_ws`, `RankLookup`, `map_pairs` (workerstore pools) | — |
+| `src/biomark/combinatorial.py` | readers of the Esmaeili Anvar 2024 harmonised table and the Flister 2024 supplement (to Entrez pair keys only), `label_of`, `candidates`, `background`, `validation`, `lookup` | — |
+| `src/biomark/limits.py` | `pair_classes` (on `audit.pair_classes`), `gene_classes` (on `audit.gene_classes`), `pair_labels`, `q1b`, `known_recovery`, `shortlist` | — |
+| `src/biomark/audit.py` | `cross_lineage` split into `cross_lineage_stats` (per pair) + `cross_lineage_labels` (BH F4/F5 + labels); `cross_lineage()` = labels(stats(...)), behaviour unchanged | — |
+| `scripts/run_subtypes.py` | §8.1 / §8.2 -> `results/subtypes/{subtypes,subtype_lines,subtype_genes,modules,module_lines}.csv`, `summary.json` | subtypes, modules |
+| `scripts/run_cross_lineage.py` | §8.3 -> `results/lineage/{cross_lineage,cross_lineage_per_lineage}.csv`, `summary.json` | cross_lineage |
+| `scripts/run_m5_audits.py` | §8.4-§8.7 -> `results/locus/{resolution,amplicon}.csv`, `results/subtypes/{culture_audit,culture_overlap,hypermut_tp53}.csv`, `results/m5_audits_summary.json` | locus_resolution, amplicon_test, culture_audit, hypermut_tp53 |
+| `scripts/run_combinatorial_lookup.py` | §11 -> `results/combinatorial/{lookup.csv, validation.json}` | combinatorial_lookup |
+| `scripts/run_limits.py` | §12.1 / §12.2, Q1b, NC6 -> `results/limits/{pair_classes,gene_classes,pair_labels}.csv`, `limits_summary.json` | limits |
+| `scripts/build_candidate_cards.py` | §12.3 -> `results/candidates/{known_recovery,shortlist}.csv`, `cards_summary.json` | candidate_cards |
+| `tests/test_m5_m8_toy.py` | the six scripts end to end on a toy workspace + synthetic unit checks | — |
+
+Every script refuses unless HEAD descends from `freeze-bounds` (`EP.require_descends`, as in `run_gate.py`), before
+anything is read or written. `--toy DIR` runs on a toy workspace (prepared on first use by the unchanged engine;
+never the project's `results/`). Each script writes timing through `analyses.write_timing` and a registry row (status
+`toy` in a toy workspace). No R: no scope `replication`, no `p1.test_predictions`; R-dependent outputs read
+`results/replication/*.csv` only if it exists.
+
+Ambiguities resolved:
+1. **Line share (§8.1).** β = the full-D EN-pred coefficient (`beta_full`), Σ over the EN-pred *stability-selected*
+   features of g (both stages); x̃ = 𝒟 standardised on D and residualised on the EN unpenalised block (design blocks
+   + NA indicators) on g's rows, x̄ = its mean. A catalogue feature with `beta_full = 0` (selected by stability only)
+   gets no members and a note (counted in `summary.json:beta_full_zero`). Membership is computed for MD-global ∪
+   MD-strict pairs. Per gene: `n_unexplained` = dependent but not accurate-dependent; `n_accurate_unassigned`.
+2. **Module carriers (§8.2).** Binary d: x = 1. Continuous d: the dependency side of the D median
+   (sign(β)·(x − median) < 0). "Accurate-dependent on ≥ 50% of module genes" uses the genes with a non-NaN status for
+   that line. Effective clusters: average linkage on 1 − |r| (pairwise-complete D effects), cut at distance 1 − 0.5.
+   Modules per list (MD-global; MD-strict alongside) and per sign.
+3. **Cross-lineage pairs (§8.3).** MD-global ∪ MD-strict ∪ all positive-control features in U ∪ the S1-obs BH top 200
+   by rank (`pipeline_params.audit.cross_lineage_top_s1`). One BH family (F4, F5) per run over all those pairs: pairs
+   are fitted in parallel chunks (`cross_lineage_stats`) and BH + labels are applied once to the concatenated tables
+   (`cross_lineage_labels`; tested equal to a single call). Shrunk β for the power rule: one EB fit over every S1-obs
+   U row, streamed in row chunks (`eb_fit_streamed`: same grid, start, tolerance and cap as `stats.eb_scale_mixture`;
+   tested equal); the posterior is read for the needed pairs only.
+   **A7-iii limitation:** `single_lineage_driven` = cross-lineage label with ≤ 1 powered lineage that is nominally
+   significant (p < 0.05) with the pooled sign. It is reported in `summary.json`; the label itself is not changed.
+4. **Co-location / cutting pairs (§8.4-§8.5).** MD-global ∪ MD-strict ∪ S1-obs BH ∪ positive controls (as in the toy
+   adapter), so passengers that appear only as S1-obs hits are resolved too; `audit.locus_resolution` and
+   `audit.amplicon_test` are unchanged.
+5. **Culture (§8.6).** Membership vector = subtype members vs the other lines with an effect for g. Variables:
+   CellFormat, 3D (CellFormat = 3D), SerumFree, medium family, library group; flag on max V ≥ 0.3. Rescue: the
+   confounder model restricted to the level of the flagging variable that holds most members keeps the catalogue
+   sign at p < 0.05 (`culture_confounded` = flagged and not rescued -> class 6). Module overlap: one-sided
+   hypergeometric over the eligible-gene universe, BH over all (module, set) tests.
+6. **Hypermutation / TP53 (§8.7).** Hypermutated = MSI covariate level MSI ∪ SIG:TMB ≥ the D 95th percentile (toy:
+   the TMB covariate). HOT/ALLELE/LOFBI must keep sign with |β| ≥ 0.5 |β_full| in non-hypermutated lines; SIG must
+   keep sign in TP53-mutant lines (`tp53_status = mut`). A refit that cannot be estimated gets `passed = NaN` (not a
+   failure).
+7. **Pair classes (§12.2).** Base = `audit.pair_classes` (any flagged delta block counts as confounding, as in the toy
+   suite). Added class-6 reasons: culture flag, hypermutation, TP53, subtype-confounded (primary-disease delta).
+   Order 4 → 5 → 6 → 8 → 7. Class 5 also applies when R power < 0.5 (pre-tag power from
+   `configs/catalogue/r_requests.csv`, or from `r_tests.csv`). Class 8 = a catalogue pair matching a CGT test of KO
+   class `discordant-mechanism`, with ceiling label data-null / data-contradicted, or with the opposite sign. Class 7
+   (R powered, not replicated) overrides 9/8 once R exists. Before R, classes 9/8 (and 6 without power) carry
+   `class_status = pending R`. Gene-level class-8 rows (`source = cgt_ceiling`) are added for concordant CGT tests
+   whose ceiling is data-null / contradicted (`results/clinical/cgt_ceiling.csv`, from the M6 ceiling script; until
+   it exists, class 8 uses KO class and sign only).
+8. **Gene classes (§12.1).** Universe = variable ∪ selective (`eligible_genes.csv`) ∪ control dependency genes. D SD
+   comes from Part 1 `gene_classes.csv` (same D Chronos effects; avoids reading every gene's effects); r_within =
+   `r_beyond`; fidelity = EN-pred `r2_oof_beyond_design`. The M1 named share is applied only when the Tier B file
+   `results/attribution/m1_named_share.csv` exists. `failure_class_md_strict` is reported alongside. Pan-lethal =
+   Part 1 DepMap `common_essential` flag (Krill-Burger 2023 method).
+9. **Extra labels.** processing-limited = a LOSS/AMP/DEL feature of g's own gene (own-arm CN; CYCLOPS).
+   predictor-blind = S1-obs BH ∧ not EN-pred selected (∧ replicated in R: pending; `run_xlib` produces no per-pair XLIB
+   replication, so XLIB does not enter this label). predictor-only not replicated needs R.
+10. **Combinatorial (§11).** Esmaeili Anvar 2024 is the harmonised source for Dede, Parrish, Thompson, CHyMErA and
+   Ito; the raw Dede / Thompson supplements are not re-read, so nothing is counted twice. Parrish enters through the
+   Esmaeili re-analysis (DESIGN excluded only the unprocessed counts). Screen-level hit = the authors' per-study hit
+   list (`Data_for_Figure_01:Figure1_E`); tested = `Figure1_B`; line-level hit = a `Supp_table1` row with CohenD ≥ 0.8
+   and deltaMean ≤ −0.5, counted only in studies whose hit list contains the pair (`m5_m8_params`). Flister 2024: only
+   the preprint's own screens (NCIH1299 and MDAMB231 columns of media-3), counted as one screen with two lines. Pairs
+   are keyed by Entrez (symbols mapped with `genesets.symbol_to_entrez`, aliases included). Candidates: list pairs
+   whose feature is a loss family of another gene A (LOFBI, LOSS, DEL, SIL*, METH, YABS, and EXPPAR with β > 0);
+   relation paralog (Part 1 top-3 Compara paralogs, either direction) / spec partner / other; validation uses the
+   SL-direction paralog candidates. Background = every screened pair with a known identity, minus the list's own
+   pairs, restricted to the strata occupied by the list (identity decile of the background × family-size bin
+   1/2/3-4/5-9/10+, family size = max of the two genes). Fisher exact OR with exact CI, plus the
+   stratum-standardised expected rate. `lookup.csv` holds identifiers and our counts only.
+11. **Candidate cards (§12.3).** known_recovery = every positive control (all scopes) and every testable CGT test of
+   the headline-eligible set incl. proxy copies (`endpoints.p2_test_set(..., 'incl_proxy')`). Rank = §10.5
+   rank_of_feature_D via `m5.RankLookup` (same semantics as `endpoints.RankIndex`, tested equal, without loading the
+   arms table). The shortlist is empty with status `pending R` before the single R run; `check_shortlist` asserts
+   shortlist ⊆ class 9 ∧ R replicated. not_in_curated_lists: neither (g, d) nor (g, gene of d) is in controls, CGT,
+   P1 biomarker_pairs (first word of the biomarker text read as a symbol) or oncogene_pairs.
+12. **Memory.** The arms table (~26 M rows) is never loaded whole. Scripts read S1-obs selected rows, the rows of the
+   needed genes, and, for the EB fit and the rank lookup, only 2-3 float columns of one arm at a time. `map_pairs`
+   applies `analyses.guard_workers` when it is available.
+
+# Streamed (blocked) arms orchestration and the reader API (memory fix before the full launch)
+
+A single in-memory arms table for 2,193 genes is ~26 M rows: ~25 GiB as one parquet-read copy, and > 30 GB peak in
+the old `run_arms` parent. `src/biomark/blocked.py:run_streamed` replaces the in-memory assembly.
+
+**Orchestration.** It is used by `scripts/run_arms.py`, the `ctrl` universe and `scripts/run_xlib.py`. Results equal
+`arms.run_arms` (`tests/test_blocked.py`, serial and 2 workers).
+- Genes are sorted by NaN pattern and cut into chunks at every pattern change and every `chunk_genes` genes.
+- One S1 pool scans all chunks. Each chunk's raw scan is written immediately to a stage part
+  (`arms.finish_s1_local`), and the parent keeps only slim categorical columns.
+- One pool per EN arm does the same. Workers evict FWL caches to one row pattern
+  (`ENEngine.max_patterns = runtime_params.blocked.en_max_patterns`; cache only — the frozen `fwl_cache_max_entries`
+  stays the upper bound).
+- Global steps run on the slim columns with the same rules as `finish_s1` / `finish_en` / `add_dedup` /
+  `run_arms`: BH per (arm, family), S1 ranks (p, −|β|, feature; stable), EN ranks (`en.rank_en`), de-duplicated
+  ranks, observed cut-offs.
+- MD-strict / MD-global / EN-obs-strict use `arms.strict` / `arms.md_global` on the EN-selected candidates and
+  their S1-obs rows, read back from the stage parts.
+- Each final part is `arms.annotate` plus the global columns, written as `<dataset>/part-NNNNN.parquet` with
+  categorical string columns. Each part's sha256 goes to `results/bulk_manifest.csv`.
+- Equality: discrete outputs are exactly equal (BH sets, selections, ranks, de-duplicated ranks, MD lists,
+  strings). Continuous statistics agree to rtol 1e-9: BLAS/QR rounding differs at the last bit between column blocks,
+  so there is no bitwise identity across chunkings.
+
+**Reader API (use this for every arms read; never load the whole table).**
+```python
+from biomark import endpoint_io as IO
+IO.read_arms(columns=[...], arms=None | [arm, ...], genes=None | [entrez, ...], features=None | [id, ...],
+             selected_only=False, dataset_dir=None, categorical=False)       # -> pandas DataFrame
+IO.pool_inputs(dataset_dir=None, genes=None)    # (ranks of every arm: RANK_COLS, S1-obs rows: S1O_COLS)
+```
+- Datasets: `IO.ARMS_DIR` = `cache/benchmark/arms` (eligible universe), `cache/benchmark/arms_ctrl`, and
+  `IO.XLIB_ARMS_DIR` = `cache/benchmark/xlib_arms`.
+- Reads go part by part with pyarrow row filters. Categoricals come back as plain strings (shared objects) unless
+  `categorical=True`.
+- Columns of a part: the `assemble` columns of the former table (arm, gene, feature, S1 statistics incl. df_rule /
+  df_nu / p_nu, q, selected, selected_F2, test_family, EN columns, family, d_type, variant_group, feature_stage,
+  access_class, en_max_attainable_freq, rank, rank_stat, rank_dedup, lost_to_group_member, se_type).
+- P2 ranks: `endpoints.RankIndex.slim(dedup_ranks_by_arm, rows_of_queried_genes)` gives the same `rank_of` as the
+  full index (tested).
+
+**Memory guard and worker counts** (`configs/runtime_params.json`, not frozen).
+- Defaults: S1 8, EN 6, null 6 (flags `--workers-s1`, `--workers-en`; `run_null --workers`).
+- `analyses.guard_workers` lowers a pool's workers to floor(room / per-worker RSS), where room = min(10 GB budget
+  − parent RSS, available − 1 GB). Per-worker estimates come from the 100-gene smoke: S1 0.5, EN 0.9, null 1.5
+  (unmeasured, conservative).
+- The effective count and the guard inputs are written into the timing records (`memory_guard`).
+- Null draws process genes by NaN pattern with the same one-pattern cache.

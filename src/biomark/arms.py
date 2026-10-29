@@ -41,27 +41,53 @@ def scan_inputs(data, X=None, na_flags=None) -> ST.ScanInputs:
                          patients=data.patients, drop=data.drop)
 
 
-def run_s1(data, arms=S1_ARMS, genes=None, X=None, workers: int = 1, chunk: int | None = None) -> pd.DataFrame:
+def run_s1(data, arms=S1_ARMS, genes=None, X=None, workers: int = 1, chunk: int | None = None,
+           chunks: list | None = None, on_chunk=None, finish: bool = True):
     """S1 scan for the requested S1 arms (or the D-stage 'S1-obs' only); one row per (arm, g, d) in U.
-    ``workers`` > 1: gene chunks (sorted by NaN pattern) over a process pool; results identical to serial."""
+    ``workers`` > 1: gene chunks (sorted by NaN pattern) over a process pool; results identical to serial.
+    Streaming (blocked orchestration): ``chunks`` = explicit list of gene lists and ``on_chunk(i, raw_df)`` receives
+    each chunk's raw (unfinished) scan in order; the function then returns None."""
+    if on_chunk is not None:
+        return _s1_stream(data, arms, chunks, workers, on_chunk)
     genes = list(data.genes if genes is None else genes)
     chunk = chunk or PR.null_params()["chunk_genes"]
     if workers <= 1 or len(genes) <= chunk or X is not None:
         tg = {a: data.target(TARGET_OF[a]) for a in arms}
         df = ST.s1_scan(scan_inputs(data, X), tg, compute=True, genes_subset=genes)
-        return finish_s1(data, df)
+        return finish_s1(data, df) if finish else df
     from concurrent.futures import ProcessPoolExecutor
     gi = {g: i for i, g in enumerate(data.genes)}
     order = sorted(genes, key=lambda g: data.rows_ok[:, gi[g]].tobytes())
     jobs = [(tuple(arms), order[i:i + chunk]) for i in range(0, len(order), chunk)]
+    from . import workerstore as WS
     payload = {"data": data.for_workers(include_obs=any(TARGET_OF[a] == "obs" for a in arms)), "gf": None,
                "blas_threads": PR.null_params()["blas_threads"]}
-    with ProcessPoolExecutor(max_workers=workers, initializer=_worker_init, initargs=(payload,)) as ex:
+    with WS.staged(payload, "s1") as path, \
+            ProcessPoolExecutor(max_workers=workers, initializer=_worker_init, initargs=(path,)) as ex:
         parts = list(ex.map(_worker_s1, jobs))
     df = pd.concat([p for p in parts if len(p)], ignore_index=True)
     key = pd.Categorical(df["gene"], categories=genes, ordered=True)
     df = df.assign(_k=key).sort_values(["arm", "_k"], kind="mergesort").drop(columns="_k").reset_index(drop=True)
-    return finish_s1(data, df)
+    return finish_s1(data, df) if finish else df
+
+
+def _s1_stream(data, arms, chunks, workers, on_chunk) -> None:
+    jobs = [(tuple(arms), list(c)) for c in chunks]
+    if workers <= 1:
+        for i, j in enumerate(jobs):
+            tg = {a: data.target(TARGET_OF[a]) for a in arms}
+            on_chunk(i, ST.s1_scan(scan_inputs(data), tg, compute=True, genes_subset=j[1]))
+        return None
+    from concurrent.futures import ProcessPoolExecutor
+
+    from . import workerstore as WS
+    payload = {"data": data.for_workers(include_obs=any(TARGET_OF[a] == "obs" for a in arms)), "gf": None,
+               "blas_threads": PR.null_params()["blas_threads"]}
+    with WS.staged(payload, "s1") as path, \
+            ProcessPoolExecutor(max_workers=workers, initializer=_worker_init, initargs=(path,)) as ex:
+        for i, df in enumerate(ex.map(_worker_s1, jobs)):
+            on_chunk(i, df)
+    return None
 
 
 def _worker_s1(args):
@@ -69,6 +95,17 @@ def _worker_s1(args):
     data = _W["data"]
     tg = {a: data.target(TARGET_OF[a]) for a in arms}
     return ST.s1_scan(scan_inputs(data), tg, compute=True, genes_subset=genes)
+
+
+def finish_s1_local(data, df: pd.DataFrame) -> pd.DataFrame:
+    """Row-local part of finish_s1 (test family, rank_stat, stage); BH and ranks are global (blocked.py)."""
+    if df.empty:
+        return df
+    df = df.copy()
+    df["test_family"] = np.where(own_expdose_mask(data, df), "F2", "F1")
+    df["rank_stat"] = df["p"]
+    df["stage"] = ""
+    return df
 
 
 def finish_s1(data, df: pd.DataFrame) -> pd.DataFrame:
@@ -82,9 +119,16 @@ def finish_s1(data, df: pd.DataFrame) -> pd.DataFrame:
     for a, idx in df.groupby("arm").groups.items():
         sub = df.loc[idx]
         ok = sub["p"].notna()
-        o = sub[ok].assign(_b=-sub.loc[ok, "beta"].abs()).sort_values(["p", "_b", "feature"], kind="mergesort").index
+        s = sub[ok]
+        o = s.index[s1_order(s["p"].to_numpy(), s["beta"].to_numpy(), s["feature"].to_numpy())]
         df.loc[o, "rank"] = np.arange(1, len(o) + 1)
     return df
+
+
+def s1_order(p, beta, feature) -> np.ndarray:
+    """Order of the S1 rank rule (p asc, |beta| desc, feature id asc), p and |beta| tied within params.rank_tie_rel
+    (shared by finish_s1 and the streamed global step, so neither depends on floating-point noise)."""
+    return EN.tie_order([np.asarray(p, float), -np.abs(np.asarray(beta, float)), np.asarray(feature, dtype=object)])
 
 
 def universe(data, genes=None) -> pd.DataFrame:
@@ -154,6 +198,15 @@ def run_en_genes(data, arm: str, genes, gf: dict, engine: EN.ENEngine | None = N
     return tab, pd.DataFrame(lt), tim, betas
 
 
+def finish_en_local(tab: pd.DataFrame) -> pd.DataFrame:
+    """Row-local part of finish_en (en_unreachable); the ranks are global (blocked.py)."""
+    if tab.empty:
+        return tab
+    tab = tab.copy()
+    tab["en_unreachable"] = tab["en_max_attainable_freq"] < PR.en_params()["unreachable_lt"]
+    return tab
+
+
 def finish_en(tab: pd.DataFrame) -> pd.DataFrame:
     if tab.empty:
         return tab
@@ -176,6 +229,10 @@ _W = {}
 
 
 def _worker_init(payload):
+    """``payload``: a workerstore directory (file-backed, mmap) or, for in-process callers, the dict itself."""
+    if isinstance(payload, str):
+        from . import workerstore as WS
+        payload = WS.load(payload)
     for k in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
         os.environ[k] = str(payload.get("blas_threads", 1))
     try:
@@ -186,6 +243,7 @@ def _worker_init(payload):
     _W["data"] = payload["data"]
     _W["gf"] = payload["gf"]
     _W["engine"] = None
+    _W["max_patterns"] = payload.get("max_patterns")
 
 
 def _worker_en(args):
@@ -193,12 +251,19 @@ def _worker_en(args):
     data = _W["data"]
     if _W["engine"] is None:
         _W["engine"] = en_engine(data)
+        _W["engine"].max_patterns = _W.get("max_patterns")
     return run_en_genes(data, arm, genes, _W["gf"], engine=_W["engine"], lam=lam, K=K)[:3]  # literal-ok: first three return values
 
 
 def run_en(data, arms=EN_ARMS, genes=None, U=None, workers: int = 1, lam: dict | None = None, K=None,
-           chunk: int | None = None):
-    """EN arms over ``genes`` (default data.genes). ``lam`` = {arm: {gene: {'G': α, 'X': α}}} for fixed-λ runs."""
+           chunk: int | None = None, chunks: list | None = None, on_chunk=None, finish: bool = True,
+           max_patterns: int | None = None, gf: dict | None = None):
+    """EN arms over ``genes`` (default data.genes). ``lam`` = {arm: {gene: {'G': α, 'X': α}}} for fixed-λ runs.
+    Streaming (blocked orchestration): ``chunks`` (gene lists) and ``on_chunk(i, arm, tab, lam_tab, timing)`` per
+    chunk in order (then returns per-arm wall records only). ``max_patterns``: engine FWL-cache eviction policy
+    (cache only; results identical)."""
+    if on_chunk is not None:
+        return _en_stream(data, arms, U, gf, chunks, workers, lam, K, on_chunk, max_patterns)
     U = universe(data, genes) if U is None else U
     gf = gene_feats(data, U)
     genes = [g for g in (data.genes if genes is None else genes) if g in gf]
@@ -218,16 +283,46 @@ def run_en(data, arms=EN_ARMS, genes=None, U=None, workers: int = 1, lam: dict |
         for a in arms:
             t_arm = time.time()
             jobs = [(a, order[i:i + chunk], None if lam is None else lam.get(a), K) for i in range(0, len(order), chunk)]
+            from . import workerstore as WS
             payload = {"data": data.for_workers(include_obs=TARGET_OF[a] == "obs"), "gf": gf,
                        "blas_threads": PR.null_params()["blas_threads"]}
-            with ProcessPoolExecutor(max_workers=workers, initializer=_worker_init, initargs=(payload,)) as ex:
+            with WS.staged(payload, f"en-{a}") as path, \
+                    ProcessPoolExecutor(max_workers=workers, initializer=_worker_init, initargs=(path,)) as ex:
                 for t, l, tm in ex.map(_worker_en, jobs):
                     tabs.append(t), lts.append(l), tims.append(tm)
             tims.append({"arm": a, "kind": "arm_wall", "start_epoch": t_arm, "end_epoch": time.time(), "workers": workers})
-    tab = finish_en(pd.concat([t for t in tabs if len(t)], ignore_index=True)) if any(len(t) for t in tabs) \
+    fin = finish_en if finish else (lambda x: x)
+    tab = fin(pd.concat([t for t in tabs if len(t)], ignore_index=True)) if any(len(t) for t in tabs) \
         else pd.DataFrame()
     lt = pd.concat(lts, ignore_index=True) if lts else pd.DataFrame()
     return tab, lt, tims
+
+
+def _en_stream(data, arms, U, gf, chunks, workers, lam, K, on_chunk, max_patterns) -> list:
+    gf = gene_feats(data, U) if gf is None else gf
+    walls = []
+    for a in arms:
+        t_arm = time.time()
+        jobs = [(a, [g for g in c if g in gf], None if lam is None else lam.get(a), K) for c in chunks]
+        if workers <= 1:
+            eng = en_engine(data)
+            eng.max_patterns = max_patterns
+            for i, (_, gs, lm, k) in enumerate(jobs):
+                t, l, tm, _ = run_en_genes(data, a, gs, gf, engine=eng, lam=lm, K=k)
+                on_chunk(i, a, t, l, tm)
+        else:
+            from concurrent.futures import ProcessPoolExecutor
+
+            from . import workerstore as WS
+            payload = {"data": data.for_workers(include_obs=TARGET_OF[a] == "obs"), "gf": gf,
+                       "blas_threads": PR.null_params()["blas_threads"], "max_patterns": max_patterns}
+            with WS.staged(payload, f"en-{a}") as path, \
+                    ProcessPoolExecutor(max_workers=workers, initializer=_worker_init, initargs=(path,)) as ex:
+                for i, (t, l, tm) in enumerate(ex.map(_worker_en, jobs)):
+                    on_chunk(i, a, t, l, tm)
+        walls.append({"arm": a, "kind": "arm_wall", "start_epoch": t_arm, "end_epoch": time.time(),
+                      "workers": max(1, workers)})
+    return walls
 
 
 # ------------------------------------------------------------------------------------------------
@@ -282,6 +377,11 @@ def p_cut_sc(m: pd.DataFrame) -> float:
 
 def assemble(data, s1: pd.DataFrame, en_tab: pd.DataFrame) -> pd.DataFrame:
     """Long arms table on the common universe with design columns (DESIGN §5.1)."""
+    return add_dedup(annotate(data, s1, en_tab))
+
+
+def annotate(data, s1: pd.DataFrame, en_tab: pd.DataFrame) -> pd.DataFrame:
+    """Row-local part of ``assemble`` (everything except the de-duplicated ranks)."""
     fm = data.fmeta
     parts = []
     if len(s1):
@@ -302,7 +402,7 @@ def assemble(data, s1: pd.DataFrame, en_tab: pd.DataFrame) -> pd.DataFrame:
         a["en_max_attainable_freq"] = mx.reindex(pd.MultiIndex.from_arrays([a["gene"], a["feature"]])).to_numpy()
     a["selected"] = a["selected"].fillna(False).astype(bool)
     a["se_type"] = PR.pp()["se_type"]
-    return add_dedup(a)
+    return a
 
 
 def add_dedup(a: pd.DataFrame) -> pd.DataFrame:

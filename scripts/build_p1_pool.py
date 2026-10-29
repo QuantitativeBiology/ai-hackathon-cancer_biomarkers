@@ -37,8 +37,7 @@ def main() -> int:
     EP.require_descends("freeze-bounds")
     if gitutil.tag_exists(P.PROJECT, "freeze-catalogue"):
         raise EP.EndpointRefusal("freeze-catalogue exists: the pool and r_requests are frozen")
-    a = IO.arms_table()
-    s1o = a[a["arm"] == "S1-obs"].copy()
+    a, s1o = IO.pool_inputs()                        # slim ranks of every arm + S1-obs rows (not the whole table)
     dev, test = list(p1.dev_ids()), list(p1.test_ids())
     genes = sorted(s1o["gene"].unique())
     nan_D = pd.read_parquet(P.CACHE / "effect_nan_mask.parquet").reindex(index=dev, columns=genes)
@@ -55,7 +54,7 @@ def main() -> int:
     cgt = pd.read_csv(P.CONFIGS / "clinical_ground_truth.csv")
     ez = GS.symbol_to_entrez(sorted({x for v in cgt["target_set"] for x in EP._targets(v)}))
     tests = EP.p2_test_set(cgt, s1o, "incl_proxy", entrez_of=ez.dropna().astype(str).to_dict())
-    s1h = a[(a["arm"] == "S1-obs") & a["selected"].astype(bool)]
+    s1h = s1o[s1o["selected"].astype(bool)]
     req = IO.build_requests(pool, lists, s1o, IO.md_strict(), IO.en_obs_strict(), s1h, ctl, tests, mg=IO.md_global())
     out = P.CONFIGS / "catalogue" / "r_requests.csv"
     out.parent.mkdir(parents=True, exist_ok=True)

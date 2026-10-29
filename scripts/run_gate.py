@@ -52,10 +52,9 @@ def run(reason: str | None, toy_test: str | None, check=None) -> dict:
     pc = pd.read_csv(P.RESULTS / "controls" / "pc_eligibility.csv", dtype=str)
     ctl = pd.read_csv(P.CONFIGS / "positive_controls.csv", dtype=str)
     md = IO.md_strict()
-    a = IO.arms_table()
     lists = {"MD-strict": md, "MD-global": IO.md_global()}     # decided on MD-strict (A7); MD-global reported
     for arm in A.ARMS:
-        lists[arm] = a[(a["arm"] == arm) & a["selected"].astype(bool)][["gene", "feature", "beta"]]
+        lists[arm] = IO.read_arms(arms=[arm], columns=["gene", "feature", "beta"], selected_only=True)
     res = EP.gate_attempt(pc, ctl, lists)
     commit = gitutil.head(P.PROJECT)
     out = {"attempt": n, "utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "commit": commit,

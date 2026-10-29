@@ -323,3 +323,23 @@ def test_pool_power_and_frozen_lists():
     assert ("g1", "HOT:2") not in got and ("g1", "HOT:1") in got          # group member de-duplicated
     assert all(f != "HOT:3" for _, f in got)                              # unrankable never enters
     assert L["n_list"] == 5 and EP.p1_k(len(UG)) == min(100, len(UG) // 3)
+
+
+def test_rank_index_slim_equals_full():
+    rng = np.random.default_rng(5)
+    n = 300
+    a = pd.DataFrame({"arm": rng.choice(["S1-obs", "EN-pred"], n), "gene": rng.choice([f"g{i}" for i in range(8)], n),
+                      "feature": [f"F:{i}" for i in range(n)], "rank_stat": rng.random(n),
+                      "variant_group": rng.choice([None, "LG1", "LG2", "LG3"], n), "beta": rng.normal(size=n)})
+    a["rank"] = a.groupby("arm")["rank_stat"].rank(method="first")
+    a.loc[a.index[::13], "rank"] = np.nan
+    a = A.add_dedup(a)
+    full = EP.RankIndex(a)
+    qg = ["g1", "g4", "g6"]
+    dedup = {arm: s.loc[s["rank_dedup"].notna(), "rank"].to_numpy() for arm, s in a.groupby("arm")}
+    slim = EP.RankIndex.slim(dedup, a[a["gene"].isin(qg)])
+    for arm in ("S1-obs", "EN-pred"):
+        for g, f in zip(a.loc[a["gene"].isin(qg), "gene"], a.loc[a["gene"].isin(qg), "feature"]):
+            r1, b1 = full.rank_of(arm, g, f)
+            r2, b2 = slim.rank_of(arm, g, f)
+            assert (np.isnan(r1) and np.isnan(r2)) or r1 == r2

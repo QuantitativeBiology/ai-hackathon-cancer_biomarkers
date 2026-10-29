@@ -1,0 +1,17 @@
+{
+  "_comment": "Runtime / orchestration settings (not design decisions, not frozen): worker counts, the pre-spawn memory guard and the streamed (blocked) arms orchestration. Changing them never changes results (tests/test_blocked.py). Read via biomark.params.runtime().",
+  "memory": {
+    "total_budget_gb": 10.0,
+    "safety_margin_gb": 1.0,
+    "rss_per_worker_gb": {"s1": 0.5, "en": 0.9, "null": 1.5, "delta": 0.6, "default": 1.0},
+    "source": "100-gene real-D smoke, 4 workers (2026-10-29): S1 workers 0.45-0.48 GB; EN workers 0.82-0.83 GB with one NaN pattern cached (1.74 GB with two; the streamed EN pools evict to one pattern); parent 2.0 GB. null and delta not measured: conservative."
+  },
+  "workers_default": {"s1": 8, "en": 6, "null": 6, "delta": 6},
+  "blocked": {
+    "chunk_genes": 50,
+    "en_max_patterns": 1,
+    "dataset_dir": "cache/benchmark/arms",
+    "stage_dir": "cache/benchmark/_stage_arms",
+    "string_columns_categorical": true
+  }
+}
