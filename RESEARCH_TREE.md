@@ -4,6 +4,19 @@ Legend: [ ] planned · [~] in progress · [x] done · [-] abandoned/negative · 
 
 ## Status summary (latest first)
 
+### 2026-10-29 08:40 — INTERRUPTION (VS Code closed overnight); resumed
+Everything up to 19e4b31 is committed and intact. Five running jobs were lost, and none of them had written any output:
+- the fixed-threshold null, which had been running since 03:38 and has no per-draw checkpoint;
+- cross-lineage;
+- the confounder audit;
+- the writer (effective_rules.md and the REPORT.md draft);
+- check_report_numbers.py.
+Re-run at 08:40: the null (background), then the confounder audit; the writer and author agents were resumed via
+SendMessage. The machine has about 3.5 GB of RAM free before any job starts, so the memory guard cuts workers and the
+null will be slower than projected. Remaining order: confounder audit → cross-lineage → M5 audits → Q4 → limits/cards →
+toy suite re-run (src changed after 04aa982) → null → XLIB → freeze-catalogue (P1 pool, r_requests, dry run) →
+single R replication → limits/cards re-run → REPORT.md, number check, red-team review, LESSONS prune, final commit.
+
 ### 2026-10-29 ~00:35 — M3b milestone: bounds frozen (tag `freeze-bounds`), engine verified on the toy
 The Tier A engine (S1 with CR2 and a carrier df, a two-stage stability elastic net, the four arms, the MD lists, the
 fixed-threshold null) was written by one agent. Two others checked it on the toy simulation and with process checks.
