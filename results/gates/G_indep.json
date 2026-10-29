@@ -1,0 +1,1604 @@
+{
+ "design_ref": "DESIGN 13.3; tolerances design_params.indep_s13",
+ "tolerances": {
+  "start": "after results/gates/G_pc_attempt1.json",
+  "genes": 20,
+  "delta_pairs": 10,
+  "s1_p_tol_abs_log10": 1e-06,
+  "counts": "exact",
+  "en_freq_tol": 0.04,
+  "en_selected_set": "identical excluding features within en_freq_tol of selection_freq_min",
+  "en_beta_rel_tol": 0.001
+ },
+ "utc": "2026-10-29T04:09:30+00:00",
+ "commit": "824f47bddba7a5304ef9202b1783b6c1bed2be5c",
+ "agent": "independent-checker",
+ "reads": "D effects via guard.load_effects(scope='dev') only; no R",
+ "self_test_cr2_max_rel_diff_vs_bruteforce": 9.683091979283509e-14,
+ "task1_s1_obs": {
+  "n_compared": 59955,
+  "n_match": 59955,
+  "match_rate": 1.0,
+  "max_dlog10p": 8.526512829121202e-14,
+  "median_dlog10p": 4.440892098500626e-16,
+  "n_only_mine": 0,
+  "n_only_mine_untested": 0,
+  "n_only_engine": 0,
+  "n_df_mismatch_gt_1e-9": 0,
+  "n_beta_rel_gt_1e-6": 0,
+  "n_se_rel_gt_1e-6": 0,
+  "n_dropped_cov_mismatch": 0,
+  "n_obs_mismatch": 0,
+  "seed_key": "seeds.json:seeds[0]",
+  "seed": 0,
+  "genes_with_F1_hits": [
+   "10190",
+   "10423",
+   "11004",
+   "2067",
+   "2673",
+   "29929",
+   "54820",
+   "595",
+   "79718",
+   "80233"
+  ],
+  "genes_without_F1_hits": [
+   "10015",
+   "10421",
+   "23644",
+   "3838",
+   "55003",
+   "60626",
+   "7022",
+   "79042",
+   "8289",
+   "90480"
+  ],
+  "worst": [
+   {
+    "gene": "595",
+    "feature": "EXPPAR:896",
+    "p": 1.767416206864204e-10,
+    "p_eng": 1.7674162068645522e-10,
+    "dlog10p": 8.526512829121202e-14,
+    "beta": 0.12327169351068604,
+    "beta_eng": 0.12327169351068572,
+    "se": 0.018315911248803766,
+    "se_eng": 0.01831591124880381,
+    "df": 198.89915710702095,
+    "df_eng": 198.8991571070212,
+    "dropped_cov": ""
+   },
+   {
+    "gene": "10421",
+    "feature": "SIL-METH:6935",
+    "p": 0.024977897179336683,
+    "p_eng": 0.024977897179334504,
+    "dlog10p": 3.7969627442180354e-14,
+    "beta": 0.08822804991809206,
+    "beta_eng": 0.08822804991809276,
+    "se": 0.036671784794951735,
+    "se_eng": 0.0366717847949514,
+    "df": 22.0,
+    "df_eng": 22.0,
+    "dropped_cov": ""
+   },
+   {
+    "gene": "55003",
+    "feature": "PROG:NMF14",
+    "p": 0.12171189997722962,
+    "p_eng": 0.12171189997721915,
+    "dlog10p": 3.7414515929867775e-14,
+    "beta": 1.6844450337203705,
+    "beta_eng": 1.6844450337204153,
+    "se": 1.0518525840459516,
+    "se_eng": 1.0518525840459485,
+    "df": 25.276778467294267,
+    "df_eng": 25.2767784672942,
+    "dropped_cov": ""
+   },
+   {
+    "gene": "54820",
+    "feature": "EXPPAR:81565",
+    "p": 1.5668803350253175e-06,
+    "p_eng": 1.566880335025449e-06,
+    "dlog10p": 3.6415315207705135e-14,
+    "beta": 0.09712147293747889,
+    "beta_eng": 0.09712147293747848,
+    "se": 0.019747702580383254,
+    "se_eng": 0.019747702580383244,
+    "df": 255.1445017945867,
+    "df_eng": 255.14450179458635,
+    "dropped_cov": ""
+   },
+   {
+    "gene": "3838",
+    "feature": "SIL-other:2054",
+    "p": 0.02485129487195275,
+    "p_eng": 0.02485129487195085,
+    "dlog10p": 3.3306690738754696e-14,
+    "beta": 0.1385922631911925,
+    "beta_eng": 0.13859226319119342,
+    "se": 0.05337782620460472,
+    "se_eng": 0.0533778262046042,
+    "df": 11.0,
+    "df_eng": 11.0,
+    "dropped_cov": ""
+   },
+   {
+    "gene": "54820",
+    "feature": "FUS:23261",
+    "p": 0.19690749923268738,
+    "p_eng": 0.19690749923270215,
+    "dlog10p": 3.2529534621517087e-14,
+    "beta": -0.13443983294637565,
+    "beta_eng": -0.1344398329463728,
+    "se": 0.09034768206947968,
+    "se_eng": 0.09034768206948131,
+    "df": 5.0,
+    "df_eng": 5.0,
+    "dropped_cov": ""
+   },
+   {
+    "gene": "55003",
+    "feature": "SIL-METH:127018",
+    "p": 0.5298577484565545,
+    "p_eng": 0.5298577484565881,
+    "dlog10p": 2.7478019859472624e-14,
+    "beta": -0.07090664658562765,
+    "beta_eng": -0.07090664658562326,
+    "se": 0.1093099734465937,
+    "se_eng": 0.10930997344659599,
+    "df": 11.0,
+    "df_eng": 11.0,
+    "dropped_cov": ""
+   },
+   {
+    "gene": "29929",
+    "feature": "SIL-other:2054",
+    "p": 0.06829282416720206,
+    "p_eng": 0.0682928241671978,
+    "dlog10p": 2.708944180085382e-14,
+    "beta": 0.09448383025744206,
+    "beta_eng": 0.094483830257443,
+    "se": 0.046749838169627224,
+    "se_eng": 0.046749838169626856,
+    "df": 11.0,
+    "df_eng": 11.0,
+    "dropped_cov": ""
+   },
+   {
+    "gene": "3838",
+    "feature": "FUS:23261",
+    "p": 0.23205613563889813,
+    "p_eng": 0.23205613563888405,
+    "dlog10p": 2.6423307986078726e-14,
+    "beta": 0.10180434887679665,
+    "beta_eng": 0.10180434887679814,
+    "se": 0.07487814931968663,
+    "se_eng": 0.07487814931968509,
+    "df": 5.0,
+    "df_eng": 5.0,
+    "dropped_cov": ""
+   },
+   {
+    "gene": "80233",
+    "feature": "DEL:112488740",
+    "p": 0.36482307364574584,
+    "p_eng": 0.36482307364572375,
+    "dlog10p": 2.631228568361621e-14,
+    "beta": -0.025390698811284536,
+    "beta_eng": -0.025390698811285382,
+    "se": 0.025483657271659015,
+    "se_eng": 0.025483657271658588,
+    "df": 5.0,
+    "df_eng": 5.0,
+    "dropped_cov": ""
+   }
+  ],
+  "drop_paths_exercised": {
+   "": 59564,
+   "own_CN": 171,
+   "TP53": 140,
+   "DMG_BURDEN": 40,
+   "MSI": 20,
+   "DMG_BURDEN;MSI": 20
+  },
+  "n_tests_with_merged_levels": 1120,
+  "pass": true,
+  "supplement_nan_row_genes": {
+   "n_compared": 5733,
+   "n_match": 5733,
+   "match_rate": 1.0,
+   "max_dlog10p": 5.773159728050814e-15,
+   "median_dlog10p": 3.608224830031759e-16,
+   "n_only_mine": 264,
+   "n_only_mine_untested": 264,
+   "n_only_engine": 0,
+   "n_df_mismatch_gt_1e-9": 0,
+   "n_beta_rel_gt_1e-6": 0,
+   "n_se_rel_gt_1e-6": 0,
+   "n_dropped_cov_mismatch": 0,
+   "n_obs_mismatch": 0,
+   "genes": [
+    "113457",
+    "728118"
+   ],
+   "seed_key": "seeds.json:seeds[3]",
+   "pass": true
+  }
+ },
+ "task2_bh_and_gate": {
+  "family_definition": "Task 2: BH counts from the engine's p values with an independently written family definition, and the gate\nrecall from the frozen inputs of results/gates/G_pc_attempt1.json.\n\nFamily F1 (design 5.6, test_families_s5.F1_S1_main): every (g, d) in U (g eligible; d in D_g minus self-null) whose\nd is not g's own EXPDOSE, with a finite p (tests the engine dropped for < 5 carriers or zero residual variance have no\np and are not tests). F2 = the own-EXPDOSE tests. BH (step-up) at q = s1_s5.bh_q over the whole family.",
+  "S1-obs": {
+   "n_rows_no_p": 0,
+   "F1": {
+    "n_tests": 6559561,
+    "bh_rejections": 3358,
+    "p_cut": 2.5559981134588366e-05,
+    "collinear_among_rejections": 216,
+    "list_hits": 3142
+   },
+   "F2": {
+    "n_tests": 2170,
+    "bh_rejections": 334,
+    "p_cut": 0.007640239031928096,
+    "collinear_among_rejections": 1,
+    "list_hits": 333
+   },
+   "engine": {
+    "F1_selected": 3142,
+    "F2_selected": 333,
+    "F1_rows_engine_label": 6559561,
+    "F1_rows_engine_label_with_p": 6559561,
+    "label_vs_mine_mismatch": 0
+   },
+   "F1_hit_set_symmetric_difference": 0,
+   "F2_hit_set_symmetric_difference": 0,
+   "F1_match_exact": true,
+   "F2_match_exact": true,
+   "universe": {
+    "n_pairs_mine": 6574471,
+    "n_pairs_engine": 6561731,
+    "only_mine": 12740,
+    "only_engine": 0,
+    "n_genes_differing": 75,
+    "genes_differing": 75,
+    "examples": [
+     {
+      "gene": "100128731",
+      "only_mine": [
+       "ALLELE:EGFR_L858R_EX19DEL",
+       "DEL:159013",
+       "DEL:2055",
+       "DEL:23326",
+       "DEL:388336"
+      ],
+      "only_engine": []
+     },
+     {
+      "gene": "100287238",
+      "only_mine": [
+       "ALLELE:EGFR_L858R_EX19DEL",
+       "DEL:1005",
+       "DEL:10206",
+       "DEL:115761",
+       "DEL:132625"
+      ],
+      "only_engine": []
+     },
+     {
+      "gene": "101059918",
+      "only_mine": [
+       "ALLELE:EGFR_L858R_EX19DEL",
+       "DEL:1005",
+       "DEL:10206",
+       "DEL:115761",
+       "DEL:132625"
+      ],
+      "only_engine": []
+     },
+     {
+      "gene": "10156",
+      "only_mine": [
+       "ALLELE:EGFR_L858R_EX19DEL",
+       "DEL:1005",
+       "DEL:10206",
+       "DEL:115761",
+       "DEL:132625"
+      ],
+      "only_engine": []
+     },
+     {
+      "gene": "10410",
+      "only_mine": [
+       "ALLELE:EGFR_L858R_EX19DEL",
+       "DEL:159013",
+       "DEL:2055",
+       "DEL:23326",
+       "DEL:388336"
+      ],
+      "only_engine": []
+     },
+     {
+      "gene": "10879",
+      "only_mine": [
+       "DEL:255057"
+      ],
+      "only_engine": []
+     },
+     {
+      "gene": "113457",
+      "only_mine": [
+       "ALLELE:EGFR_L858R_EX19DEL",
+       "DEL:1005",
+       "DEL:10206",
+       "DEL:115761",
+       "DEL:132625"
+      ],
+      "only_engine": []
+     },
+     {
+      "gene": "1163",
+      "only_mine": [
+       "ALLELE:EGFR_L858R_EX19DEL",
+       "DEL:159013",
+       "DEL:2055",
+       "DEL:23326",
+       "DEL:388336"
+      ],
+      "only_engine": []
+     },
+     {
+      "gene": "129868",
+      "only_mine": [
+       "ALLELE:EGFR_L858R_EX19DEL",
+       "DEL:1005",
+       "DEL:10206",
+       "DEL:115761",
+       "DEL:132625"
+      ],
+      "only_engine": []
+     },
+     {
+      "gene": "1719",
+      "only_mine": [
+       "ALLELE:EGFR_L858R_EX19DEL",
+       "DEL:159013",
+       "DEL:2055",
+       "DEL:23326",
+       "DEL:388336"
+      ],
+      "only_engine": []
+     }
+    ],
+    "engine_genes_not_eligible": []
+   }
+  },
+  "S1-pred_extra": {
+   "n_rows_no_p": 0,
+   "F1": {
+    "n_tests": 6559561,
+    "bh_rejections": 286551,
+    "p_cut": 0.002184218975949538,
+    "collinear_among_rejections": 9994,
+    "list_hits": 276557
+   },
+   "F2": {
+    "n_tests": 2170,
+    "bh_rejections": 1411,
+    "p_cut": 0.032422744424114726,
+    "collinear_among_rejections": 4,
+    "list_hits": 1407
+   },
+   "engine": {
+    "F1_selected": 276557,
+    "F2_selected": 1407,
+    "F1_rows_engine_label": 6559561,
+    "F1_rows_engine_label_with_p": 6559561,
+    "label_vs_mine_mismatch": 0
+   },
+   "F1_hit_set_symmetric_difference": 0,
+   "F2_hit_set_symmetric_difference": 0,
+   "F1_match_exact": true,
+   "F2_match_exact": true
+  },
+  "MD_lists_recomputed": {
+   "MD-strict": {
+    "n_EN_pred_selected": 50728,
+    "n_testable": 50728,
+    "bh_rejections_q_sc": 13303,
+    "p_cut_sc": 0.0131104699259703,
+    "mine_same_sign_noncollinear": 11662,
+    "engine": 11662,
+    "set_equal": true
+   },
+   "MD-global": {
+    "mine": 1380,
+    "engine": 1380,
+    "set_equal": true
+   }
+  },
+  "gate": {
+   "MD-strict_engine_file": {
+    "k": 21,
+    "n": 39,
+    "recall": 0.5384615384615384,
+    "ci95": [
+     0.37181074720651874,
+     0.6990521969924921
+    ],
+    "by_family": {
+     "ADD-CN": {
+      "k": 1,
+      "n": 5
+     },
+     "ADD-EXP": {
+      "k": 0,
+      "n": 1
+     },
+     "ADD-HOT": {
+      "k": 5,
+      "n": 6
+     },
+     "LOF-SL": {
+      "k": 1,
+      "n": 2
+     },
+     "P53": {
+      "k": 4,
+      "n": 4
+     },
+     "PAR": {
+      "k": 7,
+      "n": 13
+     },
+     "PROG": {
+      "k": 2,
+      "n": 2
+     },
+     "SIG": {
+      "k": 0,
+      "n": 2
+     },
+     "SIL": {
+      "k": 0,
+      "n": 1
+     },
+     "W": {
+      "k": 1,
+      "n": 3
+     }
+    },
+    "family_pass": {
+     "ADD-CN": false,
+     "ADD-HOT": true,
+     "LOF-SL": true,
+     "P53": true,
+     "PAR": true,
+     "PROG": true,
+     "SIG": false,
+     "W": false
+    },
+    "pass": false
+   },
+   "MD-strict_my_recompute": {
+    "k": 21,
+    "n": 39,
+    "recall": 0.5384615384615384,
+    "ci95": [
+     0.37181074720651874,
+     0.6990521969924921
+    ],
+    "by_family": {
+     "ADD-CN": {
+      "k": 1,
+      "n": 5
+     },
+     "ADD-EXP": {
+      "k": 0,
+      "n": 1
+     },
+     "ADD-HOT": {
+      "k": 5,
+      "n": 6
+     },
+     "LOF-SL": {
+      "k": 1,
+      "n": 2
+     },
+     "P53": {
+      "k": 4,
+      "n": 4
+     },
+     "PAR": {
+      "k": 7,
+      "n": 13
+     },
+     "PROG": {
+      "k": 2,
+      "n": 2
+     },
+     "SIG": {
+      "k": 0,
+      "n": 2
+     },
+     "SIL": {
+      "k": 0,
+      "n": 1
+     },
+     "W": {
+      "k": 1,
+      "n": 3
+     }
+    },
+    "family_pass": {
+     "ADD-CN": false,
+     "ADD-HOT": true,
+     "LOF-SL": true,
+     "P53": true,
+     "PAR": true,
+     "PROG": true,
+     "SIG": false,
+     "W": false
+    },
+    "pass": false
+   },
+   "S1-obs_my_bh": {
+    "k": 21,
+    "n": 39,
+    "recall": 0.5384615384615384,
+    "ci95": [
+     0.37181074720651874,
+     0.6990521969924921
+    ],
+    "by_family": {
+     "ADD-CN": {
+      "k": 2,
+      "n": 5
+     },
+     "ADD-EXP": {
+      "k": 0,
+      "n": 1
+     },
+     "ADD-HOT": {
+      "k": 5,
+      "n": 6
+     },
+     "LOF-SL": {
+      "k": 0,
+      "n": 2
+     },
+     "P53": {
+      "k": 4,
+      "n": 4
+     },
+     "PAR": {
+      "k": 4,
+      "n": 13
+     },
+     "PROG": {
+      "k": 2,
+      "n": 2
+     },
+     "SIG": {
+      "k": 1,
+      "n": 2
+     },
+     "SIL": {
+      "k": 0,
+      "n": 1
+     },
+     "W": {
+      "k": 3,
+      "n": 3
+     }
+    },
+    "family_pass": {
+     "ADD-CN": false,
+     "ADD-HOT": true,
+     "LOF-SL": false,
+     "P53": true,
+     "PAR": false,
+     "PROG": true,
+     "SIG": true,
+     "W": true
+    },
+    "pass": false
+   },
+   "MD-global_my_recompute": {
+    "k": 17,
+    "n": 39,
+    "recall": 0.4358974358974359,
+    "ci95": [
+     0.27810762967640934,
+     0.6037919829857288
+    ],
+    "by_family": {
+     "ADD-CN": {
+      "k": 1,
+      "n": 5
+     },
+     "ADD-EXP": {
+      "k": 0,
+      "n": 1
+     },
+     "ADD-HOT": {
+      "k": 5,
+      "n": 6
+     },
+     "LOF-SL": {
+      "k": 0,
+      "n": 2
+     },
+     "P53": {
+      "k": 4,
+      "n": 4
+     },
+     "PAR": {
+      "k": 4,
+      "n": 13
+     },
+     "PROG": {
+      "k": 2,
+      "n": 2
+     },
+     "SIG": {
+      "k": 0,
+      "n": 2
+     },
+     "SIL": {
+      "k": 0,
+      "n": 1
+     },
+     "W": {
+      "k": 1,
+      "n": 3
+     }
+    },
+    "family_pass": {
+     "ADD-CN": false,
+     "ADD-HOT": true,
+     "LOF-SL": false,
+     "P53": true,
+     "PAR": false,
+     "PROG": true,
+     "SIG": false,
+     "W": false
+    },
+    "pass": false
+   },
+   "attempt1": {
+    "k": 21,
+    "n": 39,
+    "by_family": {
+     "ADD-CN": {
+      "k": 1,
+      "n": 5
+     },
+     "ADD-EXP": {
+      "k": 0,
+      "n": 1
+     },
+     "ADD-HOT": {
+      "k": 5,
+      "n": 6
+     },
+     "LOF-SL": {
+      "k": 1,
+      "n": 2
+     },
+     "P53": {
+      "k": 4,
+      "n": 4
+     },
+     "PAR": {
+      "k": 7,
+      "n": 13
+     },
+     "PROG": {
+      "k": 2,
+      "n": 2
+     },
+     "SIG": {
+      "k": 0,
+      "n": 2
+     },
+     "SIL": {
+      "k": 0,
+      "n": 1
+     },
+     "W": {
+      "k": 1,
+      "n": 3
+     }
+    },
+    "S1-obs": {
+     "k": 21
+    },
+    "MD-global": {
+     "k": 17
+    }
+   },
+   "row_disagreements_vs_attempt1": [],
+   "exact_match": true,
+   "exact_match_my_recompute": true
+  },
+  "pass": true,
+  "key_numbers": {
+   "F1_tests": 6559561,
+   "F1_bh_rejections": 3358,
+   "F1_p_cut": 2.5559981134588366e-05,
+   "F1_list_hits_mine": 3142,
+   "F1_selected_engine": 3142,
+   "gate_recall_mine": "21/39",
+   "gate_recall_attempt1": "21/39"
+  }
+ },
+ "task3_en_obs": {
+  "n_pairs_compared": 59303,
+  "n_only_mine": 0,
+  "n_only_engine": 0,
+  "freq": {
+   "n_within_tol": 59303,
+   "n_outside_tol": 0,
+   "max_abs_diff": 0.020000000000000004,
+   "n_nonzero_either": 4688,
+   "n_exact_equal": 59300
+  },
+  "selected": {
+   "n_mine": 30,
+   "n_engine": 30,
+   "n_both": 30,
+   "n_diff_total": 0,
+   "n_diff_excluding_near_threshold": 0,
+   "n_near_threshold_excluded": 11
+  },
+  "beta": {
+   "n_compared_selected_both": 30,
+   "mean_beta_n_within_rel_tol": 29,
+   "mean_beta_max_rel": 0.0012458369238086396,
+   "full_beta_n_within_rel_tol": 30,
+   "full_beta_max_rel": 4.057448456903956e-05
+  },
+  "lambda": {
+   "n_genes": 20,
+   "lam_G_max_rel": 3.938843363899364e-07,
+   "lam_X_max_rel": 3.861704969079542e-07,
+   "n_genes_lam_G_rel_gt_1e-6": 0,
+   "n_genes_lam_X_rel_gt_1e-6": 0,
+   "n_rows_mismatch": 0
+  },
+  "pass_freq": true,
+  "pass_selected": true,
+  "pass_beta": false,
+  "pass": false,
+  "seed_key": "seeds.json:seeds[1]",
+  "seed": 1,
+  "n_genes_with_EN_obs_selection": 319,
+  "genes_with_EN_obs_selection": [
+   "10274",
+   "156",
+   "25842",
+   "2962",
+   "5045",
+   "53918",
+   "6927",
+   "79087",
+   "8833",
+   "8880"
+  ],
+  "genes_without": [
+   "10293",
+   "126382",
+   "29123",
+   "51218",
+   "54960",
+   "6904",
+   "7534",
+   "79664",
+   "80146",
+   "832"
+  ],
+  "worst_freq": [
+   {
+    "gene": "5045",
+    "feature": "AMP:6427",
+    "freq": 0.08,
+    "selection_freq": 0.06,
+    "sel_mine": false,
+    "sel_eng": false
+   },
+   {
+    "gene": "6927",
+    "feature": "SIL-other:240",
+    "freq": 0.1,
+    "selection_freq": 0.08,
+    "sel_mine": false,
+    "sel_eng": false
+   },
+   {
+    "gene": "5045",
+    "feature": "AMP:9123",
+    "freq": 0.1,
+    "selection_freq": 0.12,
+    "sel_mine": false,
+    "sel_eng": false
+   },
+   {
+    "gene": "10274",
+    "feature": "FUS:2313",
+    "freq": 0.08,
+    "selection_freq": 0.08,
+    "sel_mine": false,
+    "sel_eng": false
+   },
+   {
+    "gene": "10274",
+    "feature": "LOFBI:10735",
+    "freq": 0.94,
+    "selection_freq": 0.94,
+    "sel_mine": true,
+    "sel_eng": true
+   },
+   {
+    "gene": "10274",
+    "feature": "PROG:NMF17",
+    "freq": 0.1,
+    "selection_freq": 0.1,
+    "sel_mine": false,
+    "sel_eng": false
+   },
+   {
+    "gene": "10274",
+    "feature": "SIL-METH:4507",
+    "freq": 0.1,
+    "selection_freq": 0.1,
+    "sel_mine": false,
+    "sel_eng": false
+   },
+   {
+    "gene": "10274",
+    "feature": "SIL-METH:60468",
+    "freq": 0.1,
+    "selection_freq": 0.1,
+    "sel_mine": false,
+    "sel_eng": false
+   },
+   {
+    "gene": "10274",
+    "feature": "SIL-other:10018",
+    "freq": 0.02,
+    "selection_freq": 0.02,
+    "sel_mine": false,
+    "sel_eng": false
+   },
+   {
+    "gene": "10274",
+    "feature": "SIL-other:10620",
+    "freq": 0.06,
+    "selection_freq": 0.06,
+    "sel_mine": false,
+    "sel_eng": false
+   }
+  ],
+  "worst_beta": [
+   {
+    "gene": "5045",
+    "feature": "SIL-METH:604",
+    "beta_mean": -0.009750356042129307,
+    "beta_mean_eng": -0.009762518548206029,
+    "rel_beta_mean": 0.0012458369238086396,
+    "beta_full_mine": -0.021222598525886868,
+    "beta_full_eng": -0.021222598537979625
+   },
+   {
+    "gene": "5045",
+    "feature": "SIL-METH:3932",
+    "beta_mean": -0.02224979221620753,
+    "beta_mean_eng": -0.022242285733581765,
+    "rel_beta_mean": 0.0003374870153039053,
+    "beta_full_mine": -0.02534563469732915,
+    "beta_full_eng": -0.025345635385723833
+   },
+   {
+    "gene": "5045",
+    "feature": "SIL-METH:10581",
+    "beta_mean": -0.016313061711144296,
+    "beta_mean_eng": -0.016307673501782183,
+    "rel_beta_mean": 0.0003304094456836,
+    "beta_full_mine": -0.02154179633506215,
+    "beta_full_eng": -0.021541797562772413
+   },
+   {
+    "gene": "5045",
+    "feature": "SIL-DEL:1031",
+    "beta_mean": -0.02240750364869306,
+    "beta_mean_eng": -0.02241436424457561,
+    "rel_beta_mean": 0.0003060803245494397,
+    "beta_full_mine": -0.024051206092724816,
+    "beta_full_eng": -0.02405120755943294
+   },
+   {
+    "gene": "5045",
+    "feature": "LOFBI:1654",
+    "beta_mean": 0.006005179091142669,
+    "beta_mean_eng": 0.00600657049030358,
+    "rel_beta_mean": 0.00023164618864574265,
+    "beta_full_mine": 0.007507521657428879,
+    "beta_full_eng": 0.0075075221771253855
+   },
+   {
+    "gene": "5045",
+    "feature": "SIL-other:3655",
+    "beta_mean": -0.01289816654163962,
+    "beta_mean_eng": -0.012895599577739725,
+    "rel_beta_mean": 0.000199057351650847,
+    "beta_full_mine": -0.016740539168075774,
+    "beta_full_eng": -0.01674054517885992
+   },
+   {
+    "gene": "6927",
+    "feature": "PROG:NMF08",
+    "beta_mean": -0.01001843770114724,
+    "beta_mean_eng": -0.010019920716484195,
+    "rel_beta_mean": 0.0001480066937569873,
+    "beta_full_mine": -0.017182775517954645,
+    "beta_full_eng": -0.01718347272850371
+   },
+   {
+    "gene": "5045",
+    "feature": "CLIN:CAPI_ALT",
+    "beta_mean": 0.026616591882778685,
+    "beta_mean_eng": 0.026619338673503884,
+    "rel_beta_mean": 0.00010318778985792712,
+    "beta_full_mine": 0.035844159186159505,
+    "beta_full_eng": 0.03584416017233262
+   },
+   {
+    "gene": "6927",
+    "feature": "EXPDOSE:6927",
+    "beta_mean": -0.03700188412903177,
+    "beta_mean_eng": -0.037000342667905556,
+    "rel_beta_mean": 4.166072568704658e-05,
+    "beta_full_mine": -0.043339741767937895,
+    "beta_full_eng": -0.04333923821447237
+   },
+   {
+    "gene": "2962",
+    "feature": "SIL-other:642489",
+    "beta_mean": 0.007494596971428346,
+    "beta_mean_eng": 0.007494760109826142,
+    "rel_beta_mean": 2.1766993927132504e-05,
+    "beta_full_mine": 0.010159662826394961,
+    "beta_full_eng": 0.010159803819386488
+   }
+  ],
+  "selected_differences": [],
+  "lambda_table": [
+   {
+    "gene": "10274",
+    "lam_G_mine": 0.05969370048063798,
+    "lam_G_eng": 0.0596937037537082,
+    "lam_X_mine": 0.05053181886629062,
+    "lam_X_eng": 0.0505318195064276,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 5.4831079524564075e-08,
+    "relX": 1.2667997796236456e-08
+   },
+   {
+    "gene": "156",
+    "lam_G_mine": 0.03213438051110629,
+    "lam_G_eng": 0.0321343826921018,
+    "lam_X_mine": 0.03739400686445725,
+    "lam_X_eng": 0.0373940092746628,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 6.787108780307867e-08,
+    "relX": 6.445432291914145e-08
+   },
+   {
+    "gene": "25842",
+    "lam_G_mine": 0.028178825461524025,
+    "lam_G_eng": 0.0281788261332286,
+    "lam_X_mine": 0.04460524226975583,
+    "lam_X_eng": 0.0446052475932447,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 2.3837209212728156e-08,
+    "relX": 1.1934669466584862e-07
+   },
+   {
+    "gene": "2962",
+    "lam_G_mine": 0.030759056103947965,
+    "lam_G_eng": 0.0307590561039479,
+    "lam_X_mine": 0.016953396745277217,
+    "lam_X_eng": 0.0169533979298962,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 2.1430921633078968e-15,
+    "relX": 6.987501783817136e-08
+   },
+   {
+    "gene": "5045",
+    "lam_G_mine": 0.019644853571284114,
+    "lam_G_eng": 0.019644852337656,
+    "lam_X_mine": 0.036204790093024956,
+    "lam_X_eng": 0.0362047830267815,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 6.279650728104429e-08,
+    "relX": 1.9517430758231715e-07
+   },
+   {
+    "gene": "53918",
+    "lam_G_mine": 0.09241527095801998,
+    "lam_G_eng": 0.0924152537612545,
+    "lam_X_mine": 0.07054431743324326,
+    "lam_X_eng": 0.0705443446753879,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 1.8608146133957934e-07,
+    "relX": 3.861704969079542e-07
+   },
+   {
+    "gene": "6927",
+    "lam_G_mine": 0.03246633060883859,
+    "lam_G_eng": 0.0324663272964666,
+    "lam_X_mine": 0.024519918345583716,
+    "lam_X_eng": 0.0245199182714046,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 1.0202484452580419e-07,
+    "relX": 3.0252595823685657e-09
+   },
+   {
+    "gene": "79087",
+    "lam_G_mine": 0.04647688710353849,
+    "lam_G_eng": 0.0464768896001296,
+    "lam_X_mine": 0.03184811734724271,
+    "lam_X_eng": 0.0318481120958266,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 5.3716828491300214e-08,
+    "relX": 1.648894004052872e-07
+   },
+   {
+    "gene": "8833",
+    "lam_G_mine": 0.05251532212286731,
+    "lam_G_eng": 0.0525153256105479,
+    "lam_X_mine": 0.06903409457653716,
+    "lam_X_eng": 0.0690340980160078,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 6.641262428116278e-08,
+    "relX": 4.9822779433688527e-08
+   },
+   {
+    "gene": "8880",
+    "lam_G_mine": 0.04829513973662293,
+    "lam_G_eng": 0.0482951397366228,
+    "lam_X_mine": 0.030069564952748446,
+    "lam_X_eng": 0.0300695649527484,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 2.7298602901496983e-15,
+    "relX": 1.499948883406593e-15
+   },
+   {
+    "gene": "10293",
+    "lam_G_mine": 0.05033605151617179,
+    "lam_G_eng": 0.0503360501940702,
+    "lam_X_mine": 0.039163892834621475,
+    "lam_X_eng": 0.0391638810335488,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 2.6265501360796097e-08,
+    "relX": 3.0132541421298215e-07
+   },
+   {
+    "gene": "126382",
+    "lam_G_mine": 0.02964138812623309,
+    "lam_G_eng": 0.0296413901060087,
+    "lam_X_mine": 0.028664553270665666,
+    "lam_X_eng": 0.0286645509803209,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 6.679091635921927e-08,
+    "relX": 7.990164458221477e-08
+   },
+   {
+    "gene": "29123",
+    "lam_G_mine": 0.028644751505669502,
+    "lam_G_eng": 0.028644753788108,
+    "lam_X_mine": 0.02814012195010195,
+    "lam_X_eng": 0.028140121347154,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 7.968085589083362e-08,
+    "relX": 2.1426629298265518e-08
+   },
+   {
+    "gene": "51218",
+    "lam_G_mine": 0.03197412897246915,
+    "lam_G_eng": 0.0319741243485601,
+    "lam_X_mine": 0.031080761805553744,
+    "lam_X_eng": 0.0310807602383256,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 1.4461409494286654e-07,
+    "relX": 5.0424382492072645e-08
+   },
+   {
+    "gene": "54960",
+    "lam_G_mine": 0.0373570336989983,
+    "lam_G_eng": 0.0373570424988363,
+    "lam_X_mine": 0.0480837168608578,
+    "lam_X_eng": 0.0480837168608578,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 2.3556034976402514e-07,
+    "relX": 0.0
+   },
+   {
+    "gene": "6904",
+    "lam_G_mine": 0.03469928011230569,
+    "lam_G_eng": 0.0346992772204587,
+    "lam_X_mine": 0.0297917275643869,
+    "lam_X_eng": 0.0297917280800577,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 8.334026592728837e-08,
+    "relX": 1.7309194008924854e-08
+   },
+   {
+    "gene": "7534",
+    "lam_G_mine": 0.048763181367112336,
+    "lam_G_eng": 0.0487631763948681,
+    "lam_X_mine": 0.05606698806523394,
+    "lam_X_eng": 0.0560669901760738,
+    "n_rows_mine": 382,
+    "n_rows_eng": 382,
+    "relG": 1.019671933210188e-07,
+    "relX": 3.764853170187072e-08
+   },
+   {
+    "gene": "79664",
+    "lam_G_mine": 0.04709696884973477,
+    "lam_G_eng": 0.0470969749030975,
+    "lam_X_mine": 0.048609398136908774,
+    "lam_X_eng": 0.0486093999303198,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 1.2852975674546932e-07,
+    "relX": 3.689432550956356e-08
+   },
+   {
+    "gene": "80146",
+    "lam_G_mine": 0.04927511262830919,
+    "lam_G_eng": 0.0492750932196218,
+    "lam_X_mine": 0.08775219985569875,
+    "lam_X_eng": 0.087752220915255,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 3.938843363899364e-07,
+    "relX": 2.399888690222855e-07
+   },
+   {
+    "gene": "832",
+    "lam_G_mine": 0.06176496946429283,
+    "lam_G_eng": 0.0617649628302666,
+    "lam_X_mine": 0.0494632884292748,
+    "lam_X_eng": 0.0494632774862317,
+    "n_rows_mine": 1022,
+    "n_rows_eng": 1022,
+    "relG": 1.074075969148463e-07,
+    "relX": 2.2123570561462315e-07
+   }
+  ]
+ },
+ "task4_confounding_delta": {
+  "seed_key": "seeds.json:seeds[2]",
+  "seed": 2,
+  "engine_file_exists": false,
+  "pairs": [
+   {
+    "gene": "10899",
+    "feature": "PROG:NMF34",
+    "beta_full": 13.50820494670046,
+    "se_full": 5.047273644338635,
+    "p_full": 0.008451968944817704,
+    "dropped_cov": "",
+    "beta_md_strict_engine": 13.508204946700472,
+    "se_md_strict_engine": 5.047273644338641,
+    "p_md_strict_engine": 0.0084519689448177,
+    "beta_minus_lineage": 20.13434135236162,
+    "se_minus_lineage": 4.502148482554459,
+    "flag_lineage": false,
+    "beta_minus_library": 14.495169020738967,
+    "se_minus_library": 5.148399495350076,
+    "flag_library": false,
+    "beta_minus_culture": 14.225629499533172,
+    "se_minus_culture": 4.8809545098939715,
+    "flag_culture": false,
+    "beta_minus_growth": 13.446977339621938,
+    "se_minus_growth": 5.04801558895415,
+    "flag_growth": false,
+    "beta_minus_burden": 13.44166841028546,
+    "se_minus_burden": 4.978763639862075,
+    "flag_burden": false,
+    "beta_minus_TP53": 11.755800039431502,
+    "se_minus_TP53": 5.004634953548248,
+    "flag_TP53": false,
+    "beta_minus_own_CN": 11.714490785471016,
+    "se_minus_own_CN": 5.1908267730599285,
+    "flag_own_CN": false,
+    "beta_minus_primary_disease": 11.835822093337113,
+    "se_minus_primary_disease": 5.122995854433194,
+    "flag_primary_disease": false,
+    "flagged_blocks": ""
+   },
+   {
+    "gene": "1119",
+    "feature": "PROG:NMF31",
+    "beta_full": 6.931829799555613,
+    "se_full": 1.2870285231120504,
+    "p_full": 6.946345572284511e-06,
+    "dropped_cov": "",
+    "beta_md_strict_engine": 6.931829799555604,
+    "se_md_strict_engine": 1.2870285231120475,
+    "p_md_strict_engine": 6.946345572284388e-06,
+    "beta_minus_lineage": 5.348356281000481,
+    "se_minus_lineage": 1.132590020435663,
+    "flag_lineage": false,
+    "beta_minus_library": 6.426694178148197,
+    "se_minus_library": 1.246857621476408,
+    "flag_library": false,
+    "beta_minus_culture": 6.998531006519691,
+    "se_minus_culture": 1.2854511180124304,
+    "flag_culture": false,
+    "beta_minus_growth": 6.994966868664814,
+    "se_minus_growth": 1.2884910909053764,
+    "flag_growth": false,
+    "beta_minus_burden": 6.749538239563131,
+    "se_minus_burden": 1.2443195323924714,
+    "flag_burden": false,
+    "beta_minus_TP53": 6.945091992507611,
+    "se_minus_TP53": 1.287009446529731,
+    "flag_TP53": false,
+    "beta_minus_own_CN": 6.758444536296099,
+    "se_minus_own_CN": 1.2860950146168304,
+    "flag_own_CN": false,
+    "beta_minus_primary_disease": 3.890827389780839,
+    "se_minus_primary_disease": 3.479522032650476,
+    "flag_primary_disease": false,
+    "flagged_blocks": ""
+   },
+   {
+    "gene": "23592",
+    "feature": "PROG:NMF35",
+    "beta_full": 6.992918101177078,
+    "se_full": 2.558137948905733,
+    "p_full": 0.008260745950227442,
+    "dropped_cov": "",
+    "beta_md_strict_engine": 6.992918101177069,
+    "se_md_strict_engine": 2.5581379489057303,
+    "p_md_strict_engine": 0.0082607459502274,
+    "beta_minus_lineage": 7.105600892592063,
+    "se_minus_lineage": 2.1460310245897523,
+    "flag_lineage": false,
+    "beta_minus_library": 7.230979400893357,
+    "se_minus_library": 2.5712622504424547,
+    "flag_library": false,
+    "beta_minus_culture": 7.442065696259245,
+    "se_minus_culture": 2.5286415266393116,
+    "flag_culture": false,
+    "beta_minus_growth": 6.968750449875442,
+    "se_minus_growth": 2.591347963103073,
+    "flag_growth": false,
+    "beta_minus_burden": 6.867274190490437,
+    "se_minus_burden": 2.543426983770292,
+    "flag_burden": false,
+    "beta_minus_TP53": 6.97943353265786,
+    "se_minus_TP53": 2.548593809738098,
+    "flag_TP53": false,
+    "beta_minus_own_CN": 6.967637197253274,
+    "se_minus_own_CN": 2.5428341589914663,
+    "flag_own_CN": false,
+    "beta_minus_primary_disease": 6.2484492023758165,
+    "se_minus_primary_disease": 2.752192066881455,
+    "flag_primary_disease": false,
+    "flagged_blocks": ""
+   },
+   {
+    "gene": "27010",
+    "feature": "EXPDOSE:27010",
+    "beta_full": 0.043277373476158815,
+    "se_full": 0.009812519225659348,
+    "p_full": 1.7604847014538246e-05,
+    "dropped_cov": "",
+    "beta_md_strict_engine": 0.0432773734761589,
+    "se_md_strict_engine": 0.0098125192256593,
+    "p_md_strict_engine": 1.7604847014538338e-05,
+    "beta_minus_lineage": 0.04343441584817197,
+    "se_minus_lineage": 0.008838980859754219,
+    "flag_lineage": false,
+    "beta_minus_library": 0.04620577996652359,
+    "se_minus_library": 0.009857315218553046,
+    "flag_library": false,
+    "beta_minus_culture": 0.03739652657522442,
+    "se_minus_culture": 0.009867822429477712,
+    "flag_culture": false,
+    "beta_minus_growth": 0.043528589567545815,
+    "se_minus_growth": 0.00984259493153586,
+    "flag_growth": false,
+    "beta_minus_burden": 0.04367753128438176,
+    "se_minus_burden": 0.009765885182633816,
+    "flag_burden": false,
+    "beta_minus_TP53": 0.043311646946749834,
+    "se_minus_TP53": 0.0098216858284194,
+    "flag_TP53": false,
+    "beta_minus_own_CN": 0.043971144264479865,
+    "se_minus_own_CN": 0.009748846439601697,
+    "flag_own_CN": false,
+    "beta_minus_primary_disease": 0.04164717711502981,
+    "se_minus_primary_disease": 0.010065192044924438,
+    "flag_primary_disease": false,
+    "flagged_blocks": ""
+   },
+   {
+    "gene": "29959",
+    "feature": "EXPPAR:65267",
+    "beta_full": 0.07862430409663415,
+    "se_full": 0.02296614600254149,
+    "p_full": 0.0007820399751268563,
+    "dropped_cov": "",
+    "beta_md_strict_engine": 0.0786243040966343,
+    "se_md_strict_engine": 0.0229661460025415,
+    "p_md_strict_engine": 0.0007820399751268,
+    "beta_minus_lineage": 0.1150374394393597,
+    "se_minus_lineage": 0.01931883763802828,
+    "flag_lineage": false,
+    "beta_minus_library": 0.0806599127934399,
+    "se_minus_library": 0.02255114846852435,
+    "flag_library": false,
+    "beta_minus_culture": 0.07886332856768005,
+    "se_minus_culture": 0.022522107448558107,
+    "flag_culture": false,
+    "beta_minus_growth": 0.07801929758793148,
+    "se_minus_growth": 0.022982105772731666,
+    "flag_growth": false,
+    "beta_minus_burden": 0.08244431202578859,
+    "se_minus_burden": 0.0231811030080086,
+    "flag_burden": false,
+    "beta_minus_TP53": 0.07911772307174675,
+    "se_minus_TP53": 0.023009629657564694,
+    "flag_TP53": false,
+    "beta_minus_own_CN": 0.0724255069561915,
+    "se_minus_own_CN": 0.023103672194601563,
+    "flag_own_CN": false,
+    "beta_minus_primary_disease": 0.07337947723009108,
+    "se_minus_primary_disease": 0.024708532820996085,
+    "flag_primary_disease": false,
+    "flagged_blocks": ""
+   },
+   {
+    "gene": "4659",
+    "feature": "EXPPAR:116729",
+    "beta_full": 0.12136248119599509,
+    "se_full": 0.013633890763275662,
+    "p_full": 1.9915985553494124e-07,
+    "dropped_cov": "",
+    "beta_md_strict_engine": 0.121362481195995,
+    "se_md_strict_engine": 0.0136338907632756,
+    "p_md_strict_engine": 1.9915985553493635e-07,
+    "beta_minus_lineage": 0.0959406214152683,
+    "se_minus_lineage": 0.011662183649475953,
+    "flag_lineage": false,
+    "beta_minus_library": 0.12912005452116787,
+    "se_minus_library": 0.014295821806240838,
+    "flag_library": false,
+    "beta_minus_culture": 0.13190318208658722,
+    "se_minus_culture": 0.013884069202080202,
+    "flag_culture": false,
+    "beta_minus_growth": 0.12110331598974389,
+    "se_minus_growth": 0.013538447011451897,
+    "flag_growth": false,
+    "beta_minus_burden": 0.11828191406111944,
+    "se_minus_burden": 0.01369200989754899,
+    "flag_burden": false,
+    "beta_minus_TP53": 0.12527588462436898,
+    "se_minus_TP53": 0.013836716434771284,
+    "flag_TP53": false,
+    "beta_minus_own_CN": 0.12231875557862026,
+    "se_minus_own_CN": 0.013326564165652602,
+    "flag_own_CN": false,
+    "beta_minus_primary_disease": 0.12705818372814628,
+    "se_minus_primary_disease": 0.01584742791598453,
+    "flag_primary_disease": false,
+    "flagged_blocks": ""
+   },
+   {
+    "gene": "51026",
+    "feature": "PROG:NMF07",
+    "beta_full": 2.303005478632164,
+    "se_full": 0.5558724342136819,
+    "p_full": 6.910439403854682e-05,
+    "dropped_cov": "",
+    "beta_md_strict_engine": 2.303005478632164,
+    "se_md_strict_engine": 0.5558724342136816,
+    "p_md_strict_engine": 6.910439403854604e-05,
+    "beta_minus_lineage": 3.64810618427024,
+    "se_minus_lineage": 0.5099423064250918,
+    "flag_lineage": false,
+    "beta_minus_library": 2.2555467557446818,
+    "se_minus_library": 0.5530751826674505,
+    "flag_library": false,
+    "beta_minus_culture": 2.156071014464589,
+    "se_minus_culture": 0.5476354832621422,
+    "flag_culture": false,
+    "beta_minus_growth": 2.3683321277755773,
+    "se_minus_growth": 0.5494518116169983,
+    "flag_growth": false,
+    "beta_minus_burden": 2.293638064249573,
+    "se_minus_burden": 0.5535229519797409,
+    "flag_burden": false,
+    "beta_minus_TP53": 2.232678351902927,
+    "se_minus_TP53": 0.5599234627886214,
+    "flag_TP53": false,
+    "beta_minus_own_CN": 2.311926972807784,
+    "se_minus_own_CN": 0.5658672567150603,
+    "flag_own_CN": false,
+    "beta_minus_primary_disease": 2.131855849645948,
+    "se_minus_primary_disease": 0.5593698712128634,
+    "flag_primary_disease": false,
+    "flagged_blocks": ""
+   },
+   {
+    "gene": "56254",
+    "feature": "LOFBI:6794",
+    "beta_full": -0.15574345920341767,
+    "se_full": 0.051407202901600675,
+    "p_full": 0.004815844244108024,
+    "dropped_cov": "",
+    "beta_md_strict_engine": -0.1557434592034176,
+    "se_md_strict_engine": 0.0514072029016006,
+    "p_md_strict_engine": 0.004815844244108,
+    "beta_minus_lineage": -0.1387558151339333,
+    "se_minus_lineage": 0.05002776550494207,
+    "flag_lineage": false,
+    "beta_minus_library": -0.15306686846336323,
+    "se_minus_library": 0.049499732212830466,
+    "flag_library": false,
+    "beta_minus_culture": -0.14413236299650342,
+    "se_minus_culture": 0.051416508988355154,
+    "flag_culture": false,
+    "beta_minus_growth": -0.1554149673380055,
+    "se_minus_growth": 0.05119991001298697,
+    "flag_growth": false,
+    "beta_minus_burden": -0.16210455709722582,
+    "se_minus_burden": 0.05271932658712858,
+    "flag_burden": false,
+    "beta_minus_TP53": -0.1558216931299402,
+    "se_minus_TP53": 0.05107344920151281,
+    "flag_TP53": false,
+    "beta_minus_own_CN": -0.1607644035632021,
+    "se_minus_own_CN": 0.05063964093469251,
+    "flag_own_CN": false,
+    "beta_minus_primary_disease": -0.17178827708463582,
+    "se_minus_primary_disease": 0.051716502355702625,
+    "flag_primary_disease": false,
+    "flagged_blocks": ""
+   },
+   {
+    "gene": "79066",
+    "feature": "PSCORE:NRF2",
+    "beta_full": 0.07166744317774927,
+    "se_full": 0.022481642233228936,
+    "p_full": 0.001629625951442685,
+    "dropped_cov": "",
+    "beta_md_strict_engine": 0.0716674431777492,
+    "se_md_strict_engine": 0.0224816422332289,
+    "p_md_strict_engine": 0.0016296259514426,
+    "beta_minus_lineage": 0.05417523391152713,
+    "se_minus_lineage": 0.020544002234631677,
+    "flag_lineage": false,
+    "beta_minus_library": 0.06898368771711012,
+    "se_minus_library": 0.02229551334224448,
+    "flag_library": false,
+    "beta_minus_culture": 0.06490848607283714,
+    "se_minus_culture": 0.021967667115551173,
+    "flag_culture": false,
+    "beta_minus_growth": 0.06765822125125925,
+    "se_minus_growth": 0.02259536411404014,
+    "flag_growth": false,
+    "beta_minus_burden": 0.07202276173013751,
+    "se_minus_burden": 0.02245472379785077,
+    "flag_burden": false,
+    "beta_minus_TP53": 0.0686645153957733,
+    "se_minus_TP53": 0.02247311119377298,
+    "flag_TP53": false,
+    "beta_minus_own_CN": 0.07164659965201475,
+    "se_minus_own_CN": 0.022331739921512783,
+    "flag_own_CN": false,
+    "beta_minus_primary_disease": 0.08382358480497983,
+    "se_minus_primary_disease": 0.023640620196854742,
+    "flag_primary_disease": false,
+    "flagged_blocks": ""
+   },
+   {
+    "gene": "79897",
+    "feature": "SIL-other:1289",
+    "beta_full": 0.19950959952442576,
+    "se_full": 0.06239607490178103,
+    "p_full": 0.0022812315416468718,
+    "dropped_cov": "",
+    "beta_md_strict_engine": 0.1995095995244257,
+    "se_md_strict_engine": 0.0623960749017809,
+    "p_md_strict_engine": 0.0022812315416468,
+    "beta_minus_lineage": 0.055707921836448446,
+    "se_minus_lineage": 0.06152979363801698,
+    "flag_lineage": true,
+    "beta_minus_library": 0.2021169008315354,
+    "se_minus_library": 0.062281048270283884,
+    "flag_library": false,
+    "beta_minus_culture": 0.21203655713142766,
+    "se_minus_culture": 0.06110574836136475,
+    "flag_culture": false,
+    "beta_minus_growth": 0.19986052594750295,
+    "se_minus_growth": 0.06262955803206095,
+    "flag_growth": false,
+    "beta_minus_burden": 0.20059268587879647,
+    "se_minus_burden": 0.06235004457449122,
+    "flag_burden": false,
+    "beta_minus_TP53": 0.20331556611174584,
+    "se_minus_TP53": 0.0626052145709177,
+    "flag_TP53": false,
+    "beta_minus_own_CN": 0.20457904720746853,
+    "se_minus_own_CN": 0.06308662867171443,
+    "flag_own_CN": false,
+    "beta_minus_primary_disease": 0.18993206013882652,
+    "se_minus_primary_disease": 0.06411097788160366,
+    "flag_primary_disease": false,
+    "flagged_blocks": "lineage"
+   }
+  ],
+  "n_pairs_flagged_any_block": 1,
+  "full_model_vs_md_strict_beta_max_rel": 1.941583682551078e-15,
+  "full_model_vs_md_strict_p_max_dlog10": 3.108624468950438e-14,
+  "pass": null,
+  "status": "reported only (results/confounders/delta.csv does not exist)"
+ },
+ "overall": {
+  "task1": true,
+  "task2": true,
+  "task3": false,
+  "task4": "reported only (no engine file)",
+  "task3_detail": "freq PASS, selected set PASS, beta (mean over 50) FAIL 29/30 (max rel 1.25e-3); full-D beta 30/30 within 4e-5"
+ },
+ "wall_s": 411.80756878852844,
+ "notes": {
+  "readings_R0": [
+   "5.3 screen days: one droppable covariate = cached screen_days_dev_humagne ('screen days within Humagne'); pipeline_params lists screen_days as droppable, DESIGN lists it both in the library block and as droppable",
+   "5.3 S1 design has no METH_absent / MSI_unknown (1.6: S1 drops NA lines per feature); own CN NaN -> 0 with CN_absent",
+   "5.3 'Leverages depend on (NaN group, d) only': read as a computational remark; my h_ii uses the full Z (incl. own CN, EXPGATE). Engine p agree to 1e-13, so the engine also uses the exact full-model hat",
+   "5.3 df 'n - rank(Z) - 2': rank(Z) counts the intercept; binary d min(., carrier clusters - 1) (A7 iv)",
+   "5.6 F1: BH over all U tests except own EXPDOSE incl. collinear_with_design tests; list hits exclude collinear_with_design (5.3 'never counted as determinants'); same rule for F2, S1-pred, MD-strict, MD-global",
+   "4.1 'NA -> 0' after standardisation once on D (mean/SD ddof 0 over non-NaN D values)",
+   "4.1 FWL block = the 4.1 list only (no screen days, no droppable covariates); 5.3 < 2-line level merge applied",
+   "4.1 SIS: top-300 |corr| union forced (gene-specific relations except self-null); 25-alpha grid from the full-D screened set; 1-SE with SD(fold MSE, ddof 1)/sqrt(5); stage X CV on each fold's own stage-G residual",
+   "13.3 'beta within 1e-3 relative': which beta is unstated; pass/fail uses mean beta over 50 subsamples (the EN rank statistic, engine column 'beta'); full-D beta reported alongside",
+   "5.5 library block also removes screen days (5.3 puts them in the library block); burden = MSI + DMG_BURDEN; primary-disease sensitivity = block added to the full model, same flag rule (5.5 does not restate it)"
+  ],
+  "fixes_to_my_code": [
+   "1 counts.py: list hits had omitted the collinear_with_design exclusion (BH cut unchanged and identical to engine)",
+   "2 s1check.py: dropped_cov comparison accepts the engine's '|' separator (reporting only)",
+   "3 encheck.py: removed two dead lines referencing a non-existent column (crash)",
+   "4 data.py: METH_absent derived as 'all METH features NaN' (453 D lines); the loader biomark.covariates.build defines it as 'not in the RRBS gene matrix' (456). Changed to the loader definition. Found because with the engine's lambdas plugged in (diagnostic) full-D betas still differed by 0.1-5%; three other EN readings (screen days in FWL, SD ddof 1, raw NA->0) were tried as diagnostics and did not explain it; not adopted",
+   "5 enet.py: optional fixed-lambda argument for that diagnostic only"
+  ],
+  "task3_diagnosis": "after fix 4: lambda_G/X agree to 4e-7, full-D beta to 4e-5 for all 30 selected features, frequency max |diff| 0.02 (one subsample fit in 3 features of genes 5045/6927), selected sets identical. The only out-of-tolerance item is mean beta of 5045 x SIL-METH:604 (rel 1.25e-3 vs 1e-3): its full-D beta agrees to 6e-10, so the gap comes from the same 5045 subsample fit(s) whose active set differs (AMP:6427 0.08 vs 0.06, AMP:9123 0.10 vs 0.12) - a solver-tolerance (tol 1e-3) / SIS-boundary effect in one half-sample, not a rule difference. Strictly a FAIL of the beta tolerance; PASS if 'beta' means full-D beta."
+ }
+}
