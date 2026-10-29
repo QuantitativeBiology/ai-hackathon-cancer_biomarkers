@@ -1,5 +1,5 @@
 {
- "status": "pending R",
+ "status": "ok",
  "n_known_recovery": 88,
  "n_controls": 58,
  "n_cgt_tests": 30,
@@ -20,8 +20,12 @@
    "recovered_md_strict": 27
   }
  },
- "n_shortlist": 0,
+ "n_shortlist": 735,
  "report_top_rows": 15,
- "case_studies": [],
+ "case_studies": [
+  "9130|EXPPAR:26240",
+  "1654|EXPPAR:8653",
+  "131118|EXPPAR:29103"
+ ],
  "rule": "shortlist = class-9 MD-global pairs replicated in R (asserted); 'novel' is never applied to a gene"
 }
