@@ -1,0 +1,333 @@
+<title>Reading Biomarkers From a Dependency Predictor</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: one reading column (~68ch) with full-width figures; numbered steps follow the real order of the work. */
+:root{
+  --bg:#f7f8f9; --paper:#ffffff; --ink:#1b2430; --muted:#5b6673; --rule:#d9dee4; --accent:#1f6f78; --warn:#a4561a;
+  --c1:#1f6f78; --c2:#7fb4ba; --c3:#6a4c93; --c4:#b39cd0; --c5:#b5651d; --c6:#8a8f97; --c0:#c4c9cf;
+  --font-display:"Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-body:"Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-ui:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#12171d; --paper:#182029; --ink:#e3e8ee; --muted:#9aa6b2; --rule:#2c3742; --accent:#6cc3cc; --warn:#e3a066;
+  --c1:#5fb8c1; --c2:#2f6d73; --c3:#b49be0; --c4:#6e5a91; --c5:#e3a066; --c6:#7d8894; --c0:#3d4955; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#12171d; --paper:#182029; --ink:#e3e8ee; --muted:#9aa6b2; --rule:#2c3742; --accent:#6cc3cc; --warn:#e3a066;
+  --c1:#5fb8c1; --c2:#2f6d73; --c3:#b49be0; --c4:#6e5a91; --c5:#e3a066; --c6:#7d8894; --c0:#3d4955; color-scheme:dark }
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+main{max-width:46rem;margin:0 auto;padding-block:2.5rem 4rem}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;line-height:1.2;text-wrap:balance}
+h1{font-size:2.3rem;margin:.2rem 0 .6rem}
+h2{font-size:1.55rem;margin:2.6rem 0 .6rem;padding-top:1.2rem;border-top:1px solid var(--rule)}
+h3{font-size:1.15rem;margin:1.6rem 0 .3rem}
+p{margin:.7rem 0}
+.kicker{font-family:var(--font-ui);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.byline{font-family:var(--font-ui);font-size:.88rem;color:var(--muted)}
+.lede{font-size:1.15rem}
+.note{font-family:var(--font-ui);font-size:.86rem;color:var(--muted);border-left:3px solid var(--rule);padding:.2rem 0 .2rem .9rem;margin:1rem 0}
+.disclaimer{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:.9rem 1.1rem;font-family:var(--font-ui);font-size:.88rem;color:var(--muted)}
+.take{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:1rem 1.3rem;margin:1.4rem 0}
+.take h3{margin-top:.2rem;font-family:var(--font-ui);font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+.take ul{margin:.3rem 0;padding-left:1.2rem}
+.take li{margin:.35rem 0}
+dl.gloss{display:grid;grid-template-columns:max-content 1fr;gap:.35rem 1rem;font-size:.95rem}
+dl.gloss dt{font-family:var(--font-ui);font-weight:600;font-size:.88rem}
+dl.gloss dd{margin:0;min-width:0}
+figure{margin:1.6rem 0;background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:1rem 1rem .8rem}
+figcaption{font-family:var(--font-ui);font-size:.84rem;color:var(--muted);line-height:1.5;margin-top:.5rem}
+figcaption b{color:var(--ink)}
+.fig-svg{width:100%;height:auto;display:block}
+.fig-svg text{font-family:var(--font-ui)}
+.lab{fill:var(--ink);font-size:13px}.tick{fill:var(--muted);font-size:11.5px}.val{fill:var(--ink);font-size:12px;font-variant-numeric:tabular-nums}
+.axis{fill:var(--muted);font-size:12px}.limitlab{fill:var(--warn);font-size:12px;font-weight:600}
+.grid{stroke:var(--rule);stroke-width:1}.limit{stroke:var(--warn);stroke-width:1.6;stroke-dasharray:5 4}
+.box{fill:var(--bg);stroke:var(--rule);stroke-width:1.2}.b1{stroke:var(--c1)}.b3{stroke:var(--c3)}.b4{stroke:var(--warn)}.b5{stroke:var(--c5)}
+.boxt{fill:var(--ink);font-size:13.5px;font-weight:600}.boxs{fill:var(--muted);font-size:11.5px}
+.arrow{stroke:var(--muted);stroke-width:1.3}.ahead{fill:var(--muted)}
+.line{fill:none;stroke-width:2.4}
+.c0{fill:var(--c0)}.c1{fill:var(--c1)}.c2{fill:var(--c2)}.c3{fill:var(--c3)}.c4{fill:var(--c4)}.c5{fill:var(--c5)}.c6{fill:var(--c6)}
+.line.c1{stroke:var(--c1);fill:none}.line.c2{stroke:var(--c2);fill:none}.line.c3{stroke:var(--c3);fill:none}.line.c4{stroke:var(--c4);fill:none}
+.c1t{fill:var(--c1)}.c2t{fill:var(--c2)}.c3t{fill:var(--c3)}.c4t{fill:var(--c4)}
+.dot{stroke:var(--paper);stroke-width:1.5}
+table{border-collapse:collapse;width:100%;font-family:var(--font-ui);font-size:.88rem;font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid var(--rule);padding:.4rem .5rem;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600}
+.tw{overflow-x:auto;margin:1rem 0}
+ol.refs{font-size:.9rem;padding-left:1.3rem}ol.refs li{margin:.25rem 0}
+a{color:var(--accent)}
+code{font-family:"IBM Plex Mono", ui-monospace, monospace;font-size:.86em}
+@media (max-width:520px){ body{font-size:16px} h1{font-size:1.8rem} dl.gloss{grid-template-columns:1fr} }
+</style>
+<main>
+<p class="kicker">Research briefing · agentic bioinformatics</p>
+<h1>Can an accurate essentiality predictor tell us why cancer cells depend on a gene?</h1>
+<p class="byline">Written by the AI principal investigator (Claude Opus 5.5) of an AI-run project · 2026-10-30 · source repository: QuantitativeBiology/ai-hackathon-cancer_biomarkers</p>
+
+<div class="disclaimer">This briefing, the analysis and all results were produced by AI agents with minimal human intervention, as part of a hackathon on agentic bioinformatics (Beltrao Lab, ETH Zurich, with INESC-ID and IST, Universidade de Lisboa). No human has yet verified the results. Every number below is read by a script from the project's committed result files.</div>
+
+<p class="lede">A previous project built a model that predicts how much each cancer cell line depends on each gene. If a model predicts dependencies accurately, one might expect it to have learnt <em>why</em> a line depends on a gene, for example because the line carries a particular mutation. This project tested whether those reasons can be read out of the model as biomarkers that group cell lines into dependency subtypes, and whether such biomarkers hold up against simpler methods, held-out data, clinical knowledge and independent experiments.</p>
+
+<div class="take">
+<h3>Main findings</h3>
+<ul>
+<li><b>The predictor did not add detectable value.</b> In 255 cell lines held back until the end, the top 100 candidate biomarkers read from the predictor replicated at 0.82, against 0.89 for the same method applied to measured data and 0.99 for a simple one-feature-at-a-time test.</li>
+<li><b>That verdict is fragile.</b> The pre-declared comparison shows no detectable difference. An alternative confidence interval says the predictor did worse, and with longer candidate lists it did slightly better.</li>
+<li><b>The simplest method was the most reliable.</b> The confounder-adjusted single-feature test replicated best, was best calibrated and recovered the most clinical biomarkers.</li>
+<li><b>The final catalogue is mostly a paralog story.</b> The 552 best-supported pairs are dominated by dependencies on one member of a gene pair when its partner is weakly expressed. Several are also dependencies of non-cancerous cells.</li>
+<li><b>Agents can run a pre-registered analysis end to end, but the independent checks mattered.</b> Several consequential errors were caught only by agents that had not produced the result.</li>
+</ul>
+</div>
+
+<h2>1. The question and its vocabulary</h2>
+<p>In a CRISPR knockout screen each gene is disrupted in turn, and the resulting loss of growth is scored. A strongly negative score means the line <em>depends</em> on that gene. The DepMap project has screened over a thousand cancer cell lines this way; we used its 26Q3 release.</p>
+<p>The Part 1 predictor estimates these scores from a line's molecular profile. It averages three models: a kernel ridge regression on gene expression, a model built on paralog genes, and a gradient-boosted tree model on the residual. Its predictions are "out-of-fold": each line's prediction comes from a model that never saw that line.</p>
+<p>The premise in the project brief was strong: <em>every</em> accurate prediction implies a molecular determinant that could serve as a biomarker. We treated that as a hypothesis to test, not a fact.</p>
+<dl class="gloss">
+<dt>Dependency</dt><dd>A gene whose knockout slows a cell line's growth.</dd>
+<dt>Determinant / biomarker</dt><dd>A measurable feature of the line (a mutation, a copy-number change, methylation, expression of a gene or a gene programme) that marks the lines that depend on a gene.</dd>
+<dt>Subtype</dt><dd>The group of lines sharing a dependency for the same molecular reason.</dd>
+<dt>Lineage</dt><dd>The tissue of origin of a cell line (lung, bowel, blood, …). Lineage is the largest confounder: a feature and a dependency can both be common in one tissue without being linked.</dd>
+<dt>Paralog</dt><dd>A related gene from an ancient duplication. Paralogs can back each other up, so losing one makes a cell depend on the other.</dd>
+<dt>Replication</dt><dd>A finding from the 1,022 development lines that reappears, with the same sign and one-sided p &lt; 0.05, in 255 lines that were set aside.</dd>
+</dl>
+
+<h2>2. How the project was run</h2>
+<p>The project was executed by an AI "principal investigator" that delegated work to other AI agents. Separate agents wrote the analysis code, built a simulated test world, reviewed the design, reimplemented the statistics independently and wrote this text. One human set the task, supplied data that could not be downloaded by script, and made one decision: to extend the 24-hour budget.</p>
+<p>Three practices shaped the work:</p>
+<ul>
+<li><b>Pre-registration in stages.</b> The design was frozen after three rounds of review. Each later stage was then fixed with a git tag before the data it depended on were analysed: the clinical test table, the control bounds, and finally the catalogue, which was frozen before the held-out lines were read once. Every later change was logged as a numbered deviation; there are 19 in total.</li>
+<li><b>Pre-committed responses to failure.</b> Before any real result existed, a table fixed what would happen if each control failed. When controls did fail, there was no room to rescue them after the fact.</li>
+<li><b>Authors never verify their own work.</b> The simulated test world and its answer key, the reimplementation of the statistics, and two critical reviews were all done by agents that had not written the code under test.</li>
+</ul>
+<p>The project ran for about 31 hours of wall time across 104 commits, including an overnight interruption and a laptop with 15.7 GB of memory. Several decisions below were shaped by those limits.</p>
+
+<figure><svg viewBox="0 0 760 330" role="img" aria-label="Study design schematic" class="fig-svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahead"/></marker></defs><rect x="10" y="20" width="170" height="78" rx="6" class="box"/><text x="95.0" y="42.0" class="boxt" text-anchor="middle" >Observed effects</text><text x="95.0" y="60.0" class="boxs" text-anchor="middle" >CRISPR knockout scores</text><text x="95.0" y="75.0" class="boxs" text-anchor="middle" >1,022 dev lines (D)</text><rect x="10" y="120" width="170" height="78" rx="6" class="box"/><text x="95.0" y="142.0" class="boxt" text-anchor="middle" >Predicted effects</text><text x="95.0" y="160.0" class="boxs" text-anchor="middle" >Part 1 predictor,</text><text x="95.0" y="175.0" class="boxs" text-anchor="middle" >out-of-fold</text><rect x="10" y="225" width="170" height="78" rx="6" class="box"/><text x="95.0" y="247.0" class="boxt" text-anchor="middle" >Feature dictionary</text><text x="95.0" y="265.0" class="boxs" text-anchor="middle" >26,246,924 gene × feature</text><text x="95.0" y="280.0" class="boxs" text-anchor="middle" >tests (mutations, CN, …)</text><rect x="250" y="20" width="190" height="78" rx="6" class="box b1"/><text x="345.0" y="42.0" class="boxt" text-anchor="middle" >Univariate test (S1)</text><text x="345.0" y="60.0" class="boxs" text-anchor="middle" >one feature at a time,</text><text x="345.0" y="75.0" class="boxs" text-anchor="middle" >confounders adjusted</text><rect x="250" y="120" width="190" height="78" rx="6" class="box b3"/><text x="345.0" y="142.0" class="boxt" text-anchor="middle" >Elastic net (EN)</text><text x="345.0" y="160.0" class="boxs" text-anchor="middle" >many features jointly,</text><text x="345.0" y="175.0" class="boxs" text-anchor="middle" >stability selection</text><text x="345.0" y="220.0" class="boxs" text-anchor="middle" >each run on observed AND</text><text x="345.0" y="236.0" class="boxs" text-anchor="middle" >predicted effects = 4 arms</text><rect x="510" y="20" width="240" height="78" rx="6" class="box b5"/><text x="630.0" y="42.0" class="boxt" text-anchor="middle" >Catalogue MD-global</text><text x="630.0" y="60.0" class="boxs" text-anchor="middle" >EN-pred ∩ S1-obs hits</text><text x="630.0" y="75.0" class="boxs" text-anchor="middle" >(same sign)</text><rect x="510" y="120" width="240" height="78" rx="6" class="box b4"/><text x="630.0" y="142.0" class="boxt" text-anchor="middle" >Freeze, then read R once</text><text x="630.0" y="160.0" class="boxs" text-anchor="middle" >255 held-out lines</text><text x="630.0" y="175.0" class="boxs" text-anchor="middle" >top-k lists replicated?</text><rect x="510" y="225" width="240" height="78" rx="6" class="box"/><text x="630.0" y="247.0" class="boxt" text-anchor="middle" >Checks</text><text x="630.0" y="265.0" class="boxs" text-anchor="middle" >toy world · controls · null</text><text x="630.0" y="280.0" class="boxs" text-anchor="middle" >clinical · combinatorial screens</text><line x1="180" y1="59" x2="248" y2="59" class="arrow" marker-end="url(#ah)"/><line x1="180" y1="159" x2="248" y2="159" class="arrow" marker-end="url(#ah)"/><line x1="180" y1="264" x2="248" y2="159" class="arrow" marker-end="url(#ah)"/><line x1="180" y1="264" x2="248" y2="80" class="arrow" marker-end="url(#ah)"/><line x1="180" y1="264" x2="248" y2="178" class="arrow" marker-end="url(#ah)"/><line x1="440" y1="59" x2="508" y2="59" class="arrow" marker-end="url(#ah)"/><line x1="440" y1="159" x2="508" y2="80" class="arrow" marker-end="url(#ah)"/><line x1="630" y1="98" x2="630" y2="118" class="arrow" marker-end="url(#ah)"/><line x1="630" y1="198" x2="630" y2="223" class="arrow" marker-end="url(#ah)"/></svg>
+<figcaption><b>Figure 1. Study design.</b> The same two methods (a univariate test and an elastic net) were each run on observed and on predicted dependency scores, giving four "arms". The catalogue keeps pairs found by the predictor-based elastic net that the observed univariate test also confirms. Everything was checked on simulated data with a known answer, against controls, against clinical and combinatorial-screen data, and finally in held-out cell lines read once.</figcaption></figure>
+
+<h2>3. Step one: build the candidate biomarkers and protect a test set</h2>
+<p><b>Held-out lines.</b> Part 1 had already split DepMap into 1,022 development lines and 255 test lines. We kept that split. The 255 lines were locked behind a software guard that refuses to load their scores unless the catalogue tag exists and an explicit unlock is set. Every read is logged, and the log shows one read.</p>
+<p><b>Feature dictionary.</b> Each candidate biomarker is one feature: a hotspot mutation, a loss-of-function call, an amplification or deletion, a fusion, promoter methylation, a paralog's expression, an expression programme from matrix factorisation, or a clinical composite such as "TP53 mutant". Thresholds were set on the development lines only. Testing every eligible gene against its features gave 26,246,924 gene–feature pairs across 2,193 genes.</p>
+<p><b>Eligible genes.</b> We kept genes whose dependency varies between lines and is predicted with useful accuracy beyond what lineage and screening library explain. Genes that fail are not dropped from the story. They are counted later as one kind of limit.</p>
+
+<h2>4. Step two: four ways to find biomarkers</h2>
+<p>The central comparison is a two-by-two design. One axis is the method; the other is whether it reads measured or predicted dependency scores.</p>
+<ul>
+<li><b>Univariate test (S1).</b> One feature at a time, a regression of the dependency score on the feature, adjusted for lineage, screening library, culture conditions and growth rate, and where appropriate for mutation burden, microsatellite instability, TP53 status and the gene's own copy number. This follows the per-gene association design used in large cell-line screens (Garnett et al. 2012; Iorio et al. 2016; Behan et al. 2019; Pacini et al. 2024), with the covariate structure modelled on Gonçalves et al. 2020. Standard errors are clustered by patient, because some lines come from the same person. They use a small-sample correction ("CR2") with an adjusted number of degrees of freedom (Bell and McCaffrey 2002; Pustejovsky and Tipton 2018). Multiple testing across the millions of tests is controlled with the Benjamini–Hochberg procedure (1995).</li>
+<li><b>Elastic net (EN).</b> All features of a gene are fitted jointly, in two stages: genomic features first, then expression features. It uses a penalised regression that keeps a few features and shrinks the rest to zero (Zou and Hastie 2005). A feature counts as selected only if it is chosen in at least 60% of 50 half-sample refits, with consistent sign. This is complementary-pairs stability selection (Meinshausen and Bühlmann 2010; Shah and Samworth 2013).</li>
+</ul>
+<p>Run on measured scores these give <b>S1-obs</b> and <b>EN-obs</b>; run on the predictor's scores, <b>S1-pred</b> and <b>EN-pred</b>. EN-pred is the purest reading of "what the predictor learnt": it never sees a measured dependency score.</p>
+<p>On the development lines the arms selected very different numbers of pairs: S1-obs 3,142, EN-obs 738, EN-pred 50,728 and S1-pred 276,557. Predicted scores are smoother than measured ones, so methods reading them find many more "associations". Section 5 explains why many of those are not trustworthy.</p>
+
+<h2>5. Step three: test the machinery on a world with a known answer</h2>
+<p>Before touching real associations, a separate agent built a simulated data set with planted biomarkers of known kinds:</p>
+<ul>
+<li>pan-cancer and lineage-restricted effects;</li>
+<li>passenger mutations near a true driver;</li>
+<li>culture artefacts and artefacts of CRISPR cutting;</li>
+<li>a fold-specific bias of the kind that out-of-fold predictions can carry.</li>
+</ul>
+<p>Our pipeline then had to recover the plants and avoid false hits. On the final engine, 19 passed, 3 failed of these checks passed. The three failures are reported in the full report, not hidden.</p>
+<p>The simulation found the most important problem in the design.</p>
+<ul>
+<li><b>The planned catalogue failed its error bound.</b> The frozen plan, "MD-strict", took the predictor-based elastic-net picks and re-checked them against measured scores within that selection. When the predictor was ridge-like, as Part 1's is, the true false-discovery proportion was 0.16–0.25 against a limit of 0.15 (Figure 2).</li>
+<li><b>The cause is a double dip.</b> A ridge predictor trained on the development lines absorbs their noise. Re-checking its picks against those same lines then confirms the noise.</li>
+<li><b>The fix was decided on the simulation alone.</b> We switched the catalogue to "MD-global", which keeps a pick only if it is also significant in the observed univariate test corrected across all tests. Its false-discovery proportion was at most 0.025, with the same recall (0.81–0.93). The switch was made before any real association result existed; the only real-data output seen by then was the count of pairs selected in a 50-gene timing pilot.</li>
+</ul>
+<p>The simulation also showed something this design could not solve. On a ridge-like predictor, lists built from predicted scores have a large hidden false-discovery rate. A permutation null cannot see it, because the noise lives inside the predictions.</p>
+
+<figure><svg viewBox="0 0 720 260" role="img" aria-label="Toy false discovery by list" class="fig-svg"><line x1="170.0" y1="22" x2="170.0" y2="220" class="grid"/><text x="170.0" y="236.0" class="tick" text-anchor="middle" >0.00</text><line x1="274.0" y1="22" x2="274.0" y2="220" class="grid"/><text x="274.0" y="236.0" class="tick" text-anchor="middle" >0.12</text><line x1="378.0" y1="22" x2="378.0" y2="220" class="grid"/><text x="378.0" y="236.0" class="tick" text-anchor="middle" >0.24</text><line x1="482.0" y1="22" x2="482.0" y2="220" class="grid"/><text x="482.0" y="236.0" class="tick" text-anchor="middle" >0.36</text><line x1="586.0" y1="22" x2="586.0" y2="220" class="grid"/><text x="586.0" y="236.0" class="tick" text-anchor="middle" >0.48</text><line x1="690.0" y1="22" x2="690.0" y2="220" class="grid"/><text x="690.0" y="236.0" class="tick" text-anchor="middle" >0.60</text><line x1="300.0" y1="16" x2="300.0" y2="220" class="limit"/><text x="306.0" y="26.0" class="limitlab" text-anchor="start" >limit 0.15</text><text x="158.0" y="52.0" class="lab" text-anchor="end" >MD-strict (frozen plan)</text><circle cx="367.4" cy="42.0" r="6" class="dot c6"/><circle cx="390.8" cy="45.0" r="6" class="dot c6"/><circle cx="375.5" cy="48.0" r="6" class="dot c6"/><circle cx="343.3" cy="51.0" r="6" class="dot c6"/><circle cx="308.3" cy="54.0" r="6" class="dot c6"/><text x="158.0" y="98.0" class="lab" text-anchor="end" >MD-global (adopted)</text><circle cx="170.0" cy="88.0" r="6" class="dot c5"/><circle cx="170.0" cy="91.0" r="6" class="dot c5"/><circle cx="181.6" cy="94.0" r="6" class="dot c5"/><circle cx="170.0" cy="97.0" r="6" class="dot c5"/><circle cx="191.4" cy="100.0" r="6" class="dot c5"/><text x="158.0" y="144.0" class="lab" text-anchor="end" >S1-obs</text><circle cx="230.7" cy="134.0" r="6" class="dot c1"/><circle cx="204.3" cy="137.0" r="6" class="dot c1"/><circle cx="230.1" cy="140.0" r="6" class="dot c1"/><circle cx="211.7" cy="143.0" r="6" class="dot c1"/><circle cx="236.7" cy="146.0" r="6" class="dot c1"/><text x="158.0" y="190.0" class="lab" text-anchor="end" >EN-pred</text><circle cx="608.8" cy="180.0" r="6" class="dot c4"/><circle cx="547.6" cy="183.0" r="6" class="dot c4"/><circle cx="585.0" cy="186.0" r="6" class="dot c4"/><circle cx="541.4" cy="189.0" r="6" class="dot c4"/><circle cx="493.3" cy="192.0" r="6" class="dot c4"/><text x="430.0" y="254.0" class="axis" text-anchor="middle" >true false-discovery proportion on 5 simulated data sets with a ridge-type predictor</text></svg>
+<figcaption><b>Figure 2. Why the catalogue definition was changed.</b> True false-discovery proportion on five simulated data sets built with a ridge-type predictor, for four lists. The pre-registered catalogue (MD-strict, grey) exceeds the 0.15 limit every time. The adopted catalogue (MD-global, amber) stays close to zero. The predictor-based elastic-net list (EN-pred) is around 0.5, which is why prediction-based lists are labelled "not calibrated" throughout. A caveat: MD-global was chosen on these same simulations, so its good performance here is not an independent test.</figcaption></figure>
+
+<h2>6. Step four: controls on the real data</h2>
+<h3>Known biomarkers: the positive-control gate failed</h3>
+<p>Before any biological claim, the pipeline had to recover a pre-specified list of known dependency–biomarker pairs. The list covered:</p>
+<ul>
+<li>KRAS-mutant lines depending on KRAS;</li>
+<li>loss of one paralog making a line depend on the other, as with SMARCA4/SMARCA2 and MTAP loss with PRMT5;</li>
+<li>MDM2 dependence in TP53 wild-type lines.</li>
+</ul>
+<p>The pre-declared bar was 60% recovery. The pipeline recovered 21 of 39 (54%), so the gate failed.</p>
+<p>A bug search, the only remedy the pre-committed rules allowed, found one real bug. Control genes outside the eligible set had never been analysed. After the fix, recovery was still 21/39: the formerly missing controls were genuine misses. Restricted to eligible genes, recovery was 21/32, but that is not the pre-declared denominator and did not change the verdict.</p>
+<p>The misses are informative:</p>
+<ul>
+<li>EGFR-mutant dependence has too few carriers for the conservative test.</li>
+<li>Paralog pairs that need a homozygous deletion are not captured by a "shallow loss" feature.</li>
+<li>MYCN amplification is almost confined to neuroblastoma, so the lineage term absorbs it.</li>
+</ul>
+
+<figure><svg viewBox="0 0 720 276" role="img" aria-label="Positive-control recall" class="fig-svg"><line x1="150.0" y1="22" x2="150.0" y2="238" class="grid"/><text x="150.0" y="254.0" class="tick" text-anchor="middle" >0.0</text><line x1="250.0" y1="22" x2="250.0" y2="238" class="grid"/><text x="250.0" y="254.0" class="tick" text-anchor="middle" >0.2</text><line x1="350.0" y1="22" x2="350.0" y2="238" class="grid"/><text x="350.0" y="254.0" class="tick" text-anchor="middle" >0.4</text><line x1="450.0" y1="22" x2="450.0" y2="238" class="grid"/><text x="450.0" y="254.0" class="tick" text-anchor="middle" >0.6</text><line x1="550.0" y1="22" x2="550.0" y2="238" class="grid"/><text x="550.0" y="254.0" class="tick" text-anchor="middle" >0.8</text><line x1="650.0" y1="22" x2="650.0" y2="238" class="grid"/><text x="650.0" y="254.0" class="tick" text-anchor="middle" >1.0</text><text x="140.0" y="45.0" class="lab" text-anchor="end" >MD-strict</text><rect x="150" y="32" width="269.2" height="20" rx="2" class="bar c6"/><text x="425.2" y="46.0" class="val" text-anchor="start" >21/39</text><text x="140.0" y="79.0" class="lab" text-anchor="end" >MD-global</text><rect x="150" y="66" width="217.9" height="20" rx="2" class="bar c5"/><text x="373.9" y="80.0" class="val" text-anchor="start" >17/39</text><text x="140.0" y="113.0" class="lab" text-anchor="end" >S1-obs</text><rect x="150" y="100" width="269.2" height="20" rx="2" class="bar c1"/><text x="425.2" y="114.0" class="val" text-anchor="start" >21/39</text><text x="140.0" y="147.0" class="lab" text-anchor="end" >S1-pred</text><rect x="150" y="134" width="371.8" height="20" rx="2" class="bar c2"/><text x="527.8" y="148.0" class="val" text-anchor="start" >29/39</text><text x="140.0" y="181.0" class="lab" text-anchor="end" >EN-obs</text><rect x="150" y="168" width="192.3" height="20" rx="2" class="bar c3"/><text x="348.3" y="182.0" class="val" text-anchor="start" >15/39</text><text x="140.0" y="215.0" class="lab" text-anchor="end" >EN-pred</text><rect x="150" y="202" width="269.2" height="20" rx="2" class="bar c4"/><text x="425.2" y="216.0" class="val" text-anchor="start" >21/39</text><line x1="450.0" y1="16" x2="450.0" y2="238" class="limit"/><text x="456.0" y="26.0" class="limitlab" text-anchor="start" >pass bar 60%</text><text x="400.0" y="272.0" class="axis" text-anchor="middle" >fraction of 39 known dependency–biomarker pairs recovered</text></svg>
+<figcaption><b>Figure 3. Recovery of known dependency–biomarker pairs</b> (gate attempt 2). No list reaches the pre-declared 60% bar. The predicted-score univariate list (S1-pred) scores highest only because it is enormous: it selects 276,557 pairs, so it contains many controls by size alone.</figcaption></figure>
+
+<h3>False discoveries: a permutation check</h3>
+<p>To estimate how many hits arise by chance, we shuffled the feature data between cell lines within lineage-and-library groups, 20 times, and re-ran the methods at their fixed thresholds on 300 genes.</p>
+<ul>
+<li><b>Within target:</b> the catalogue (MD-global, 0.0009) and the observed univariate test (S1-obs, 0.022) were well inside the 0.10 target.</li>
+<li><b>Failed:</b> the elastic net on measured scores was not (0.20), and is labelled "false discovery not controlled".</li>
+<li><b>Not calibrated:</b> the prediction-based lists cannot be judged by this check at all, as Figure 2 explained.</li>
+</ul>
+
+<figure><svg viewBox="0 0 720 276" role="img" aria-label="Permutation estimate of false discovery" class="fig-svg"><line x1="150.0" y1="22" x2="150.0" y2="238" class="grid"/><text x="150.0" y="254.0" class="tick" text-anchor="middle" >0.00</text><line x1="250.0" y1="22" x2="250.0" y2="238" class="grid"/><text x="250.0" y="254.0" class="tick" text-anchor="middle" >0.07</text><line x1="350.0" y1="22" x2="350.0" y2="238" class="grid"/><text x="350.0" y="254.0" class="tick" text-anchor="middle" >0.14</text><line x1="450.0" y1="22" x2="450.0" y2="238" class="grid"/><text x="450.0" y="254.0" class="tick" text-anchor="middle" >0.21</text><line x1="550.0" y1="22" x2="550.0" y2="238" class="grid"/><text x="550.0" y="254.0" class="tick" text-anchor="middle" >0.28</text><line x1="650.0" y1="22" x2="650.0" y2="238" class="grid"/><text x="650.0" y="254.0" class="tick" text-anchor="middle" >0.35</text><text x="140.0" y="45.0" class="lab" text-anchor="end" >MD-global</text><rect x="150" y="32" width="1.5" height="20" rx="2" class="bar c5"/><text x="157.3" y="46.0" class="val" text-anchor="start" >0.001</text><text x="140.0" y="79.0" class="lab" text-anchor="end" >S1-obs</text><rect x="150" y="66" width="32.0" height="20" rx="2" class="bar c1"/><text x="188.0" y="80.0" class="val" text-anchor="start" >0.022</text><text x="140.0" y="113.0" class="lab" text-anchor="end" >MD-strict</text><rect x="150" y="100" width="53.0" height="20" rx="2" class="bar c6"/><text x="209.0" y="114.0" class="val" text-anchor="start" >0.037</text><text x="140.0" y="147.0" class="lab" text-anchor="end" >S1-pred</text><rect x="150" y="134" width="58.3" height="20" rx="2" class="bar c2"/><text x="214.3" y="148.0" class="val" text-anchor="start" >0.041</text><text x="140.0" y="181.0" class="lab" text-anchor="end" >EN-obs</text><rect x="150" y="168" width="285.0" height="20" rx="2" class="bar c3"/><text x="441.0" y="182.0" class="val" text-anchor="start" >0.200</text><text x="140.0" y="215.0" class="lab" text-anchor="end" >EN-pred</text><rect x="150" y="202" width="467.6" height="20" rx="2" class="bar c4"/><text x="623.6" y="216.0" class="val" text-anchor="start" >0.327</text><line x1="292.9" y1="16" x2="292.9" y2="238" class="limit"/><text x="298.9" y="26.0" class="limitlab" text-anchor="start" >target ≤ 0.10</text><text x="400.0" y="272.0" class="axis" text-anchor="middle" >estimated false-discovery rate from 20 label permutations (300 genes)</text></svg>
+<figcaption><b>Figure 4. Estimated false-discovery rate from permutations.</b> Only the catalogue and the observed univariate list are both within the 0.10 target and interpretable. The values for the prediction-based lists (S1-pred, EN-pred) and for MD-strict are not reliable estimates, because a ridge predictor's hidden false discoveries are invisible to this check.</figcaption></figure>
+
+<h3>Negative controls</h3>
+<p>Three further pre-declared negative controls also failed:</p>
+<ul>
+<li><b>Low-tier genes:</b> the predictor's fidelity was 0.104, against a bound of 0.0011 set from the simulation. The bug search found no bug; the simulated bound was too strict for real data.</li>
+<li><b>Self-null features:</b> a gene's own deletion should not make lines more dependent on it, yet 42% of such pairs showed dependent carriers, against a bound of 0.1. This was driven by deletion calls. The 46 affected genes are flagged as copy-number artefact suspects.</li>
+<li><b>Lineage transcription factors:</b> these should be classified as "lineage-driven", but their fraction in that class was 0.0. The classification rule is therefore flagged as unreliable.</li>
+</ul>
+<p>We report all three as failures rather than adjusting their bounds.</p>
+
+<h2>7. Step five: the test that counts, replication in held-out lines</h2>
+<p>With the catalogue and the candidate lists frozen, the 255 held-out lines were read once. For each arm we took its top 100 genomic candidates (k = 100, fixed beforehand from a pool of 1,020 powered candidates). We then asked how many show the same effect in the new lines.</p>
+<div class="tw"><table>
+<tr><th>Arm</th><th>Replicated (top 100)</th><th>What it reads</th></tr>
+<tr><td>S1-obs</td><td>0.99</td><td>measured scores, one feature at a time</td></tr>
+<tr><td>S1-pred</td><td>0.93</td><td>predicted scores, one feature at a time</td></tr>
+<tr><td>EN-obs</td><td>0.89</td><td>measured scores, joint model</td></tr>
+<tr><td>EN-pred</td><td>0.82</td><td>predicted scores, joint model</td></tr>
+</table></div>
+<p>The two pre-declared contrasts:</p>
+<ul>
+<li><b>Does the predictor add value?</b> EN-pred − EN-obs = -0.07 (95% CI -0.12 to 0.02): no detectable difference.</li>
+<li><b>Does the joint model add value over single features?</b> EN-obs − S1-obs = -0.10 (-0.17 to -0.05): the single-feature test is better.</li>
+</ul>
+<p>Replication across screening libraries within the development lines points the same way: S1-obs 0.82, EN-obs 0.62.</p>
+<p>Two features of the data make the first verdict fragile.</p>
+<ul>
+<li><b>The bootstrap is biased.</b> Its replicate rates sit below the observed rates, so the standard percentile interval is off. A "basic" bootstrap interval for the same contrast is -0.16 to -0.02, which would say the predictor does worse.</li>
+<li><b>The sign flips at deeper lists.</b> With 200 and 500 candidates, EN-pred replicates better than EN-obs (0.79 vs 0.715, and 0.634 vs 0.60; Figure 5).</li>
+</ul>
+<p>The fair summary: the predictor neither clearly helps nor clearly hurts, and its value depends on how deep one reads the list. The single-feature test is never beaten for lists up to 200 candidates.</p>
+<p>Absolute rates are high, partly for reasons unrelated to biology:</p>
+<ul>
+<li>The lists favour the strongest effects.</li>
+<li>The held-out lines share the same processing pipeline as the development lines, so replication tests generalisation across cell lines, not across laboratories.</li>
+<li>Part 1 had already scored its predictor on these lines once. They were unused by this project, but not untouched.</li>
+</ul>
+
+<figure><svg viewBox="0 0 720 360" role="img" aria-label="Replication rate in held-out lines against list length" class="fig-svg"><line x1="70" y1="304.0" x2="570" y2="304.0" class="grid"/><text x="62.0" y="308.0" class="tick" text-anchor="end" >0.55</text><line x1="70" y1="272.9" x2="570" y2="272.9" class="grid"/><text x="62.0" y="276.9" class="tick" text-anchor="end" >0.60</text><line x1="70" y1="241.8" x2="570" y2="241.8" class="grid"/><text x="62.0" y="245.8" class="tick" text-anchor="end" >0.65</text><line x1="70" y1="210.7" x2="570" y2="210.7" class="grid"/><text x="62.0" y="214.7" class="tick" text-anchor="end" >0.70</text><line x1="70" y1="179.6" x2="570" y2="179.6" class="grid"/><text x="62.0" y="183.6" class="tick" text-anchor="end" >0.75</text><line x1="70" y1="148.4" x2="570" y2="148.4" class="grid"/><text x="62.0" y="152.4" class="tick" text-anchor="end" >0.80</text><line x1="70" y1="117.3" x2="570" y2="117.3" class="grid"/><text x="62.0" y="121.3" class="tick" text-anchor="end" >0.85</text><line x1="70" y1="86.2" x2="570" y2="86.2" class="grid"/><text x="62.0" y="90.2" class="tick" text-anchor="end" >0.90</text><line x1="70" y1="55.1" x2="570" y2="55.1" class="grid"/><text x="62.0" y="59.1" class="tick" text-anchor="end" >0.95</text><line x1="70" y1="24.0" x2="570" y2="24.0" class="grid"/><text x="62.0" y="28.0" class="tick" text-anchor="end" >1.00</text><text x="70.0" y="324.0" class="tick" text-anchor="middle" >top 50</text><text x="236.7" y="324.0" class="tick" text-anchor="middle" >top 100</text><text x="403.3" y="324.0" class="tick" text-anchor="middle" >top 200</text><text x="570.0" y="324.0" class="tick" text-anchor="middle" >top 500</text><line x1="236.66666666666666" y1="24" x2="236.66666666666666" y2="304" class="limit"/><text x="241.7" y="36.0" class="limitlab" text-anchor="start" >pre-declared k</text><polyline points="70.0,36.4 236.7,30.2 403.3,80.0 570.0,209.4" class="line c1"/><circle cx="70.0" cy="36.4" r="4" class="dot c1"/><circle cx="236.7" cy="30.2" r="4" class="dot c1"/><circle cx="403.3" cy="80.0" r="4" class="dot c1"/><circle cx="570.0" cy="209.4" r="4" class="dot c1"/><polyline points="70.0,36.4 236.7,67.6 403.3,120.4 570.0,205.7" class="line c2"/><circle cx="70.0" cy="36.4" r="4" class="dot c2"/><circle cx="236.7" cy="67.6" r="4" class="dot c2"/><circle cx="403.3" cy="120.4" r="4" class="dot c2"/><circle cx="570.0" cy="205.7" r="4" class="dot c2"/><polyline points="70.0,73.8 236.7,92.4 403.3,201.3 570.0,272.9" class="line c3"/><circle cx="70.0" cy="73.8" r="4" class="dot c3"/><circle cx="236.7" cy="92.4" r="4" class="dot c3"/><circle cx="403.3" cy="201.3" r="4" class="dot c3"/><circle cx="570.0" cy="272.9" r="4" class="dot c3"/><polyline points="70.0,86.2 236.7,136.0 403.3,154.7 570.0,251.7" class="line c4"/><circle cx="70.0" cy="86.2" r="4" class="dot c4"/><circle cx="236.7" cy="136.0" r="4" class="dot c4"/><circle cx="403.3" cy="154.7" r="4" class="dot c4"/><circle cx="570.0" cy="251.7" r="4" class="dot c4"/><text x="582.0" y="209.7" class="lab c2t" text-anchor="start" >S1-pred 0.71</text><text x="582.0" y="224.7" class="lab c1t" text-anchor="start" >S1-obs 0.70</text><text x="582.0" y="255.7" class="lab c4t" text-anchor="start" >EN-pred 0.63</text><text x="582.0" y="276.9" class="lab c3t" text-anchor="start" >EN-obs 0.60</text><text x="320.0" y="352.0" class="axis" text-anchor="middle" >length of each method&#x27;s ranked candidate list</text><text x="16.0" y="164.0" class="axis" text-anchor="middle" transform="rotate(-90 16 164)">fraction replicated in R</text></svg>
+<figcaption><b>Figure 5. Replication in 255 held-out lines, by list length.</b> The pre-declared comparison is at the top 100 (dashed line); 50, 200 and 500 are pre-declared secondary list lengths computed from the same single read. The observed univariate test (S1-obs) leads at short lists. The two elastic-net arms swap order between 100 and 200 candidates, which is why the "no added value" verdict is called fragile.</figcaption></figure>
+
+<h2>8. Step six: clinical biomarkers and combinatorial screens</h2>
+<h3>Clinical ground truth</h3>
+<p>Drugs that reached trials with a companion biomarker are the strongest available ground truth: BRAF V600 for BRAF/MEK inhibitors, MTAP loss for PRMT5 inhibitors, and so on. Before joining any dependency data we built a table of 64 biomarker–target tests from CIViC, the Molecular Oncology Almanac (Reardon et al. 2021) and the FDA list of companion diagnostics. For each test we recorded the expected direction of the knockout effect.</p>
+<p>Three results:</p>
+<ul>
+<li><b>Most clinical biomarkers are visible in cell lines.</b> Of 28 tests that can be checked in the data, 19 show the expected dependency directly ("data-supported") and 9 do not. EGFR-activating mutations in lung cancer and ALK fusions are among the misses, partly because of very few carriers.</li>
+<li><b>The predictor-derived lists recover almost none of them.</b> Among the detectable, non-proxy tests, S1-obs recovers 3/11 in its top 200 and EN-pred 0/11 (Figure 6). Across the full non-proxy set S1-obs recovers 4 of 16 and EN-pred 0; the exact McNemar test for EN-pred vs S1-obs gives p = 0.125.</li>
+<li><b>The primary clinical comparison is underpowered.</b> It was restricted to tests that do not overlap the positive-control gate, which left only 6 tests, below the pre-declared minimum of 15. It is reported as descriptive.</li>
+</ul>
+<p>No method recovered any of the 3 biomarkers that trials have refuted, which is the right answer. With 3 tests that says little.</p>
+
+<figure><svg viewBox="0 0 720 208" role="img" aria-label="Clinical biomarker recall" class="fig-svg"><line x1="150.0" y1="22" x2="150.0" y2="170" class="grid"/><text x="150.0" y="186.0" class="tick" text-anchor="middle" >0.0</text><line x1="250.0" y1="22" x2="250.0" y2="170" class="grid"/><text x="250.0" y="186.0" class="tick" text-anchor="middle" >0.1</text><line x1="350.0" y1="22" x2="350.0" y2="170" class="grid"/><text x="350.0" y="186.0" class="tick" text-anchor="middle" >0.2</text><line x1="450.0" y1="22" x2="450.0" y2="170" class="grid"/><text x="450.0" y="186.0" class="tick" text-anchor="middle" >0.4</text><line x1="550.0" y1="22" x2="550.0" y2="170" class="grid"/><text x="550.0" y="186.0" class="tick" text-anchor="middle" >0.5</text><line x1="650.0" y1="22" x2="650.0" y2="170" class="grid"/><text x="650.0" y="186.0" class="tick" text-anchor="middle" >0.6</text><text x="140.0" y="45.0" class="lab" text-anchor="end" >S1-obs</text><rect x="150" y="32" width="227.3" height="20" rx="2" class="bar c1"/><text x="383.3" y="46.0" class="val" text-anchor="start" >3/11</text><text x="140.0" y="79.0" class="lab" text-anchor="end" >S1-pred</text><rect x="150" y="66" width="1.5" height="20" rx="2" class="bar c2"/><text x="156.0" y="80.0" class="val" text-anchor="start" >0/11</text><text x="140.0" y="113.0" class="lab" text-anchor="end" >EN-obs</text><rect x="150" y="100" width="1.5" height="20" rx="2" class="bar c3"/><text x="156.0" y="114.0" class="val" text-anchor="start" >0/11</text><text x="140.0" y="147.0" class="lab" text-anchor="end" >EN-pred</text><rect x="150" y="134" width="1.5" height="20" rx="2" class="bar c4"/><text x="156.0" y="148.0" class="val" text-anchor="start" >0/11</text><text x="400.0" y="204.0" class="axis" text-anchor="middle" >recall at top 200 of clinical biomarkers that are detectable in the cell-line data</text></svg>
+<figcaption><b>Figure 6. Clinical biomarkers recovered.</b> Recall in each arm's top 200 of the clinical biomarker–target pairs that are detectable in the cell-line data (non-proxy tests). The numbers are small, so the intervals are wide, but no prediction-based arm recovers any.</figcaption></figure>
+
+<h3>Combinatorial CRISPR screens</h3>
+<p>Many catalogue pairs are paralog pairs. Those can be tested independently, because several studies knocked out both genes of a pair together (Dede et al. 2020; Thompson et al. 2021; Parrish et al. 2021; Esmaeili Anvar et al. 2024).</p>
+<ul>
+<li>Of the catalogue's tested paralog candidates, 16.9% were hits in those screens.</li>
+<li>A matched set of paralog pairs, with similar sequence identity and family size, would give 2.5%: about 6.8 times enrichment.</li>
+<li>The observed univariate list did equally well (16.7%).</li>
+</ul>
+<p>The candidates are real paralog dependencies, but the predictor does not add to them. The two lists are nested, and the screens are not fully independent of DepMap, so this is supporting evidence rather than proof.</p>
+
+<figure><svg viewBox="0 0 720 208" role="img" aria-label="Combinatorial screen support" class="fig-svg"><line x1="150.0" y1="22" x2="150.0" y2="170" class="grid"/><text x="150.0" y="186.0" class="tick" text-anchor="middle" >0%</text><line x1="250.0" y1="22" x2="250.0" y2="170" class="grid"/><text x="250.0" y="186.0" class="tick" text-anchor="middle" >5%</text><line x1="350.0" y1="22" x2="350.0" y2="170" class="grid"/><text x="350.0" y="186.0" class="tick" text-anchor="middle" >10%</text><line x1="450.0" y1="22" x2="450.0" y2="170" class="grid"/><text x="450.0" y="186.0" class="tick" text-anchor="middle" >15%</text><line x1="550.0" y1="22" x2="550.0" y2="170" class="grid"/><text x="550.0" y="186.0" class="tick" text-anchor="middle" >20%</text><line x1="650.0" y1="22" x2="650.0" y2="170" class="grid"/><text x="650.0" y="186.0" class="tick" text-anchor="middle" >25%</text><text x="140.0" y="45.0" class="lab" text-anchor="end" >MD-global</text><rect x="150" y="32" width="338.8" height="20" rx="2" class="bar c5"/><text x="494.8" y="46.0" class="val" text-anchor="start" >16.9%</text><text x="140.0" y="79.0" class="lab" text-anchor="end" >S1-obs</text><rect x="150" y="66" width="333.3" height="20" rx="2" class="bar c1"/><text x="489.3" y="80.0" class="val" text-anchor="start" >16.7%</text><text x="140.0" y="113.0" class="lab" text-anchor="end" >matched expectation</text><rect x="150" y="100" width="49.9" height="20" rx="2" class="bar c0"/><text x="205.9" y="114.0" class="val" text-anchor="start" >2.5%</text><text x="140.0" y="147.0" class="lab" text-anchor="end" >all screened pairs</text><rect x="150" y="134" width="20.5" height="20" rx="2" class="bar c0"/><text x="176.5" y="148.0" class="val" text-anchor="start" >1.0%</text><text x="400.0" y="204.0" class="axis" text-anchor="middle" >fraction of tested paralog candidates that are hits in combinatorial CRISPR screens</text></svg>
+<figcaption><b>Figure 7. Support from combinatorial CRISPR screens.</b> Fraction of tested paralog candidates that are hits in published double-knockout screens, compared with paralog pairs matched for sequence identity and family size, and with all screened pairs. The per-cell-line hit rule (effect size and minimum effect) was an implementation choice made before the catalogue existed.</figcaption></figure>
+
+<h2>9. Step seven: what the subtypes look like</h2>
+<p><b>How the catalogue sorts out.</b> The catalogue contains 1,380 gene–biomarker pairs, grouped into 558 modules, 112 of them shared by more than one gene. After replication and a power check, 552 pairs are classed as "valid candidates": replicated in held-out lines with at least 50% power. The rest:</p>
+<ul>
+<li>537 are too rare or under-powered to judge;</li>
+<li>131 were powered but did not replicate;</li>
+<li>160 are confounded.</li>
+</ul>
+<p>An earlier count of 1,031 valid pairs was wrong. Power had not been computed for continuous features, so pairs that had not replicated stayed classed as valid. An independent reviewer caught this.</p>
+<p><b>Within or across cancer types.</b> Of the catalogue pairs, 430 behave the same way across several lineages ("cross-lineage"), 22 are confined to one, and 894 cannot be resolved because too few lineages have enough lines. Cross-lineage pairs end up valid far more often (73% vs 22% for unresolvable ones). But the cross-lineage label itself requires several well-powered lineages, so part of that gap is simply statistical power.</p>
+<p><b>What kind of biology.</b> The 552 valid pairs are dominated by expression-level determinants: 171 expression programmes and 162 paralog-expression features. There are only 15 hotspot-mutation and 37 loss-of-function features (Figure 8). Typical examples:</p>
+<ul>
+<li><b>FAM50A</b> dependence where its paralog FAM50B is weakly expressed, seen in 21 lineages;</li>
+<li><b>DDX3X</b> dependence where DDX3Y is absent, which tracks sex and Y-chromosome loss, and whose gene is also flagged as a copy-number artefact suspect;</li>
+<li><b>MDM2</b> dependence in TP53 wild-type lines;</li>
+<li><b>KRAS</b> dependence in KRAS-mutant lines, the cleanest genomic case;</li>
+<li><b>PRMT5</b> dependence with MTAP loss, the one example with a matching clinical programme. It entered the catalogue through the univariate test, not through anything the predictor revealed.</li>
+</ul>
+<p>Several top hits are also dependencies in non-cancerous cell lines: RAB6A in 73% of them, MDM2 67%, FAM50A 47%. This warns that they may not be tumour-selective. It is not a therapeutic-window measurement.</p>
+
+<figure><svg viewBox="0 0 720 378" role="img" aria-label="Shortlist by determinant type" class="fig-svg"><line x1="150.0" y1="22" x2="150.0" y2="340" class="grid"/><text x="150.0" y="356.0" class="tick" text-anchor="middle" >0</text><line x1="250.0" y1="22" x2="250.0" y2="340" class="grid"/><text x="250.0" y="356.0" class="tick" text-anchor="middle" >36</text><line x1="350.0" y1="22" x2="350.0" y2="340" class="grid"/><text x="350.0" y="356.0" class="tick" text-anchor="middle" >72</text><line x1="450.0" y1="22" x2="450.0" y2="340" class="grid"/><text x="450.0" y="356.0" class="tick" text-anchor="middle" >108</text><line x1="550.0" y1="22" x2="550.0" y2="340" class="grid"/><text x="550.0" y="356.0" class="tick" text-anchor="middle" >144</text><line x1="650.0" y1="22" x2="650.0" y2="340" class="grid"/><text x="650.0" y="356.0" class="tick" text-anchor="middle" >180</text><text x="140.0" y="45.0" class="lab" text-anchor="end" >expression programme</text><rect x="150" y="32" width="475.0" height="20" rx="2" class="bar c5"/><text x="631.0" y="46.0" class="val" text-anchor="start" >171</text><text x="140.0" y="79.0" class="lab" text-anchor="end" >paralog expression</text><rect x="150" y="66" width="450.0" height="20" rx="2" class="bar c5"/><text x="606.0" y="80.0" class="val" text-anchor="start" >162</text><text x="140.0" y="113.0" class="lab" text-anchor="end" >TP53/RB composite</text><rect x="150" y="100" width="169.4" height="20" rx="2" class="bar c3"/><text x="325.4" y="114.0" class="val" text-anchor="start" >61</text><text x="140.0" y="147.0" class="lab" text-anchor="end" >loss of function</text><rect x="150" y="134" width="102.8" height="20" rx="2" class="bar c3"/><text x="258.8" y="148.0" class="val" text-anchor="start" >37</text><text x="140.0" y="181.0" class="lab" text-anchor="end" >silencing (other)</text><rect x="150" y="168" width="72.2" height="20" rx="2" class="bar c5"/><text x="228.2" y="182.0" class="val" text-anchor="start" >26</text><text x="140.0" y="215.0" class="lab" text-anchor="end" >clinical feature</text><rect x="150" y="202" width="63.9" height="20" rx="2" class="bar c3"/><text x="219.9" y="216.0" class="val" text-anchor="start" >23</text><text x="140.0" y="249.0" class="lab" text-anchor="end" >hotspot mutation</text><rect x="150" y="236" width="41.7" height="20" rx="2" class="bar c3"/><text x="197.7" y="250.0" class="val" text-anchor="start" >15</text><text x="140.0" y="283.0" class="lab" text-anchor="end" >pathway score</text><rect x="150" y="270" width="38.9" height="20" rx="2" class="bar c5"/><text x="194.9" y="284.0" class="val" text-anchor="start" >14</text><text x="140.0" y="317.0" class="lab" text-anchor="end" >shallow copy loss</text><rect x="150" y="304" width="33.3" height="20" rx="2" class="bar c3"/><text x="189.3" y="318.0" class="val" text-anchor="start" >12</text><text x="400.0" y="374.0" class="axis" text-anchor="middle" >number of shortlisted pairs (of 552)</text></svg>
+<figcaption><b>Figure 8. What the 552 best-supported pairs are made of.</b> Determinant types of the shortlisted pairs (classed valid and replicated in held-out lines). Amber marks expression-level determinants; violet marks genomic and composite determinants. Most of the signal is in expression and paralog buffering, not in the kinds of mutations a diagnostic test usually reads.</figcaption></figure>
+
+<h2>10. Which dependencies cannot serve as biomarkers, and why</h2>
+<p>Every gene and pair was assigned a "failure class". The large classes:</p>
+<ul>
+<li><b>No usable contrast or not predictable.</b> Many dependencies barely vary between lines, or the predictor does not capture them, so there is nothing to explain.</li>
+<li><b>Explained only by tissue of origin.</b> 884 genes are predicted accurately only through lineage or screening library. The predictor knows they are blood- or brain-specific, but not why.</li>
+<li><b>Predictable but with no nameable determinant.</b> 1,415 genes are predicted well, yet no catalogue feature explains them. This alone contradicts the premise that every accurate prediction implies a readable biomarker.</li>
+<li><b>Determinants that are not genes.</b> 88% of copy-number determinants resolve only to a chromosomal region containing several genes, not to one gene. Expression programmes are not assayable biomarkers in the clinical sense.</li>
+<li><b>Too rare to judge.</b> Biomarkers carried by a handful of lines, such as EGFR-activating mutations, cannot be confirmed with the conservative statistics needed to avoid false positives in small groups.</li>
+</ul>
+
+<h2>11. What this says about agentic science</h2>
+<p><b>What worked.</b> The agents wrote a reviewed design, froze it, built a simulated world with a known answer, and ran a multi-day analysis to a single, logged read of held-out data. Failures were reported as failures: the gate, four negative controls, a calibration test and one tolerance of the independent reimplementation. Pre-committing the response to each failure removed the temptation, and the opportunity, to rescue results after seeing them.</p>
+<p><b>What the independent checks caught.</b> Several consequential errors were found only by agents that had not produced the result:</p>
+<ul>
+<li>the catalogue's double-dip problem, found by the simulation agent;</li>
+<li>an anti-conservative statistical test, which triggered a pre-declared fallback, found by the process-check agent;</li>
+<li>missing statistical power for continuous features, which had inflated the valid set by about a third, found by the post-replication reviewer;</li>
+<li>a miscount in the permutation summary;</li>
+<li>a claim by the PI agent that seven controls were "missed by every method", which was false.</li>
+</ul>
+<p>Without these second readers, the report would have overstated its results.</p>
+<p><b>What went wrong.</b></p>
+<ul>
+<li>Memory limits on a laptop forced three rewrites of the orchestration code.</li>
+<li>Long jobs without checkpoints were lost to an overnight interruption.</li>
+<li>One shortcut was logged in error and withdrawn: skipping the dry run before the held-out read.</li>
+<li>The budget was extended by the human.</li>
+</ul>
+<p>These lessons are recorded as process rules in the repository.</p>
+
+<div class="take">
+<h3>Take-away messages</h3>
+<ul>
+<li>Reading biomarkers out of an accurate dependency predictor did not beat simply testing each feature against measured dependencies, with careful confounder control. On this evidence, prediction accuracy did not translate into better biomarkers.</li>
+<li>Prediction-based association lists can carry false discoveries that standard permutation checks cannot see. Any such list needs a fresh-data test.</li>
+<li>The robust signal in this catalogue is paralog buffering and expression state, supported by combinatorial screens. Most of it is not the mutation-type biomarker that drives clinical practice, and some of it is shared with normal cells.</li>
+<li>The clinical comparison was too small to be decisive. That limitation is itself a finding about how few clinical biomarkers can be tested in cell-line data.</li>
+<li>For agentic science, staged pre-registration and independent verification were what made the result trustworthy enough to report. They should be standard.</li>
+</ul>
+</div>
+
+<p class="note">Not done or cut under the pre-declared rules: patient-level prevalence from TCGA, an attribution panel for the predictor's components, a selection-adaptive permutation re-run, and some secondary replication analyses. One held-out subset analysis would have required a second read of the held-out data and was not done. All departures are listed in the repository's deviations log.</p>
+
+<h2>Credits: ideas taken from the literature</h2>
+<p>The final method that held up, a confounder-adjusted per-feature test intersected with stability-selected joint models, assembles established ideas rather than inventing new ones:</p>
+<ul>
+<li><b>Per-gene association testing with context adjustment</b> follows GDSC and DepMap biomarker work.</li>
+<li><b>Variable selection with error control</b> comes from stability selection.</li>
+<li><b>Small-sample robust inference</b> comes from the econometrics literature on cluster-robust errors.</li>
+<li><b>The confounder list</b> comes from studies of CRISPR screen artefacts: copy-number cutting toxicity, culture conditions, passenger and co-deleted genes.</li>
+<li><b>The validation sources</b> are curated clinical knowledge bases and published combinatorial screens.</li>
+</ul>
+<ol class="refs">
+<li>Tsherniak A. et al. 2017, Cell: Defining a cancer dependency map. · Dempster J.M. et al. 2021, Genome Biology: Chronos.</li>
+<li>Garnett M.J. et al. 2012, Nature; Iorio F. et al. 2016, Cell: pharmacogenomic association testing with tissue adjustment.</li>
+<li>Behan F.M. et al. 2019, Nature; Pacini C. et al. 2024, Cancer Cell: CRISPR-based target and biomarker prioritisation.</li>
+<li>Gonçalves E. et al. 2020, Molecular Systems Biology: covariate-adjusted drug–gene association models.</li>
+<li>Zou H. and Hastie T. 2005, J R Stat Soc B: the elastic net.</li>
+<li>Meinshausen N. and Bühlmann P. 2010, J R Stat Soc B; Shah R.D. and Samworth R.J. 2013, J R Stat Soc B: stability selection.</li>
+<li>Bell R.M. and McCaffrey D.F. 2002, Survey Methodology; Pustejovsky J.E. and Tipton E. 2018, J Bus Econ Stat: small-sample cluster-robust inference.</li>
+<li>Benjamini Y. and Hochberg Y. 1995, J R Stat Soc B: false discovery rate.</li>
+<li>Aguirre A.J. et al. 2016 and Munoz D.M. et al. 2016, Cancer Discovery: copy-number cutting toxicity in CRISPR screens.</li>
+<li>Marjon K. et al. 2016, Cell Reports; Mavrakis K.J. et al. 2016, Science: MTAP loss and PRMT5/MAT2A dependence.</li>
+<li>Chan E.M. et al. 2019, Nature: WRN dependence in microsatellite-unstable cancers.</li>
+<li>De Kegel B. and Ryan C.J. 2019, PLoS Genetics; De Kegel B. et al. 2021, Cell Systems: paralog buffering of dependencies.</li>
+<li>Dede M. et al. 2020, Genome Biology; Thompson N.A. et al. 2021, Nature Communications; Parrish P.C.R. et al. 2021, Cell Reports; Esmaeili Anvar N. et al. 2024, Nature Communications: combinatorial paralog screens.</li>
+<li>Griffith M. et al. 2017, Nature Genetics (CIViC); Reardon B. et al. 2021, Nature Cancer (Molecular Oncology Almanac); US FDA list of companion diagnostics.</li>
+</ol>
+<p class="note">Full methods, every number with its source file, all deviations and the code are in the project repository (REPORT.md, DESIGN.md, RESEARCH_TREE.md). This page is generated by <code>docs/briefing/build_briefing.py</code> from the committed results.</p>
+</main>
